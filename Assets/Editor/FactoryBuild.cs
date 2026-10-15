@@ -45,13 +45,15 @@ public static class FactoryBuild {
         Board("LEAVE A CRATE ON THE STRIPED PLATE\nTHE DOOR STAYS OPEN WHILE IT IS HELD",new Vector3(-4.8f,1.65f,9.8f),2.9f);
         var welcome=Board("AUNT MAY'S NOTE\nE TO READ",new Vector3(4.8f,1.6f,-4),2.4f).AddComponent<StoryPoint>();welcome.kind=StoryPoint.StoryKind.Note;welcome.note="The helpers only return on Halloween. If the lights are on, please tell them I left the side door open for the parade. Your old drawing is still in the archive. Love, Aunt May.";
         Desk(new Vector3(5.2f,0,3));buttonGhost=Ghost("Button",new Vector3(5.2f,0,3),false).transform;
+        game.buttonHelper=buttonGhost.GetComponent<GhostIdle>();game.buttonHelper.role="button";
+        var buttonTalk=buttonGhost.gameObject.AddComponent<StoryPoint>();buttonTalk.kind=StoryPoint.StoryKind.Button;var buttonCol=buttonGhost.gameObject.AddComponent<BoxCollider>();buttonCol.center=Vector3.up*1.2f;buttonCol.size=new Vector3(1.3f,1.9f,1);
         for(int i=0;i<3;i++){Shape("Lunch tin",PrimitiveType.Cube,new Vector3(4.5f+i*.65f,1.07f,2.8f),new Vector3(.42f,.18f,.3f),i==1?orange:teal);}
         Pumpkin(new Vector3(-6.6f,.45f,-5),.8f);Pumpkin(new Vector3(6.4f,.36f,8),.6f);
         // Packaging: both machines share the same physical core.
         RoomTitle("02 / PACKAGING",new Vector3(0,3.25f,28.7f));
         game.sharedCore=Core(new Vector3(0,.6f,16));
         var relayGate=Gate("Workshop power gate",18,FactoryGate.Rule.PowerOrPlate,new Vector3(4.8f,.05f,16));
-        relayGate.relay=Relay(new Vector3(-5.4f,0,15.3f));relayGate.relay.gate=relayGate;
+        relayGate.relay=Relay(new Vector3(-5.4f,0,15.3f));relayGate.relay.gate=relayGate;game.workshopRelay=relayGate.relay;
         Crate("Workshop override crate",new Vector3(5,.61f,20));
         Board("POWER OPENS THE GATE\nA CRATE KEEPS IT OPEN WITHOUT POWER\nBRING THE CRATE BACK, THEN REUSE THE CORE",new Vector3(5.4f,2.3f,17.5f),4.2f);
         MachineAt("mould","MOULDING TABLE",new Vector3(-5.4f,0,20),"1 / MAKE THE SHELL");
@@ -66,7 +68,8 @@ public static class FactoryBuild {
         Crate("Movable cover",new Vector3(3.8f,.61f,35));
         Shelf(new Vector3(-5.8f,0,39.3f));Shelf(new Vector3(5.9f,0,39.3f));
         Gate("Drawing cabinet",43.5f,FactoryGate.Rule.Plate,new Vector3(5.5f,.05f,41.3f),false).requireLesson=true;
-        var drawing=Board("AN OLD DRAWING\nE TO TURN IT OVER",new Vector3(2.6f,1.5f,44.9f),2.3f).AddComponent<StoryPoint>();drawing.kind=StoryPoint.StoryKind.Drawing;
+        var drawing=Board("",new Vector3(2.6f,1.5f,44.9f),2.3f).AddComponent<StoryPoint>();drawing.name="Notice / AN OLD DRAWING";drawing.kind=StoryPoint.StoryKind.Drawing;
+        DrawingSketch(new Vector3(2.6f,1.5f,44.9f),drawing.transform);
         Gate("Assembly entrance",46,FactoryGate.Rule.Drawing,Vector3.zero);
         Board("HUSH IS ON SAFETY DUTY\nWATCH HIS ROUTE. CRATES BLOCK SIGHT.\nSTART THE CHIME TO DRAW HIM AWAY.\nHE WILL NEVER HURT YOU.",new Vector3(6.4f,2.75f,32),3.4f);
         var ig=Ghost("Hush / safety inspector",new Vector3(0,0,35),true);var ins=ig.AddComponent<Inspector>();game.inspector=ins;
@@ -80,10 +83,10 @@ public static class FactoryBuild {
         Gate("Assembly work gate",54,FactoryGate.Rule.Plate,new Vector3(-2f,.05f,51.5f),false);
         MachineAt("press","LANTERN PRESS",new Vector3(5.4f,0,57.5f),"4 / FINISH THE LANTERN");
         var lanternRoot=new GameObject("The last lantern");lanternRoot.transform.position=new Vector3(3.6f,1.1f,58.5f);var lp=lanternRoot.AddComponent<Pickup>();lp.kind=Pickup.Kind.Lantern;lp.displayName="the last lantern";lp.home=lanternRoot.transform.position;
-        var pumpkin=Pumpkin(Vector3.zero,.58f,lanternRoot.transform);pumpkin.transform.localPosition=Vector3.zero;
+        var finished=LanternModel(lanternRoot.transform.position,.7f,lanternRoot.transform);finished.portable=true;var finalCollider=lanternRoot.AddComponent<SphereCollider>();finalCollider.radius=.48f;
         Shape("Lantern base",PrimitiveType.Cylinder,new Vector3(3.6f,.45f,58.5f),new Vector3(.8f,.45f,.8f),brass);
         game.lantern=lp;lanternRoot.SetActive(false);
-        Desk(new Vector3(0,0,60));var pip=Ghost("Pip / night foreman",new Vector3(0,0,60.5f),false);var talk=pip.AddComponent<StoryPoint>();talk.kind=StoryPoint.StoryKind.Pip;var talkCollider=pip.AddComponent<BoxCollider>();talkCollider.center=Vector3.up*1.2f;talkCollider.size=new Vector3(1.5f,2,1.2f);
+        Desk(new Vector3(0,0,60));var pip=Ghost("Pip / night foreman",new Vector3(0,0,60.5f),false);var talk=pip.AddComponent<StoryPoint>();talk.kind=StoryPoint.StoryKind.Pip;var talkCollider=pip.AddComponent<BoxCollider>();talkCollider.center=Vector3.up*1.2f;talkCollider.size=new Vector3(1.5f,2,1.2f);game.pipHelper=pip.GetComponent<GhostIdle>();game.pipHelper.role="pip";
         Board("DISPATCH / PIP\nONE LAST ORDER",new Vector3(-3.8f,1.8f,61),2.6f);
         Pumpkin(new Vector3(-6,.5f,60),.9f);
         var ending=game.gameObject.AddComponent<EndOfShift>();ending.pip=pip.transform;ending.button=buttonGhost;ending.hush=ig.transform;ending.exitDoor=exitDoor;ending.view=cam;
@@ -169,11 +172,61 @@ public static class FactoryBuild {
         var sock=new GameObject("Core socket").transform;sock.SetParent(root.transform);sock.position=pos+new Vector3(.75f,1.6f,0);m.corePoint=sock;
         Shape("Socket rim",PrimitiveType.Cylinder,pos+new Vector3(.75f,1.32f,0),new Vector3(.65f,.05f,.65f),dark,root.transform,false);
         m.indicator=Shape("Status lamp",PrimitiveType.Sphere,pos+new Vector3(-.85f,1.48f,-.25f),Vector3.one*.22f,cream,root.transform,false).GetComponent<Renderer>();
-        var wheel=Shape("Work spindle",PrimitiveType.Cylinder,pos+new Vector3(-.2f,1.52f,0),new Vector3(.6f,.25f,.6f),orange,root.transform,false);m.spinner=wheel.transform;
+        var wheel=Shape("Work spindle",PrimitiveType.Cylinder,pos+new Vector3(-.2f,1.52f,.45f),new Vector3(.38f,.18f,.38f),orange,root.transform,false);m.spinner=wheel.transform;
         Box("Machine label",pos+new Vector3(0,.8f,-.77f),new Vector3(2.1f,.5f,.04f),dark,root.transform,false);
         Sign(name,pos+new Vector3(0,.85f,-.8f),.57f,cream);
         m.status=Sign("INSERT CORE",pos+new Vector3(0,.55f,-.8f),.44f,cream);
+        if(id!="chime"){
+            Shape("Workpiece resting tray",PrimitiveType.Cylinder,pos+new Vector3(-.5f,1.35f,-.2f),new Vector3(.72f,.07f,.72f),dark,root.transform,false);
+            var output=LanternModel(pos+new Vector3(-.5f,1.65f,-.2f),.58f,root.transform);output.station=m;
+            Sign(id=="mould"?"SHELL / KEEP WHEN UNPOWERED":id=="ribbon"?"RIBBON / READY FOR ASSEMBLY":id=="etch"?"YOUR PROMISE / ENGRAVED":"LIGHT / READY AT DISPATCH",pos+new Vector3(0,1.08f,-.84f),.27f,cream);
+        }
         Board(instruction,pos+new Vector3(0,2.6f,.6f),3);return m;
+    }
+    static void DrawingSketch(Vector3 centre,Transform parent){
+        var layer=new GameObject("Childhood sketch").transform;layer.SetParent(parent);parent=layer;
+        Box("Old drawing paper",centre+Vector3.back*.08f,new Vector3(2.08f,1.13f,.02f),cream,parent,false);
+        Sign("AN OLD DRAWING",centre+new Vector3(0,.46f,-.105f),.38f,ink,0,parent);
+        Sign("E TO TURN IT OVER",centre+new Vector3(0,-.47f,-.105f),.32f,ink,0,parent);
+        Vector3 pumpkin=centre+new Vector3(-.34f,-.02f,-.11f);
+        for(int i=0;i<16;i++){
+            float a=i*Mathf.PI/8,b=(i+1)*Mathf.PI/8;
+            SketchStroke(pumpkin+new Vector3(Mathf.Cos(a)*.32f,Mathf.Sin(a)*.25f,0),pumpkin+new Vector3(Mathf.Cos(b)*.32f,Mathf.Sin(b)*.25f,0),orange,parent);
+        }
+        SketchStroke(pumpkin+new Vector3(-.1f,.23f,0),pumpkin+new Vector3(-.1f,.37f,0),violet,parent);
+        SketchStroke(pumpkin+new Vector3(-.1f,.37f,0),pumpkin+new Vector3(.1f,.34f,0),violet,parent);
+        SketchStroke(pumpkin+new Vector3(.1f,.34f,0),pumpkin+new Vector3(.1f,.24f,0),violet,parent);
+        foreach(int side in new[]{-1,1})Box("Child's ink eye",pumpkin+new Vector3(side*.12f,.05f,-.01f),new Vector3(.045f,.055f,.012f),ink,parent,false);
+        SketchStroke(pumpkin+new Vector3(-.12f,-.09f,0),pumpkin+new Vector3(.12f,-.11f,0),ink,parent);
+        Vector3 ghost=centre+new Vector3(.44f,-.01f,-.11f);
+        Vector3[] outline={new Vector3(-.18f,-.22f,0),new Vector3(-.18f,.12f,0),new Vector3(-.1f,.23f,0),new Vector3(.1f,.23f,0),new Vector3(.18f,.12f,0),new Vector3(.18f,-.22f,0),new Vector3(.07f,-.15f,0),new Vector3(0,-.23f,0),new Vector3(-.07f,-.15f,0),new Vector3(-.18f,-.22f,0)};
+        for(int i=1;i<outline.Length;i++)SketchStroke(ghost+outline[i-1],ghost+outline[i],violet,parent);
+        foreach(int side in new[]{-1,1})Box("Child's ghost eye",ghost+new Vector3(side*.065f,.04f,-.01f),new Vector3(.035f,.05f,.012f),ink,parent,false);
+        SketchStroke(ghost+new Vector3(-.18f,-.04f,0),pumpkin+new Vector3(.3f,.04f,0),violet,parent);
+    }
+    static void SketchStroke(Vector3 a,Vector3 b,Material inkMaterial,Transform parent){
+        var mark=Box("Crayon stroke",(a+b)/2,new Vector3(.025f,Vector3.Distance(a,b),.014f),inkMaterial,parent,false);mark.transform.rotation=Quaternion.FromToRotation(Vector3.up,b-a);
+    }
+    static LanternDisplay LanternModel(Vector3 pos,float size,Transform parent){
+        var root=new GameObject("Lantern / visible craft");root.transform.SetParent(parent);root.transform.position=pos;
+        var display=root.AddComponent<LanternDisplay>();
+        var model=new GameObject("Craft stages").transform;model.SetParent(root.transform,false);display.model=model;
+        for(int i=0;i<8;i++){float a=i*Mathf.PI/4;Shape("Ceramic pumpkin rib",PrimitiveType.Sphere,pos+new Vector3(Mathf.Cos(a)*size*.22f,0,Mathf.Sin(a)*size*.22f),new Vector3(size*.7f,size*.8f,size*.7f),orange,model,false);}
+        Shape("Brass lid",PrimitiveType.Cylinder,pos+Vector3.up*size*.43f,new Vector3(size*.43f,size*.045f,size*.43f),brass,model,false);
+        foreach(int side in new[]{-1,1})Box("Carry handle",pos+new Vector3(side*size*.25f,size*.7f,0),new Vector3(size*.055f,size*.5f,size*.06f),brass,model,false);
+        Box("Carry handle bridge",pos+Vector3.up*size*.94f,new Vector3(size*.55f,size*.055f,size*.06f),brass,model,false);
+        var ribbon=new GameObject("Plum ribbon and bow").transform;ribbon.SetParent(model,false);display.ribbon=ribbon;
+        Box("Ribbon sash",pos+new Vector3(0,-size*.12f,-size*.5f),new Vector3(size*.7f,size*.12f,size*.055f),violet,ribbon,false);
+        foreach(int side in new[]{-1,1}){var bow=Shape("Ribbon loop",PrimitiveType.Sphere,pos+new Vector3(side*size*.13f,-size*.12f,-size*.55f),new Vector3(size*.23f,size*.17f,size*.07f),violet,ribbon,false);bow.transform.rotation=Quaternion.Euler(0,0,side*25);}
+        var inscription=new GameObject("Little engraved promise").transform;inscription.SetParent(model,false);display.inscription=inscription;
+        Box("Ivory promise tag",pos+new Vector3(size*.33f,-size*.13f,-size*.43f),new Vector3(size*.23f,size*.3f,size*.035f),cream,inscription,false);
+        for(int i=0;i<3;i++)Box("Handwritten line",pos+new Vector3(size*.33f,(-.06f-i*.055f)*size,-size*.46f),new Vector3(size*(i==2?.1f:.17f),size*.018f,size*.012f),ink,inscription,false);
+        var glow=new GameObject("Lit eyes and smile").transform;glow.SetParent(model,false);display.glow=glow;
+        foreach(int side in new[]{-1,1})Shape("Unlit eye cutout",PrimitiveType.Sphere,pos+new Vector3(side*size*.18f,size*.12f,-size*.47f),new Vector3(size*.15f,size*.17f,size*.05f),dark,model,false);
+        foreach(int side in new[]{-1,1})Shape("Lit lantern eye",PrimitiveType.Sphere,pos+new Vector3(side*size*.18f,size*.12f,-size*.505f),new Vector3(size*.12f,size*.14f,size*.04f),glass,glow,false);
+        Box("Lantern smile",pos+new Vector3(0,-size*.015f,-size*.555f),new Vector3(size*.19f,size*.045f,size*.025f),glass,glow,false);
+        var light=new GameObject("Lantern warmth").AddComponent<Light>();light.transform.SetParent(model,false);light.type=LightType.Point;light.color=new Color(1,.64f,.28f);light.range=3;light.intensity=.65f;display.warmth=light;
+        return display;
     }
     static void Desk(Vector3 pos){Box("Desk top",pos+Vector3.up*.9f,new Vector3(2.8f,.18f,1.1f),timber);foreach(int a in new[]{-1,1})foreach(int b in new[]{-1,1})Box("Desk leg",pos+new Vector3(a*1.2f,.4f,b*.4f),new Vector3(.12f,.8f,.12f),brass);}
     static void Conveyor(Vector3 pos,float length){Box("Conveyor base",pos,new Vector3(length,.4f,1.6f),brass);for(float x=-length/2+.3f;x<length/2;x+=.42f){var r=Shape("Conveyor roller",PrimitiveType.Cylinder,pos+new Vector3(x,.28f,0),new Vector3(.2f,.7f,.2f),dark);r.transform.rotation=Quaternion.Euler(90,0,0);}}

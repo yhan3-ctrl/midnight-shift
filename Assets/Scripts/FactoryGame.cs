@@ -10,6 +10,7 @@ public class FactoryGame : MonoBehaviour {
     public Inspector inspector;
     public Pickup lantern, sharedCore;
     public AudioScore audioScore;
+    public GridRelay workshopRelay; public GhostIdle buttonHelper,pipHelper;
     int circuitOpenedFrame;
     public Machine activeCircuit; CircuitView circuitView=new CircuitView();
     public bool started, paused, ended, journal;
@@ -36,9 +37,20 @@ public class FactoryGame : MonoBehaviour {
     public string Objective {
         get {
             if(!shell&&player&&player.transform.position.z<12) return "00  /  OPEN THE FIRST DOOR\nCarry the foyer crate toward the striped plate. Q places it a step ahead; leave it on the plate, then walk through the centre door.";
-            if(!shell) return "01  /  MAKE THE LANTERN SHELL\nPower the workshop gate. Bring its crate back to the override plate, then reuse the core.";
+            if(!shell){
+                if(workshopRelay){
+                    if(workshopRelay.OverrideHeld){
+                        if(workshopRelay.core)return "01  /  REUSE THE CORE\nThe crate keeps the workshop open. Take the core out of the Workshop Relay, then bring it to the Moulding Table on the left.";
+                        if(sharedCore&&sharedCore.socket&&sharedCore.socket.machineId=="mould"&&sharedCore.socket.running)return "01  /  THE SHELL IS TAKING SHAPE\nWatch the shell form on the worktop. Leave the core in until the machine finishes; then it can power the next job.";
+                        if(sharedCore&&sharedCore.socket&&sharedCore.socket.machineId=="mould")return "01  /  MAKE THE LANTERN SHELL\nAt the Moulding Table: E opens the routing board. Connect the contact and outlet, then send power. Your shell stays finished without power.";
+                        return "01  /  MAKE THE LANTERN SHELL\nThe gate is held by the crate. Bring the core to the Moulding Table on the left and use E to insert it.";
+                    }
+                    if(workshopRelay.core)return "01  /  KEEP THE WAY OPEN\nFetch the crate beyond the powered gate. Bring it back to the striped override plate before reusing the core.";
+                }
+                return "01  /  POWER THE WORKSHOP\nPick up the gold core and insert it into the purple Workshop Relay on the left. The gate opens while it has power.";
+            }
             if(!transferred) return "02  /  SHARE THE POWER\nThe shell stays finished. Move the SAME core to the Ribbon Conveyor.";
-            if(!blueprint) return "03  /  FIND THE OLD DRAWING\nPower the Break-time Chime to call Hush, then hold the archive plate with a crate.";
+            if(!blueprint)return inspectorLesson?"03  /  FIND THE OLD DRAWING\nYou have tried the Chime. Watch Hush's route, use crates as cover and leave a crate on the archive plate to reach the drawing.":"03  /  FIND THE OLD DRAWING\nPower the Break-time Chime to call Hush, then hold the archive plate with a crate.";
             if(!etched) return "04  /  FINISH YOUR OLD PROMISE\nBring the power core to the Engraving Table in Final Assembly.";
             if(!assembled) return "05  /  LIGHT THE WAY HOME\nKeep the assembly gate open with a crate. Move the core to the Lantern Press.";
             return "06  /  ONE LAST DELIVERY\nPick up the finished lantern and give it to Pip at the dispatch desk.";
@@ -96,7 +108,16 @@ public class FactoryGame : MonoBehaviour {
             case "etch": etched=true; Notify("THE PROMISE IS ENGRAVED / Move the core to the Lantern Press.",5);break;
             case "press": assembled=true; lantern.gameObject.SetActive(true); Say("PIP / OVER THE SPEAKER","Look at that. Every little crooked line, just like the drawing.","I'll be at dispatch. Shall we see who this one's for?");break;
         }
+        if(buttonHelper&&(id=="mould"||id=="ribbon"))buttonHelper.Celebrate();
+        if(pipHelper&&(id=="etch"||id=="press"))pipHelper.Celebrate();
         if(audioScore) audioScore.Chord();
+    }
+    public void TalkToButton(){
+        if(buttonHelper)buttonHelper.Celebrate();
+        if(!shell)Say("BUTTON / STORES","I've kept the old mould polished. Pip said the order might still be wanted someday.","The gold core is all we have left. When the workshop gate is held by a crate, we can borrow its power for the Moulding Table.");
+        else if(!transferred)Say("BUTTON / STORES","There it is! A real little shell, just like I remember.","The Ribbon Conveyor is across the room. Take the same core; your shell will stay finished.");
+        else if(!blueprint)Say("BUTTON / STORES","I tied the ribbon the way the child liked it. A little crooked. Never trim the ends.","Pip kept the old drawing in the archive. Hush is on safety duty there. He only wants the aisles clear.");
+        else Say("BUTTON / STORES","You remember who it was for, don't you?","We kept your drawing. You came back to finish it. I think that makes this a very good last shift.");
     }
     public void ReadDrawing(){
         if(blueprint){Say("YOUR OLD DRAWING","For the last one to leave. So the way home is bright, too.");return;}
@@ -141,7 +162,7 @@ public class FactoryGame : MonoBehaviour {
             GUI.Label(new Rect(100,345,520,110),"One old order. Three little ghosts.\nA promise you left here long ago.",body);
             GUI.Label(new Rect(100,477,510,85),"Explore a warm toy factory, share its last power core, and uncover the story behind an unfinished lantern.",small);
             if(GUI.Button(new Rect(100,610,330,58),"Begin the night shift",button))Begin();
-            GUI.Label(new Rect(100,690,510,100),"WASD  Walk    Mouse / arrows  Look    E  Use\nQ  Place    H  Hint    J  Journal    Esc  Pause\nEarly playable / v0.3 — timing not yet playtested",small);return;
+            GUI.Label(new Rect(100,690,510,100),"WASD  Walk    Mouse / arrows  Look    E  Use\nQ  Place    H  Hint    J  Journal    Esc  Pause\nEarly playable / v0.4 — timing not yet playtested",small);return;
         }
         if(ended){
             Panel(new Rect(40,80,570,h-160));GUI.Label(new Rect(75,110,500,40),"THE LAST ORDER / DELIVERED",heading);

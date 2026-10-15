@@ -9,7 +9,7 @@ public class BuildSmokeCheck : MonoBehaviour {
         Application.runInBackground=true;yield return null;
         if(capture){yield return Capture();yield break;}
         var g=FactoryGame.I;
-        if(!g||!g.player||!g.inspector||!g.lantern||!g.sharedCore||!FindFirstObjectByType<EndOfShift>()){Debug.LogError("PACKAGED_BUILD_FAIL / Missing serialized references");Application.Quit(1);yield break;}
+        if(!g||!g.player||!g.inspector||!g.lantern||!g.sharedCore||!FindFirstObjectByType<EndOfShift>()||!g.buttonHelper||!g.pipHelper||!g.workshopRelay){Debug.LogError("PACKAGED_BUILD_FAIL / Missing serialized references");Application.Quit(1);yield break;}
         g.Begin();while(g.Reading)g.Advance();g.ToggleJournal();
         if(!g.Frozen||Time.timeScale!=0){Debug.LogError("PACKAGED_BUILD_FAIL / Journal");Application.Quit(1);yield break;}
         g.ToggleJournal();yield return new WaitForSecondsRealtime(1);
@@ -26,6 +26,12 @@ public class BuildSmokeCheck : MonoBehaviour {
         Machine mould=null;foreach(var m in FindObjectsByType<Machine>(FindObjectsSortMode.None))if(m.machineId=="mould")mould=m;
         g.player.Pick(g.sharedCore);mould.Use(g.player);mould.Use(g.player);yield return new WaitForSecondsRealtime(.7f);
         ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"02-circuit-runtime.png"));yield return new WaitForSecondsRealtime(.7f);g.CloseCircuit();
+        g.shell=true;mould.done=true;mould.progress=mould.workSeconds;g.buttonHelper.Celebrate();g.player.Teleport(new Vector3(-3.4f,0,19),0);g.player.view.transform.LookAt(new Vector3(-5.7f,1.7f,20));
+        yield return new WaitForSecondsRealtime(.7f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"03-shell-and-helper-runtime.png"));yield return new WaitForSecondsRealtime(.7f);
+        g.transferred=true;g.blueprint=true;g.etched=true;foreach(var staged in FindObjectsByType<Machine>(FindObjectsSortMode.None))if(staged.machineId=="etch")staged.done=true;g.player.Teleport(new Vector3(-3.4f,0,49.4f),0);g.player.view.transform.LookAt(new Vector3(-5.7f,1.7f,50.8f));
+        yield return new WaitForSecondsRealtime(.7f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"04-engraved-lantern-runtime.png"));yield return new WaitForSecondsRealtime(.7f);
+        g.player.Teleport(new Vector3(2.6f,0,43.7f),0);g.player.view.transform.LookAt(new Vector3(2.6f,1.5f,44.9f));
+        yield return new WaitForSecondsRealtime(.7f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"04b-childhood-drawing-runtime.png"));yield return new WaitForSecondsRealtime(.7f);
         g.shell=true;g.transferred=true;g.inspectorLesson=true;g.blueprint=true;g.etched=true;g.assembled=true;
         g.player.Teleport(new Vector3(0,0,58.2f),0);g.lantern.gameObject.SetActive(true);g.player.Pick(g.lantern);g.Deliver();
         yield return new WaitForSecondsRealtime(13);

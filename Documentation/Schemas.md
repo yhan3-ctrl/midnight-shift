@@ -19,3 +19,5 @@ Evidence: CircuitGrid, Inspector, FactoryGame.ResetSection. Observe whether play
 Crate occlusion, a movable shared core, retained manufacturing progress and machine noise can combine into different local plans. Do not claim rich emergence until playtests record distinct successful strategies. The present factory progression is deliberately authored and ordered.
 
 Do not label ordinary success sounds as cybernetic balancing feedback. They communicate outcomes but are not evidence of an implemented negative-feedback balance loop.
+
+In v0.4, persistent worktop outputs also make production state visible: plain shell, ribbon, promise tag and light. The dynamic workshop objective follows the relay/override/core state. These cues support information access; player understanding still requires observation.

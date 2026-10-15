@@ -7,3 +7,5 @@ Current prototype uses original programmatic 3D geometry, a custom depth-tested 
 Course references provided by the user: Theory of Fun, Rules of Play, Fundamentals of Game Design, The Art of Game Design slide decks. Specific slide references are in Design-v1.zh.md. These files are course materials, not redistributable game assets, and are not copied into the game.
 
 No claim of human performance, hand-drawn art or external playtesting is made for generated material.
+
+v0.4: staged lantern meshes (ceramic ribs, brass handle, plum bow, handwritten tag), warm lantern light, helper gaze/wave/celebration and optional Button dialogue are original project work. No downloaded character, music, image or animation assets were added.

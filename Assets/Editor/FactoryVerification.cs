@@ -11,6 +11,7 @@ public static class FactoryVerification {
     [InitializeOnLoadMethod]
     static void ResumeAfterReload(){if(SessionState.GetBool("WillowVerification",false))EditorApplication.playModeStateChanged+=OnState;}
     public static void Run(){
+        File.WriteAllText("Work/playcheck.txt","RUNNING / current verification not yet complete");
         EditorSceneManager.OpenScene("Assets/Scenes/WillowWorks.unity");
         SessionState.SetBool("WillowVerification",true);
         EditorApplication.playModeStateChanged+=OnState;
@@ -38,7 +39,7 @@ public class FactoryPlaycheck : MonoBehaviour {
         yield return null;
         Application.runInBackground=true;Time.captureDeltaTime=1f/60;
         g=FactoryGame.I;p=g.player;
-        try{Check(g&&p&&g.inspector,"scene references survive serialization");Check(FindObjectsByType<Machine>(FindObjectsSortMode.None).Length==5,"five machines present");Check(FindObjectsByType<StoryPoint>(FindObjectsSortMode.None).Length==3,"story interaction components survive serialization");}
+        try{Check(g&&p&&g.inspector,"scene references survive serialization");Check(FindObjectsByType<Machine>(FindObjectsSortMode.None).Length==5,"five machines present");Check(FindObjectsByType<StoryPoint>(FindObjectsSortMode.None).Length==4,"story interaction components survive serialization");}
         catch(Exception e){Fail(e);yield break;}
         g.Begin();CloseDialogue();
         try{
@@ -65,7 +66,8 @@ public class FactoryPlaycheck : MonoBehaviour {
             var powerGate=gates.Single(x=>x.name=="Workshop power gate");
             var overrideCrate=crates.Single(x=>x.name=="Workshop override crate");overrideCrate.PlaceAt(powerGate.plate.position+Vector3.up*.885f);Physics.SyncTransforms();
             Check(powerGate.relay.gate==powerGate&&powerGate.relay.OverrideHeld,"relay identifies crate-supported access independently of core power");
-            Check(powerGate.Evaluate(),"crate override keeps workshop gate open without a core");overrideCrate.ResetHome();Physics.SyncTransforms();
+            Check(powerGate.Evaluate(),"crate override keeps workshop gate open without a core");
+            p.Teleport(new Vector3(0,0,15),0);Check(g.Objective.Contains("Moulding"),"objective advances from gate preparation to manufacturing once crate holds access");p.Teleport(new Vector3(0,0,-6),0);overrideCrate.ResetHome();Physics.SyncTransforms();
 
             var tutorialCrate=crates.Single(x=>x.name=="Foyer crate");p.Pick(tutorialCrate);p.Teleport(new Vector3(-4.8f,0,5.3f),0);Physics.SyncTransforms();p.TryPlace();
             Check(p.held==null&&Vector3.Distance(tutorialCrate.transform.position,foyer.plate.position+Vector3.up*.885f)<.05f&&foyer.Evaluate(),"near-edge crate placement snaps onto plate and opens gate");
@@ -79,11 +81,19 @@ public class FactoryPlaycheck : MonoBehaviour {
         var ribbon=machines.Single(x=>x.machineId=="ribbon");
         try{
             Check(g.shell,"mould completes using game update");
+            var shellDisplay=FindObjectsByType<LanternDisplay>(FindObjectsSortMode.None).Single(x=>x.station&&x.station.machineId=="mould");shellDisplay.Refresh();
+            Check(shellDisplay.Visible&&shellDisplay.Stage==1&&!shellDisplay.ribbon.gameObject.activeSelf,"mould produces a visible persistent plain shell");
+            Check(g.buttonHelper&&g.buttonHelper.Celebrations>0,"Button reacts to manufacturing completion");
+            g.TalkToButton();Check(g.Reading&&g.line.Contains("shell"),"optional Button dialogue responds to the current craft stage");
+            Check(g.buttonHelper.Celebrating&&g.Frozen,"optional helper conversation retains a celebration while world is paused");CloseDialogue();
             machines.Single(x=>x.machineId=="mould").Use(p);Check(p.held==core,"completed machine returns same core");
             ribbon.Use(p);ribbon.Use(p);SolveRouting(ribbon);Check(g.shell,"processed shell survives power transfer");
+            shellDisplay.Refresh();Check(shellDisplay.Visible,"visible shell survives removing and reusing its core");
         }catch(Exception e){Fail(e);yield break;}
         Time.timeScale=16;yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
         try{
+            var ribbonDisplay=FindObjectsByType<LanternDisplay>(FindObjectsSortMode.None).Single(x=>x.station&&x.station.machineId=="ribbon");ribbonDisplay.Refresh();
+            Check(ribbonDisplay.Visible&&ribbonDisplay.Stage==2&&ribbonDisplay.ribbon.gameObject.activeSelf&&!ribbonDisplay.inscription.gameObject.activeSelf,"ribbon output adds its bow without revealing engraving");
             Check(g.transferred&&gates.Single(x=>x.name=="Packaging gate").Evaluate(),"packaging door unlocks only after both jobs");
             var archive=gates.Single(x=>x.name=="Drawing cabinet");Check(!archive.Evaluate(),"archive drawing protected by physical gate");
             var crate=crates.Single(x=>x.name=="Archive crate");crate.transform.position=archive.plate.position+Vector3.up*.885f;Physics.SyncTransforms();Check(!archive.Evaluate(),"archive requires taught chime interaction as well as crate");
@@ -104,12 +114,17 @@ public class FactoryPlaycheck : MonoBehaviour {
         }catch(Exception e){Fail(e);yield break;}
         Time.timeScale=16;yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
         try{
-            Check(g.etched,"engraving completes");machines.Single(x=>x.machineId=="etch").Use(p);
+            Check(g.etched,"engraving completes");
+            var engraving=FindObjectsByType<LanternDisplay>(FindObjectsSortMode.None).Single(x=>x.station&&x.station.machineId=="etch");engraving.Refresh();
+            Check(engraving.Visible&&engraving.Stage==3&&engraving.inscription.gameObject.activeSelf&&!engraving.glow.gameObject.activeSelf,"engraving adds the promise tag before the light is finished");machines.Single(x=>x.machineId=="etch").Use(p);
             var press=machines.Single(x=>x.machineId=="press");press.Use(p);press.Use(p);SolveRouting(press);
         }catch(Exception e){Fail(e);yield break;}
         Time.timeScale=16;yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
         try{
-            Check(g.assembled&&g.lantern.gameObject.activeInHierarchy,"press creates physical lantern");p.Pick(g.lantern);g.Deliver();Check(g.ended&&p.held==null,"physical lantern delivery reaches ending");
+            Check(g.assembled&&g.lantern.gameObject.activeInHierarchy,"press creates physical lantern");
+            var finalDisplay=g.lantern.GetComponentInChildren<LanternDisplay>();finalDisplay.Refresh();
+            Check(finalDisplay.portable&&finalDisplay.Stage==4&&finalDisplay.glow.gameObject.activeSelf&&finalDisplay.warmth.enabled,"finished pickup carries ribbon, inscription and an actual warm light");
+            var pressDisplay=FindObjectsByType<LanternDisplay>(FindObjectsSortMode.None).Single(x=>x.station&&x.station.machineId=="press");pressDisplay.Refresh();Check(!pressDisplay.Visible,"press clears its workpiece when the one deliverable lantern is ready");p.Pick(g.lantern);g.Deliver();Check(g.ended&&p.held==null,"physical lantern delivery reaches ending");
             Check(FindObjectsByType<Pickup>(FindObjectsInactive.Include,FindObjectsSortMode.None).Count(x=>x.kind==Pickup.Kind.Core)==1,"one core throughout run; no duplication");
             File.WriteAllText("Work/playcheck.txt",$"PASS: {checks} engine integration checks.\nChecks use actual scene components and Update processing.\nThis is not an unassisted human playthrough or a timing validation.\n");Debug.Log("PLAYCHECK_PASS / "+checks);
         }catch(Exception e){Fail(e);yield break;}
@@ -126,6 +141,8 @@ public class FactoryPlaycheck : MonoBehaviour {
         for(int i=0;i<grid.turns.Length;i++)while(grid.turns[i]!=0)grid.Rotate(i);
         Check(grid.Solved,"authored circuit has a valid connected solution: "+machine.machineId);
         g.PowerCircuit();Check(g.activeCircuit==null&&machine.running,"connected circuit starts machine: "+machine.machineId);
+        if(machine.machineId=="mould"){var relay=g.workshopRelay;var crate=FindObjectsByType<Pickup>(FindObjectsSortMode.None).First(x=>x.kind==Pickup.Kind.Crate&&!x.carried);var position=crate.transform.position;crate.PlaceAt(relay.gate.plate.position+Vector3.up*.885f);p.Teleport(new Vector3(0,0,19),0);Physics.SyncTransforms();Check(g.Objective.Contains("TAKING SHAPE"),"running machine objective does not instruct the player to remove its core or reopen routing");crate.PlaceAt(position);}
+
     }
     void CloseDialogue(){for(int i=0;i<20&&g.Reading;i++)g.Advance();Time.timeScale=1;}
     void Check(bool ok,string what){if(!ok)throw new Exception(what);checks++;Debug.Log("CHECK_PASS / "+what);}

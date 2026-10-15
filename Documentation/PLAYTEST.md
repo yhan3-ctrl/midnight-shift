@@ -13,3 +13,5 @@ For each participant record:
 - Concrete observation or quote, resulting change and retest
 
 Engine integration checks are recorded separately in VALIDATION.md. They are not human playtests.
+
+For the v0.4 follow-up, also observe whether players notice the shell, bow and engraved tag; whether the held core leaves adequate floor visibility; whether the state-specific workshop objective reduces backtracking; and whether optional Button interaction strengthens the relationship without being mistaken for a mandatory step. Ask what changed after each machine, rather than suggesting the answer.

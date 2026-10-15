@@ -72,3 +72,18 @@ Updated-build native retest: the same near-edge Q placement now visibly aligned 
 Native operation completed both packaging machines and both routing boards, including recovering the core and maintaining access with the override crate. This was an informed agent's simulation of a newcomer, not a first-time human test. The session stopped at the archive approach. See FIRST-CONTACT-REVIEW.md for scope, confounds and unresolved findings.
 
 Observed and changed: removed recipient spoiler from title copy; reduced the held core's screen footprint; added explicit confirmation and accurate relay prompts for crate-supported access; moved a suspended notice out of the central approach. Visible manufacturing output and the complete native inspector/finale experience remain outstanding.
+
+## v0.4 / visible craft and helper response
+
+Addresses observations from the prior native simulated-first-contact review:
+- Added visible manufacturing stages so job completion has a physical result: shell, bow, engraved tag and light. Outputs persist when their core is removed; the Press hands off to one portable lantern.
+- Added optional context-dependent conversation with Button, a workshop welcome wave, gaze and completion celebration. Interaction is optional and does not extend the required route with waiting.
+- Replaced the repeated workshop objective with state-specific guidance for relay, crate override, core recovery and routing.
+
+Validation must check serialized references, stage visibility and retained outputs, optional dialogue, and the unchanged physical route. Staged screenshots may assess presentation but do not establish timing, fun, or human learning.
+
+Added an actual framed childhood sketch at the archive reveal. The running-machine objective explicitly says to leave the core in until completion; the post-Chime objective no longer implies Hush remains distracted forever.
+
+The first new validation attempt was stopped before flow checks to combine edits. A later attempt caught an unreliable animation-duration assertion under accelerated time. Replaced it with event-trigger and paused-state checks and explicitly froze gesture timers in reading/pause modes. The completed rerun passed 71 engine checks including the ending.
+
+After the 71-check engine rerun, complete deterministic physical traversal passed again (24 camera-ray interactions, four Q placements and four known circuit solutions; inspector movement disabled). Inspected actual runtime craft/drawing previews and successfully used Button's optional conversation in the native app. The release bundle passed integrity/signature checks.

@@ -69,3 +69,7 @@ stateDiagram-v2
 ```
 
 Partial work survives power removal. The workshop relay is a continuous power source for its gate, not a completed-work flag. A manual crate plate can take over while its core is reused elsewhere.
+
+## Helper presentation (v0.4)
+
+Button and Pip: Idle → WelcomeWave on first nearby active encounter; Idle/WelcomeWave → Celebrate on manufacturing success or optional Button interaction; animations return to Idle after their timers. Body bob, sleeve gestures and gaze use the same paused world clock. When Ended becomes true, helper relocation and gaze stop and EndOfShift controls the group departure. This helper presentation does not replace Hush's patrol FSM.

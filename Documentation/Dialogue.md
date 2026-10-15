@@ -55,3 +55,15 @@ Outside, the parade is just beginning.
 ## Direction and timing
 
 Reading pauses the world and advances at the player's pace. The note is revealed before the final task, so the player makes and delivers the lantern with its recipient in mind. Completion opens the exit and shows the three helpers walking into the village with the lantern. Optional reading must not be counted as mandatory gameplay length. No voiced performance is currently included.
+
+## Button / optional conversation (v0.4)
+
+Before the shell: “I've kept the old mould polished. Pip said the order might still be wanted someday.” Button explains that the gate's power can be borrowed once a crate holds access.
+
+After the shell: “There it is! A real little shell, just like I remember.” Button directs the player to Ribbon using the same core.
+
+After Ribbon: “I tied the ribbon the way the child liked it. A little crooked. Never trim the ends.” Button points toward the archive and describes Hush as wanting clear aisles.
+
+After the drawing: “We kept your drawing. You came back to finish it. I think that makes this a very good last shift.”
+
+These conversations are optional and use the ordinary paused reading mode.

@@ -4,13 +4,13 @@ Willow Works 的万圣节最后一班。Unity 6.6 / 6000.6.5f1 / Built-in Render
 
 ## 当前版本
 
-v0.3：可玩机制与故事原型。包含四个从教学到综合运用的线路谜题。当前不视为最终课程提交版。未完成陌生玩家试玩，不能声称已达到 5–10 分钟或已验证学习成效。
+v0.4：可玩机制与故事原型。包含四个从教学到综合运用的线路谜题、可见的灯笼制作阶段，以及可选的 Button 对话和幽灵回应。当前不视为最终课程提交版。未完成陌生玩家试玩，不能声称已达到 5–10 分钟或已验证学习成效。
 
 ## 打开游戏
 
 双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift.app`。
 
-源文件仍在桌面。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.3.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
+源文件仍在桌面。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.4.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
 
 编辑项目：Unity Hub → Projects → Add → Add project from disk → 选择整个 `MidnightShift` 文件夹。打开后在 Project 面板双击 `Assets/Scenes/WillowWorks.unity`，再按编辑器上方 Play。
 

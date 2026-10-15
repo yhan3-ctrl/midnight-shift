@@ -86,3 +86,13 @@ Emergence remains a design hypothesis. Do not claim emergent depth until differe
 Engine integration checks exercise serialized scene references and actual components for power transfer, gate conditions, job progression, inspector noise, retries and delivery. They place objects and accelerate time deliberately. They do not prove unaided navigation, time-to-completion, music quality, fun or learning. Record real player observations before claiming any of those.
 
 Crate placement has a 1.35-unit horizontal assist around a pressure plate at the same floor level. Placement still rejects solid obstructions. The opening objective describes the foyer crate before introducing the workshop power problem.
+
+## v0.4 / visible craft and responsive helpers
+
+Manufacturing now has a visible object on each relevant worktop. Moulding forms a plain pumpkin shell as processing advances; its output remains when power is removed. Ribbon displays the shell with a plum bow when finished. Engraving adds a small handwritten promise tag after the drawing is found. The Press displays the engraved unlit shell during processing, then clears its display when the sole portable lantern appears on its pedestal. Worktop displays have no pickup, collider or independent progression flag. The final pickup includes bow, tag, lit eyes/smile and warm point light.
+
+Button moves from the foyer to the Moulding work area after the player enters Packaging. Nearby helpers orient toward the player and wave once; Button celebrates completed Packaging jobs. Talking to Button is optional, pauses the world through the normal dialogue mode, and responds to the current manufacturing/story state. It introduces no gate or required wait. During the ending, helper behaviour yields to the authored departure sequence.
+
+Workshop objectives distinguish initial relay power, bringing back the override crate, retrieving the core and using the Moulding Table. These are instructions about current mechanics, not extra tasks.
+
+The archive now contains a framed childlike line drawing of a pumpkin lantern and small helper, in addition to its readable reverse-side note. It is the same ordinary E interaction and has no extra collectible requirement.
