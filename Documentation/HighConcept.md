@@ -10,7 +10,9 @@ A single-player, first-person 3D environmental puzzle game with gentle stealth. 
 Finishing a practical job becomes a personal act of care. The player's childhood drawing reveals that the last order was a gift for the helpers themselves. The player learns this before assembling and physically delivering the lantern.
 
 ## Learning target
-Plan and revise a sequence of actions under shared-resource constraints. Observe which outputs persist without power and which routes depend on a continuously held condition. Predict a patrol and use environmental occlusion or a machine's sound to create an opportunity to cross.
+Plan and revise a sequence of actions under shared-resource constraints. Distinguish completed outputs that persist without power from access that depends on a continuously held condition. Read reciprocal circuit connections, route through required contacts and split one supply between outlets. These are the abilities directly exercised by the required progression.
+
+Patrol prediction, placed-crate occlusion and machine-sound distraction are supported strategies. A fast player may escape pursuit without deliberately using all of them, so successful completion alone does not demonstrate mastery of those strategies.
 
 These are intended learning outcomes. Their necessity and effectiveness must be evaluated against real player behaviour.
 
@@ -18,4 +20,4 @@ These are intended learning outcomes. Their necessity and effectiveness must be 
 Four authored circuit boards progress from one route to branching supply and required intermediate contacts. Four connected factory areas move from safe crate teaching to shared power, archive traversal and final assembly. A repeating original music-box melody gains plucked accompaniment as work resumes. Warm teal, brass, autumn orange and gentle ghosts establish Halloween without jump scares.
 
 ## Scope and status
-Unity 6.6, 3D, keyboard/mouse. Intended platforms: Windows, macOS, Linux. Target first-run duration: 7–9 minutes, not yet measured. Version 0.3 is an early playable, not a finished or playtested submission. See GameScript.md for implemented rules and current gaps.
+Unity 6.6, 3D, keyboard/mouse. Intended platforms: Windows, macOS, Linux. Target first-run duration: 7–9 minutes, not yet measured. Version 0.5 has completed a developer-operated native playthrough with the inspector active, including one safety retry and the animated ending. Independent first-time human tests, audio listening and cross-platform execution remain pending. See GameScript.md for implemented rules and current gaps.

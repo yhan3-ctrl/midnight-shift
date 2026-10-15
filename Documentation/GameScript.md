@@ -1,16 +1,16 @@
-# Game Script / v0.3 implemented rules
+# Game Script / v0.5 implemented rules
 
 This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. A future final report must update this document to match its submitted version.
 
 ## Player role, controls and modes
 
-The player is Aunt May's visitor helping magical toy-factory workers finish a childhood order. Exploration/puzzle play uses a first-person camera, WASD movement at 4.1 units/s, mouse/arrow-key look, E interaction, Q placement, H hint, J journal and Esc pause. Circuit routing has its own mode with clickable tiles, arrow-key selection, Space rotation, Return activation and Esc close. No jumping, combat, health pool or global time limit. Interactions use the first collider on a camera ray, maximum distance 3.1 units.
+The player is Aunt May's visitor helping magical toy-factory workers finish a childhood order. Exploration/puzzle play uses a first-person camera, WASD movement at 4.1 units/s, mouse/arrow-key look (K toggles arrow-only look), E interaction, Q placement, H hint, J journal and Esc pause. Circuit routing has its own mode with clickable tiles, arrow-key selection, Space rotation, Return activation and Esc close. No jumping, combat, health pool or global time limit. Interactions use the first collider on a camera ray, maximum distance 3.1 units.
 
 Exploration permits walking, looking, carrying and interacting. Reading/dialogue restricts locomotion and freezes world simulation; Space, Return or the visible button advances. The journal freezes simulation and displays the current task, rules and discovered story, then restores the previous carrying state. Pause freezes simulation and offers music/effects/sensitivity sliders, resume and restart. The title screen begins the night; the ending offers restart. Reading and pause are not secretly timed hazards.
 
 ## Items and placement
 
-One item can be held at a time. A held item has its colliders disabled and follows the carry pose. Carrying does not reduce movement speed. Q attempts placement 1.5 units ahead, using a downward surface query. A level surface and clear volume are required. Failed placement retains the item and explains the failure. No throwing or item destruction.
+One item can be held at a time. A held item has its colliders disabled and follows the carry pose. Carrying does not reduce movement speed. Q attempts placement 1.5 units ahead, using a downward surface query. A floor-level surface (height at most 0.25 units), clear volume and separation from the player are required. Raised worktops and shelf tops are rejected. A crate must remain at least 1 unit horizontally from the player after plate assistance (0.65 for other pickups). Failed placement retains the item and explains the failure. No throwing or item destruction.
 
 Crates measure 1.2 by 1.65 by 1.2 units. They appear at 65% scale while held, below the view centre, and return to full scale on valid placement. Crates hold pressure plates and block inspector sight when placed. There is one reusable power core. A lantern exists only after final pressing. No inventory consumption or random drops.
 
@@ -55,7 +55,7 @@ Hush is a safety inspector, not a lethal enemy. His four patrol waypoints form a
 
 Continuous visibility fills alert over 0.95 seconds. Alert pauses patrol and faces the player. Full alert begins Approach at 2.8 units/s. Lost sight begins Search of the last seen position; search lasts 4 seconds, then Return. Sounds initiate Investigate at 1.8 units/s with 5 seconds at the destination, then Return. The destination is a walkable point 1.6 units in front of the sounding machine, not the occupied centre of its cabinet. New sound cannot cancel Alert or Approach. Movement checks world obstacles and attempts a lateral detour; complex navigation still needs gameplay evaluation.
 
-Within 1.1 units of the detected player, a safety retry moves the player to the current region checkpoint (archive z = 31.7; assembly z = 47.2), resets that region’s crates and the inspector, and releases the held item. A held core is recovered beside the local checkpoint, avoiding a long return trip. Finished jobs and the story reveal remain complete. After a safety reset or a change of duty, 2.5 game seconds of detection grace allow the player to reorient. No damage, jump scare or global restart occurs. The hint and message explain the retry. The notebook also names the current location or occupied machine of the shared core, reducing accidental backtracking.
+Within 1.1 units of the detected player, a safety retry moves the player to the current region checkpoint (archive z = 31.7; assembly z = 47.2), resets that region’s crates and the inspector, and releases the held item. A held core is recovered beside the local checkpoint, avoiding a long return trip. Finished jobs and the story reveal remain complete. After a safety reset or a change of duty, 2.5 game seconds of detection grace allow the player to reorient. No damage, jump scare or global restart occurs. The retry opens a two-line dialogue that freezes the world until acknowledged and explains the local recovery. The notebook also names the current location or occupied machine of the shared core, reducing accidental backtracking.
 
 ## Story progression and ending
 
@@ -81,7 +81,13 @@ Systems of Information: the circuit’s lit connections and outlet/contact count
 Systems of Uncertainty: outcomes depend on the player's incomplete layout knowledge, sequence and traversal timing, without random inspector detection. See slides 68–84.
 Emergence remains a design hypothesis. Do not claim emergent depth until different viable player strategies are observed.
 
-## Current validation limits
+## Learning claims and validation limits
+
+Required progression exercises holding a door condition while reusing the sole core, preserving finished work, and completing reciprocal, contact-constrained and branching circuits. Crate occlusion and deliberate patrol prediction are optional strategies: the developer native run escaped some detection through movement. Therefore completion does not prove that a player learned occlusion, used distraction strategically, or predicted the patrol. First-time testing must observe and ask about those actions before the report claims them as demonstrated learning.
+
+A complete native developer run reached the ending with the inspector active and one safety retry; see NATIVE-FULL-REVIEW-v0.5.md. It establishes recoverable progression under those tested actions, while the long interruption invalidates its duration for grading.
+
+## Engine check limits
 
 Engine integration checks exercise serialized scene references and actual components for power transfer, gate conditions, job progression, inspector noise, retries and delivery. They place objects and accelerate time deliberately. They do not prove unaided navigation, time-to-completion, music quality, fun or learning. Record real player observations before claiming any of those.
 

@@ -41,3 +41,5 @@ The v0.4 Mac ZIP passed archive integrity and strict signature verification afte
 ## v0.5 complete native follow-up
 
 79 engine checks and deterministic geometry traversal passed. A subsequent native run with corrected WASD-only movement completed from title to delivery, with inspector active, one safety retry, all four circuit boards, story reveal and full departure animation. See NATIVE-FULL-REVIEW-v0.5.md for limitations and evidence. This supersedes the earlier “complete native run pending” status, but does not establish first-time human duration, emotional response or audio quality. A long interruption invalidates the native session's timing; raw evidence is retained without relabeling it as human feedback.
+
+Final v0.5 packaging (2026-10-15): successful Unity build, local strict deep signature verification, packaged startup smoke check, ZIP integrity check and strict signature verification after extraction all passed. Universal executable includes x86_64 and arm64; execution on this host covers arm64 only. ZIP SHA-256: `5cae5aa8d0ae1d5864de841efb8f48966068ed165f6a55a948ca00fb411393a4`.
