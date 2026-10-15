@@ -62,6 +62,11 @@ public class FactoryPlaycheck : MonoBehaviour {
             p.Teleport(new Vector3(0,0,-6),0);Physics.SyncTransforms();
             Check(!foyer.Evaluate(),"foyer initially blocks progression");
             Check(g.Objective.Contains("OPEN THE FIRST DOOR"),"foyer objective teaches the immediate task before power mechanics");
+            var powerGate=gates.Single(x=>x.name=="Workshop power gate");
+            var overrideCrate=crates.Single(x=>x.name=="Workshop override crate");overrideCrate.PlaceAt(powerGate.plate.position+Vector3.up*.885f);Physics.SyncTransforms();
+            Check(powerGate.relay.gate==powerGate&&powerGate.relay.OverrideHeld,"relay identifies crate-supported access independently of core power");
+            Check(powerGate.Evaluate(),"crate override keeps workshop gate open without a core");overrideCrate.ResetHome();Physics.SyncTransforms();
+
             var tutorialCrate=crates.Single(x=>x.name=="Foyer crate");p.Pick(tutorialCrate);p.Teleport(new Vector3(-4.8f,0,5.3f),0);Physics.SyncTransforms();p.TryPlace();
             Check(p.held==null&&Vector3.Distance(tutorialCrate.transform.position,foyer.plate.position+Vector3.up*.885f)<.05f&&foyer.Evaluate(),"near-edge crate placement snaps onto plate and opens gate");
             p.Teleport(new Vector3(0,0,-6),0);

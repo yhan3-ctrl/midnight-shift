@@ -31,6 +31,7 @@ public class PlayerMotor : MonoBehaviour {
     public bool Pick(Pickup item){
         if(held){FactoryGame.I.Notify("Your hands are full. Place what you're carrying first.");return false;}
         held=item;item.AttachTo(hand);item.carried=true;if(item.kind==Pickup.Kind.Crate){item.transform.localScale*=.65f;item.transform.localPosition=new Vector3(0,-.3f,0);}
+        if(item.kind==Pickup.Kind.Core){item.transform.localScale*=.5f;item.transform.localPosition=new Vector3(.1f,-.25f,0);}
         FactoryGame.I.audioScore.Tick(660);return true;
     }
     public void TryPlace(){

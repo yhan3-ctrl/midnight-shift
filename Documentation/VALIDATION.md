@@ -4,7 +4,7 @@ Build: Unity 6000.6.5f1, macOS, 2026-10-14 local project session. Evidence descr
 
 | Check | Result | Limits |
 |---|---|---|
-| Saved-scene integration | 58 checks passed, including animated ending | Exercises components, not independent human understanding |
+| Saved-scene integration | 60 checks passed, including animated ending | Exercises components, not independent human understanding |
 | Physical traversal | Reached delivery/ending; 24 camera-ray interactions, 4 Q placements, 4 circuits | Inspector locomotion disabled; accelerated; known circuit solutions |
 | Patrol and safety rules | Physics vision, crate occlusion, carried collider, investigation, local reset/grace checked separately | Uninterrupted native evasion difficulty still unverified |
 | Premature machine use | Sole core remains recoverable when prerequisites absent | Not a guarantee against every possible interaction sequence |
@@ -26,3 +26,5 @@ Source test tools: Assets/Editor/FactoryVerification.cs, FactoryNavigation.cs, F
 - GitHub remote history, required collaborator, Box distribution and Blackboard submission.
 
 No human names, feedback or successful first-time durations have been invented.
+
+A subsequent simulated-first-contact native session completed both packaging machines and their routing boards. It stopped at the archive approach. See FIRST-CONTACT-REVIEW.md; no complete native new-player run is claimed.

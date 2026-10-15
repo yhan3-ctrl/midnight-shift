@@ -3,6 +3,15 @@ namespace LastLantern {
 public class FactoryGate : MonoBehaviour {
     public enum Rule { Plate, PowerOrPlate, Packaging, Drawing }
     public bool requireLesson; public Rule rule; public GridRelay relay; public Transform panel,plate; public TextMesh label; public Vector3 closedPosition; public bool isOpen;
+    public bool CrateHoldsPlate {
+        get {
+            if(!plate)return false;
+            foreach(var c in Physics.OverlapBox(plate.position+Vector3.up*.65f,new Vector3(.86f,.7f,.86f),Quaternion.identity,~0,QueryTriggerInteraction.Ignore)){
+                var item=c.GetComponentInParent<Pickup>();if(item&&item.kind==Pickup.Kind.Crate&&!item.carried)return true;
+            }
+            return false;
+        }
+    }
     public bool Evaluate(){
         if(requireLesson&&(!FactoryGame.I||!FactoryGame.I.inspectorLesson))return false;
         if(rule==Rule.Packaging)return FactoryGame.I&&FactoryGame.I.shell&&FactoryGame.I.transferred;

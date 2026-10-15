@@ -139,7 +139,7 @@ public class FactoryGame : MonoBehaviour {
             Panel(new Rect(65,80,640,h-160)); GUI.Label(new Rect(100,110,560,30),"A HALLOWEEN NIGHT AT WILLOW WORKS",heading);
             GUI.Label(new Rect(98,172,560,140),"MIDNIGHT SHIFT\nThe Last Lantern",title);
             GUI.Label(new Rect(100,345,520,110),"One old order. Three little ghosts.\nA promise you left here long ago.",body);
-            GUI.Label(new Rect(100,477,510,85),"Explore a warm toy factory, share its last power core, and make a light for the ones who stayed late.",small);
+            GUI.Label(new Rect(100,477,510,85),"Explore a warm toy factory, share its last power core, and uncover the story behind an unfinished lantern.",small);
             if(GUI.Button(new Rect(100,610,330,58),"Begin the night shift",button))Begin();
             GUI.Label(new Rect(100,690,510,100),"WASD  Walk    Mouse / arrows  Look    E  Use\nQ  Place    H  Hint    J  Journal    Esc  Pause\nEarly playable / v0.3 — timing not yet playtested",small);return;
         }

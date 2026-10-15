@@ -51,13 +51,13 @@ public static class FactoryBuild {
         RoomTitle("02 / PACKAGING",new Vector3(0,3.25f,28.7f));
         game.sharedCore=Core(new Vector3(0,.6f,16));
         var relayGate=Gate("Workshop power gate",18,FactoryGate.Rule.PowerOrPlate,new Vector3(4.8f,.05f,16));
-        relayGate.relay=Relay(new Vector3(-5.4f,0,15.3f));
+        relayGate.relay=Relay(new Vector3(-5.4f,0,15.3f));relayGate.relay.gate=relayGate;
         Crate("Workshop override crate",new Vector3(5,.61f,20));
         Board("POWER OPENS THE GATE\nA CRATE KEEPS IT OPEN WITHOUT POWER\nBRING THE CRATE BACK, THEN REUSE THE CORE",new Vector3(5.4f,2.3f,17.5f),4.2f);
         MachineAt("mould","MOULDING TABLE",new Vector3(-5.4f,0,20),"1 / MAKE THE SHELL");
         MachineAt("ribbon","RIBBON CONVEYOR",new Vector3(5.4f,0,25),"2 / SEND IT TO ASSEMBLY");
         Gate("Packaging gate",30,FactoryGate.Rule.Packaging,Vector3.zero);
-        Board("ONE CORE / TWO JOBS\nFINISHED WORK STAYS FINISHED\nE TO REMOVE A CORE AFTER A JOB",new Vector3(0,1.8f,27.8f),3.2f);
+        Board("ONE CORE / TWO JOBS\nFINISHED WORK STAYS FINISHED\nE TO REMOVE A CORE AFTER A JOB",new Vector3(-6.5f,2.4f,28.5f),3.2f);
         Conveyor(new Vector3(0,.75f,23),6);
         // Archive: a safe observation alcove introduces Hush without a surprise attack.
         RoomTitle("03 / THE ARCHIVE",new Vector3(0,3.25f,44.8f));

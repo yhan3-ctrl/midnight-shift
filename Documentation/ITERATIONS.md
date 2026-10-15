@@ -66,3 +66,9 @@ Changes from this observation:
 The deterministic full route and inspector checks remain separate from the native UI inspection. Native uninterrupted evasion and a first-time player's duration still need to be observed.
 
 Updated-build native retest: the same near-edge Q placement now visibly aligned the crate on the plate and opened the foyer gate. Traversal through the opening switched the HUD to the workshop objective. Low-core pickup also succeeded. Full uninterrupted native traversal remains unverified.
+
+## Simulated first-contact review
+
+Native operation completed both packaging machines and both routing boards, including recovering the core and maintaining access with the override crate. This was an informed agent's simulation of a newcomer, not a first-time human test. The session stopped at the archive approach. See FIRST-CONTACT-REVIEW.md for scope, confounds and unresolved findings.
+
+Observed and changed: removed recipient spoiler from title copy; reduced the held core's screen footprint; added explicit confirmation and accurate relay prompts for crate-supported access; moved a suspended notice out of the central approach. Visible manufacturing output and the complete native inspector/finale experience remain outstanding.
