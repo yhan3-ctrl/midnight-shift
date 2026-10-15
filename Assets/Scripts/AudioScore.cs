@@ -2,12 +2,12 @@ using UnityEngine;
 namespace LastLantern {
 // Original synthesized score. No external recordings or licensed samples.
 public class AudioScore : MonoBehaviour {
-    AudioSource music,effects; AudioClip[] arrangements; AudioClip tick,chord; int current=-1;
+    AudioSource music,effects; AudioClip[] arrangements; AudioClip tick,chord,step; int current=-1;
     void Awake(){
         music=gameObject.AddComponent<AudioSource>();music.loop=true;music.spatialBlend=0;
         effects=gameObject.AddComponent<AudioSource>();effects.spatialBlend=0;
         arrangements=new AudioClip[3];for(int i=0;i<3;i++)arrangements[i]=MakeScore(i);
-        tick=Tone(440,.12f);chord=MakeChord();
+        tick=Tone(440,.12f);step=MakeFootstep();chord=MakeChord();
     }
     void Update(){
         if(!FactoryGame.I)return;var g=FactoryGame.I;int next=g.ended||g.assembled?2:g.shell?1:0;
@@ -15,8 +15,14 @@ public class AudioScore : MonoBehaviour {
         music.volume=g.musicVolume*(g.Reading?.48f:1);effects.volume=g.effectsVolume;
         if(g.paused){if(music.isPlaying)music.Pause();}else if(!music.isPlaying)music.UnPause();
     }
+    public void Step(){effects.pitch=.9f+Mathf.Sin(Time.time*7)*.08f;effects.PlayOneShot(step,.23f);}
     public void Tick(float hz){effects.pitch=hz/440;effects.PlayOneShot(tick,.5f);}
     public void Chord(){effects.pitch=1;effects.PlayOneShot(chord,.65f);}
+    static AudioClip MakeFootstep(){
+        int sr=22050;var d=new float[(int)(sr*.12f)];uint seed=3197;float low=0;
+        for(int i=0;i<d.Length;i++){seed=seed*1664525+1013904223;float noise=((seed>>8)/(float)0xFFFFFF)*2-1;low=low*.82f+noise*.18f;float t=i/(float)sr;d[i]=(low*.9f+Mathf.Sin(2*Mathf.PI*78*t)*.3f)*Mathf.Exp(-t*42)*Mathf.Min(1,t/.004f);}
+        var c=AudioClip.Create("Soft wooden footstep",d.Length,1,sr,false);c.SetData(d,0);return c;
+    }
     static AudioClip Tone(float hz,float seconds){int sr=22050;var data=new float[(int)(sr*seconds)];for(int i=0;i<data.Length;i++){float t=i/(float)sr;data[i]=Mathf.Sin(2*Mathf.PI*hz*t)*Mathf.Exp(-t*25)*.25f;}var c=AudioClip.Create("Soft interaction",data.Length,1,sr,false);c.SetData(data,0);return c;}
     static AudioClip MakeChord(){int sr=22050;var d=new float[sr*2];foreach(float hz in new[]{261.63f,329.63f,392f,523.25f})for(int i=0;i<d.Length;i++){float t=i/(float)sr;d[i]+=Mathf.Sin(2*Mathf.PI*hz*t)*Mathf.Exp(-t*3)*.085f;}var c=AudioClip.Create("Lantern chord",d.Length,1,sr,false);c.SetData(d,0);return c;}
     static AudioClip MakeScore(int layer){

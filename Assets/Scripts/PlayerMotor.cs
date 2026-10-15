@@ -3,7 +3,7 @@ namespace LastLantern {
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMotor : MonoBehaviour {
     public Camera view; public Transform hand; public Pickup held; public Interactable focus;
-    public float speed=4.1f; float pitch,fall,bob; CharacterController cc;
+    public float speed=4.1f; float pitch,fall,bob,stepClock; CharacterController cc;
     void Awake(){cc=GetComponent<CharacterController>();}
     void Update(){
         if(!FactoryGame.I||FactoryGame.I.Frozen){focus=null;return;}
@@ -14,29 +14,34 @@ public class PlayerMotor : MonoBehaviour {
         fall=cc.isGrounded?-2:fall-22*Time.deltaTime;
         cc.Move((transform.TransformDirection(move)*speed+Vector3.up*fall)*Time.deltaTime);
         bob+=move.magnitude*Time.deltaTime*6;
+        stepClock+=move.magnitude*Time.deltaTime;if(stepClock>.48f&&cc.isGrounded&&cc.velocity.magnitude>.2f){stepClock=0;FactoryGame.I.audioScore.Step();}
         hand.localPosition=Vector3.Lerp(hand.localPosition,new Vector3(.25f,-.33f+Mathf.Sin(bob)*.012f,.8f),Time.deltaTime*12);
-        focus=null;
-        if(Physics.Raycast(view.transform.position,view.transform.forward,out RaycastHit hit,3.1f,~0,QueryTriggerInteraction.Ignore))focus=hit.collider.GetComponentInParent<Interactable>();
-        if(Input.GetKeyDown(KeyCode.E)&&focus)focus.Use(this);
+        ScanFocus();
+        if(Input.GetKeyDown(KeyCode.E))TryInteract();
         if(Input.GetKeyDown(KeyCode.Q)&&held)TryPlace();
         if(transform.position.y < -4)Teleport(new Vector3(0,0,-6),0);
     }
+    public void ScanFocus(){
+        focus=null;
+        if(Physics.Raycast(view.transform.position,view.transform.forward,out RaycastHit hit,3.1f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))focus=hit.collider.GetComponentInParent<Interactable>();
+    }
+    public bool TryInteract(){ScanFocus();if(!focus)return false;focus.Use(this);return true;}
     public bool Pick(Pickup item){
         if(held){FactoryGame.I.Notify("Your hands are full. Place what you're carrying first.");return false;}
-        held=item;item.carried=true; item.SetColliders(false);item.transform.SetParent(hand);item.transform.localPosition=Vector3.zero;item.transform.localRotation=Quaternion.identity;
+        held=item;item.AttachTo(hand);item.carried=true;if(item.kind==Pickup.Kind.Crate){item.transform.localScale*=.65f;item.transform.localPosition=new Vector3(0,-.3f,0);}
         FactoryGame.I.audioScore.Tick(660);return true;
     }
     public void TryPlace(){
         Vector3 ahead=transform.position+transform.forward*1.5f+Vector3.up*2;
-        if(!Physics.Raycast(ahead,Vector3.down,out RaycastHit ground,3.5f,~0,QueryTriggerInteraction.Ignore)||ground.normal.y<.85f){FactoryGame.I.Notify("Find a clear, level surface to place it.");return;}
-        Vector3 at=ground.point+Vector3.up*(held.kind==Pickup.Kind.Crate?.61f:.43f);
-        Vector3 half=held.kind==Pickup.Kind.Crate?new Vector3(.58f,.58f,.58f):Vector3.one*.25f;
+        if(!Physics.Raycast(ahead,Vector3.down,out RaycastHit ground,3.5f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore)||ground.normal.y<.85f){FactoryGame.I.Notify("Find a clear, level surface to place it.");return;}
+        Vector3 at=ground.point+Vector3.up*(held.kind==Pickup.Kind.Crate?.835f:.43f);
+        Vector3 half=held.kind==Pickup.Kind.Crate?new Vector3(.58f,.8f,.58f):Vector3.one*.25f;
         foreach(var c in Physics.OverlapBox(at,half,Quaternion.identity,~0,QueryTriggerInteraction.Ignore)){
             if(c.transform.IsChildOf(transform)||c.transform.IsChildOf(held.transform))continue;
             if(c.bounds.max.y<=ground.point.y+.08f)continue;
             FactoryGame.I.Notify("There's not enough room here. Try a clear patch of floor.");return;
         }
-        held.transform.SetParent(null);held.transform.position=at;held.transform.rotation=Quaternion.identity;held.carried=false;held.SetColliders(true);held=null;FactoryGame.I.audioScore.Tick(330);
+        held.PlaceAt(at);held=null;FactoryGame.I.audioScore.Tick(330);
         Physics.SyncTransforms();
     }
     public void PutBackHeld(){if(!held)return;held.ResetHome();held=null;}
