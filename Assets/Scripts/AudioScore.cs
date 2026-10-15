@@ -2,22 +2,47 @@ using UnityEngine;
 namespace LastLantern {
 // Original synthesized score. No external recordings or licensed samples.
 public class AudioScore : MonoBehaviour {
-    AudioSource music,effects; AudioClip[] arrangements; AudioClip tick,chord,step; int current=-1;
+    AudioSource music,effects;AudioClip[] arrangements;AudioClip tick,chord,step;int current=-1;
+    bool menuPaused,rebuildPending,silentReview;float nextRecovery;public int Recoveries {get;private set;}
+    public bool MusicPlaying=>music&&music.isPlaying;
     void Awake(){
-        music=gameObject.AddComponent<AudioSource>();music.loop=true;music.spatialBlend=0;
-        effects=gameObject.AddComponent<AudioSource>();effects.spatialBlend=0;
+        var args=System.Environment.GetCommandLineArgs();silentReview=Application.isBatchMode||System.Array.IndexOf(args,"--capture-preview")>=0||System.Array.IndexOf(args,"--verify-build")>=0||System.Array.IndexOf(args,"--agent-playtest")>=0;
+        music=gameObject.AddComponent<AudioSource>();music.loop=true;music.spatialBlend=0;music.playOnAwake=false;music.ignoreListenerPause=true;
+        effects=gameObject.AddComponent<AudioSource>();effects.spatialBlend=0;effects.playOnAwake=false;effects.ignoreListenerPause=true;
+        music.mute=silentReview;effects.mute=silentReview;
+        BuildClips();AudioSettings.OnAudioConfigurationChanged+=ConfigurationChanged;
+    }
+    void BuildClips(){
+        if(arrangements!=null)foreach(var clip in arrangements)if(clip)Destroy(clip);
+        if(tick)Destroy(tick);if(step)Destroy(step);if(chord)Destroy(chord);
         arrangements=new AudioClip[3];for(int i=0;i<3;i++)arrangements[i]=MakeScore(i);
-        tick=Tone(440,.12f);step=MakeFootstep();chord=MakeChord();
+        tick=Tone(440,.12f);step=MakeFootstep();chord=MakeChord();current=-1;
+    }
+    void ConfigurationChanged(bool changed){rebuildPending=true;nextRecovery=Time.unscaledTime+.25f;}
+    void OnApplicationFocus(bool focus){if(focus)nextRecovery=Time.unscaledTime+.1f;}
+    public void RestoreAudio(bool test=false){
+        AudioListener.pause=false;AudioListener.volume=1;
+        if(rebuildPending){BuildClips();rebuildPending=false;}
+        var g=FactoryGame.I;int next=g&&(g.ended||g.assembled)?2:g&&g.shell?1:0;
+        if(current!=next||music.clip!=arrangements[next]){current=next;music.clip=arrangements[next];}
+        music.enabled=true;music.mute=silentReview;effects.mute=silentReview;
+        if(!music.isPlaying){if(menuPaused){music.UnPause();menuPaused=false;}if(!music.isPlaying)music.Play();Recoveries++;}
+        if(test){effects.volume=g?Mathf.Max(g.effectsVolume,.4f):.65f;effects.pitch=1;effects.PlayOneShot(chord,.65f);}
+        nextRecovery=Time.unscaledTime+1;
     }
     void Update(){
-        if(!FactoryGame.I)return;var g=FactoryGame.I;int next=g.ended||g.assembled?2:g.shell?1:0;
-        if(next!=current){float t=music.isPlaying?music.time:0;current=next;music.clip=arrangements[next];music.time=t%music.clip.length;music.Play();}
-        music.volume=g.musicVolume*(g.Reading?.48f:1);effects.volume=g.effectsVolume;
-        if(g.paused){if(music.isPlaying)music.Pause();}else if(!music.isPlaying)music.UnPause();
+        var g=FactoryGame.I;if(!g)return;
+        if(rebuildPending&&Time.unscaledTime>=nextRecovery)RestoreAudio();
+        int next=g.ended||g.assembled?2:g.shell?1:0;
+        if(next!=current){float t=music.isPlaying?music.time:0;current=next;music.clip=arrangements[next];music.time=t%music.clip.length;menuPaused=false;music.Play();}
+        music.volume=g.musicVolume*(g.Reading?.65f:1);effects.volume=g.effectsVolume;
+        if(g.paused){if(music.isPlaying){music.Pause();menuPaused=true;}}
+        else if(!music.isPlaying&&Time.unscaledTime>=nextRecovery)RestoreAudio();
     }
     public void Step(){effects.pitch=.9f+Mathf.Sin(Time.time*7)*.08f;effects.PlayOneShot(step,.23f);}
     public void Tick(float hz){effects.pitch=hz/440;effects.PlayOneShot(tick,.5f);}
     public void Chord(){effects.pitch=1;effects.PlayOneShot(chord,.65f);}
+    void OnDestroy(){AudioSettings.OnAudioConfigurationChanged-=ConfigurationChanged;}
     static AudioClip MakeFootstep(){
         int sr=22050;var d=new float[(int)(sr*.12f)];uint seed=3197;float low=0;
         for(int i=0;i<d.Length;i++){seed=seed*1664525+1013904223;float noise=((seed>>8)/(float)0xFFFFFF)*2-1;low=low*.82f+noise*.18f;float t=i/(float)sr;d[i]=(low*.9f+Mathf.Sin(2*Mathf.PI*78*t)*.3f)*Mathf.Exp(-t*42)*Mathf.Min(1,t/.004f);}

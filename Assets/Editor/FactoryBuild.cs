@@ -42,7 +42,7 @@ public static class FactoryBuild {
         RoomTitle("01 / THE LAST NIGHT SHIFT",new Vector3(0,3.25f,10.7f));
         Gate("Foyer gate",12,FactoryGate.Rule.Plate,new Vector3(-4.8f,.05f,8));
         Crate("Foyer crate",new Vector3(-4.8f,.61f,3.8f));
-        Board("LEAVE A CRATE ON THE STRIPED PLATE\nTHE DOOR STAYS OPEN WHILE IT IS HELD",new Vector3(-4.8f,1.65f,9.8f),2.9f);
+        Board("CRATE + PLATE = OPEN DOOR",new Vector3(-4.8f,2.65f,9.8f),3.8f);
         var welcome=Board("AUNT MAY'S NOTE\nE TO READ",new Vector3(4.8f,1.6f,-4),2.4f).AddComponent<StoryPoint>();welcome.kind=StoryPoint.StoryKind.Note;welcome.note="The helpers only return on Halloween. If the lights are on, please tell them I left the side door open for the parade. Your old drawing is still in the archive. Love, Aunt May.";
         Desk(new Vector3(5.2f,0,3));buttonGhost=Ghost("Button",new Vector3(5.2f,0,3),false).transform;
         game.buttonHelper=buttonGhost.GetComponent<GhostIdle>();game.buttonHelper.role="button";
@@ -92,7 +92,7 @@ public static class FactoryBuild {
         var ending=game.gameObject.AddComponent<EndOfShift>();ending.pip=pip.transform;ending.button=buttonGhost;ending.hush=ig.transform;ending.exitDoor=exitDoor;ending.view=cam;
         Festival();
         PlayerSettings.companyName="Willow Works";PlayerSettings.productName="Midnight Shift - The Last Lantern";
-        PlayerSettings.defaultScreenWidth=1440;PlayerSettings.defaultScreenHeight=900;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=false;
+        PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=false;PlayerSettings.resizableWindow=true;PlayerSettings.allowFullscreenSwitch=false;
         var ps=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);var active=ps.FindProperty("activeInputHandler");if(active!=null){active.intValue=0;ps.ApplyModifiedPropertiesWithoutUndo();}
         EditorSceneManager.SaveScene(SceneManager.GetActiveScene(),"Assets/Scenes/WillowWorks.unity");
         EditorBuildSettings.scenes=new[]{new EditorBuildSettingsScene("Assets/Scenes/WillowWorks.unity",true)};
@@ -102,10 +102,10 @@ public static class FactoryBuild {
     static GameObject Shape(string name,PrimitiveType type,Vector3 pos,Vector3 scale,Material mat,Transform parent=null,bool collision=true){var g=GameObject.CreatePrimitive(type);g.name=name;g.transform.SetParent(parent?parent:world);g.transform.position=pos;var inherited=g.transform.parent.lossyScale;g.transform.localScale=new Vector3(scale.x/inherited.x,scale.y/inherited.y,scale.z/inherited.z);g.GetComponent<Renderer>().sharedMaterial=mat;if(!collision)UnityEngine.Object.DestroyImmediate(g.GetComponent<Collider>());return g;}
     static GameObject Box(string name,Vector3 pos,Vector3 size,Material m,Transform parent=null,bool collision=true)=>Shape(name,PrimitiveType.Cube,pos,size,m,parent,collision);
     static TextMesh Sign(string text,Vector3 pos,float size,Material mat,float yaw=0,Transform parent=null){
-        var g=new GameObject(text.Split('\n')[0]);g.transform.SetParent(parent?parent:world);g.transform.position=pos;g.transform.rotation=Quaternion.Euler(0,yaw,0);var t=g.AddComponent<TextMesh>();t.text=text;t.font=font;t.fontSize=64;t.characterSize=size*.055f;t.anchor=TextAnchor.MiddleCenter;t.alignment=TextAlignment.Center;t.color=mat.color;g.GetComponent<MeshRenderer>().sharedMaterial=worldText;g.AddComponent<WorldLabel>();return t;
+        var g=new GameObject(text.Split('\n')[0]);g.transform.SetParent(parent?parent:world);g.transform.position=pos;g.transform.rotation=Quaternion.Euler(0,yaw,0);var t=g.AddComponent<TextMesh>();t.text=text;t.font=font;t.fontSize=96;t.characterSize=size*.065f;t.anchor=TextAnchor.MiddleCenter;t.alignment=TextAlignment.Center;t.color=mat.color;g.GetComponent<MeshRenderer>().sharedMaterial=worldText;g.AddComponent<WorldLabel>();return t;
     }
-    static GameObject Board(string text,Vector3 pos,float width){var g=Box("Notice / "+text.Split('\n')[0],pos,new Vector3(width,1.3f,.13f),dark);Sign(text,pos+Vector3.back*.08f,.61f,cream);return g;}
-    static void RoomTitle(string s,Vector3 p){Box("Overhead sign",p,new Vector3(9,.65f,.2f),dark);Sign(s,p+Vector3.back*.12f,.95f,cream);}
+    static GameObject Board(string text,Vector3 pos,float width){var g=Box("Notice / "+text.Split('\n')[0],pos,new Vector3(width,1.3f,.13f),dark);var textMesh=Sign(text,pos+Vector3.back*.08f,.61f,cream);var fit=textMesh.GetComponent<WorldLabel>();fit.maxWidth=width-.25f;fit.maxHeight=1.1f;return g;}
+    static void RoomTitle(string s,Vector3 p){Box("Overhead sign",p,new Vector3(9,.65f,.2f),dark);var label=Sign(s,p+Vector3.back*.12f,.95f,cream);label.GetComponent<WorldLabel>().maxWidth=8.6f;label.GetComponent<WorldLabel>().maxHeight=.5f;}
     static void FloorAndShell(){
         Box("Foundation",new Vector3(0,-.2f,27),new Vector3(18,.4f,74),timber);
         for(int z=-9;z<64;z+=2)for(int x=-8;x<9;x+=2)Box("Floorboard",new Vector3(x,.008f,z),new Vector3(1.97f,.02f,1.97f),(x+z)%4==0?teal:dark,null,false);
@@ -174,8 +174,8 @@ public static class FactoryBuild {
         m.indicator=Shape("Status lamp",PrimitiveType.Sphere,pos+new Vector3(-.85f,1.48f,-.25f),Vector3.one*.22f,cream,root.transform,false).GetComponent<Renderer>();
         var wheel=Shape("Work spindle",PrimitiveType.Cylinder,pos+new Vector3(-.2f,1.52f,.45f),new Vector3(.38f,.18f,.38f),orange,root.transform,false);m.spinner=wheel.transform;
         Box("Machine label",pos+new Vector3(0,.8f,-.77f),new Vector3(2.1f,.5f,.04f),dark,root.transform,false);
-        Sign(name,pos+new Vector3(0,.85f,-.8f),.57f,cream);
-        m.status=Sign("INSERT CORE",pos+new Vector3(0,.55f,-.8f),.44f,cream);
+        var nameplate=Sign(name,pos+new Vector3(0,.85f,-.8f),.57f,cream);nameplate.GetComponent<WorldLabel>().maxWidth=2.1f;
+        m.status=Sign("INSERT CORE",pos+new Vector3(0,.55f,-.8f),.44f,cream);m.status.GetComponent<WorldLabel>().maxWidth=2.25f;
         if(id!="chime"){
             Shape("Workpiece resting tray",PrimitiveType.Cylinder,pos+new Vector3(-.5f,1.35f,-.2f),new Vector3(.72f,.07f,.72f),dark,root.transform,false);
             var output=LanternModel(pos+new Vector3(-.5f,1.65f,-.2f),.58f,root.transform);output.station=m;

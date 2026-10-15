@@ -22,7 +22,11 @@ public class BuildSmokeCheck : MonoBehaviour {
         ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"00-title-runtime.png"));yield return new WaitForSecondsRealtime(.7f);
         var g=FactoryGame.I;g.Begin();yield return new WaitForSecondsRealtime(.7f);
         ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01-dialogue-runtime.png"));yield return new WaitForSecondsRealtime(.7f);
+        g.TogglePause();yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01b-menu-runtime.png"));yield return new WaitForSecondsRealtime(.5f);g.TogglePause();
         while(g.Reading)g.Advance();g.player.enabled=false;g.inspector.enabled=false;
+        yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01c-guide-runtime.png"));yield return new WaitForSecondsRealtime(.5f);
+        foreach(var crate in FindObjectsByType<Pickup>(FindObjectsSortMode.None))if(crate.name=="Foyer crate"){g.player.Pick(crate);break;}
+        g.player.Teleport(new Vector3(-4.8f,0,7.3f),0);yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01d-placement-runtime.png"));yield return new WaitForSecondsRealtime(.5f);g.player.PutBackHeld();g.player.Teleport(new Vector3(0,0,-7),0);
         Machine mould=null;foreach(var m in FindObjectsByType<Machine>(FindObjectsSortMode.None))if(m.machineId=="mould")mould=m;
         g.player.Pick(g.sharedCore);mould.Use(g.player);mould.Use(g.player);yield return new WaitForSecondsRealtime(.7f);
         ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"02-circuit-runtime.png"));yield return new WaitForSecondsRealtime(.7f);g.CloseCircuit();

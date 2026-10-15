@@ -4,13 +4,13 @@ Willow Works 的万圣节最后一班。Unity 6.6 / 6000.6.5f1 / Built-in Render
 
 ## 当前版本
 
-v0.5：完成一轮从开场到结局的开发者原生试玩，并修复输入与摆放问题。包含四个从教学到综合运用的线路谜题、可见的灯笼制作阶段，以及可选的 Button 对话和幽灵回应。当前不视为最终课程提交版。未完成陌生玩家试玩，不能声称已达到 5–10 分钟或已验证学习成效。
+v0.6：根据实际首次使用反馈重做逐步教学、大字双语界面、挂历待办和退出菜单，补充音频恢复。包含四个从教学到综合运用的线路谜题、可见的灯笼制作阶段，以及可选的 Button 对话和幽灵回应。当前不视为最终课程提交版。未完成陌生玩家试玩，不能声称已达到 5–10 分钟或已验证学习成效。
 
 ## 打开游戏
 
 双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift.app`。
 
-源文件仍在桌面。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.5.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
+当前开发源文件位于本机 `~/Developer/MidnightShift`，避免 iCloud 卸载源代码。桌面旧项目保留为 v0.5 参考。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.6.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
 
 编辑项目：Unity Hub → Projects → Add → Add project from disk → 选择整个 `MidnightShift` 文件夹。打开后在 Project 面板双击 `Assets/Scenes/WillowWorks.unity`，再按编辑器上方 Play。
 
@@ -22,13 +22,15 @@ v0.5：完成一轮从开场到结局的开发者原生试玩，并修复输入�
 - Space 或 Return：继续对白。阅读时世界暂停。
 - H：当前任务提示。
 - J：值班笔记，查看当前目标、规则和已发现的故事。
-- Esc：暂停，调节音乐、效果音和鼠标灵敏度。
+- Tab / F1：随时打开菜单、释放鼠标，包括对话与线路板期间。Esc 在对话中也可打开菜单；在线路板中返回工厂。
+- 菜单内可退出游戏、试听/恢复声音，并切换中英文。
+- 对话暂停世界；点击继续或按空格/回车推进。右侧挂历与金色箭头逐步指路。
 
 生产机器插入核心后，再按 E 打开线路板。旋转线路，使电源经过标记接点并到达全部出口，再点 Send power 启动。线路板支持鼠标，也支持方向键选格、空格旋转、回车启动、Esc 关闭。休息铃无需线路谜题。完成后按 E 取出核心，用于下一台。核心始终只有一枚，不会消耗。没有全局倒计时。
 
 ## 本地试玩记录
 
-游戏自动记录当前局部任务完成、活跃操作时间、阅读、暂停、笔记、提示次数和重试次数，仅保存在本机，不上传。Mac 独立应用位置为 `~/Library/Application Support/com.Willow-Works.Midnight-Shift---The-Last-Lantern/Playtests/`；编辑器检查记录位于 `~/Library/Application Support/Willow Works/Midnight Shift - The Last Lantern/Playtests/`。自动检查及带 --agent-playtest 的操作会标记为 automated；其余记录默认 reviewer=unattributed，不能仅凭日志认定是真人试玩。
+游戏自动记录当前局部任务完成、活跃操作时间、阅读、暂停、笔记、提示次数和重试次数，仅保存在本机，不上传。Mac 独立应用位置为 `~/Library/Application Support/com.Willow-Works.Midnight-Shift---The-Last-Lantern/Playtests/`；编辑器检查记录位于 `~/Library/Application Support/Willow Works/Midnight Shift - The Last Lantern/Playtests/`。自动检查及带 --agent-playtest 的操作会标记为 automated，并自动静音；其余记录默认 reviewer=unattributed，不能仅凭日志认定是真人试玩。
 
 计时包含未暂停时的思考与停顿，长时间离开或系统休眠会污染数据；这类记录必须剔除，不能作为课程时长证据。完整开发者试玩见 `Documentation/NATIVE-FULL-REVIEW-v0.5.md`。
 
@@ -55,7 +57,7 @@ Unity 顶部 `Willow Works`：
 - 最终区域已加入巡检，组合能源复用、压力板和机器声音。难度与敌人导航还需真人测试。
 - 美术目前为原创程序化 3D 几何，角色与手部动画为程序动画。需要继续打磨动作和角色表现。
 - 音乐、脚步与反馈音为原创合成音，尚需人工试听和混音改进。持续机器环境音还可加强。
-- 当前为英文游戏文字、中文开发说明。尚未实现语言切换。
+- 游戏默认英文，标题与暂停菜单提供可选中文；开发说明为中文。
 - 尚无跨启动存档。重启或菜单重新开始会重置整晚。
 - Mac 构建目标为 Intel + Apple Silicon 通用版；Windows / Linux 模块尚未安装，构建及跨平台完整验证尚未完成。
 - GitHub 上传、教师协作者、Box 发布、Blackboard 提交尚未执行。

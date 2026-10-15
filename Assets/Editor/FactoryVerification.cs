@@ -43,6 +43,20 @@ public class FactoryPlaycheck : MonoBehaviour {
         catch(Exception e){Fail(e);yield break;}
         g.Begin();CloseDialogue();
         try{
+            Check(g.guide&&g.guide.Current.key=="MOUSE / ARROWS","opening guide teaches looking before future power rules");
+            g.guide.looked=true;Check(g.guide.Current.key=="W A S D","guide advances to walking only after observing look input");
+            g.guide.walked=true;Check(g.guide.Current.key=="E","guide then asks for the crate interaction");
+            g.Say("Menu regression","This line must survive opening the menu.");g.TogglePause();
+            Check(g.paused&&g.Reading&&g.Frozen&&Time.timeScale==0,"menu can open during dialogue without discarding it");
+            g.TogglePause();Check(!g.paused&&g.Reading&&g.line.Contains("survive"),"resume returns to the same dialogue line");CloseDialogue();
+            g.audioScore.RestoreAudio();var music=g.audioScore.GetComponents<AudioSource>().Single(x=>x.loop);music.Stop();
+            g.audioScore.RestoreAudio();Check(g.audioScore.MusicPlaying,"audio recovery starts a stopped source rather than only unpausing it");
+            var previousClip=music.clip;g.audioScore.SendMessage("ConfigurationChanged",true);g.audioScore.RestoreAudio();
+            Check(g.audioScore.MusicPlaying&&music.clip!=previousClip,"audio device recovery recreates the generated music clips");
+            Check(g.audioScore.GetComponents<AudioSource>().All(x=>x.mute),"automated checks stay silent even after restoring audio");
+            var font=Resources.Load<Font>("Fonts/NotoSansSC");Check(font&&font.HasCharacter('我')&&Resources.Load<Font>("Fonts/Fraunces"),"redistributable fonts include Chinese guide glyphs and a display face");
+        }catch(Exception e){Fail(e);yield break;}
+        try{
             var graph=CircuitGrid.Create("mould");graph.shapes=new int[9];graph.turns=new int[9];for(int i=3;i<=5;i++)graph.shapes[i]=CircuitGrid.W|CircuitGrid.E;graph.sourceRow=1;graph.targets=new[]{5};graph.beacons=new[]{1};graph.Refresh();
             Check(graph.LitOutlets==1&&!graph.Solved,"an outlet alone cannot bypass required contacts");
             graph.shapes[4]=CircuitGrid.N|CircuitGrid.S;graph.Refresh();Check(graph.LitOutlets==0,"adjacent tiles require matching reciprocal edges");
@@ -107,6 +121,7 @@ public class FactoryPlaycheck : MonoBehaviour {
             g.ResetSection();Check(g.resets==1&&g.shell&&g.transferred&&g.blueprint,"safety reset preserves completed progress");Check(p.held==null&&core.transform.parent==null,"reset releases core to recoverable home");
             Check(g.Reading&&g.Frozen,"retry explains recovery while safely pausing the world");CloseDialogue();
             g.inspector.enabled=false;g.inspector.ResetPatrol();g.inspector.transform.position=new Vector3(0,0,36);g.inspector.transform.rotation=Quaternion.identity;p.Teleport(new Vector3(0,0,40),0);Physics.SyncTransforms();
+            g.inspectorLesson=false;Check(!g.inspector.CanSeePlayer(),"archive first practice remains safe before the chime lesson");g.inspectorLesson=true;
             Check(g.inspector.CanSeePlayer(),"inspector vision sees player in range and field of view");
             var cover=crates.First();cover.transform.position=new Vector3(0,.835f,38);Physics.SyncTransforms();
             Check(!g.inspector.CanSeePlayer(),"placed crate physically blocks inspector sight");
@@ -115,6 +130,8 @@ public class FactoryPlaycheck : MonoBehaviour {
             p.Pick(core);g.ResetSection();Check(p.transform.position.z>46&&core.transform.position.z>46,"final-area retry recovers player and held core locally");Check(!g.inspector.CanSeePlayer(),"safety reset grants a brief detection grace period");CloseDialogue();
             g.inspector.enabled=true;g.inspector.assemblyDuty=false;g.inspector.route=new[]{new Vector3(-2.3f,0,35.5f),new Vector3(2.3f,0,40.5f)};g.inspector.ResetPatrol();p.Teleport(new Vector3(0,0,15),0);
             var etch=machines.Single(x=>x.machineId=="etch");p.Pick(core);etch.Use(p);etch.Use(p);SolveRouting(etch);
+            p.Teleport(new Vector3(-5.4f,0,49.1f),0);var preparation=g.guide.Current;Check(preparation.targetName=="Crate"&&preparation.reason.Contains("while it works"),"engraver gives the player gate preparation rather than exposed waiting");
+            g.Hint();Check(g.toast.Contains(preparation.action),"requested hints stay consistent with the current formal-game action");p.Teleport(new Vector3(0,0,15),0);
         }catch(Exception e){Fail(e);yield break;}
         Time.timeScale=16;yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
         try{

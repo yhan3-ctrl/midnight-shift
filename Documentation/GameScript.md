@@ -1,18 +1,18 @@
-# Game Script / v0.5 implemented rules
+# Game Script / v0.6 implemented rules
 
 This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. A future final report must update this document to match its submitted version.
 
 ## Player role, controls and modes
 
-The player is Aunt May's visitor helping magical toy-factory workers finish a childhood order. Exploration/puzzle play uses a first-person camera, WASD movement at 4.1 units/s, mouse/arrow-key look (K toggles arrow-only look), E interaction, Q placement, H hint, J journal and Esc pause. Circuit routing has its own mode with clickable tiles, arrow-key selection, Space rotation, Return activation and Esc close. No jumping, combat, health pool or global time limit. Interactions use the first collider on a camera ray, maximum distance 3.1 units.
+The player is Aunt May's visitor helping magical toy-factory workers finish a childhood order. Exploration/puzzle play uses a first-person camera, WASD movement at 4.1 units/s, mouse/arrow-key look (K toggles arrow-only look), E interaction, Q placement, H hint, J journal and Tab/F1 menu. Esc opens the menu from exploration/dialogue and closes routing/notebook first. Circuit routing has its own mode with clickable tiles, arrow-key selection, Space rotation, Return activation and Esc close. No jumping, combat, health pool or global time limit. Interactions use the first collider on a camera ray, maximum distance 3.1 units.
 
-Exploration permits walking, looking, carrying and interacting. Reading/dialogue restricts locomotion and freezes world simulation; Space, Return or the visible button advances. The journal freezes simulation and displays the current task, rules and discovered story, then restores the previous carrying state. Pause freezes simulation and offers music/effects/sensitivity sliders, resume and restart. The title screen begins the night; the ending offers restart. Reading and pause are not secretly timed hazards.
+Exploration permits walking, looking, carrying and interacting. Reading/dialogue restricts locomotion and freezes world simulation; Space, Return or the visible button advances. The journal freezes simulation and displays the current task, rules and discovered story, then restores the previous carrying state. Pause freezes simulation and offers music/effects sliders, audio test/recovery, a mouse/arrow-only toggle, optional language switching, resume, restart and Quit (also X). The current dialogue or circuit is retained. The title screen begins the night; the ending offers restart. Reading and pause are not secretly timed hazards.
 
 ## Items and placement
 
 One item can be held at a time. A held item has its colliders disabled and follows the carry pose. Carrying does not reduce movement speed. Q attempts placement 1.5 units ahead, using a downward surface query. A floor-level surface (height at most 0.25 units), clear volume and separation from the player are required. Raised worktops and shelf tops are rejected. A crate must remain at least 1 unit horizontally from the player after plate assistance (0.65 for other pickups). Failed placement retains the item and explains the failure. No throwing or item destruction.
 
-Crates measure 1.2 by 1.65 by 1.2 units. They appear at 65% scale while held, below the view centre, and return to full scale on valid placement. Crates hold pressure plates and block inspector sight when placed. There is one reusable power core. A lantern exists only after final pressing. No inventory consumption or random drops.
+Crates measure 1.2 by 1.65 by 1.2 units. They appear at 45% scale while held, below the view centre, and return to full scale on valid placement. Crates hold pressure plates and block inspector sight when placed. There is one reusable power core. A lantern exists only after final pressing. No inventory consumption or random drops.
 
 ## Gates
 
@@ -38,7 +38,7 @@ Machine work starts emit the same inspector stimulus. He responds to sources in 
 
 ## Power-routing mode
 
-The world and inspector freeze while the player manipulates a circuit. Active play time still counts because solving is gameplay. Click a tile to rotate it clockwise, or select with arrows and rotate with Space. Return or Send power starts a valid circuit. Esc / Close preserves tile orientation and resumes the world. Remove core closes the board and retrieves the core. Reset tiles restores the board's initial orientation.
+The world and inspector freeze while the player manipulates a circuit. Active play time still counts because solving is gameplay. Click a tile to rotate it clockwise, or select with arrows and rotate with Space. Return or Start machine starts a valid circuit. Esc / Close preserves tile orientation and resumes the world. Remove core closes the board and retrieves the core. Reset tiles restores the board's initial orientation.
 
 Each tile has connectors on some of its north, east, south and west edges. Power begins only if the leftmost source tile faces the incoming supply. It crosses to an adjacent tile only if both touching edges have connectors. Straight pieces carry, elbows turn and T pieces split power. Unused open ends do not cause failure. The board succeeds only when every marked contact is powered and every marked right-edge outlet receives power with its east connector facing out.
 
@@ -51,7 +51,7 @@ All four are authored and have validated solutions. Tile rotations persist when 
 
 ## Inspector
 
-Hush is a safety inspector, not a lethal enemy. His four patrol waypoints form a rectangle in the archive. Patrol speed is 1.45 units/s. He sees the player within 7 units and a 110-degree horizontal field of view, provided a wall or placed crate does not block the physics ray. In archive duty, only player positions z = 31.5–44.8 are detectable. In assembly duty this region becomes z = 47–53.3. Assembly patrol waypoints are (4,52), (-1,50), (-1,52), (4,50). This version uses a magical relocation between duties, announced by a message, rather than pathing the entire inter-room transition.
+Hush is a safety inspector, not a lethal enemy. His four patrol waypoints form a rectangle in the archive. Patrol speed is 1.45 units/s. He sees the player within 7 units and a 110-degree horizontal field of view, provided a wall or placed crate does not block the physics ray. Archive detection stays off until the player starts the first Chime cycle; this allows a safe first demonstration. That first activation grants 2.5 seconds of detection grace before normal patrol detection begins. In archive duty, only player positions z = 31.5–44.8 are detectable. In assembly duty this region becomes z = 47–53.3. Assembly patrol waypoints are (4,52), (-1,50), (-1,52), (4,50). This version uses a magical relocation between duties, announced by a message, rather than pathing the entire inter-room transition.
 
 Continuous visibility fills alert over 0.95 seconds. Alert pauses patrol and faces the player. Full alert begins Approach at 2.8 units/s. Lost sight begins Search of the last seen position; search lasts 4 seconds, then Return. Sounds initiate Investigate at 1.8 units/s with 5 seconds at the destination, then Return. The destination is a walkable point 1.6 units in front of the sounding machine, not the occupied centre of its cabinet. New sound cannot cancel Alert or Approach. Movement checks world obstacles and attempts a lateral detour; complex navigation still needs gameplay evaluation.
 
@@ -102,3 +102,17 @@ Button moves from the foyer to the Moulding work area after the player enters Pa
 Workshop objectives distinguish initial relay power, bringing back the override crate, retrieving the core and using the Moulding Table. These are instructions about current mechanics, not extra tasks.
 
 The archive now contains a framed childlike line drawing of a pumpkin lantern and small helper, in addition to its readable reverse-side note. It is the same ordinary E interaction and has no extra collectible requirement.
+
+## v0.6 / guidance across the whole shift
+
+English is the fresh-install default. English/Chinese selection is available at title and pause, and persists only after selection. Large keycaps, a screen-space marker and a chapter calendar accompany exploration. The guide chooses one immediate action from actual item, gate and job state. Markers use intermediate doorways/corners where needed; they do not simply point through the nearest wall. World-label sizes are bounded by their signs. Placement previews use the same validation as Q; invalid placement receives a separate feedback card.
+
+The foyer teaches looking, approaching the crate, aiming/E, Q onto the plate, and leaving the crate behind to cross. The first successful placement receives a brief positive response. Packaging then introduces shared gate power and the crate override before core transfer, one-route Moulding and branching Ribbon puzzles. Physical output changes from shell to bow, tag and final light, so progress is visible in the world.
+
+The archive entry introduces Hush and the consequence of a safety check in two short paused lines. The first Chime interaction is a safe opportunity to meet the system. After activation, crate carrying, patrol and the drawing gate form the traversal challenge. A retry keeps completed jobs and story state, recovers a carried core locally and explains what happened.
+
+The assembly entry reconnects the childhood promise with the task. While the Engraver runs, the immediate guide asks the player to prepare the crate gate instead of standing exposed beside the machine. After completion, the core moves to the Press for the combined branching/contact puzzle. The final delivery gives the crafted item to a character and changes the whole scene through the departure animation.
+
+H now repeats the current actionable instruction and reason; it cannot contradict the ongoing job with a future core-transfer instruction. Routing provides visible contact/outlet counters, a gold input arrow and an optional animated connection example. The example does not solve or rotate the actual board. Dialogue and routing pause hazards, with explicit text explaining this; Tab/F1 opens the exit menu from either.
+
+Audio initialization/recovery now restarts stopped sources and rebuilds generated clips after configuration changes. The reported intermittent initial silence has not been reproduced; playback-state checks do not establish audible output or musical quality.

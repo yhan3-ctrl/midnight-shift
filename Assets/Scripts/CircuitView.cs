@@ -1,45 +1,48 @@
 using UnityEngine;
 namespace LastLantern {
-// Native game UI for manipulating the same routing model used by machine start checks.
 public class CircuitView {
-    Texture2D tile,lit,wire,contact;GUIStyle text,title,small,action,contactText;
-    Texture2D Solid(Color c){var t=new Texture2D(1,1);t.SetPixel(0,0,c);t.Apply();return t;}
-    void Setup(){if(tile)return;tile=Solid(new Color(.12f,.23f,.25f));lit=Solid(new Color(1,.76f,.35f));wire=Solid(new Color(.5f,.59f,.58f));contact=Solid(new Color(.95f,.85f,.58f));
-        text=new GUIStyle(GUI.skin.label){fontSize=20,wordWrap=true};text.normal.textColor=new Color(.95f,.91f,.81f);
-        title=new GUIStyle(text){fontSize=29,fontStyle=FontStyle.Bold};small=new GUIStyle(text){fontSize=16};
-        action=new GUIStyle(GUI.skin.button){fontSize=18};contactText=new GUIStyle(small){fontStyle=FontStyle.Bold,alignment=TextAnchor.MiddleCenter};contactText.normal.textColor=new Color(.08f,.14f,.16f);
-    }
-    public void Draw(Machine machine,float width,float height,Texture2D background){
-        Setup();var g=FactoryGame.I;var p=machine.puzzle;float left=width/2-480,top=height/2-360;
-        GUI.DrawTexture(new Rect(left,top,960,720),background);
-        GUI.Label(new Rect(left+40,top+28,880,46),machine.displayName+" / POWER ROUTING",title);
-        GUI.Label(new Rect(left+40,top+88,870,80),p.lesson,small);
-        float step=88,gap=8,gridX=left+100,gridY=top+205;
+    bool example;float exampleSince;
+    string T(string zh,string en)=>UiCopy.Pick(zh,en);
+    public void Draw(Machine m,float width,float height,Texture2D unused){
+        var g=FactoryGame.I;var p=m.puzzle;float left=width/2-600,top=80;
+        UiTheme.Panel(new Rect(left,top,1200,height-110),new Color(.04f,.12f,.14f,.99f));
+        UiTheme.Label(new Rect(left+35,top+20,1120,55),UiCopy.Translate(m.displayName)+T(" / 接通电路"," / CONNECT THE CIRCUIT"),34,UiTheme.Gold,true,true);
+        UiTheme.Label(new Rect(left+35,top+82,1120,84),T("把左边入口的电，送到右边每一个出口；途中经过所有 ★ 标记。","Join IN to every OUT. Pass through each ★ contact."),27);
+        float step=86,gap=8,gridX=left+113,gridY=top+214;
         for(int y=0;y<p.size;y++)for(int x=0;x<p.size;x++){
             int i=p.Index(x,y);Rect r=new Rect(gridX+x*(step+gap),gridY+y*(step+gap),step,step);
-            GUI.DrawTexture(r,tile);if(GUI.Button(r,GUIContent.none,GUIStyle.none)){machine.selectedTile=i;p.Rotate(i);g.audioScore.Tick(500+i*9);}
-            if(machine.selectedTile==i){GUI.DrawTexture(new Rect(r.x,r.y,r.width,2),contact);GUI.DrawTexture(new Rect(r.x,r.yMax-2,r.width,2),contact);GUI.DrawTexture(new Rect(r.x,r.y,2,r.height),contact);GUI.DrawTexture(new Rect(r.xMax-2,r.y,2,r.height),contact);}
-            int mask=p.Mask(i);var color=p.Powered(i)?lit:wire;float cx=r.center.x,cy=r.center.y;
-            if((mask&CircuitGrid.N)!=0)GUI.DrawTexture(new Rect(cx-5,r.y,10,step/2),color);
-            if((mask&CircuitGrid.E)!=0)GUI.DrawTexture(new Rect(cx,cy-5,step/2,10),color);
-            if((mask&CircuitGrid.S)!=0)GUI.DrawTexture(new Rect(cx-5,cy,10,step/2),color);
-            if((mask&CircuitGrid.W)!=0)GUI.DrawTexture(new Rect(r.x,cy-5,step/2,10),color);
-            GUI.DrawTexture(new Rect(cx-7,cy-7,14,14),color);
-            if(p.IsContact(i)){GUI.DrawTexture(new Rect(r.x+5,r.y+5,17,17),contact);GUI.Label(new Rect(r.x+6,r.y+3,20,22),p.Powered(i)?"+":"o",contactText);}
-            if(p.IsOutlet(i)){GUI.Label(new Rect(r.xMax+10,cy-13,85,30),p.Powered(i)&&(mask&CircuitGrid.E)!=0?"OUT +":"OUT o",small);}
+            UiTheme.Fill(r,new Color(.16f,.30f,.32f));
+            if(GUI.Button(r,GUIContent.none,GUIStyle.none)){m.selectedTile=i;p.Rotate(i);g.audioScore.Tick(500+i*9);}
+            if(m.selectedTile==i){UiTheme.Fill(new Rect(r.x,r.y,r.width,3),UiTheme.Cream);UiTheme.Fill(new Rect(r.x,r.yMax-3,r.width,3),UiTheme.Cream);UiTheme.Fill(new Rect(r.x,r.y,3,r.height),UiTheme.Cream);UiTheme.Fill(new Rect(r.xMax-3,r.y,3,r.height),UiTheme.Cream);}
+            int mask=p.Mask(i);Color c=p.Powered(i)?UiTheme.Gold:new Color(.62f,.74f,.72f);float cx=r.center.x,cy=r.center.y;
+            if((mask&CircuitGrid.N)!=0)UiTheme.Fill(new Rect(cx-6,r.y,12,step/2),c);
+            if((mask&CircuitGrid.E)!=0)UiTheme.Fill(new Rect(cx,cy-6,step/2,12),c);
+            if((mask&CircuitGrid.S)!=0)UiTheme.Fill(new Rect(cx-6,cy,12,step/2),c);
+            if((mask&CircuitGrid.W)!=0)UiTheme.Fill(new Rect(r.x,cy-6,step/2,12),c);
+            UiTheme.Fill(new Rect(cx-8,cy-8,16,16),c);
+            if(p.IsContact(i)){UiTheme.Fill(new Rect(r.x+5,r.y+5,28,28),UiTheme.Cream);UiTheme.Label(new Rect(r.x+5,r.y+2,28,32),p.Powered(i)?"✓":"★",24,UiTheme.Ink,true,false,TextAnchor.MiddleCenter);}
+            if(p.IsOutlet(i))UiTheme.Label(new Rect(r.xMax+12,cy-22,125,50),p.Powered(i)&&(mask&CircuitGrid.E)!=0?"OUT ✓":"OUT →",24,UiTheme.Gold,true,false,TextAnchor.MiddleLeft);
         }
-        GUI.Label(new Rect(gridX-65,gridY+p.sourceRow*(step+gap)+28,65,30),"IN >",small);
-        float sx=left+595;
-        GUI.Label(new Rect(sx,top+210,310,90),$"OUTLETS  {p.LitOutlets} / {p.targets.Length}\nCONTACTS  {p.LitContacts} / {p.beacons.Length}",text);
-        GUI.Label(new Rect(sx,top+330,310,120),p.Solved?"The circuit is connected. Send power when you're ready.":"Follow the lit path from IN. Rotate the next tile so both touching edges meet.",text);
-        GUI.Label(new Rect(sx,top+475,310,80),"The workshop is paused while you plan. Your tile positions are kept if you close this panel.",small);
-        GUI.Label(new Rect(left+40,top+588,880,28),"Click to turn. Arrows select, Space turns, Enter sends power, Esc closes.",small);
-        GUI.enabled=p.Solved;
-        if(GUI.Button(new Rect(left+40,top+625,275,54),"Send power / start machine",action))g.PowerCircuit();
-        GUI.enabled=true;
-        if(GUI.Button(new Rect(left+330,top+625,175,54),"Reset tiles",action))p.Reset();
-        if(GUI.Button(new Rect(left+520,top+625,180,54),"Remove core",action)){g.CloseCircuit();machine.Remove(g.player);}
-        if(GUI.Button(new Rect(left+715,top+625,200,54),"Close  [Esc]",action))g.CloseCircuit();
+        UiTheme.Label(new Rect(gridX-98,gridY+p.sourceRow*(step+gap)+22,94,55),"IN →",26,UiTheme.Gold,true);
+        float sx=left+655;
+        UiTheme.Label(new Rect(sx,top+207,500,80),T("出口 ","OUT ")+p.LitOutlets+" / "+p.targets.Length+"     ★ "+p.LitContacts+" / "+p.beacons.Length,31,UiTheme.Gold,true);
+        if(example){
+            bool connected=((int)(Time.unscaledTime-exampleSince))%2==1;
+            UiTheme.Label(new Rect(sx,top+294,490,50),T("点一下，方格转动四分之一圈。","One click turns a tile a quarter turn."),24);
+            UiTheme.Label(new Rect(sx,top+370,92,45),"IN →",25,UiTheme.Gold,true);
+            for(int n=0;n<2;n++){Rect box=new Rect(sx+100+n*85,top+365,68,68);UiTheme.Fill(box,new Color(.16f,.3f,.32f));bool horizontal=n==0||connected;UiTheme.Fill(horizontal?new Rect(box.x,box.center.y-5,68,10):new Rect(box.center.x-5,box.y,10,68),n==0||connected?UiTheme.Gold:UiTheme.Muted);}
+            UiTheme.Label(new Rect(sx+280,top+370,180,45),connected?"→ OUT ✓":"OUT",25,connected?UiTheme.Gold:UiTheme.Muted,true);
+            UiTheme.Label(new Rect(sx,top+447,490,40),T("线头对上后，电就能继续走。","Matching ends let the power continue."),23,UiTheme.Muted);
+        }else UiTheme.Label(new Rect(sx,top+294,493,180),p.Solved?T("接好啦！\n现在点下面的“启动机器”。","Connected!\nChoose Start machine below."):T("1. 从金色 IN 开始看。\n2. 点击方格，让两段线头接上。\n3. 金色表示有电，不必点亮所有格子。","1. Start at the gold IN.\n2. Click tiles to join the ends.\n3. Gold means power.\nNot all tiles need to light up."),26);
+        if(UiTheme.Button(new Rect(sx,top+492,450,55),example?T("收起小例子","Hide the example"):T("看一个简单例子","Show a simple example"),true)){example=!example;exampleSince=Time.unscaledTime;}
+        if(example){UiTheme.Label(new Rect(sx,top+563,465,70),T("IN → ── → ┐\n横线传电，弯角转弯，T 形可以分流。","IN → ── → ┐\nStraights carry; corners turn; T shapes split."),24,UiTheme.Gold);}
+        else UiTheme.Label(new Rect(sx,top+563,465,70),T("看线路时世界暂停。\n不用着急，按 Tab 可以打开菜单。","The world is paused. Take your time.\nTab opens the menu."),23,UiTheme.Muted);
+        float bottom=height-112;
+        UiTheme.Label(new Rect(left+35,bottom-62,1125,44),T("鼠标点击：转动   |   方向键：选格   空格：转动   回车：启动   Esc：返回","Click / Space: turn   Arrows: select   Enter: start   Esc: return"),23,UiTheme.Muted);
+        GUI.enabled=p.Solved;if(UiTheme.Button(new Rect(left+35,bottom,375,65),p.Solved?T("启动机器  →","Start machine  →"):T("先接通出口和星标","Connect OUT + ★ first"),!p.Solved))g.PowerCircuit();GUI.enabled=true;
+        if(UiTheme.Button(new Rect(left+430,bottom,220,65),T("重置方格","Reset tiles"),true))p.Reset();
+        if(UiTheme.Button(new Rect(left+670,bottom,220,65),T("取回核心","Remove core"),true)){g.CloseCircuit();m.Remove(g.player);}
+        if(UiTheme.Button(new Rect(left+910,bottom,255,65),T("返回工厂 [Esc]","Return [Esc]"),true))g.CloseCircuit();
     }
 }
 }

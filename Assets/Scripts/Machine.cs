@@ -32,7 +32,7 @@ public class Machine : Interactable {
     }
     public void StartWork(){
         if(!core||done||Requirement!=""||(puzzle!=null&&!puzzle.Solved))return;
-        running=true;if(machineId=="chime"){FactoryGame.I.inspectorLesson=true;FactoryGame.I.Notify("Hush is coming to check the chime. Watch his route, then use the archive plate.",7);}
+        running=true;if(machineId=="chime"){bool first=!FactoryGame.I.inspectorLesson;FactoryGame.I.inspectorLesson=true;if(first&&FactoryGame.I.inspector)FactoryGame.I.inspector.ResetPatrol(true);FactoryGame.I.Notify("Hush is coming to check the chime. Watch his route, then use the archive plate.",7);}
         FactoryGame.I.audioScore.Tick(440);if(FactoryGame.I.inspector)FactoryGame.I.inspector.Hear(transform.position);
     }
     public void Remove(PlayerMotor p){

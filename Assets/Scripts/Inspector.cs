@@ -16,7 +16,7 @@ public class Inspector : MonoBehaviour {
         destination=new Vector3(Mathf.Clamp(location.x,-7,7),0,Mathf.Clamp(location.z-1.6f,min+1,max-1));state=State.Investigate;timer=0;
     }
     public bool CanSeePlayer(){
-        if(Time.time<graceUntil)return false;
+        if(Time.time<graceUntil||(!assemblyDuty&&!FactoryGame.I.inspectorLesson))return false;
         var p=FactoryGame.I.player;Vector3 target=p.transform.position+Vector3.up*1.1f;
         Vector3 delta=target-eyes.position;
         float lower=assemblyDuty?47:31.5f,upper=assemblyDuty?53.3f:44.8f;

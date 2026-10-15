@@ -105,3 +105,25 @@ The first v0.5 native pass uncovered a concrete input conflict: Unity's legacy H
 Corrected-input native rerun completed from title through delivery and departure animation with the inspector active and one final-area retry. No teleports, progression shortcuts or disabled inspector used. Also corrected hour-wrapping in the ending duration display. Full evidence/limits are in NATIVE-FULL-REVIEW-v0.5.md.
 
 Final document consistency review updated HighConcept and GameScript to v0.5. Learning claims now distinguish required core/condition/circuit reasoning from optional occlusion and patrol strategies, which successful completion alone cannot establish. This addresses the prior project's inaccurate “What You Are Learning” claim without inventing human learning evidence.
+
+## v0.6 / first-time player comprehension, based on actual user feedback
+
+The user reported intermittent initial silence, tiny controls and labels, an obscured foyer sign, confusing rules and being unable to move/close during dialogue. This feedback supersedes the assumption that a complete informed-developer run established usability.
+
+Redesign: one-action guide for look/walk/pick/place/door; actual-world-state checklist on a hanging calendar; screen-space target marker and simple doorway waypoints; bilingual large keycaps and body text; open-license display/body fonts; visible placement feedback and a smaller held crate. Early Button dialogue now stays on the immediate foyer task.
+
+Dialogue explicitly explains that the world is paused. Tab/F1 always open a menu during active play, including dialogue and routing; Esc also opens the menu from dialogue. Resuming preserves the dialogue/circuit. Visible quit buttons appear at title, pause and ending. First v0.6 launch returns to a resizable window.
+
+Audio repair: distinguish a paused source from a stopped one, actually restart stopped playback, regenerate procedural clips after audio configuration changes, and provide a test/restore button. The reported intermittent silent startup has not been reproduced; source-state regression checks establish recovery behaviour, not audible speaker/headphone output.
+
+87 engine integration checks passed, including new guide/menu/audio/font regressions and the animated ending. Native UI appearance and first-contact operation are reviewed separately before delivery.
+
+Storage: Desktop and Documents/Codex were confirmed iCloud-managed and source files had become dataless placeholders. Created a 5.9 MB local clone from recovered Git objects at ~/Developer/MidnightShift; no Unity caches or old builds were needed for that clone. The original Desktop repository is preserved. New fonts and generated caches make subsequent size larger.
+
+User clarified that the default must be English; optional language switching is acceptable. v0.6 now defaults to English on fresh preferences, with Chinese available only by explicit selection. The menu also offers X as a direct quit shortcut alongside the visible Quit button and the OS shortcut.
+
+Formal-play follow-up: archive entry now introduces Hush and preserves a safe first Chime practice period, then activates the actual patrol challenge. Assembly entry reconnects the promise with the work; engraving guidance asks for crate-gate preparation while processing runs. H now follows the same immediate action as the guide instead of issuing stale core-transfer instructions. The optional circuit example animates a matching connection without modifying the real board. Blocked placement feedback has a separate card so it cannot cover the keycap.
+
+The user heard intermittent music during background verification. Automated batch, preview, smoke and agent-review launches now mute both AudioSources, including after recovery; normal launches retain audio. No system output device, headset or global volume setting was changed. 91 engine checks pass, including safe initial archive detection, productive engraving guidance, consistent hints and silent automated recovery. Complete deterministic geometry traversal also passed with 24 raycast interactions, four placements and four circuits; its inspector locomotion is disabled and timing accelerated.
+
+Final native opening/early-formal review reached the actual workshop crate override. The chapter calendar, core-to-relay instruction, doorway marker, crate placement and core-retrieval instruction all advanced with world state. Tab/X exited cleanly. Visual review also separated the interaction strip/footer and reserved full font height for the coach and menu. Synthetic CUA mouse clicks did not activate Unity's buttons, so this session establishes keyboard operation rather than mouse-button usability.

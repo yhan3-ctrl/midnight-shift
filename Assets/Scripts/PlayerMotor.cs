@@ -35,36 +35,36 @@ public class PlayerMotor : MonoBehaviour {
     public bool TryInteract(){ScanFocus();if(!focus)return false;focus.Use(this);return true;}
     public bool Pick(Pickup item){
         if(held){FactoryGame.I.Notify("Your hands are full. Place what you're carrying first.");return false;}
-        held=item;item.AttachTo(hand);item.carried=true;if(item.kind==Pickup.Kind.Crate){item.transform.localScale*=.65f;item.transform.localPosition=new Vector3(0,-.3f,0);}
+        held=item;item.AttachTo(hand);item.carried=true;if(item.kind==Pickup.Kind.Crate){item.transform.localScale*=.45f;item.transform.localPosition=new Vector3(.15f,-.36f,.08f);}
         if(item.kind==Pickup.Kind.Core){item.transform.localScale*=.5f;item.transform.localPosition=new Vector3(.1f,-.25f,0);}
         FactoryGame.I.audioScore.Tick(660);return true;
     }
-    public void TryPlace(){
+    public bool Placement(out Vector3 at,out string reason){
+        at=Vector3.zero;reason="";
+        if(!held){reason=UiCopy.Pick("先拿起一个物品。","Pick up an item first.");return false;}
         Vector3 ahead=transform.position+transform.forward*1.5f+Vector3.up*2;
-        if(!Physics.Raycast(ahead,Vector3.down,out RaycastHit ground,3.5f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore)||ground.normal.y<.85f){FactoryGame.I.Notify("Find a clear, level surface to place it.");return;}
+        if(!Physics.Raycast(ahead,Vector3.down,out RaycastHit ground,3.5f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore)||ground.normal.y<.85f){reason=UiCopy.Pick("这里放不下，找一块平整的空地。","Find a clear, level patch of floor.");return false;}
         Vector3 surface=ground.point;
-        if(surface.y>.25f){FactoryGame.I.Notify("Place it on the factory floor, away from shelves and worktops.");return;}
-        // A small placement assist makes the raised plate forgiving at its edges.
-        // The same solid-obstacle validation below still applies after snapping.
-        if(held.kind==Pickup.Kind.Crate){
-            float nearest=1.35f;
-            foreach(var gate in FindObjectsByType<FactoryGate>(FindObjectsSortMode.None)){
-                if(!gate.plate||Mathf.Abs(gate.plate.position.y-surface.y)>.25f)continue;
-                Vector3 delta=gate.plate.position-ahead;delta.y=0;
-                if(delta.magnitude<nearest){nearest=delta.magnitude;surface=gate.plate.position+Vector3.up*.05f;}
-            }
-        }
-        Vector3 at=surface+Vector3.up*(held.kind==Pickup.Kind.Crate?.835f:.43f);
+        if(surface.y>.25f){reason=UiCopy.Pick("请放在地上，避开柜子和工作台。","Place it on the floor, away from shelves and worktops.");return false;}
+        if(held.kind==Pickup.Kind.Crate){float nearest=1.35f;foreach(var gate in FindObjectsByType<FactoryGate>(FindObjectsSortMode.None)){
+            if(!gate.plate||Mathf.Abs(gate.plate.position.y-surface.y)>.25f)continue;
+            Vector3 delta=gate.plate.position-ahead;delta.y=0;
+            if(delta.magnitude<nearest){nearest=delta.magnitude;surface=gate.plate.position+Vector3.up*.05f;}
+        }}
+        at=surface+Vector3.up*(held.kind==Pickup.Kind.Crate?.835f:.43f);
         Vector3 half=held.kind==Pickup.Kind.Crate?new Vector3(.58f,.8f,.58f):Vector3.one*.25f;
         Vector3 separation=at-transform.position;separation.y=0;
-        if(separation.magnitude<(held.kind==Pickup.Kind.Crate?1.0f:.65f)){FactoryGame.I.Notify("Step back from the plate before placing it. Leave room for yourself.");return;}
+        if(separation.magnitude<(held.kind==Pickup.Kind.Crate?1.0f:.65f)){reason=UiCopy.Pick("离条纹板太近：退后一步再放。","Too close to the plate: take one step back.");return false;}
         foreach(var c in Physics.OverlapBox(at,half,Quaternion.identity,~0,QueryTriggerInteraction.Ignore)){
             if(c.transform.IsChildOf(transform)||c.transform.IsChildOf(held.transform))continue;
             if(c.bounds.max.y<=surface.y+.08f)continue;
-            FactoryGame.I.Notify("There's not enough room here. Try a clear patch of floor.");return;
+            reason=UiCopy.Pick("前方有东西挡着：换一块空地。","Something blocks this spot. Find clear floor.");return false;
         }
-        held.PlaceAt(at);held=null;FactoryGame.I.audioScore.Tick(330);
-        Physics.SyncTransforms();
+        return true;
+    }
+    public void TryPlace(){
+        if(!Placement(out Vector3 at,out string reason)){FactoryGame.I.Notify(reason,4);return;}
+        held.PlaceAt(at);held=null;FactoryGame.I.audioScore.Tick(330);Physics.SyncTransforms();
     }
     public void PutBackHeld(){if(!held)return;held.ResetHome();held=null;}
     public void ReleaseForDelivery(){if(!held)return;var item=held;held=null;item.transform.SetParent(null);item.carried=false;item.transform.position=new Vector3(.2f,1.45f,60);item.SetColliders(false);}
