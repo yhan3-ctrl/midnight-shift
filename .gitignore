@@ -1,0 +1,13 @@
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/Work/
+/.vs/
+*.csproj
+*.sln
+*.slnx
+*.user
+.DS_Store

@@ -1,0 +1,169 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
+using UnityEditor.Build.Reporting;
+using LastLantern;
+
+public static class FactoryBuild {
+    static Material teal, dark, timber, brass, cream, orange, mint, ink, violet, glass;
+    static Transform world; static Font font; static Material worldText;
+    [MenuItem("Willow Works/Build factory scene")]
+    public static void CreateScene(){
+        Directory.CreateDirectory("Assets/Materials");Directory.CreateDirectory("Assets/Scenes");Directory.CreateDirectory("Documentation");
+        EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);
+        teal=Mat("Paint - deep teal",new Color(.09f,.25f,.28f));dark=Mat("Paint - midnight",new Color(.045f,.09f,.12f));
+        timber=Mat("Wood - honey",new Color(.44f,.26f,.13f));brass=Mat("Metal - warm brass",new Color(.68f,.48f,.23f),.45f);
+        cream=Mat("Paper - ivory",new Color(.91f,.84f,.67f));orange=Mat("Pumpkin - apricot",new Color(.95f,.38f,.12f));
+        mint=Mat("Ghost - seafoam",new Color(.62f,.89f,.78f));ink=Mat("Ink",new Color(.04f,.08f,.1f));violet=Mat("Fabric - plum",new Color(.3f,.17f,.3f));
+        glass=Mat("Core - warm light",new Color(1,.78f,.3f));glass.EnableKeyword("_EMISSION");glass.SetColor("_EmissionColor",new Color(1,.6f,.15f)*1.2f);
+        font=Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+        font.RequestCharactersInTexture("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 /.-%&!",64);
+        worldText=AssetDatabase.LoadAssetAtPath<Material>("Assets/Materials/World text.mat");if(!worldText){worldText=new Material(Shader.Find("Willow/WorldText"));AssetDatabase.CreateAsset(worldText,"Assets/Materials/World text.mat");}worldText.mainTexture=font.material.mainTexture;
+        world=new GameObject("WILLOW WORKS / handcrafted factory").transform;
+        RenderSettings.ambientMode=UnityEngine.Rendering.AmbientMode.Flat;RenderSettings.ambientLight=new Color(.43f,.49f,.5f);RenderSettings.fog=true;RenderSettings.fogColor=new Color(.09f,.15f,.18f);RenderSettings.fogMode=FogMode.ExponentialSquared;RenderSettings.fogDensity=.009f;
+        var sun=new GameObject("Autumn moon").AddComponent<Light>();sun.type=LightType.Directional;sun.color=new Color(.7f,.8f,1);sun.intensity=.5f;sun.transform.rotation=Quaternion.Euler(48,-35,0);sun.shadows=LightShadows.Soft;
+        QualitySettings.shadowDistance=45;QualitySettings.antiAliasing=4;
+        FloorAndShell();
+        var game=new GameObject("Night shift / game state").AddComponent<FactoryGame>();game.audioScore=game.gameObject.AddComponent<AudioScore>();
+        var po=new GameObject("Player / first person");po.transform.position=new Vector3(0,0,-7);var cc=po.AddComponent<CharacterController>();cc.height=1.8f;cc.center=Vector3.up*.9f;cc.radius=.3f;cc.stepOffset=.25f;cc.slopeLimit=45;
+        var player=po.AddComponent<PlayerMotor>();game.player=player;
+        var cam=new GameObject("Player view").AddComponent<Camera>();cam.tag="MainCamera";cam.transform.SetParent(po.transform);cam.transform.localPosition=new Vector3(0,1.65f,0);cam.fieldOfView=68;cam.nearClipPlane=.06f;cam.farClipPlane=140;cam.backgroundColor=new Color(.075f,.12f,.16f);cam.clearFlags=CameraClearFlags.SolidColor;cam.gameObject.AddComponent<AudioListener>();player.view=cam;
+        var hand=new GameObject("Carry pose").transform;hand.SetParent(cam.transform);hand.localPosition=new Vector3(.25f,-.33f,.8f);player.hand=hand;
+        // Two visible mitten hands make carrying legible without importing character assets.
+        var left=Shape("Left mitten",PrimitiveType.Capsule,Vector3.zero,new Vector3(.12f,.19f,.13f),violet,hand,false);left.transform.localPosition=new Vector3(-.42f,-.22f,.04f);left.transform.localRotation=Quaternion.Euler(0,0,-25);
+        var right=Shape("Right mitten",PrimitiveType.Capsule,Vector3.zero,new Vector3(.12f,.19f,.13f),violet,hand,false);right.transform.localPosition=new Vector3(.42f,-.22f,.04f);right.transform.localRotation=Quaternion.Euler(0,0,25);
+        // Foyer: crate holds the route open. Plate is visible beside the gate.
+        Sign("WILLOW WORKS",new Vector3(0,3.1f,-9.65f),2.4f,cream,180);
+        Sign("TOYS, LANTERNS & LITTLE KINDNESSES",new Vector3(0,2.5f,-9.64f),.65f,cream,180);
+        RoomTitle("01 / THE LAST NIGHT SHIFT",new Vector3(0,3.25f,10.7f));
+        Gate("Foyer gate",12,FactoryGate.Rule.Plate,new Vector3(-4.8f,.05f,8));
+        Crate("Foyer crate",new Vector3(-4.8f,.61f,3.8f));
+        Board("LEAVE A CRATE ON THE STRIPED PLATE\nTHE DOOR STAYS OPEN WHILE IT IS HELD",new Vector3(-4.8f,1.65f,9.8f),2.9f);
+        var welcome=Board("AUNT MAY'S NOTE\nE TO READ",new Vector3(4.8f,1.6f,-4),2.4f).AddComponent<StoryPoint>();welcome.kind=StoryPoint.StoryKind.Note;welcome.note="The helpers only return on Halloween. If the lights are on, please tell them I left the side door open for the parade. Your old drawing is still in the archive. Love, Aunt May.";
+        Desk(new Vector3(5.2f,0,3));Ghost("Button",new Vector3(5.2f,0,3),false);
+        for(int i=0;i<3;i++){Shape("Lunch tin",PrimitiveType.Cube,new Vector3(4.5f+i*.65f,1.07f,2.8f),new Vector3(.42f,.18f,.3f),i==1?orange:teal);}
+        Pumpkin(new Vector3(-6.6f,.45f,-5),.8f);Pumpkin(new Vector3(6.4f,.36f,8),.6f);
+        // Packaging: both machines share the same physical core.
+        RoomTitle("02 / PACKAGING",new Vector3(0,3.25f,28.7f));
+        Core(new Vector3(0,.6f,17));
+        MachineAt("mould","MOULDING TABLE",new Vector3(-5.4f,0,20),"1 / MAKE THE SHELL");
+        MachineAt("ribbon","RIBBON CONVEYOR",new Vector3(5.4f,0,25),"2 / SEND IT TO ASSEMBLY");
+        Gate("Packaging gate",30,FactoryGate.Rule.Packaging,Vector3.zero);
+        Board("ONE CORE / TWO JOBS\nFINISHED WORK STAYS FINISHED\nE TO REMOVE A CORE AFTER A JOB",new Vector3(0,1.8f,27.8f),3.2f);
+        Conveyor(new Vector3(0,.75f,23),6);
+        // Archive: a safe observation alcove introduces Hush without a surprise attack.
+        RoomTitle("03 / THE ARCHIVE",new Vector3(0,3.25f,44.8f));
+        MachineAt("chime","BREAK-TIME CHIME",new Vector3(-6.3f,0,35),"POWER & START TO CALL HUSH");
+        Crate("Archive crate",new Vector3(-4,.61f,32.8f));
+        Crate("Movable cover",new Vector3(3.8f,.61f,35));
+        Shelf(new Vector3(-5.8f,0,39.3f));Shelf(new Vector3(5.9f,0,39.3f));
+        Gate("Drawing cabinet",43.5f,FactoryGate.Rule.Plate,new Vector3(5.5f,.05f,41.3f),false);
+        var drawing=Board("AN OLD DRAWING\nE TO TURN IT OVER",new Vector3(0,1.5f,44.9f),2.3f).AddComponent<StoryPoint>();drawing.kind=StoryPoint.StoryKind.Drawing;
+        Gate("Assembly entrance",46,FactoryGate.Rule.Drawing,Vector3.zero);
+        Board("HUSH IS ON SAFETY DUTY\nWATCH HIS ROUTE. CRATES BLOCK SIGHT.\nSTART THE CHIME TO DRAW HIM AWAY.\nHE WILL NEVER HURT YOU.",new Vector3(6.4f,1.8f,32),3.4f);
+        var ig=Ghost("Hush / safety inspector",new Vector3(0,0,35),true);var ins=ig.AddComponent<Inspector>();game.inspector=ins;
+        ins.visual=ig.transform.Find("Ghost body");ins.eyes=new GameObject("Sight origin").transform;ins.eyes.SetParent(ig.transform);ins.eyes.localPosition=new Vector3(0,1.45f,.35f);
+        ins.armLeft=ins.visual.Find("Left sleeve");ins.armRight=ins.visual.Find("Right sleeve");
+        ins.route=new[]{new Vector3(-2.3f,0,35.5f),new Vector3(2.3f,0,35.5f),new Vector3(2.3f,0,40.5f),new Vector3(-2.3f,0,40.5f)};
+        // Assembly: same core, a reversible gate layout, persistent intermediate output.
+        RoomTitle("04 / A LIGHT FOR THE WAY HOME",new Vector3(0,3.25f,62.8f));
+        MachineAt("etch","ENGRAVING TABLE",new Vector3(-5.4f,0,50.8f),"3 / FOLLOW THE OLD DRAWING");
+        Crate("Assembly crate",new Vector3(4.8f,.61f,49));
+        Gate("Assembly work gate",54,FactoryGate.Rule.Plate,new Vector3(-4.8f,.05f,52),false);
+        MachineAt("press","LANTERN PRESS",new Vector3(5.4f,0,57.5f),"4 / FINISH THE LANTERN");
+        var lanternRoot=new GameObject("The last lantern");lanternRoot.transform.position=new Vector3(3.6f,1.1f,58.5f);var lp=lanternRoot.AddComponent<Pickup>();lp.kind=Pickup.Kind.Lantern;lp.displayName="the last lantern";lp.home=lanternRoot.transform.position;
+        var pumpkin=Pumpkin(Vector3.zero,.58f,lanternRoot.transform);pumpkin.transform.localPosition=Vector3.zero;
+        Shape("Lantern base",PrimitiveType.Cylinder,new Vector3(3.6f,.45f,58.5f),new Vector3(.8f,.45f,.8f),brass);
+        game.lantern=lp;lanternRoot.SetActive(false);
+        Desk(new Vector3(0,0,60));var pip=Ghost("Pip / night foreman",new Vector3(0,0,60.5f),false);var talk=pip.AddComponent<StoryPoint>();talk.kind=StoryPoint.StoryKind.Pip;var talkCollider=pip.AddComponent<BoxCollider>();talkCollider.center=Vector3.up*1.2f;talkCollider.size=new Vector3(1.5f,2,1.2f);
+        Board("DISPATCH / PIP\nONE LAST ORDER",new Vector3(-3.8f,1.8f,61),2.6f);
+        Pumpkin(new Vector3(-6,.5f,60),.9f);
+        PlayerSettings.companyName="Willow Works";PlayerSettings.productName="Midnight Shift - The Last Lantern";
+        PlayerSettings.defaultScreenWidth=1440;PlayerSettings.defaultScreenHeight=900;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=false;
+        var ps=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);var active=ps.FindProperty("activeInputHandler");if(active!=null){active.intValue=0;ps.ApplyModifiedPropertiesWithoutUndo();}
+        EditorSceneManager.SaveScene(SceneManager.GetActiveScene(),"Assets/Scenes/WillowWorks.unity");
+        EditorBuildSettings.scenes=new[]{new EditorBuildSettingsScene("Assets/Scenes/WillowWorks.unity",true)};
+        AssetDatabase.SaveAssets();Debug.Log("FACTORY_SCENE_READY");
+    }
+    static Material Mat(string name,Color color,float metal=0){string path="Assets/Materials/"+name+".mat";var m=AssetDatabase.LoadAssetAtPath<Material>(path);if(!m){m=new Material(Shader.Find("Standard"));AssetDatabase.CreateAsset(m,path);}m.color=color;m.SetFloat("_Metallic",metal);m.SetFloat("_Glossiness",.25f);return m;}
+    static GameObject Shape(string name,PrimitiveType type,Vector3 pos,Vector3 scale,Material mat,Transform parent=null,bool collision=true){var g=GameObject.CreatePrimitive(type);g.name=name;g.transform.SetParent(parent?parent:world);g.transform.position=pos;var inherited=g.transform.parent.lossyScale;g.transform.localScale=new Vector3(scale.x/inherited.x,scale.y/inherited.y,scale.z/inherited.z);g.GetComponent<Renderer>().sharedMaterial=mat;if(!collision)UnityEngine.Object.DestroyImmediate(g.GetComponent<Collider>());return g;}
+    static GameObject Box(string name,Vector3 pos,Vector3 size,Material m,Transform parent=null,bool collision=true)=>Shape(name,PrimitiveType.Cube,pos,size,m,parent,collision);
+    static TextMesh Sign(string text,Vector3 pos,float size,Material mat,float yaw=0,Transform parent=null){
+        var g=new GameObject(text.Split('\n')[0]);g.transform.SetParent(parent?parent:world);g.transform.position=pos;g.transform.rotation=Quaternion.Euler(0,yaw,0);var t=g.AddComponent<TextMesh>();t.text=text;t.font=font;t.fontSize=64;t.characterSize=size*.055f;t.anchor=TextAnchor.MiddleCenter;t.alignment=TextAlignment.Center;t.color=mat.color;g.GetComponent<MeshRenderer>().sharedMaterial=worldText;g.AddComponent<WorldLabel>();return t;
+    }
+    static GameObject Board(string text,Vector3 pos,float width){var g=Box("Notice / "+text.Split('\n')[0],pos,new Vector3(width,1.3f,.13f),dark);Sign(text,pos+Vector3.back*.08f,.61f,cream);return g;}
+    static void RoomTitle(string s,Vector3 p){Box("Overhead sign",p,new Vector3(9,.65f,.2f),dark);Sign(s,p+Vector3.back*.12f,.95f,cream);}
+    static void FloorAndShell(){
+        Box("Foundation",new Vector3(0,-.2f,27),new Vector3(18,.4f,74),timber);
+        for(int z=-9;z<64;z+=2)for(int x=-8;x<9;x+=2)Box("Floorboard",new Vector3(x,.008f,z),new Vector3(1.97f,.02f,1.97f),(x+z)%4==0?teal:dark,null,false);
+        Box("Ceiling",new Vector3(0,4.95f,27),new Vector3(18,.15f,74),dark);
+        Box("West wall",new Vector3(-9,2.5f,27),new Vector3(.35f,5,74),teal);Box("East wall",new Vector3(9,2.5f,27),new Vector3(.35f,5,74),teal);
+        Box("Front wall",new Vector3(0,2.5f,-10),new Vector3(18,5,.3f),teal);Box("Back wall",new Vector3(0,2.5f,64),new Vector3(18,5,.3f),teal);
+        for(int z=-6;z<64;z+=7){
+            Box("Ceiling beam",new Vector3(0,4.6f,z),new Vector3(18,.2f,.28f),timber);
+            foreach(int side in new[]{-1,1}){
+                Box("Wall pillar",new Vector3(side*8.7f,2.2f,z),new Vector3(.25f,4.4f,.35f),timber);
+                Box("Blue window",new Vector3(side*8.79f,2.8f,z+2),new Vector3(.06f,1.65f,2.8f),dark,null,false);
+                Box("Window cross",new Vector3(side*8.7f,2.8f,z+2),new Vector3(.08f,.07f,2.8f),brass,null,false);
+                Box("Window cross",new Vector3(side*8.7f,2.8f,z+2),new Vector3(.08f,1.65f,.07f),brass,null,false);
+            }
+            Shape("Pendant shade",PrimitiveType.Cylinder,new Vector3(0,3.9f,z),new Vector3(1.1f,.12f,1.1f),brass,null,false);
+            Shape("Pendant glow",PrimitiveType.Sphere,new Vector3(0,3.7f,z),Vector3.one*.25f,glass,null,false);
+            var l=new GameObject("Warm pendant light").AddComponent<Light>();l.transform.SetParent(world);l.transform.position=new Vector3(0,3.45f,z);l.type=LightType.Point;l.range=12;l.intensity=1.6f;l.color=new Color(1,.77f,.48f);
+            for(int i=-3;i<=3;i++){var flag=Box("Halloween bunting",new Vector3(i*2,3.6f,z+2),new Vector3(.45f,.55f,.06f),i%2==0?orange:violet,null,false);flag.transform.rotation=Quaternion.Euler(0,0,i*6);}
+        }
+    }
+    static FactoryGate Gate(string name,float z,FactoryGate.Rule rule,Vector3 platePos,bool full=true){
+        var root=new GameObject(name);root.transform.SetParent(world);var g=root.AddComponent<FactoryGate>();g.rule=rule;
+        // Wall spans the room, so progression cannot be bypassed by walking around the door.
+        foreach(int side in new[]{-1,1})Box("Divider",new Vector3(side*5.3f,1.8f,z),new Vector3(7.4f,3.6f,.3f),full?teal:timber,root.transform);
+        Box("Door header",new Vector3(0,3.7f,z),new Vector3(3.2f,.4f,.5f),brass,root.transform);
+        var panel=Box("Sliding gate",new Vector3(0,1.65f,z),new Vector3(3.1f,3.3f,.23f),dark,root.transform);g.panel=panel.transform;g.closedPosition=panel.transform.position;
+        for(int i=-1;i<=1;i++)Box("Gate brass rib",new Vector3(i*.8f,1.65f,z-.14f),new Vector3(.07f,3.2f,.04f),brass,panel.transform,false);
+        g.label=Sign(rule==FactoryGate.Rule.Plate?"HOLD PLATE TO OPEN":"WORK IN PROGRESS",new Vector3(0,3.15f,z-.2f),.57f,cream);
+        if(rule==FactoryGate.Rule.Plate){var p=Box("Striped pressure plate",platePos,new Vector3(1.9f,.1f,1.9f),brass);g.plate=p.transform;for(int i=-2;i<=2;i++)Box("Plate stripe",platePos+new Vector3(i*.32f,.06f,0),new Vector3(.12f,.015f,1.8f),dark,null,false);}
+        return g;
+    }
+    static Pickup Crate(string name,Vector3 pos){var root=Box(name,pos,Vector3.one*1.2f,timber);var p=root.AddComponent<Pickup>();p.kind=Pickup.Kind.Crate;p.displayName=name;p.home=pos;
+        for(int i=-1;i<=1;i+=2){Box("Crate band",pos+new Vector3(i*.4f,0,-.61f),new Vector3(.09f,1.2f,.03f),brass,root.transform,false);Box("Crate band",pos+new Vector3(0,i*.4f,-.62f),new Vector3(1.2f,.09f,.03f),brass,root.transform,false);}return p;}
+    static Pickup Core(Vector3 pos){var root=Shape("Shared power core",PrimitiveType.Capsule,pos,new Vector3(.42f,.42f,.42f),glass);var p=root.AddComponent<Pickup>();p.kind=Pickup.Kind.Core;p.displayName="power core";p.home=pos;return p;}
+    static Machine MachineAt(string id,string name,Vector3 pos,string instruction){
+        var root=Box(name,pos+Vector3.up*.6f,new Vector3(2.5f,1.2f,1.5f),teal);var m=root.AddComponent<Machine>();m.machineId=id;m.displayName=name;
+        Box("Brass worktop",pos+Vector3.up*1.22f,new Vector3(2.65f,.12f,1.65f),brass,root.transform);
+        var sock=new GameObject("Core socket").transform;sock.SetParent(root.transform);sock.position=pos+new Vector3(.75f,1.6f,0);m.corePoint=sock;
+        Shape("Socket rim",PrimitiveType.Cylinder,pos+new Vector3(.75f,1.32f,0),new Vector3(.65f,.05f,.65f),dark,root.transform,false);
+        m.indicator=Shape("Status lamp",PrimitiveType.Sphere,pos+new Vector3(-.85f,1.48f,-.25f),Vector3.one*.22f,cream,root.transform,false).GetComponent<Renderer>();
+        var wheel=Shape("Work spindle",PrimitiveType.Cylinder,pos+new Vector3(-.2f,1.52f,0),new Vector3(.6f,.25f,.6f),orange,root.transform,false);m.spinner=wheel.transform;
+        Box("Machine label",pos+new Vector3(0,.8f,-.77f),new Vector3(2.1f,.5f,.04f),dark,root.transform,false);
+        Sign(name,pos+new Vector3(0,.85f,-.8f),.57f,cream);
+        m.status=Sign("INSERT CORE",pos+new Vector3(0,.55f,-.8f),.44f,cream);
+        Board(instruction,pos+new Vector3(0,2.6f,.6f),3);return m;
+    }
+    static void Desk(Vector3 pos){Box("Desk top",pos+Vector3.up*.9f,new Vector3(2.8f,.18f,1.1f),timber);foreach(int a in new[]{-1,1})foreach(int b in new[]{-1,1})Box("Desk leg",pos+new Vector3(a*1.2f,.4f,b*.4f),new Vector3(.12f,.8f,.12f),brass);}
+    static void Conveyor(Vector3 pos,float length){Box("Conveyor base",pos,new Vector3(length,.4f,1.6f),brass);for(float x=-length/2+.3f;x<length/2;x+=.42f){var r=Shape("Conveyor roller",PrimitiveType.Cylinder,pos+new Vector3(x,.28f,0),new Vector3(.2f,.7f,.2f),dark);r.transform.rotation=Quaternion.Euler(90,0,0);}}
+    static void Shelf(Vector3 p){for(int i=0;i<3;i++)Box("Archive shelf",p+Vector3.up*(.4f+i*.8f),new Vector3(3,.12f,1.4f),timber);for(int i=-1;i<=1;i+=2)Box("Shelf post",p+new Vector3(i*1.4f,1.2f,0),new Vector3(.15f,2.4f,1.4f),brass);for(int i=-1;i<=1;i++)Box("Stored toy box",p+new Vector3(i*.9f,.78f,0),new Vector3(.7f,.6f,1),i==0?orange:violet);}
+    static GameObject Pumpkin(Vector3 pos,float size,Transform parent=null){var g=new GameObject("Pumpkin lantern");g.transform.SetParent(parent?parent:world);g.transform.position=pos;for(int i=0;i<8;i++){float a=i*Mathf.PI/4;Shape("Pumpkin lobe",PrimitiveType.Sphere,pos+new Vector3(Mathf.Cos(a)*size*.23f,0,Mathf.Sin(a)*size*.23f),new Vector3(size*.7f,size*.8f,size*.7f),orange,g.transform,false);}Shape("Stem",PrimitiveType.Cylinder,pos+Vector3.up*size*.5f,new Vector3(size*.13f,size*.16f,size*.13f),timber,g.transform,false);for(int i=-1;i<=1;i+=2)Shape("Warm lantern eye",PrimitiveType.Sphere,pos+new Vector3(i*size*.18f,size*.1f,-size*.49f),Vector3.one*size*.14f,glass,g.transform,false);var col=g.AddComponent<SphereCollider>();col.radius=size*.55f;return g;}
+    static GameObject Ghost(string name,Vector3 pos,bool inspector){
+        var root=new GameObject(name);root.transform.SetParent(world);root.transform.position=pos;
+        var body=new GameObject("Ghost body").transform;body.SetParent(root.transform);body.position=pos+Vector3.up*1.1f;
+        Shape("Soft ghost",PrimitiveType.Sphere,body.position,new Vector3(1.1f,1.4f,.85f),inspector?cream:mint,body,false);
+        for(int i=-1;i<=1;i++)Shape("Scalloped hem",PrimitiveType.Sphere,body.position+new Vector3(i*.3f,-.5f,0),new Vector3(.4f,.45f,.65f),inspector?cream:mint,body,false);
+        for(int i=-1;i<=1;i+=2)Shape("Eye",PrimitiveType.Sphere,body.position+new Vector3(i*.19f,.18f,-.4f),new Vector3(.12f,.18f,.06f),ink,body,false);
+        Shape("Work cap",PrimitiveType.Cylinder,body.position+Vector3.up*.65f,new Vector3(1,.12f,.8f),inspector?orange:violet,body,false);
+        Shape("Left sleeve",PrimitiveType.Capsule,body.position+new Vector3(-.6f,0,0),new Vector3(.25f,.35f,.3f),mint,body,false);
+        Shape("Right sleeve",PrimitiveType.Capsule,body.position+new Vector3(.6f,0,0),new Vector3(.25f,.35f,.3f),mint,body,false);
+        if(inspector)root.transform.rotation=Quaternion.Euler(0,180,0);
+        else root.AddComponent<GhostIdle>();return root;
+    }
+    [MenuItem("Willow Works/Build Mac playable")]
+    public static void BuildMac(){
+        if(!File.Exists("Assets/Scenes/WillowWorks.unity"))CreateScene();Directory.CreateDirectory("Builds/Mac");
+        var report=BuildPipeline.BuildPlayer(new BuildPlayerOptions{scenes=new[]{"Assets/Scenes/WillowWorks.unity"},locationPathName="Builds/Mac/Midnight Shift.app",target=BuildTarget.StandaloneOSX,options=BuildOptions.Development});
+        if(report.summary.result!=BuildResult.Succeeded)throw new Exception("Mac build failed: "+report.summary.result);
+        Debug.Log("MAC_BUILD_READY / "+report.summary.totalSize);
+    }
+}
