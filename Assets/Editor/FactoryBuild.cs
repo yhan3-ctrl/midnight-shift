@@ -179,7 +179,7 @@ public static class FactoryBuild {
         if(id!="chime"){
             Shape("Workpiece resting tray",PrimitiveType.Cylinder,pos+new Vector3(-.5f,1.35f,-.2f),new Vector3(.72f,.07f,.72f),dark,root.transform,false);
             var output=LanternModel(pos+new Vector3(-.5f,1.65f,-.2f),.58f,root.transform);output.station=m;
-            Sign(id=="mould"?"SHELL / KEEP WHEN UNPOWERED":id=="ribbon"?"RIBBON / READY FOR ASSEMBLY":id=="etch"?"YOUR PROMISE / ENGRAVED":"LIGHT / READY AT DISPATCH",pos+new Vector3(0,1.08f,-.84f),.27f,cream);
+            output.caption=Sign("AWAITING CRAFT",pos+new Vector3(0,1.08f,-.84f),.27f,cream);
         }
         Board(instruction,pos+new Vector3(0,2.6f,.6f),3);return m;
     }
@@ -209,7 +209,7 @@ public static class FactoryBuild {
     }
     static LanternDisplay LanternModel(Vector3 pos,float size,Transform parent){
         var root=new GameObject("Lantern / visible craft");root.transform.SetParent(parent);root.transform.position=pos;
-        var display=root.AddComponent<LanternDisplay>();
+        var display=root.AddComponent<LanternDisplay>();display.halfHeight=size*.4f;
         var model=new GameObject("Craft stages").transform;model.SetParent(root.transform,false);display.model=model;
         for(int i=0;i<8;i++){float a=i*Mathf.PI/4;Shape("Ceramic pumpkin rib",PrimitiveType.Sphere,pos+new Vector3(Mathf.Cos(a)*size*.22f,0,Mathf.Sin(a)*size*.22f),new Vector3(size*.7f,size*.8f,size*.7f),orange,model,false);}
         Shape("Brass lid",PrimitiveType.Cylinder,pos+Vector3.up*size*.43f,new Vector3(size*.43f,size*.045f,size*.43f),brass,model,false);
@@ -230,7 +230,13 @@ public static class FactoryBuild {
     }
     static void Desk(Vector3 pos){Box("Desk top",pos+Vector3.up*.9f,new Vector3(2.8f,.18f,1.1f),timber);foreach(int a in new[]{-1,1})foreach(int b in new[]{-1,1})Box("Desk leg",pos+new Vector3(a*1.2f,.4f,b*.4f),new Vector3(.12f,.8f,.12f),brass);}
     static void Conveyor(Vector3 pos,float length){Box("Conveyor base",pos,new Vector3(length,.4f,1.6f),brass);for(float x=-length/2+.3f;x<length/2;x+=.42f){var r=Shape("Conveyor roller",PrimitiveType.Cylinder,pos+new Vector3(x,.28f,0),new Vector3(.2f,.7f,.2f),dark);r.transform.rotation=Quaternion.Euler(90,0,0);}}
-    static void Shelf(Vector3 p){for(int i=0;i<3;i++)Box("Archive shelf",p+Vector3.up*(.4f+i*.8f),new Vector3(3,.12f,1.4f),timber);for(int i=-1;i<=1;i+=2)Box("Shelf post",p+new Vector3(i*1.4f,1.2f,0),new Vector3(.15f,2.4f,1.4f),brass);for(int i=-1;i<=1;i++)Box("Stored toy box",p+new Vector3(i*.9f,.78f,0),new Vector3(.7f,.6f,1),i==0?orange:violet);}
+    static void Shelf(Vector3 p){
+        var root=new GameObject("Solid archive shelf");root.transform.SetParent(world);root.transform.position=p;
+        var collider=root.AddComponent<BoxCollider>();collider.center=Vector3.up*1.2f;collider.size=new Vector3(3,2.4f,1.4f);
+        for(int i=0;i<3;i++)Box("Archive shelf",p+Vector3.up*(.4f+i*.8f),new Vector3(3,.12f,1.4f),timber,root.transform,false);
+        for(int i=-1;i<=1;i+=2)Box("Shelf post",p+new Vector3(i*1.4f,1.2f,0),new Vector3(.15f,2.4f,1.4f),brass,root.transform,false);
+        for(int i=-1;i<=1;i++)Box("Stored toy box",p+new Vector3(i*.9f,.78f,0),new Vector3(.7f,.6f,1),i==0?orange:violet,root.transform,false);
+    }
     static GameObject Pumpkin(Vector3 pos,float size,Transform parent=null){var g=new GameObject("Pumpkin lantern");g.transform.SetParent(parent?parent:world);g.transform.position=pos;for(int i=0;i<8;i++){float a=i*Mathf.PI/4;Shape("Pumpkin lobe",PrimitiveType.Sphere,pos+new Vector3(Mathf.Cos(a)*size*.23f,0,Mathf.Sin(a)*size*.23f),new Vector3(size*.7f,size*.8f,size*.7f),orange,g.transform,false);}Shape("Stem",PrimitiveType.Cylinder,pos+Vector3.up*size*.5f,new Vector3(size*.13f,size*.16f,size*.13f),timber,g.transform,false);for(int i=-1;i<=1;i+=2)Shape("Warm lantern eye",PrimitiveType.Sphere,pos+new Vector3(i*size*.18f,size*.1f,-size*.49f),Vector3.one*size*.14f,glass,g.transform,false);var col=g.AddComponent<SphereCollider>();col.radius=size*.55f;return g;}
     static GameObject Ghost(string name,Vector3 pos,bool inspector){
         var root=new GameObject(name);root.transform.SetParent(world);root.transform.position=pos;

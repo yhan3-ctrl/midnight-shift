@@ -69,7 +69,10 @@ public class FactoryPlaycheck : MonoBehaviour {
             Check(powerGate.Evaluate(),"crate override keeps workshop gate open without a core");
             p.Teleport(new Vector3(0,0,15),0);Check(g.Objective.Contains("Moulding"),"objective advances from gate preparation to manufacturing once crate holds access");p.Teleport(new Vector3(0,0,-6),0);overrideCrate.ResetHome();Physics.SyncTransforms();
 
-            var tutorialCrate=crates.Single(x=>x.name=="Foyer crate");p.Pick(tutorialCrate);p.Teleport(new Vector3(-4.8f,0,5.3f),0);Physics.SyncTransforms();p.TryPlace();
+            var tutorialCrate=crates.Single(x=>x.name=="Foyer crate");p.Pick(tutorialCrate);
+            p.Teleport(new Vector3(-4.8f,0,7.3f),0);Physics.SyncTransforms();p.TryPlace();Check(p.held==tutorialCrate,"plate assist refuses to place a crate over the player");
+            var worktop=GameObject.CreatePrimitive(PrimitiveType.Cube);worktop.transform.position=new Vector3(0,1,1.5f);worktop.transform.localScale=new Vector3(2,.2f,2);p.Teleport(Vector3.zero,0);Physics.SyncTransforms();p.TryPlace();Check(p.held==tutorialCrate,"placement refuses elevated worktops");DestroyImmediate(worktop);Physics.SyncTransforms();
+            p.Teleport(new Vector3(-4.8f,0,5.3f),0);Physics.SyncTransforms();p.TryPlace();
             Check(p.held==null&&Vector3.Distance(tutorialCrate.transform.position,foyer.plate.position+Vector3.up*.885f)<.05f&&foyer.Evaluate(),"near-edge crate placement snaps onto plate and opens gate");
             p.Teleport(new Vector3(0,0,-6),0);
 
@@ -102,13 +105,14 @@ public class FactoryPlaycheck : MonoBehaviour {
             g.ReadDrawing();CloseDialogue();Check(g.blueprint&&gates.Single(x=>x.name=="Assembly entrance").Evaluate(),"story reveal unlocks assembly");
             machines.Single(x=>x.machineId=="chime").Use(p);p.Teleport(new Vector3(0,0,37),0);g.inspector.ResetPatrol();g.inspector.Hear(new Vector3(-6,0,35));Check(g.inspector.state==Inspector.State.Investigate,"machine noise changes inspector state");
             g.ResetSection();Check(g.resets==1&&g.shell&&g.transferred&&g.blueprint,"safety reset preserves completed progress");Check(p.held==null&&core.transform.parent==null,"reset releases core to recoverable home");
+            Check(g.Reading&&g.Frozen,"retry explains recovery while safely pausing the world");CloseDialogue();
             g.inspector.enabled=false;g.inspector.ResetPatrol();g.inspector.transform.position=new Vector3(0,0,36);g.inspector.transform.rotation=Quaternion.identity;p.Teleport(new Vector3(0,0,40),0);Physics.SyncTransforms();
             Check(g.inspector.CanSeePlayer(),"inspector vision sees player in range and field of view");
             var cover=crates.First();cover.transform.position=new Vector3(0,.835f,38);Physics.SyncTransforms();
             Check(!g.inspector.CanSeePlayer(),"placed crate physically blocks inspector sight");
             cover.SetColliders(false);Physics.SyncTransforms();Check(g.inspector.CanSeePlayer(),"disabled carried-item collision does not create invisible cover");cover.SetColliders(true);cover.ResetHome();
             p.Teleport(new Vector3(0,0,47.2f),0);g.inspector.assemblyDuty=true;g.inspector.route=new[]{new Vector3(4,0,52),new Vector3(-1,0,50)};g.inspector.ResetPatrol();
-            p.Pick(core);g.ResetSection();Check(p.transform.position.z>46&&core.transform.position.z>46,"final-area retry recovers player and held core locally");Check(!g.inspector.CanSeePlayer(),"safety reset grants a brief detection grace period");
+            p.Pick(core);g.ResetSection();Check(p.transform.position.z>46&&core.transform.position.z>46,"final-area retry recovers player and held core locally");Check(!g.inspector.CanSeePlayer(),"safety reset grants a brief detection grace period");CloseDialogue();
             g.inspector.enabled=true;g.inspector.assemblyDuty=false;g.inspector.route=new[]{new Vector3(-2.3f,0,35.5f),new Vector3(2.3f,0,40.5f)};g.inspector.ResetPatrol();p.Teleport(new Vector3(0,0,15),0);
             var etch=machines.Single(x=>x.machineId=="etch");p.Pick(core);etch.Use(p);etch.Use(p);SolveRouting(etch);
         }catch(Exception e){Fail(e);yield break;}
@@ -141,7 +145,8 @@ public class FactoryPlaycheck : MonoBehaviour {
         for(int i=0;i<grid.turns.Length;i++)while(grid.turns[i]!=0)grid.Rotate(i);
         Check(grid.Solved,"authored circuit has a valid connected solution: "+machine.machineId);
         g.PowerCircuit();Check(g.activeCircuit==null&&machine.running,"connected circuit starts machine: "+machine.machineId);
-        if(machine.machineId=="mould"){var relay=g.workshopRelay;var crate=FindObjectsByType<Pickup>(FindObjectsSortMode.None).First(x=>x.kind==Pickup.Kind.Crate&&!x.carried);var position=crate.transform.position;crate.PlaceAt(relay.gate.plate.position+Vector3.up*.885f);p.Teleport(new Vector3(0,0,19),0);Physics.SyncTransforms();Check(g.Objective.Contains("TAKING SHAPE"),"running machine objective does not instruct the player to remove its core or reopen routing");crate.PlaceAt(position);}
+        var output=FindObjectsByType<LanternDisplay>(FindObjectsSortMode.None).Single(x=>x.station==machine);output.Refresh();Check(output.caption&&!output.caption.text.Contains("READY"),"running output label does not promise completion: "+machine.machineId);
+        if(machine.machineId=="mould"){machine.progress=machine.workSeconds*.5f;output.Refresh();Check(Mathf.Abs(output.model.localPosition.y-output.halfHeight*output.model.localScale.y+output.halfHeight)<.001f,"growing shell stays anchored to its tray");machine.progress=0;var relay=g.workshopRelay;var crate=FindObjectsByType<Pickup>(FindObjectsSortMode.None).First(x=>x.kind==Pickup.Kind.Crate&&!x.carried);var position=crate.transform.position;crate.PlaceAt(relay.gate.plate.position+Vector3.up*.885f);p.Teleport(new Vector3(0,0,19),0);Physics.SyncTransforms();Check(g.Objective.Contains("TAKING SHAPE"),"running machine objective does not instruct the player to remove its core or reopen routing");crate.PlaceAt(position);}
 
     }
     void CloseDialogue(){for(int i=0;i<20&&g.Reading;i++)g.Advance();Time.timeScale=1;}

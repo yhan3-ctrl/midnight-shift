@@ -4,15 +4,20 @@ namespace LastLantern {
 public class PlayerMotor : MonoBehaviour {
     public Camera view; public Transform hand; public Pickup held; public Interactable focus;
     public float speed=4.1f; float pitch,fall,bob,stepClock; CharacterController cc;
+    public bool keyboardLook; public float Pitch=>pitch; int ignoreMouseFrames;
+    public void ResetLookInput(){ignoreMouseFrames=3;}
     void Awake(){cc=GetComponent<CharacterController>();}
     void Update(){
         if(!FactoryGame.I||FactoryGame.I.Frozen){focus=null;return;}
         float keyYaw=(Input.GetKey(KeyCode.RightArrow)?1:0)-(Input.GetKey(KeyCode.LeftArrow)?1:0);
         float keyPitch=(Input.GetKey(KeyCode.DownArrow)?1:0)-(Input.GetKey(KeyCode.UpArrow)?1:0);
-        transform.Rotate(0,Input.GetAxisRaw("Mouse X")*FactoryGame.I.sensitivity+keyYaw*85*Time.deltaTime,0);
-        pitch=Mathf.Clamp(pitch-Input.GetAxisRaw("Mouse Y")*FactoryGame.I.sensitivity+keyPitch*65*Time.deltaTime,-72,72);
+        if(Input.GetKeyDown(KeyCode.K)){keyboardLook=!keyboardLook;FactoryGame.I.Notify(keyboardLook?"Arrow-key look / mouse look off. K switches back.":"Mouse and arrow-key look. K switches to arrows only.");ResetLookInput();}
+        bool mouse=!keyboardLook&&ignoreMouseFrames<=0;if(ignoreMouseFrames>0)ignoreMouseFrames--;
+        transform.Rotate(0,(mouse?Input.GetAxisRaw("Mouse X")*FactoryGame.I.sensitivity:0)+keyYaw*85*Time.deltaTime,0);
+        pitch=Mathf.Clamp(pitch-(mouse?Input.GetAxisRaw("Mouse Y")*FactoryGame.I.sensitivity:0)+keyPitch*65*Time.deltaTime,-72,72);
         view.transform.localRotation=Quaternion.Euler(pitch,0,0);
-        Vector3 move=Vector3.ClampMagnitude(new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical")),1);
+        // Unity legacy axes also contain arrow keys; reserve those exclusively for looking.
+        Vector3 move=Vector3.ClampMagnitude(new Vector3((Input.GetKey(KeyCode.D)?1:0)-(Input.GetKey(KeyCode.A)?1:0),0,(Input.GetKey(KeyCode.W)?1:0)-(Input.GetKey(KeyCode.S)?1:0)),1);
         fall=cc.isGrounded?-2:fall-22*Time.deltaTime;
         cc.Move((transform.TransformDirection(move)*speed+Vector3.up*fall)*Time.deltaTime);
         bob+=move.magnitude*Time.deltaTime*6;
@@ -38,6 +43,7 @@ public class PlayerMotor : MonoBehaviour {
         Vector3 ahead=transform.position+transform.forward*1.5f+Vector3.up*2;
         if(!Physics.Raycast(ahead,Vector3.down,out RaycastHit ground,3.5f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore)||ground.normal.y<.85f){FactoryGame.I.Notify("Find a clear, level surface to place it.");return;}
         Vector3 surface=ground.point;
+        if(surface.y>.25f){FactoryGame.I.Notify("Place it on the factory floor, away from shelves and worktops.");return;}
         // A small placement assist makes the raised plate forgiving at its edges.
         // The same solid-obstacle validation below still applies after snapping.
         if(held.kind==Pickup.Kind.Crate){
@@ -50,6 +56,8 @@ public class PlayerMotor : MonoBehaviour {
         }
         Vector3 at=surface+Vector3.up*(held.kind==Pickup.Kind.Crate?.835f:.43f);
         Vector3 half=held.kind==Pickup.Kind.Crate?new Vector3(.58f,.8f,.58f):Vector3.one*.25f;
+        Vector3 separation=at-transform.position;separation.y=0;
+        if(separation.magnitude<(held.kind==Pickup.Kind.Crate?1.0f:.65f)){FactoryGame.I.Notify("Step back from the plate before placing it. Leave room for yourself.");return;}
         foreach(var c in Physics.OverlapBox(at,half,Quaternion.identity,~0,QueryTriggerInteraction.Ignore)){
             if(c.transform.IsChildOf(transform)||c.transform.IsChildOf(held.transform))continue;
             if(c.bounds.max.y<=surface.y+.08f)continue;
@@ -60,6 +68,6 @@ public class PlayerMotor : MonoBehaviour {
     }
     public void PutBackHeld(){if(!held)return;held.ResetHome();held=null;}
     public void ReleaseForDelivery(){if(!held)return;var item=held;held=null;item.transform.SetParent(null);item.carried=false;item.transform.position=new Vector3(.2f,1.45f,60);item.SetColliders(false);}
-    public void Teleport(Vector3 pos,float yaw){cc.enabled=false;transform.position=pos;transform.rotation=Quaternion.Euler(0,yaw,0);cc.enabled=true;fall=0;pitch=0;}
+    public void Teleport(Vector3 pos,float yaw){cc.enabled=false;transform.position=pos;transform.rotation=Quaternion.Euler(0,yaw,0);cc.enabled=true;fall=0;pitch=0;view.transform.localRotation=Quaternion.identity;ResetLookInput();}
 }
 }

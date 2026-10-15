@@ -4,19 +4,19 @@ Willow Works 的万圣节最后一班。Unity 6.6 / 6000.6.5f1 / Built-in Render
 
 ## 当前版本
 
-v0.4：可玩机制与故事原型。包含四个从教学到综合运用的线路谜题、可见的灯笼制作阶段，以及可选的 Button 对话和幽灵回应。当前不视为最终课程提交版。未完成陌生玩家试玩，不能声称已达到 5–10 分钟或已验证学习成效。
+v0.5：完成一轮从开场到结局的开发者原生试玩，并修复输入与摆放问题。包含四个从教学到综合运用的线路谜题、可见的灯笼制作阶段，以及可选的 Button 对话和幽灵回应。当前不视为最终课程提交版。未完成陌生玩家试玩，不能声称已达到 5–10 分钟或已验证学习成效。
 
 ## 打开游戏
 
 双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift.app`。
 
-源文件仍在桌面。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.4.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
+源文件仍在桌面。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.5.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
 
 编辑项目：Unity Hub → Projects → Add → Add project from disk → 选择整个 `MidnightShift` 文件夹。打开后在 Project 面板双击 `Assets/Scenes/WillowWorks.unity`，再按编辑器上方 Play。
 
 ## 操作
 
-- WASD：移动；鼠标或方向键：视角。
+- WASD：移动；鼠标或方向键：视角。K 切换为仅方向键观察。
 - E：拾取／插入核心／启动机器／读取说明／交付。
 - Q：把物品放在前方一步的位置。货箱靠近压板时会轻微吸附对齐；一次只能拿一件。
 - Space 或 Return：继续对白。阅读时世界暂停。
@@ -28,7 +28,9 @@ v0.4：可玩机制与故事原型。包含四个从教学到综合运用的线�
 
 ## 本地试玩记录
 
-游戏自动记录当前局部任务完成、活跃操作时间、阅读、暂停、笔记、提示次数和重试次数，仅保存在本机，不上传。位置为 `~/Library/Application Support/Willow Works/Midnight Shift - The Last Lantern/Playtests/`。自动检查及带 --agent-playtest 的操作会标记为 automated；其余记录默认 reviewer=unattributed，不能仅凭日志认定是真人试玩。
+游戏自动记录当前局部任务完成、活跃操作时间、阅读、暂停、笔记、提示次数和重试次数，仅保存在本机，不上传。Mac 独立应用位置为 `~/Library/Application Support/com.Willow-Works.Midnight-Shift---The-Last-Lantern/Playtests/`；编辑器检查记录位于 `~/Library/Application Support/Willow Works/Midnight Shift - The Last Lantern/Playtests/`。自动检查及带 --agent-playtest 的操作会标记为 automated；其余记录默认 reviewer=unattributed，不能仅凭日志认定是真人试玩。
+
+计时包含未暂停时的思考与停顿，长时间离开或系统休眠会污染数据；这类记录必须剔除，不能作为课程时长证据。完整开发者试玩见 `Documentation/NATIVE-FULL-REVIEW-v0.5.md`。
 
 ## 第一次检查重点
 

@@ -87,3 +87,19 @@ Added an actual framed childhood sketch at the archive reveal. The running-machi
 The first new validation attempt was stopped before flow checks to combine edits. A later attempt caught an unreliable animation-duration assertion under accelerated time. Replaced it with event-trigger and paused-state checks and explicitly froze gesture timers in reading/pause modes. The completed rerun passed 71 engine checks including the ending.
 
 After the 71-check engine rerun, complete deterministic physical traversal passed again (24 camera-ray interactions, four Q placements and four known circuit solutions; inspector movement disabled). Inspected actual runtime craft/drawing previews and successfully used Button's optional conversation in the native app. The release bundle passed integrity/signature checks.
+
+## v0.5 / retry clarity and placement reliability
+
+The native v0.4 review reached the archive but did not complete it. It exposed shelf-top placement, poor orientation after retries, and premature READY captions. Changes:
+- Reject placement on raised shelves/worktops and prevent plate snapping a crate into the player.
+- Use solid archive shelf collision to prevent entering shelf geometry.
+- Pause for a two-line safety-reset explanation; retain completed jobs and describe core recovery.
+- Reset camera pitch correctly and suppress mouse delta immediately after modal transitions. K enables arrow-only look.
+- Anchor the growing shell to its tray and make output captions reflect actual processing state.
+- Agent-review launches have a visible position/look overlay; ordinary launches do not.
+
+79 engine checks passed, including new placement/retry/caption regressions and animated ending. Deterministic physical route reached ending again: 24 raycast interactions, four validated placements, four authored circuits. This route isolates geometry with inspector locomotion disabled and is not a human timing measurement. Native complete-run validation is recorded separately when completed.
+
+The first v0.5 native pass uncovered a concrete input conflict: Unity's legacy Horizontal/Vertical axes included arrow keys, so arrow-key looking also moved the player. Replaced movement axes with explicit WASD keys. The earlier offset placements during keyboard review are confounded by this bug; they are not evidence that ordinary mouse users cannot navigate. Rebuild and native retest required.
+
+Corrected-input native rerun completed from title through delivery and departure animation with the inspector active and one final-area retry. No teleports, progression shortcuts or disabled inspector used. Also corrected hour-wrapping in the ending duration display. Full evidence/limits are in NATIVE-FULL-REVIEW-v0.5.md.

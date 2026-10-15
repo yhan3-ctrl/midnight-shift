@@ -1,4 +1,4 @@
-# 课程提交对照（v0.3）
+# 课程提交对照（v0.5）
 
 此表用于发现缺口，不代表预判成绩。
 
@@ -11,9 +11,9 @@
 | High Concept / Game Script | HighConcept.md / GameScript.md | 与最终版本核对 |
 | Rules / Modes / Player / Background | GameScript.md 与 Dialogue.md | 最终一致性检查 |
 | Graduate schemas | Schemas.md，基于提供的 Rules of Play 课件 | 结合真实行为补证据 |
-| 玩家及敌人FSM、角色动画 | FSM.md、Inspector、GhostIdle、手部动画与结局 | 动作观感与巡检完整试玩 |
+| 玩家及敌人FSM、角色动画 | FSM.md、Inspector、GhostIdle、手部动画与结局 | 原生完整巡检/结局已通关；仍需陌生玩家观察 |
 | 声音 | 原创三段编配、脚步与互动效果 | 人工试听、混音；必要环境音补充 |
-| Playtesting与迭代 | ITERATIONS / VALIDATION / AGENT-PLAYTEST，真实本地开发历史 | 陌生玩家反馈与对应改动、GitHub pushes |
+| Playtesting与迭代 | ITERATIONS / VALIDATION / NATIVE-FULL-REVIEW-v0.5，真实本地开发历史 | 陌生玩家反馈与对应改动、GitHub pushes |
 | 三平台发行 | Mac 通用版已构建并本机启动 | Windows / Linux 模块、构建、运行检查 |
 | 提交与分发 | 本地代码与 Mac 包 | GitHub、教师协作者、Box、Blackboard |
 

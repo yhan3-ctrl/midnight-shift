@@ -5,6 +5,7 @@ public class LanternDisplay : MonoBehaviour {
     public Machine station;
     public Transform model, ribbon, inscription, glow;
     public Light warmth;
+    public TextMesh caption; public float halfHeight=.232f;
     public bool portable;
     public int Stage {get;private set;}
     public bool Visible=>model&&model.gameObject.activeSelf;
@@ -22,6 +23,13 @@ public class LanternDisplay : MonoBehaviour {
             }
         }else visible=false;
         model.gameObject.SetActive(visible);model.localScale=Vector3.one*scale;
+        model.localPosition=Vector3.down*halfHeight*(1-scale);
+        if(caption&&station){
+            string id=station.machineId;
+            caption.text=station.running?(id=="mould"?"SHAPING THE SHELL":id=="ribbon"?"TYING THE RIBBON":id=="etch"?"ENGRAVING YOUR PROMISE":"ADDING THE LIGHT"):
+                station.done?(id=="mould"?"SHELL / KEEP WHEN UNPOWERED":id=="ribbon"?"RIBBON / READY FOR ASSEMBLY":id=="etch"?"YOUR PROMISE / ENGRAVED":"LANTERN / READY TO COLLECT"):
+                id=="mould"?"SHELL / AWAITING POWER":id=="ribbon"?"RIBBON / AWAITING CRAFT":id=="etch"?"PROMISE / AWAITING ENGRAVING":"LIGHT / AWAITING FINISH";
+        }
         if(ribbon)ribbon.gameObject.SetActive(Stage>=2);
         if(inscription)inscription.gameObject.SetActive(Stage>=3);
         if(glow)glow.gameObject.SetActive(Stage>=4);

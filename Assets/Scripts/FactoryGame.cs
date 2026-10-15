@@ -88,7 +88,7 @@ public class FactoryGame : MonoBehaviour {
         "WASD to walk. Mouse or arrow keys to look. E to pick up or use. Q to place. H for a hint. There's no timer to beat."); }
     public void Say(string who, params string[] text){ speaker=who; dialogue.Clear(); foreach(var s in text) dialogue.Enqueue(s); line=dialogue.Peek(); SyncFreeze(); }
     public void Advance(){ if(!Reading)return; dialogue.Dequeue(); if(Reading)line=dialogue.Peek(); SyncFreeze(); }
-    void SyncFreeze(){ Time.timeScale=Frozen?0:1; SetCursor(Frozen); }
+    void SyncFreeze(){ Time.timeScale=Frozen?0:1; SetCursor(Frozen);if(player)player.ResetLookInput(); }
     void SetCursor(bool free){ Cursor.lockState=free?CursorLockMode.None:CursorLockMode.Locked; Cursor.visible=free; }
     public void Notify(string text,float seconds=3){toast=text;toastUntil=Time.unscaledTime+seconds;}
     public void Hint(){hintsRequested++;
@@ -137,7 +137,9 @@ public class FactoryGame : MonoBehaviour {
         player.Teleport(new Vector3(0,0,checkpoint),0);
         foreach(var p in FindObjectsByType<Pickup>(FindObjectsInactive.Include,FindObjectsSortMode.None))
             if(p.kind==Pickup.Kind.Crate && (final?p.home.z>46:p.home.z>30&&p.home.z<46))p.ResetHome();
-        inspector.ResetPatrol(true); Notify("Hush: 'Safety check! Let's try that delivery again.' Your finished work is safe.",6);
+        inspector.ResetPatrol(true);
+        Say("HUSH / SAFETY CHECK", "Let's try that delivery again. You're back at the room entrance, and this room's crates are back where you found them. Your finished jobs and drawing are safe.",
+            "Check your notebook [J] if you need the core's location. A crate only blocks my view after you place it. The chime can call me away before I spot you.");
     }
     public void Restart(){ Time.timeScale=1; SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
     void Styles(){
@@ -162,13 +164,13 @@ public class FactoryGame : MonoBehaviour {
             GUI.Label(new Rect(100,345,520,110),"One old order. Three little ghosts.\nA promise you left here long ago.",body);
             GUI.Label(new Rect(100,477,510,85),"Explore a warm toy factory, share its last power core, and uncover the story behind an unfinished lantern.",small);
             if(GUI.Button(new Rect(100,610,330,58),"Begin the night shift",button))Begin();
-            GUI.Label(new Rect(100,690,510,100),"WASD  Walk    Mouse / arrows  Look    E  Use\nQ  Place    H  Hint    J  Journal    Esc  Pause\nEarly playable / v0.4 — timing not yet playtested",small);return;
+            GUI.Label(new Rect(100,690,510,100),"WASD  Walk    Mouse / arrows  Look    E  Use\nQ  Place    H  Hint    J  Journal    Esc  Pause\nK  Arrow-only look    v0.5 / playtest candidate",small);return;
         }
         if(ended){
             Panel(new Rect(40,80,570,h-160));GUI.Label(new Rect(75,110,500,40),"THE LAST ORDER / DELIVERED",heading);
             GUI.Label(new Rect(72,185,500,125),"A light for\nthe way home.",title);
             GUI.Label(new Rect(75,355,495,170),"Pip turns your note over once more.\n\n\"Then this time, we all clock out together.\"\n\nOutside, the parade is just beginning.",body);
-            GUI.Label(new Rect(75,h-250,490,65),$"Active play: {TimeSpan.FromSeconds(playSeconds):mm\\:ss}\nSafety retries: {resets}",small);
+            GUI.Label(new Rect(75,h-250,490,65),$"Active play: {Mathf.FloorToInt(playSeconds/60):00}:{Mathf.FloorToInt(playSeconds)%60:00}\nSafety retries: {resets}",small);
             if(GUI.Button(new Rect(75,h-175,490,55),"Visit the factory again",button))Restart();return;
         }
         Panel(new Rect(24,24,560,104));GUI.Label(new Rect(42,35,525,86),Objective,small);
@@ -177,6 +179,7 @@ public class FactoryGame : MonoBehaviour {
             GUI.Label(new Rect(w/2-12,h/2-15,24,30),"·",prompt);
             if(player&&player.focus){ Panel(new Rect(w/2-290,h-155,580,58)); GUI.Label(new Rect(w/2-280,h-148,560,48),player.focus.Prompt(player),prompt); }
             GUI.Label(new Rect(30,h-48,1000,30),player&&player.held?"E  Use socket / machine    Q  Place "+player.held.displayName+"    H  Hint    J  Journal    Esc  Pause":"WASD  Walk    E  Interact    Q  Place    H  Hint    J  Journal    Esc  Pause",small);
+            if(Array.IndexOf(Environment.GetCommandLineArgs(),"--agent-playtest")>=0&&player){var v=player.transform.position;GUI.Label(new Rect(w-380,h-100,350,50),$"AGENT REVIEW / {v.x:F2}, {v.z:F2}\nYaw {player.transform.eulerAngles.y:F1} / Pitch {player.Pitch:F1}",small);}
         }
         if(Time.unscaledTime<toastUntil){Panel(new Rect(w/2-380,145,760,80));GUI.Label(new Rect(w/2-360,158,720,66),toast,small);}
         if(inspector&&inspector.Alertness>0&&!Reading&&!paused&&!journal){GUI.color=new Color(1,.65f,.3f);GUI.Box(new Rect(w/2-140,240,280*inspector.Alertness,7),GUIContent.none);GUI.color=Color.white;GUI.Label(new Rect(w/2-140,254,280,30),"HUSH / "+inspector.state.ToString().ToUpper(),small);}

@@ -37,3 +37,7 @@ Standalone runtime captures inspected: visible plain shell and helper at Mouldin
 Native keyboard inspection through the normal title/intro: walked to Button in the foyer, observed the greeting gesture and Talk prompt, opened the optional conversation with E, read both context-specific lines and returned to active play with the initial job unchanged. This does not extend the prior simulated-first-contact run into a full native playthrough.
 
 The v0.4 Mac ZIP passed archive integrity and strict signature verification after extraction. Local package smoke test and native app startup passed; full inspector/finale manual play and independent human timing are still pending.
+
+## v0.5 complete native follow-up
+
+79 engine checks and deterministic geometry traversal passed. A subsequent native run with corrected WASD-only movement completed from title to delivery, with inspector active, one safety retry, all four circuit boards, story reveal and full departure animation. See NATIVE-FULL-REVIEW-v0.5.md for limitations and evidence. This supersedes the earlier “complete native run pending” status, but does not establish first-time human duration, emotional response or audio quality. A long interruption invalidates the native session's timing; raw evidence is retained without relabeling it as human feedback.
