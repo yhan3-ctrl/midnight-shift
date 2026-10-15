@@ -65,3 +65,7 @@ The final packaged preview pass completed with no UI_LAYOUT_OVERFLOW warnings or
 ## v0.7 / seven-language follow-up
 
 105 engine checks passed, including complete catalog resources, actual translated guide/story output with unchanged progression, per-language glyph coverage and English fallback. The standalone package passed startup smoke, archive integrity and extracted-app signature verification. A completed 105-screen, seven-language rendering/pagination pass and its layout fixes are described in LOCALIZATION-v0.7.md. The final native selector/restart check and last render rerun were blocked when the Mac locked; no success is claimed for those pending checks. Release ZIP SHA-256: `823a6a15355cd0323f6dbf39e93f22969c66ea3d3e8a419ff396a3b0a40f4d73`.
+
+### Unlocked native follow-up
+
+The blocked v0.7 checks have now completed on the same build. Final staged render: 105 screens, seven successful pagination stress continuations, no layout-overflow or runtime-exception log entries. Native keyboard review selected Japanese, quit/reopened and confirmed it persisted; changed Japanese to German during paused dialogue without advancing that line; restored English, quit via Tab/X, reopened and confirmed English persisted. Both normal quit paths exited 0. The silent agent instance is closed. See LOCALIZATION-v0.7.md for scope and raw log paths. This supersedes the previous lock-screen pending status without claiming independent human usability or native-language editorial review.

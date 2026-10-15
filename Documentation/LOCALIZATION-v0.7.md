@@ -20,6 +20,16 @@ The user clarified that “additional languages” meant a selection of commonly
 
 ## Limitations
 
-The Mac became locked before the final native keyboard/persistence review. Computer-use tooling reported it could not unlock the Mac, and the final render rerun waited at its first frame. That specific preview process was stopped. The earlier completed 105-screen pass remains the visual evidence; no completed zero-warning final rerun or native restart/persistence test is claimed. The final change after that pass was the short English heading and a whitespace-aware page-break refinement.
+The earlier lock-screen interruption was resolved when the user unlocked the Mac. The same release then completed its final staged pass: 105 screenshots across all seven languages, seven successful long-dialogue continuations, and no UI_LAYOUT_OVERFLOW or game-runtime exception entries in Work/languages-v07-final.log.
 
-Translations are implementation drafts and have not received professional native-speaker proofreading. Visual completeness does not prove language-specific first-time comprehension, emotional tone, fun or duration. The English-default behaviour and saved choice are implemented; final native selection/restart verification remains pending while locked.
+Native agent-operated keyboard review also completed:
+
+1. Observed English title, opened Language with L, selected Japanese with arrows/Enter.
+2. Quit using Cmd Q (process exit 0), relaunched, and observed Japanese retained on the title.
+3. Began the Japanese introduction; opened Tab menu and L selector during its first dialogue line; changed to German and resumed. The same opening line remained, translated into German, with the initial checklist unchanged.
+4. Restored English from the paused dialogue and resumed the same line in English. Tab/X quit exited with code 0.
+5. Relaunched once more and observed English retained. Closed this silent review instance with Cmd Q (exit 0), so the user's next ordinary launch is not a muted agent session.
+
+Raw native logs: Work/native-language-save.log, native-language-reopen.log and native-language-english-restored.log. These contain no reported UI_LAYOUT_OVERFLOW or game-runtime exceptions. Screenshots were inspected through the native app tool; they are agent-operated observations, not independent human playtest feedback. Actual restart persistence was exercised for Japanese and restored English, not separately for every language. Mouse-button activation was not validated in this keyboard review.
+
+Translations are implementation drafts and have not received professional native-speaker proofreading. Visual completeness does not prove language-specific first-time comprehension, emotional tone, fun or duration. English default, selection, dialogue preservation and Japanese/English restart persistence now have the native evidence above.
