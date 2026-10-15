@@ -41,7 +41,20 @@ public class FactoryPlaycheck : MonoBehaviour {
         g=FactoryGame.I;p=g.player;
         try{Check(g&&p&&g.inspector,"scene references survive serialization");Check(FindObjectsByType<Machine>(FindObjectsSortMode.None).Length==5,"five machines present");Check(FindObjectsByType<StoryPoint>(FindObjectsSortMode.None).Length==4,"story interaction components survive serialization");}
         catch(Exception e){Fail(e);yield break;}
+        int initialLanguage=UiCopy.Selected;UiCopy.Language(0,false);
         g.Begin();CloseDialogue();
+        try{
+            Check(UiCopy.Entries.Length>=260&&UiCopy.Entries.All(x=>x.values.Length==7&&x.values.All(v=>!string.IsNullOrWhiteSpace(v))),"all catalog entries contain seven complete language values");
+            var englishAction=g.guide.Current.action;string greeting="Welcome to Willow Works. I'm Pip. Let me show you around, one little step at a time.";
+            for(int language=1;language<UiCopy.Codes.Length;language++){
+                UiCopy.Language(language,false);
+                Check(UiCopy.Translate(greeting)!=greeting&&g.guide.Current.action!=englishAction&&!g.shell&&!g.player.held,"language switch localizes actual guide/story without advancing work: "+UiCopy.Codes[language]);
+                var face=UiCopy.BodyFont(language);var glyphs=new System.Collections.Generic.HashSet<char>();foreach(var entry in UiCopy.Entries)foreach(char c in entry.values[language])if(!char.IsWhiteSpace(c))glyphs.Add(c);
+                Check(face&&glyphs.All(c=>face.HasCharacter(c)),"bundled font covers every catalog glyph: "+UiCopy.Codes[language]);
+            }
+            UiCopy.Language(-1,false);Check(UiCopy.Selected==0,"unsupported language preference safely falls back to English");
+        }catch(Exception e){Fail(e);yield break;}
+
         try{
             Check(g.guide&&g.guide.Current.key=="MOUSE / ARROWS","opening guide teaches looking before future power rules");
             g.guide.looked=true;Check(g.guide.Current.key=="W A S D","guide advances to walking only after observing look input");
@@ -153,7 +166,7 @@ public class FactoryPlaycheck : MonoBehaviour {
         while(Time.realtimeSinceStartup-endStarted<15){yield return null;}
         try{var ending=FindFirstObjectByType<EndOfShift>();Check(ending&&ending.pip.position.z>70&&ending.exitDoor.position.y>5,"ending opens exit and takes the helpers into the village");File.WriteAllText("Work/playcheck.txt",$"PASS: {checks} engine integration checks, including the animated ending.\nActual scene components, physics visibility, progression, retries and delivery exercised.\nNot an unassisted human playthrough or timing validation.\n");}
         catch(Exception e){Fail(e);yield break;}
-        Application.logMessageReceived-=OnLog;EditorApplication.Exit(0);
+        UiCopy.Language(initialLanguage,false);Application.logMessageReceived-=OnLog;EditorApplication.Exit(0);
     }
     void SolveRouting(Machine machine){
         Check(g.activeCircuit==machine&&g.Frozen&&Time.timeScale==0,"routing mode freezes workshop: "+machine.machineId);

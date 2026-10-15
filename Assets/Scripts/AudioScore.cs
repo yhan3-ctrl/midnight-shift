@@ -6,7 +6,7 @@ public class AudioScore : MonoBehaviour {
     bool menuPaused,rebuildPending,silentReview;float nextRecovery;public int Recoveries {get;private set;}
     public bool MusicPlaying=>music&&music.isPlaying;
     void Awake(){
-        var args=System.Environment.GetCommandLineArgs();silentReview=Application.isBatchMode||System.Array.IndexOf(args,"--capture-preview")>=0||System.Array.IndexOf(args,"--verify-build")>=0||System.Array.IndexOf(args,"--agent-playtest")>=0;
+        var args=System.Environment.GetCommandLineArgs();silentReview=System.Array.IndexOf(args,"--capture-languages")>=0||Application.isBatchMode||System.Array.IndexOf(args,"--capture-preview")>=0||System.Array.IndexOf(args,"--verify-build")>=0||System.Array.IndexOf(args,"--agent-playtest")>=0;
         music=gameObject.AddComponent<AudioSource>();music.loop=true;music.spatialBlend=0;music.playOnAwake=false;music.ignoreListenerPause=true;
         effects=gameObject.AddComponent<AudioSource>();effects.spatialBlend=0;effects.playOnAwake=false;effects.ignoreListenerPause=true;
         music.mute=silentReview;effects.mute=silentReview;

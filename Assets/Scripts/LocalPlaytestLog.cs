@@ -7,14 +7,14 @@ namespace LastLantern {
 public class LocalPlaytestLog : MonoBehaviour {
     [Serializable]public class Event {public float seconds;public string action;}
     [Serializable]public class Record {
-        public string version="0.6", startedUtc, reviewer="unattributed";
+        public string version="0.7", startedUtc, reviewer="unattributed";
         public bool automated,completed;
         public float elapsedSeconds,activeSeconds,readingSeconds,pausedSeconds,journalSeconds;
         public int safetyRetries,hintsRequested;
         public List<Event> events=new List<Event>();
     }
     Record record;string path,lastMode="";int progress=-1;bool saved;
-    void Start(){record=new Record{startedUtc=DateTime.UtcNow.ToString("O"),automated=Application.isBatchMode||Array.IndexOf(Environment.GetCommandLineArgs(),"--capture-preview")>=0||Array.IndexOf(Environment.GetCommandLineArgs(),"--agent-playtest")>=0};path=Path.Combine(Application.persistentDataPath,"Playtests","shift-"+DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff")+".json");}
+    void Start(){record=new Record{startedUtc=DateTime.UtcNow.ToString("O"),automated=Array.IndexOf(Environment.GetCommandLineArgs(),"--capture-languages")>=0||Application.isBatchMode||Array.IndexOf(Environment.GetCommandLineArgs(),"--capture-preview")>=0||Array.IndexOf(Environment.GetCommandLineArgs(),"--agent-playtest")>=0};path=Path.Combine(Application.persistentDataPath,"Playtests","shift-"+DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff")+".json");}
     void Update(){
         var g=FactoryGame.I;if(g==null||record==null||!g.started)return;
         string mode=g.ended?"ending":g.paused?"paused":g.journal?"journal":g.Reading?"reading":g.activeCircuit?"routing":"active";

@@ -91,7 +91,7 @@ public static class FactoryBuild {
         Pumpkin(new Vector3(-6,.5f,60),.9f);
         var ending=game.gameObject.AddComponent<EndOfShift>();ending.pip=pip.transform;ending.button=buttonGhost;ending.hush=ig.transform;ending.exitDoor=exitDoor;ending.view=cam;
         Festival();
-        PlayerSettings.companyName="Willow Works";PlayerSettings.productName="Midnight Shift - The Last Lantern";
+        PlayerSettings.bundleVersion="0.7";PlayerSettings.companyName="Willow Works";PlayerSettings.productName="Midnight Shift - The Last Lantern";
         PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=false;PlayerSettings.resizableWindow=true;PlayerSettings.allowFullscreenSwitch=false;
         var ps=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);var active=ps.FindProperty("activeInputHandler");if(active!=null){active.intValue=0;ps.ApplyModifiedPropertiesWithoutUndo();}
         EditorSceneManager.SaveScene(SceneManager.GetActiveScene(),"Assets/Scenes/WillowWorks.unity");

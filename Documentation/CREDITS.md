@@ -15,3 +15,8 @@ v0.4: staged lantern meshes (ceramic ribs, brass handle, plum bow, handwritten t
 - Fraunces by the Fraunces Project Authors, from the official Google Fonts repository: https://github.com/google/fonts/tree/main/ofl/fraunces . SIL Open Font License 1.1; full license bundled in Assets/Resources/Fonts/Fraunces-OFL.txt. Static instance generated from the variable font.
 - Noto Sans SC, from the official Google Fonts repository: https://github.com/google/fonts/tree/main/ofl/notosanssc . SIL Open Font License 1.1; full license bundled in Assets/Resources/Fonts/NotoSansSC-OFL.txt. Static medium instance generated from the variable font.
 - UI keycaps, calendar, markers and diagram strokes are drawn in code; they do not rely on platform emoji rendering.
+
+## Fonts added in v0.7
+
+- Noto Sans JP: https://github.com/google/fonts/tree/main/ofl/notosansjp . Noto Sans KR: https://github.com/google/fonts/tree/main/ofl/notosanskr . Both obtained from the official Google Fonts repository under SIL OFL 1.1. Static medium instances were subsetted to the catalog/interface glyphs. Full licenses are in Assets/Resources/Fonts/NotoSansJP-OFL.txt and NotoSansKR-OFL.txt.
+- Spanish, French, German, Japanese and Korean text was drafted for this project; no external translation service or user-content upload was used. Native-language editorial review has not been performed.

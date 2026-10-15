@@ -60,6 +60,8 @@ public class FactoryGame : MonoBehaviour {
     void Awake(){ I=this; Time.timeScale=1;guide=GetComponent<ShiftGuide>();if(!guide)guide=gameObject.AddComponent<ShiftGuide>(); }
     void Start(){ SetCursor(true);if(!Application.isBatchMode&&!PlayerPrefs.HasKey("shift-v06-window")){Screen.SetResolution(1280,800,FullScreenMode.Windowed);PlayerPrefs.SetInt("shift-v06-window",1);} }
     void Update(){
+        if(screen.LanguageOpen){screen.LanguageKeys();return;}
+        if((paused||!started)&&Input.GetKeyDown(KeyCode.L)){screen.OpenLanguages();return;}
         bool menu=Input.GetKeyDown(KeyCode.Tab)||Input.GetKeyDown(KeyCode.F1);
         bool escape=Input.GetKeyDown(KeyCode.Escape);
         if(paused){if(Input.GetKeyDown(KeyCode.X)){Quit();return;}if(menu||escape)TogglePause();return;}
@@ -86,6 +88,8 @@ public class FactoryGame : MonoBehaviour {
             else if(blueprint&&!etched&&!assemblyWelcome&&player.transform.position.z>46.6f){assemblyWelcome=true;Say("PIP / FINAL ASSEMBLY","Your old drawing is safe in the notebook. Let's turn that promise into a real lantern.","The Engraver can work on its own. Leave its core in place and prepare the crate gate while it finishes. Keep an eye on Hush.");}
         }
     }
+    public void OpenLanguages(){screen.OpenLanguages();}
+    public void CloseLanguages(){screen.CloseLanguages();}
     public void OpenCircuit(Machine m){activeCircuit=m;circuitOpenedFrame=Time.frameCount;SyncFreeze();}
     public void CloseCircuit(){activeCircuit=null;SyncFreeze();}
     public void PowerCircuit(){if(!activeCircuit||!activeCircuit.puzzle.Solved)return;var machine=activeCircuit;CloseCircuit();machine.StartWork();}
@@ -94,8 +98,8 @@ public class FactoryGame : MonoBehaviour {
     public void Begin(){started=true;SyncFreeze();Say("PIP / NIGHT FOREMAN",
         "Welcome to Willow Works. I'm Pip. Let me show you around, one little step at a time.",
         "We have one forgotten pumpkin lantern to finish tonight. First, let's open this door together. Follow the gold marker; your checklist is on the right.");}
-    public void Say(string who, params string[] text){ dialogueOpenedFrame=Time.frameCount;speaker=who; dialogue.Clear(); foreach(var s in text) dialogue.Enqueue(s); line=dialogue.Peek(); SyncFreeze(); }
-    public void Advance(){ if(!Reading)return; dialogue.Dequeue(); if(Reading)line=dialogue.Peek(); SyncFreeze(); }
+    public void Say(string who, params string[] text){screen.ResetDialoguePages(); dialogueOpenedFrame=Time.frameCount;speaker=who; dialogue.Clear(); foreach(var s in text) dialogue.Enqueue(s); line=dialogue.Peek(); SyncFreeze(); }
+    public void Advance(){ if(!Reading)return;if(screen.AdvancePage(this))return; dialogue.Dequeue(); if(Reading)line=dialogue.Peek(); SyncFreeze(); }
     void SyncFreeze(){ Time.timeScale=Frozen?0:1; SetCursor(Frozen);if(player)player.ResetLookInput(); }
     void SetCursor(bool free){ Cursor.lockState=free?CursorLockMode.None:CursorLockMode.Locked; Cursor.visible=free; }
     public void Notify(string text,float seconds=3){toast=text;toastUntil=Time.unscaledTime+seconds;}

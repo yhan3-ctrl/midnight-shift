@@ -1,4 +1,4 @@
-# Game Script / v0.6 implemented rules
+# Game Script / v0.7 implemented rules
 
 This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. A future final report must update this document to match its submitted version.
 
@@ -116,3 +116,13 @@ The assembly entry reconnects the childhood promise with the task. While the Eng
 H now repeats the current actionable instruction and reason; it cannot contradict the ongoing job with a future core-transfer instruction. Routing provides visible contact/outlet counters, a gold input arrow and an optional animated connection example. The example does not solve or rotate the actual board. Dialogue and routing pause hazards, with explicit text explaining this; Tab/F1 opens the exit menu from either.
 
 Audio initialization/recovery now restarts stopped sources and rebuilds generated clips after configuration changes. The reported intermittent initial silence has not been reproduced; playback-state checks do not establish audible output or musical quality.
+
+## v0.7 / seven-language interface
+
+Fresh preferences default to English. The title and pause menu open a shared Language selector with English, 简体中文, Español, Français, Deutsch, 日本語 and 한국어. L opens it from those screens; arrows select, Enter confirms, Esc returns. Explicit choices persist in PlayerPrefs. Switching language preserves the current game, carried item, dialogue line and circuit; it is presentation state, not progression. Unsupported preference values fall back to English.
+
+The 263-entry resource catalog covers interface, instructional actions/reasons, formal-level checklists, item/machine prompts, story dialogue and recovery messages. Factory signage and the fictional brand/title remain English. Input letters and circuit IN/OUT remain stable across languages, with explanations translated. Japanese and Korean use bundled Noto fonts subsetted to the needed glyphs; licenses are included.
+
+Long dialogue is split using actual font measurements. Continue/Space/Enter first advances the visible page, then advances the underlying story line after its final page. The page counter is visible when needed. Opening a new conversation resets pagination; changing language restarts the current line at its first page. This avoids clipping translations or shrinking narrative text to an unreadable size.
+
+Translations are authored implementation drafts, not a claim of professional native-speaker proofreading. Visual and coverage checks do not establish culturally natural dialogue or new-player comprehension in every language.

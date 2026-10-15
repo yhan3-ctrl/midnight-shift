@@ -85,7 +85,7 @@ public class ShiftGuide : MonoBehaviour {
         return t;
     }
     public int Chapter=>!g||g.player.transform.position.z<12?0:!g.transferred?1:!g.blueprint?2:!g.assembled?3:4;
-    public string ChapterTitle {get{switch(Chapter){case 0:return UiCopy.Pick("01 / 第一扇门","01 / FIRST STEPS");case 1:return UiCopy.Pick("02 / 包装区","02 / PACKAGING");case 2:return UiCopy.Pick("03 / 旧图纸","03 / THE ARCHIVE");case 3:return UiCopy.Pick("04 / 最终装配","04 / ASSEMBLY");default:return UiCopy.Pick("05 / 最后送达","05 / LAST DELIVERY");}}}
+    public string ChapterTitle {get{switch(Chapter){case 0:return UiCopy.Pick("01 / 第一扇门","01 / FIRST STEPS");case 1:return UiCopy.Pick("02 / 包装区","02 / PACKAGING");case 2:return UiCopy.Pick("03 / 旧图纸","03 / THE ARCHIVE");case 3:return UiCopy.Pick("04 / 最终装配","04 / ASSEMBLY");default:return UiCopy.Pick("05 / 最后送达","05 / DELIVERY");}}}
     public string[] Checklist {get{Ensure();switch(Chapter){
         case 0:return new[]{Row(looked,"看看木箱","Look toward the crate"),Row(walked,"试着移动","Try walking"),Row(foyer.CrateHoldsPlate,"箱子压住条纹板","Leave crate on plate"),Row(g.player.transform.position.z>12,"穿过中央门","Walk through the door")};
         case 1:return new[]{Row(g.workshopRelay.OverrideHeld,"箱子保持门打开","Crate holds the gate"),Row(g.shell,"做好灯笼外壳","Make the shell"),Row(g.transferred,"系好丝带","Add the ribbon")};

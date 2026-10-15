@@ -1,0 +1,3160 @@
+{
+  "entries": [
+    {
+      "en": " / CONNECT THE CIRCUIT",
+      "values": [
+        " / CONNECT THE CIRCUIT",
+        " / 接通电路",
+        " / CONECTA EL CIRCUITO",
+        " / RELIER LE CIRCUIT",
+        " / STROMKREIS VERBINDEN",
+        " / 回路をつなごう",
+        " / 회로 연결"
+      ]
+    },
+    {
+      "en": "Join IN to every OUT. Pass through each ★ contact.",
+      "values": [
+        "Join IN to every OUT. Pass through each ★ contact.",
+        "把左边入口的电，送到右边每一个出口；途中经过所有 ★ 标记。",
+        "Une IN con cada OUT pasando por todos los contactos ★.",
+        "Relie IN à chaque OUT en passant par tous les contacts ★.",
+        "Verbinde IN mit jedem OUT über alle ★-Kontakte.",
+        "IN からすべての OUT へ、★の接点を通してつなごう。",
+        "IN에서 모든 ★ 접점을 거쳐 각 OUT까지 연결하세요."
+      ]
+    },
+    {
+      "en": "OUT ",
+      "values": [
+        "OUT ",
+        "出口 ",
+        "OUT ",
+        "OUT ",
+        "OUT ",
+        "OUT ",
+        "OUT "
+      ]
+    },
+    {
+      "en": "One click turns a tile a quarter turn.",
+      "values": [
+        "One click turns a tile a quarter turn.",
+        "点一下，方格转动四分之一圈。",
+        "Cada clic gira una pieza un cuarto de vuelta.",
+        "Un clic tourne une case d'un quart de tour.",
+        "Ein Klick dreht ein Feld um eine Vierteldrehung.",
+        "クリックするたびに、タイルが90度回るよ。",
+        "클릭할 때마다 타일이 90도 돌아갑니다."
+      ]
+    },
+    {
+      "en": "Matching ends let the power continue.",
+      "values": [
+        "Matching ends let the power continue.",
+        "线头对上后，电就能继续走。",
+        "Los extremos deben coincidir para llevar corriente.",
+        "Des extrémités alignées laissent passer le courant.",
+        "Passende Enden lassen den Strom weiterfließen.",
+        "線の端が合うと、電気が先へ流れるよ。",
+        "선의 끝이 맞닿으면 전기가 흐릅니다."
+      ]
+    },
+    {
+      "en": "Connected!\nChoose Start machine below.",
+      "values": [
+        "Connected!\nChoose Start machine below.",
+        "接好啦！\n现在点下面的“启动机器”。",
+        "¡Conectado!\nPulsa Iniciar máquina.",
+        "C'est connecté !\nChoisis Démarrer la machine.",
+        "Verbunden!\nWähle Maschine starten.",
+        "つながった！\n下の「機械を動かす」を選ぼう。",
+        "연결됐어요!\n아래의 기계 가동을 누르세요."
+      ]
+    },
+    {
+      "en": "1. Start at the gold IN.\n2. Click tiles to join the ends.\n3. Gold means power.\nNot all tiles need to light up.",
+      "values": [
+        "1. Start at the gold IN.\n2. Click tiles to join the ends.\n3. Gold means power.\nNot all tiles need to light up.",
+        "1. 从金色 IN 开始看。\n2. 点击方格，让两段线头接上。\n3. 金色表示有电，不必点亮所有格子。",
+        "1. Empieza en el IN dorado.\n2. Gira las piezas para unirlas.\n3. Dorado significa corriente.\nNo hace falta iluminar todo.",
+        "1. Pars du IN doré.\n2. Tourne les cases pour les relier.\n3. L'or indique le courant.\nTout ne doit pas s'allumer.",
+        "1. Beginne am goldenen IN.\n2. Drehe die Felder passend.\n3. Gold bedeutet Strom.\nNicht alle Felder müssen leuchten.",
+        "1. 金色の IN から始めよう。\n2. タイルを回して線をつなごう。\n3. 金色は通電中のしるし。\n全部を光らせる必要はないよ。",
+        "1. 금색 IN에서 시작하세요.\n2. 타일을 돌려 선을 이으세요.\n3. 금색은 전기가 흐른다는 뜻.\n모든 칸을 켤 필요는 없어요."
+      ]
+    },
+    {
+      "en": "Hide the example",
+      "values": [
+        "Hide the example",
+        "收起小例子",
+        "Ocultar ejemplo",
+        "Masquer l'exemple",
+        "Beispiel ausblenden",
+        "例を閉じる",
+        "예시 닫기"
+      ]
+    },
+    {
+      "en": "Show a simple example",
+      "values": [
+        "Show a simple example",
+        "看一个简单例子",
+        "Ver un ejemplo sencillo",
+        "Voir un exemple simple",
+        "Einfaches Beispiel zeigen",
+        "簡単な例を見る",
+        "간단한 예시 보기"
+      ]
+    },
+    {
+      "en": "IN → ── → ┐\nStraights carry; corners turn; T shapes split.",
+      "values": [
+        "IN → ── → ┐\nStraights carry; corners turn; T shapes split.",
+        "IN → ── → ┐\n横线传电，弯角转弯，T 形可以分流。",
+        "IN → ── → ┐\nLas rectas llevan; las curvas giran; las T dividen.",
+        "IN → ── → ┐\nLes droites conduisent, les coudes tournent, les T divisent.",
+        "IN → ── → ┐\nGeraden leiten, Winkel biegen, T-Stücke teilen.",
+        "IN → ── → ┐\n直線はまっすぐ、角は曲がり、T字は分かれる。",
+        "IN → ── → ┐\n직선은 전달, 모서리는 회전, T자는 분기."
+      ]
+    },
+    {
+      "en": "The world is paused. Take your time.\nTab opens the menu.",
+      "values": [
+        "The world is paused. Take your time.\nTab opens the menu.",
+        "看线路时世界暂停。\n不用着急，按 Tab 可以打开菜单。",
+        "El mundo está en pausa. Sin prisa.\nTab abre el menú.",
+        "Le monde est en pause. Prends ton temps.\nTab ouvre le menu.",
+        "Die Welt pausiert. Lass dir Zeit.\nTab öffnet das Menü.",
+        "世界は一時停止中。ゆっくり考えよう。\nTab でメニューを開けるよ。",
+        "세계는 일시 정지 중이에요. 천천히 하세요.\nTab으로 메뉴를 열 수 있어요."
+      ]
+    },
+    {
+      "en": "Click / Space: turn   Arrows: select   Enter: start   Esc: return",
+      "values": [
+        "Click / Space: turn   Arrows: select   Enter: start   Esc: return",
+        "鼠标点击：转动   |   方向键：选格   空格：转动   回车：启动   Esc：返回",
+        "Clic / Espacio: girar   Flechas: elegir   Enter: iniciar   Esc: volver",
+        "Clic / Espace : tourner   Flèches : choisir   Entrée : démarrer   Esc : retour",
+        "Klick / Leertaste: drehen   Pfeile: wählen   Enter: starten   Esc: zurück",
+        "クリック / Space：回転　方向キー：選択　Enter：始動　Esc：戻る",
+        "클릭 / Space: 회전   방향키: 선택   Enter: 가동   Esc: 돌아가기"
+      ]
+    },
+    {
+      "en": "Start machine  →",
+      "values": [
+        "Start machine  →",
+        "启动机器  →",
+        "Iniciar máquina →",
+        "Démarrer la machine →",
+        "Maschine starten →",
+        "機械を動かす →",
+        "기계 가동 →"
+      ]
+    },
+    {
+      "en": "Connect OUT + ★ first",
+      "values": [
+        "Connect OUT + ★ first",
+        "先接通出口和星标",
+        "Conecta OUT y ★ primero",
+        "Relie d'abord OUT et ★",
+        "Erst OUT und ★ verbinden",
+        "まず OUT と ★ をつなごう",
+        "먼저 OUT과 ★를 연결하세요"
+      ]
+    },
+    {
+      "en": "Reset tiles",
+      "values": [
+        "Reset tiles",
+        "重置方格",
+        "Reiniciar piezas",
+        "Réinitialiser",
+        "Felder zurücksetzen",
+        "タイルを戻す",
+        "타일 초기화"
+      ]
+    },
+    {
+      "en": "Remove core",
+      "values": [
+        "Remove core",
+        "取回核心",
+        "Retirar núcleo",
+        "Retirer le noyau",
+        "Kern entnehmen",
+        "コアを取り出す",
+        "코어 꺼내기"
+      ]
+    },
+    {
+      "en": "Return [Esc]",
+      "values": [
+        "Return [Esc]",
+        "返回工厂 [Esc]",
+        "Volver [Esc]",
+        "Retour [Esc]",
+        "Zurück [Esc]",
+        "戻る [Esc]",
+        "돌아가기 [Esc]"
+      ]
+    },
+    {
+      "en": "Hands full: place your item with Q",
+      "values": [
+        "Hands full: place your item with Q",
+        "双手正忙：先按 Q 放下物品",
+        "Manos ocupadas: deja el objeto con Q",
+        "Mains prises : pose l'objet avec Q",
+        "Hände voll: Gegenstand mit Q ablegen",
+        "両手がいっぱい。Q で置こう",
+        "손이 가득 찼어요. Q로 내려놓으세요"
+      ]
+    },
+    {
+      "en": "E  Pick up ",
+      "values": [
+        "E  Pick up ",
+        "E  拿起 ",
+        "E  Recoger ",
+        "E  Prendre ",
+        "E  Aufheben: ",
+        "E  拾う：",
+        "E  집기: "
+      ]
+    },
+    {
+      "en": "E  Insert core / ",
+      "values": [
+        "E  Insert core / ",
+        "E  插入核心 / ",
+        "E  Insertar núcleo / ",
+        "E  Insérer le noyau / ",
+        "E  Kern einsetzen / ",
+        "E  コアを入れる / ",
+        "E  코어 넣기 / "
+      ]
+    },
+    {
+      "en": "Place your item with Q first",
+      "values": [
+        "Place your item with Q first",
+        "先按 Q 放下手中的物品",
+        "Deja el objeto con Q primero",
+        "Pose d'abord ton objet avec Q",
+        "Erst den Gegenstand mit Q ablegen",
+        "まず Q で持ち物を置こう",
+        "먼저 Q로 물건을 내려놓으세요"
+      ]
+    },
+    {
+      "en": "Bring the gold core / ",
+      "values": [
+        "Bring the gold core / ",
+        "这里需要金色核心 / ",
+        "Trae el núcleo dorado / ",
+        "Apporte le noyau doré / ",
+        "Goldenen Kern bringen / ",
+        "金色のコアが必要 / ",
+        "금색 코어가 필요해요 / "
+      ]
+    },
+    {
+      "en": "E  Power the gate",
+      "values": [
+        "E  Power the gate",
+        "E  给门禁供电",
+        "E  Dar corriente a la puerta",
+        "E  Alimenter la porte",
+        "E  Tor mit Strom versorgen",
+        "E  ゲートに電気を送る",
+        "E  문에 전력 공급"
+      ]
+    },
+    {
+      "en": "E  Retrieve core from relay",
+      "values": [
+        "E  Retrieve core from relay",
+        "E  从供电柜取回核心",
+        "E  Retirar núcleo del relé",
+        "E  Reprendre le noyau du relais",
+        "E  Kern aus dem Relais nehmen",
+        "E  制御盤からコアを回収",
+        "E  제어반에서 코어 회수"
+      ]
+    },
+    {
+      "en": "Bring the gold core here",
+      "values": [
+        "Bring the gold core here",
+        "这里需要金色核心",
+        "Trae aquí el núcleo dorado",
+        "Apporte le noyau doré ici",
+        "Goldenen Kern hierherbringen",
+        "ここに金色のコアを持ってこよう",
+        "금색 코어를 여기로 가져오세요"
+      ]
+    },
+    {
+      "en": "PIP / NIGHT FOREMAN",
+      "values": [
+        "PIP / NIGHT FOREMAN",
+        "PIP / 夜班领班",
+        "PIP / ENCARGADO NOCTURNO",
+        "PIP / CONTREMAÎTRE DE NUIT",
+        "PIP / NACHTSCHICHTLEITER",
+        "PIP / 夜勤のリーダー",
+        "PIP / 야간 작업반장"
+      ]
+    },
+    {
+      "en": "BUTTON / STORES",
+      "values": [
+        "BUTTON / STORES",
+        "BUTTON / 仓库小助手",
+        "BUTTON / ALMACÉN",
+        "BUTTON / RÉSERVE",
+        "BUTTON / LAGER",
+        "BUTTON / 倉庫係",
+        "BUTTON / 창고 담당"
+      ]
+    },
+    {
+      "en": "PIP / OVER THE SPEAKER",
+      "values": [
+        "PIP / OVER THE SPEAKER",
+        "PIP / 工厂广播",
+        "PIP / POR EL ALTAVOZ",
+        "PIP / AU HAUT-PARLEUR",
+        "PIP / ÜBER LAUTSPRECHER",
+        "PIP / 工場放送",
+        "PIP / 공장 방송"
+      ]
+    },
+    {
+      "en": "PIP / DISPATCH",
+      "values": [
+        "PIP / DISPATCH",
+        "PIP / 送货台",
+        "PIP / DESPACHO",
+        "PIP / EXPÉDITION",
+        "PIP / VERSAND",
+        "PIP / 発送窓口",
+        "PIP / 배송 데스크"
+      ]
+    },
+    {
+      "en": "HUSH / SAFETY CHECK",
+      "values": [
+        "HUSH / SAFETY CHECK",
+        "HUSH / 安全检查",
+        "HUSH / CONTROL DE SEGURIDAD",
+        "HUSH / CONTRÔLE DE SÉCURITÉ",
+        "HUSH / SICHERHEITSKONTROLLE",
+        "HUSH / 安全確認",
+        "HUSH / 안전 점검"
+      ]
+    },
+    {
+      "en": "THE BACK OF THE DRAWING",
+      "values": [
+        "THE BACK OF THE DRAWING",
+        "旧图纸的背面",
+        "EL REVERSO DEL DIBUJO",
+        "AU DOS DU DESSIN",
+        "DIE RÜCKSEITE DER ZEICHNUNG",
+        "絵の裏に書かれた言葉",
+        "그림 뒷면"
+      ]
+    },
+    {
+      "en": "YOUR OLD DRAWING",
+      "values": [
+        "YOUR OLD DRAWING",
+        "你小时候的图纸",
+        "TU ANTIGUO DIBUJO",
+        "TON ANCIEN DESSIN",
+        "DEINE ALTE ZEICHNUNG",
+        "子どもの頃の絵",
+        "어릴 적 그림"
+      ]
+    },
+    {
+      "en": "Welcome to Willow Works. I'm Pip. Let me show you around, one little step at a time.",
+      "values": [
+        "Welcome to Willow Works. I'm Pip. Let me show you around, one little step at a time.",
+        "欢迎来到柳树玩具工厂，我是 Pip。我来带你熟悉一下吧，一步一步来。",
+        "Bienvenido a Willow Works. Soy Pip. Te enseñaré todo, paso a paso.",
+        "Bienvenue à Willow Works. Moi, c'est Pip. Je vais te guider, un petit pas à la fois.",
+        "Willkommen bei Willow Works. Ich bin Pip. Ich zeige dir alles, Schritt für Schritt.",
+        "ウィロー工場へようこそ。僕は Pip。少しずつ、工場を案内するね。",
+        "윌로 공장에 온 걸 환영해. 난 Pip이야. 하나씩 천천히 안내해 줄게."
+      ]
+    },
+    {
+      "en": "We have one forgotten pumpkin lantern to finish tonight. First, let's open this door together. Follow the gold marker; your checklist is on the right.",
+      "values": [
+        "We have one forgotten pumpkin lantern to finish tonight. First, let's open this door together. Follow the gold marker; your checklist is on the right.",
+        "今晚，我们要完成一盏被遗忘的南瓜灯。先一起打开这扇门：跟着金色箭头走，右边的挂历会记下待办。",
+        "Esta noche terminaremos un farol de calabaza olvidado. Primero, abramos esta puerta. Sigue la marca dorada; tus tareas están a la derecha.",
+        "Ce soir, on termine une lanterne citrouille oubliée. Ouvrons d'abord cette porte. Suis le repère doré ; tes tâches sont à droite.",
+        "Heute vollenden wir eine vergessene Kürbislaterne. Öffnen wir zuerst diese Tür. Folge der goldenen Markierung; rechts stehen deine Aufgaben.",
+        "今夜は、忘れられたカボチャのランタンを仕上げるんだ。まずはこのドアを開けよう。金色の目印をたどってね。右のカレンダーにやることが書いてあるよ。",
+        "오늘 밤엔 잊혀진 호박 랜턴을 완성할 거야. 먼저 이 문부터 열자. 금색 표시를 따라와. 오른쪽 달력에 할 일이 적혀 있어."
+      ]
+    },
+    {
+      "en": "A perfect little shell! I kept the mould right where that child left it.",
+      "values": [
+        "A perfect little shell! I kept the mould right where that child left it.",
+        "外壳做好啦！那个孩子留下的模具，我一直都好好保存着。",
+        "¡Una carcasa perfecta! Guardé el molde justo donde lo dejó aquel niño.",
+        "Une coque parfaite ! J'ai gardé le moule là où cet enfant l'avait laissé.",
+        "Eine perfekte Hülle! Ich habe die Form genau dort gelassen, wo das Kind sie abgestellt hatte.",
+        "素敵な外枠ができた！あの子が置いていった場所に、ずっと型をとっておいたんだ。",
+        "멋진 틀이 완성됐네! 그 아이가 두고 간 자리에 주형을 쭉 보관해 뒀어."
+      ]
+    },
+    {
+      "en": "They used to ask who switched off the lights. Not what we'd make them. Who would get home last.",
+      "values": [
+        "They used to ask who switched off the lights. Not what we'd make them. Who would get home last.",
+        "那个孩子总会问：最后是谁来关灯？谁要到很晚才能回家？",
+        "Preguntaba quién apagaba las luces. No qué le fabricaríamos, sino quién volvía a casa al final.",
+        "Cet enfant demandait qui éteignait les lumières. Pas ce qu'on allait lui fabriquer, mais qui rentrait en dernier.",
+        "Das Kind fragte immer, wer das Licht ausmachte. Nicht, was wir ihm bauen würden. Wer zuletzt nach Hause ging.",
+        "あの子はいつも、最後に誰が明かりを消すのか聞いていたよ。何を作ってもらうかより、誰がいちばん遅く帰るのかを。",
+        "그 아이는 누가 마지막에 불을 끄는지 묻곤 했어. 뭘 만들어 줄지가 아니라, 누가 제일 늦게 집에 가는지가 궁금했던 거지."
+      ]
+    },
+    {
+      "en": "The shell is safe now. Take the power core out and use it on the Ribbon Conveyor.",
+      "values": [
+        "The shell is safe now. Take the power core out and use it on the Ribbon Conveyor.",
+        "外壳已经做好，不会消失。取出金色核心，再把它借给右边的丝带机。",
+        "La carcasa ya está lista y no se perderá. Retira el núcleo y llévalo a la Cinta de Lazos.",
+        "La coque est finie et restera là. Reprends le noyau pour le Convoyeur à rubans.",
+        "Die Hülle ist fertig und bleibt erhalten. Nimm den Kern heraus und bring ihn zum Bandförderer.",
+        "外枠はもう完成しているから大丈夫。コアを取り出して、リボンコンベヤーで使おう。",
+        "틀은 완성됐으니 사라지지 않아. 코어를 꺼내서 리본 컨베이어에 가져가 줘."
+      ]
+    },
+    {
+      "en": "Look at that. Every little crooked line, just like the drawing.",
+      "values": [
+        "Look at that. Every little crooked line, just like the drawing.",
+        "你看，每一条歪歪扭扭的小线条，都和图纸上一样。",
+        "Mírala. Cada pequeña línea torcida, igual que en el dibujo.",
+        "Regarde. Chaque petit trait de travers, comme sur le dessin.",
+        "Sieh nur. Jede kleine schiefe Linie, genau wie auf der Zeichnung.",
+        "見てごらん。少し曲がった線まで、あの絵のとおりだよ。",
+        "이것 봐. 삐뚤빼뚤한 선 하나하나까지 그림 그대로야."
+      ]
+    },
+    {
+      "en": "I'll be at dispatch. Shall we see who this one's for?",
+      "values": [
+        "I'll be at dispatch. Shall we see who this one's for?",
+        "我在送货台等你。一起看看这盏灯是送给谁的吧？",
+        "Estaré en despacho. ¿Vemos para quién era?",
+        "Je t'attends à l'expédition. On va voir à qui elle est destinée ?",
+        "Ich warte im Versand. Wollen wir sehen, für wen sie ist?",
+        "発送窓口で待っているね。誰のためのランタンか、確かめようか。",
+        "배송 데스크에서 기다릴게. 누구를 위한 랜턴인지 확인해 볼까?"
+      ]
+    },
+    {
+      "en": "Let's try that delivery again. You're back at the room entrance, and this room's crates are back where you found them. Your finished jobs and drawing are safe.",
+      "values": [
+        "Let's try that delivery again. You're back at the room entrance, and this room's crates are back where you found them. Your finished jobs and drawing are safe.",
+        "我们再试一次吧。你回到了本区入口，箱子也回到了原位。已经完成的工序和读过的图纸都会保留。",
+        "Intentémoslo otra vez. Has vuelto a la entrada y las cajas a su sitio. Los trabajos terminados y el dibujo están a salvo.",
+        "On réessaie. Tu es à l'entrée de la salle, et les caisses à leur place. Ton travail terminé et le dessin sont conservés.",
+        "Versuchen wir es noch einmal. Du bist am Raumeingang, die Kisten wieder am Ausgangsort. Fertige Arbeit und die Zeichnung bleiben erhalten.",
+        "もう一度やってみよう。部屋の入り口に戻って、箱も元の場所に戻したよ。終わった作業と読んだ絵は、そのまま残っているから安心してね。",
+        "다시 해 보자. 넌 방 입구로, 상자들은 원래 자리로 돌아왔어. 완성한 작업과 읽은 그림은 그대로 남아 있으니 안심해."
+      ]
+    },
+    {
+      "en": "Check your notebook [J] if you need the core's location. A crate only blocks my view after you place it. The chime can call me away before I spot you.",
+      "values": [
+        "Check your notebook [J] if you need the core's location. A crate only blocks my view after you place it. The chime can call me away before I spot you.",
+        "右边的待办会继续指路，J 可以查看核心位置。放下的箱子能挡住我的视线；在我发现你之前，铃声可以把我引开。",
+        "Consulta el cuaderno [J] para localizar el núcleo. Una caja solo tapa mi vista al dejarla. La campana me distrae antes de que te vea.",
+        "Le carnet [J] indique où est le noyau. Une caisse bloque ma vue une fois posée. La cloche peut m'attirer avant que je te voie.",
+        "Im Notizbuch [J] steht, wo der Kern ist. Erst abgelegte Kisten versperren meine Sicht. Die Glocke lenkt mich ab, bevor ich dich sehe.",
+        "コアの場所はノート [J] で確認できるよ。箱は置いてからでないと目隠しにならないんだ。見つかる前なら、ベルで僕を呼び寄せられるよ。",
+        "코어 위치는 수첩 [J]에서 확인해. 상자는 내려놓아야 내 시야를 가려 줘. 들키기 전에는 종소리로 나를 부를 수 있어."
+      ]
+    },
+    {
+      "en": "Under the frame is a note in your own childhood handwriting.",
+      "values": [
+        "Under the frame is a note in your own childhood handwriting.",
+        "相框背后有一张小纸条，字迹是小时候的你写的。",
+        "Detrás del marco hay una nota escrita con tu letra de la infancia.",
+        "Sous le cadre, un mot porte ton écriture d'enfant.",
+        "Hinter dem Rahmen liegt eine Notiz in deiner eigenen Kinderhandschrift.",
+        "額の裏には、子どもの頃のあなたの字で書かれたメモがあった。",
+        "액자 뒤에는 어린 시절 당신의 글씨로 적힌 쪽지가 있었다."
+      ]
+    },
+    {
+      "en": "'For the last one to leave. So the way home is bright, too.'",
+      "values": [
+        "'For the last one to leave. So the way home is bright, too.'",
+        "“送给最后一个下班的人。这样，回家的路也会亮亮的。”",
+        "'Para el último en marcharse. Para que el camino a casa también tenga luz.'",
+        "« Pour la dernière personne à partir. Pour éclairer aussi le chemin du retour. »",
+        "„Für den Letzten, der geht. Damit auch der Heimweg hell ist.“",
+        "「最後に帰る人へ。帰り道も、明るくなりますように。」",
+        "\"마지막으로 퇴근하는 사람에게. 집에 가는 길도 밝아지도록.\""
+      ]
+    },
+    {
+      "en": "For the last one to leave. So the way home is bright, too.",
+      "values": [
+        "For the last one to leave. So the way home is bright, too.",
+        "送给最后一个下班的人。这样，回家的路也会亮亮的。",
+        "Para el último en marcharse. Para que el camino a casa también tenga luz.",
+        "Pour la dernière personne à partir. Pour éclairer aussi le chemin du retour.",
+        "Für den Letzten, der geht. Damit auch der Heimweg hell ist.",
+        "最後に帰る人へ。帰り道も、明るくなりますように。",
+        "마지막으로 퇴근하는 사람에게. 집에 가는 길도 밝아지도록."
+      ]
+    },
+    {
+      "en": "You remember now. The lantern was never waiting for a customer. You drew it for the little helpers who stayed after everyone else went home.",
+      "values": [
+        "You remember now. The lantern was never waiting for a customer. You drew it for the little helpers who stayed after everyone else went home.",
+        "你想起来了。这盏灯从来不是为顾客准备的，而是送给那些等所有人都回家后，仍留在工厂里的小幽灵们。",
+        "Ahora lo recuerdas. El farol no era para un cliente. Lo dibujaste para los pequeños ayudantes que se quedaban cuando todos se iban a casa.",
+        "Tu te souviens. Cette lanterne n'attendait pas un client. Tu l'avais dessinée pour les petits aides qui restaient après le départ des autres.",
+        "Jetzt erinnerst du dich. Die Laterne wartete nie auf einen Kunden. Du hattest sie für die kleinen Helfer gemalt, die blieben, wenn alle anderen nach Hause gingen.",
+        "思い出した。このランタンは、お客さんのためではなかった。みんなが帰った後も工場に残る、小さな仲間たちのために描いたのだ。",
+        "이제 기억이 난다. 이 랜턴은 손님을 기다리던 게 아니었다. 모두 집으로 떠난 뒤에도 공장에 남아 있던 작은 일꾼들을 위해 그린 것이었다."
+      ]
+    },
+    {
+      "en": "Pip has kept your promise safe all these years. You can finish it tonight.",
+      "values": [
+        "Pip has kept your promise safe all these years. You can finish it tonight.",
+        "这些年，Pip 一直替你保存着这个承诺。今晚，你终于可以完成它。",
+        "Pip ha cuidado tu promesa todos estos años. Esta noche puedes cumplirla.",
+        "Pip a gardé ta promesse toutes ces années. Ce soir, tu peux la tenir.",
+        "Pip hat dein Versprechen all die Jahre bewahrt. Heute kannst du es erfüllen.",
+        "Pip は何年もの間、あなたの約束を大切に守っていた。今夜、その約束を果たせる。",
+        "Pip은 오랜 세월 당신의 약속을 소중히 간직했다. 오늘 밤, 그 약속을 지킬 수 있다."
+      ]
+    },
+    {
+      "en": "Let's open the first door together. Look for the crate on your left. The gold marker and your checklist will show each step.",
+      "values": [
+        "Let's open the first door together. Look for the crate on your left. The gold marker and your checklist will show each step.",
+        "我们先一起打开第一扇门吧。找找左边的木箱，金色箭头和右侧待办会一步步带你完成。",
+        "Abramos la primera puerta juntos. Busca la caja de la izquierda. La marca dorada y la lista te guiarán paso a paso.",
+        "Ouvrons ensemble la première porte. La caisse est à gauche. Le repère doré et la liste te guideront à chaque étape.",
+        "Öffnen wir gemeinsam die erste Tür. Links steht eine Kiste. Die goldene Markierung und deine Liste zeigen jeden Schritt.",
+        "一緒に最初のドアを開けよう。左の箱を探してね。金色の目印とやることリストが、順番に案内してくれるよ。",
+        "첫 문부터 같이 열자. 왼쪽 상자를 찾아봐. 금색 표시와 할 일 목록이 하나씩 안내해 줄 거야."
+      ]
+    },
+    {
+      "en": "I've kept the old mould polished. Pip said the order might still be wanted someday.",
+      "values": [
+        "I've kept the old mould polished. Pip said the order might still be wanted someday.",
+        "我一直把旧模具擦得亮亮的。Pip 说，也许有一天，还有人想把这份订单做完。",
+        "He mantenido el viejo molde reluciente. Pip decía que quizá alguien querría terminar el pedido algún día.",
+        "J'ai toujours astiqué ce vieux moule. Pip disait qu'un jour, quelqu'un voudrait peut-être finir la commande.",
+        "Ich habe die alte Form immer poliert. Pip meinte, vielleicht würde jemand den Auftrag eines Tages noch wollen.",
+        "古い型を、ずっと磨いていたんだ。いつかこの注文を仕上げたくなる人が来るかもしれないって、Pip が言っていたから。",
+        "오래된 주형을 늘 반짝이게 닦아 뒀어. 언젠가 누군가 이 주문을 끝내고 싶어 할지도 모른다고 Pip이 말했거든."
+      ]
+    },
+    {
+      "en": "The gold core is all we have left. When the workshop gate is held by a crate, we can borrow its power for the Moulding Table.",
+      "values": [
+        "The gold core is all we have left. When the workshop gate is held by a crate, we can borrow its power for the Moulding Table.",
+        "工厂只剩一枚金色核心。等箱子接替它保持门打开，我们就能把核心借给成型机。",
+        "Solo nos queda el núcleo dorado. Cuando una caja mantenga la puerta abierta, podremos usarlo en la Mesa de Moldeo.",
+        "Il ne nous reste qu'un noyau doré. Une fois la porte maintenue par une caisse, on pourra le prêter à la Table de moulage.",
+        "Uns bleibt nur der goldene Kern. Hält eine Kiste das Tor offen, können wir seinen Strom für den Formtisch nutzen.",
+        "金色のコアは一つしか残っていないんだ。箱でゲートを開けておけば、コアを成形台に貸せるよ。",
+        "남은 금색 코어는 하나뿐이야. 상자로 문을 열어 두면 그 전력을 성형대에 빌려줄 수 있어."
+      ]
+    },
+    {
+      "en": "There it is! A real little shell, just like I remember.",
+      "values": [
+        "There it is! A real little shell, just like I remember.",
+        "就是它！一只真正的小灯壳，和记忆里的一样。",
+        "¡Ahí está! Una carcasa de verdad, tal como la recordaba.",
+        "La voilà ! Une vraie petite coque, comme dans mon souvenir.",
+        "Da ist sie! Eine richtige kleine Hülle, genau wie in meiner Erinnerung.",
+        "できた！本物の外枠だ。覚えているとおりの形だよ。",
+        "바로 이거야! 기억 속 그대로의 진짜 작은 틀이네."
+      ]
+    },
+    {
+      "en": "The Ribbon Conveyor is across the room. Take the same core; your shell will stay finished.",
+      "values": [
+        "The Ribbon Conveyor is across the room. Take the same core; your shell will stay finished.",
+        "丝带机在房间另一侧。把同一枚核心拿过去就好，外壳会保留。",
+        "La Cinta de Lazos está al otro lado. Lleva el mismo núcleo; la carcasa seguirá terminada.",
+        "Le Convoyeur à rubans est en face. Emporte le même noyau ; la coque restera finie.",
+        "Der Bandförderer steht gegenüber. Nimm denselben Kern mit; die fertige Hülle bleibt erhalten.",
+        "リボンコンベヤーは部屋の向かい側。同じコアを持っていこう。できた外枠は消えないよ。",
+        "리본 컨베이어는 방 건너편에 있어. 같은 코어를 가져가면 돼. 완성된 틀은 그대로 남아."
+      ]
+    },
+    {
+      "en": "I tied the ribbon the way the child liked it. A little crooked. Never trim the ends.",
+      "values": [
+        "I tied the ribbon the way the child liked it. A little crooked. Never trim the ends.",
+        "我照着那个孩子喜欢的样子系好了丝带。有一点点歪，也舍不得剪掉末端。",
+        "Até el lazo como le gustaba a aquel niño. Algo torcido. Sin cortar nunca las puntas.",
+        "J'ai noué le ruban comme cet enfant l'aimait. Un peu de travers. Sans jamais couper les bouts.",
+        "Ich habe das Band so gebunden, wie das Kind es mochte. Ein wenig schief. Die Enden nie abschneiden.",
+        "あの子の好きな結び方にしたよ。少し曲がっていて、端っこは切らないんだ。",
+        "그 아이가 좋아하던 대로 리본을 묶었어. 조금 삐뚤게. 끝부분은 자르지 않고."
+      ]
+    },
+    {
+      "en": "Pip kept the old drawing in the archive. Hush is on safety duty there. He only wants the aisles clear.",
+      "values": [
+        "Pip kept the old drawing in the archive. Hush is on safety duty there. He only wants the aisles clear.",
+        "Pip 把旧图纸放在档案室。Hush 在那里做安全巡查，他只是希望过道保持畅通。",
+        "Pip guardó el dibujo en el archivo. Hush vigila allí. Solo quiere mantener los pasillos despejados.",
+        "Pip a gardé le dessin aux archives. Hush y veille à la sécurité. Il veut juste garder les allées libres.",
+        "Pip hat die Zeichnung im Archiv aufbewahrt. Dort kontrolliert Hush die Sicherheit. Er will nur freie Gänge.",
+        "Pip が古い絵を資料室にとってあるよ。Hush が安全確認をしているけれど、通路を空けておきたいだけなんだ。",
+        "Pip이 옛 그림을 자료실에 보관했어. Hush가 거기서 안전 순찰 중이야. 통로를 비워 두고 싶을 뿐이지."
+      ]
+    },
+    {
+      "en": "You remember who it was for, don't you?",
+      "values": [
+        "You remember who it was for, don't you?",
+        "你已经想起这是送给谁的了，对吗？",
+        "Recuerdas para quién era, ¿verdad?",
+        "Tu te souviens pour qui elle était, n'est-ce pas ?",
+        "Du weißt wieder, für wen sie war, oder?",
+        "誰のためだったか、もう思い出したんだね。",
+        "누구를 위한 거였는지 이제 기억나지?"
+      ]
+    },
+    {
+      "en": "We kept your drawing. You came back to finish it. I think that makes this a very good last shift.",
+      "values": [
+        "We kept your drawing. You came back to finish it. I think that makes this a very good last shift.",
+        "我们保存了你的图纸，而你回来完成了它。这真是一个很好的最后夜班。",
+        "Guardamos tu dibujo y has vuelto para terminarlo. Creo que este es un buen último turno.",
+        "On a gardé ton dessin, et tu es revenu finir ce cadeau. Voilà un très beau dernier service.",
+        "Wir haben deine Zeichnung bewahrt. Du bist zurück, um sie zu vollenden. Das ist eine richtig gute letzte Schicht.",
+        "僕たちは絵をとっておいて、君は仕上げるために帰ってきた。とてもいい最後の夜勤になったね。",
+        "우리는 네 그림을 간직했고, 넌 완성하러 돌아왔어. 참 좋은 마지막 야간 근무가 된 것 같아."
+      ]
+    },
+    {
+      "en": "One last order, then we can all go home. I'll keep the desk warm.",
+      "values": [
+        "One last order, then we can all go home. I'll keep the desk warm.",
+        "最后一份订单完成，我们就可以一起回家。我会在送货台等你。",
+        "Un último pedido y todos podremos volver a casa. Te espero en el mostrador.",
+        "Une dernière commande, puis on rentre tous. Je t'attends au comptoir.",
+        "Ein letzter Auftrag, dann können wir alle heim. Ich halte am Schreibtisch die Stellung.",
+        "最後の注文が終わったら、みんなで帰れるよ。窓口で待っているね。",
+        "마지막 주문이 끝나면 다 같이 집에 갈 수 있어. 데스크에서 기다릴게."
+      ]
+    },
+    {
+      "en": "PACKAGING COMPLETE / The archive door is now unlocked.",
+      "values": [
+        "PACKAGING COMPLETE / The archive door is now unlocked.",
+        "包装完成！档案室的门已经打开，跟着待办继续前进。",
+        "EMBALAJE LISTO / La puerta del archivo está abierta.",
+        "EMBALLAGE TERMINÉ / Les archives sont ouvertes.",
+        "VERPACKUNG FERTIG / Das Archiv ist offen.",
+        "包装完了 / 資料室のドアが開いたよ。",
+        "포장 완료 / 자료실 문이 열렸어요."
+      ]
+    },
+    {
+      "en": "THE PROMISE IS ENGRAVED / Move the core to the Lantern Press.",
+      "values": [
+        "THE PROMISE IS ENGRAVED / Move the core to the Lantern Press.",
+        "承诺已经刻好。按右侧待办，把核心借给最后的灯笼压制机。",
+        "PROMESA GRABADA / Lleva el núcleo a la Prensa de Faroles.",
+        "PROMESSE GRAVÉE / Porte le noyau à la Presse à lanternes.",
+        "VERSPRECHEN GRAVIERT / Kern zur Laternenpresse bringen.",
+        "約束を刻めたよ / コアをランタンプレスへ運ぼう。",
+        "약속을 새겼어요 / 코어를 랜턴 프레스로 옮기세요."
+      ]
+    },
+    {
+      "en": "Hush is coming to check the chime. Watch his route, then use the archive plate.",
+      "values": [
+        "Hush is coming to check the chime. Watch his route, then use the archive plate.",
+        "Hush 正往休息铃走。观察他的路线，再搬箱子去条纹板。",
+        "Hush viene a revisar la campana. Observa su ruta y usa la placa del archivo.",
+        "Hush vient vérifier la cloche. Observe son trajet, puis utilise la plaque des archives.",
+        "Hush prüft die Glocke. Beobachte seinen Weg, dann nutze die Archivplatte.",
+        "Hush がベルを確かめに来るよ。動きを見てから、資料室のプレートを使おう。",
+        "Hush가 종을 확인하러 와요. 경로를 살핀 뒤 자료실 발판을 이용하세요."
+      ]
+    },
+    {
+      "en": "Your hands are full. Place what you're carrying first.",
+      "values": [
+        "Your hands are full. Place what you're carrying first.",
+        "双手正忙，先按 Q 放下手中的物品。",
+        "Tienes las manos ocupadas. Deja primero lo que llevas.",
+        "Tes mains sont prises. Pose d'abord ce que tu portes.",
+        "Deine Hände sind voll. Lege erst ab, was du trägst.",
+        "両手がいっぱいだよ。まず持っている物を置こう。",
+        "손이 가득 찼어요. 들고 있는 물건부터 내려놓으세요."
+      ]
+    },
+    {
+      "en": "This socket accepts one power core.",
+      "values": [
+        "This socket accepts one power core.",
+        "这个插座需要一枚金色核心。",
+        "Este hueco admite un núcleo de energía.",
+        "Cette prise accepte un noyau d'énergie.",
+        "In diesen Sockel passt ein Energiekern.",
+        "この差し込み口にはコアを一つ入れられるよ。",
+        "이 소켓에는 전력 코어 하나가 들어가요."
+      ]
+    },
+    {
+      "en": "Bring a power core to this machine.",
+      "values": [
+        "Bring a power core to this machine.",
+        "把金色核心带到这台机器前。",
+        "Trae un núcleo a esta máquina.",
+        "Apporte un noyau à cette machine.",
+        "Bring einen Kern zu dieser Maschine.",
+        "この機械にコアを持ってこよう。",
+        "이 기계에 코어를 가져오세요."
+      ]
+    },
+    {
+      "en": "Arrow-key look / mouse look off. K switches back.",
+      "values": [
+        "Arrow-key look / mouse look off. K switches back.",
+        "现在仅用方向键观察，鼠标不再转动视角。按 K 可切回。",
+        "Vista con flechas; ratón desactivado. K para cambiar.",
+        "Vue aux flèches ; souris désactivée. K pour changer.",
+        "Pfeilblick; Mausblick aus. K schaltet zurück.",
+        "方向キーで視点操作中。K でマウス操作に戻せるよ。",
+        "방향키 시점 조작 중. K로 마우스 조작으로 돌아갑니다."
+      ]
+    },
+    {
+      "en": "Mouse and arrow-key look. K switches to arrows only.",
+      "values": [
+        "Mouse and arrow-key look. K switches to arrows only.",
+        "现在可用鼠标和方向键观察。按 K 可切换为仅方向键。",
+        "Vista con ratón y flechas. K activa solo flechas.",
+        "Vue à la souris et aux flèches. K : flèches seules.",
+        "Maus- und Pfeilblick. K aktiviert nur Pfeiltasten.",
+        "マウスと方向キーで視点操作中。K で方向キーのみに切り替え。",
+        "마우스와 방향키 시점 조작 중. K로 방향키 전용으로 전환합니다."
+      ]
+    },
+    {
+      "en": "Make the shell first",
+      "values": [
+        "Make the shell first",
+        "先制作灯笼外壳",
+        "Haz primero la carcasa",
+        "Fabrique d'abord la coque",
+        "Erst die Hülle herstellen",
+        "先に外枠を作ろう",
+        "먼저 틀을 만드세요"
+      ]
+    },
+    {
+      "en": "Read the old drawing first",
+      "values": [
+        "Read the old drawing first",
+        "先读旧图纸",
+        "Lee primero el dibujo",
+        "Lis d'abord l'ancien dessin",
+        "Erst die Zeichnung lesen",
+        "先に古い絵を読もう",
+        "먼저 옛 그림을 읽으세요"
+      ]
+    },
+    {
+      "en": "Engrave the shell first",
+      "values": [
+        "Engrave the shell first",
+        "先完成雕刻",
+        "Graba primero la carcasa",
+        "Grave d'abord la coque",
+        "Erst die Hülle gravieren",
+        "先に外枠へ彫刻しよう",
+        "먼저 틀에 새기세요"
+      ]
+    },
+    {
+      "en": "WILLOW WORKS / STAFF NOTE",
+      "values": [
+        "WILLOW WORKS / STAFF NOTE",
+        "柳树工厂 / 员工纸条",
+        "WILLOW WORKS / NOTA DEL PERSONAL",
+        "WILLOW WORKS / NOTE AU PERSONNEL",
+        "WILLOW WORKS / PERSONALNOTIZ",
+        "ウィロー工場 / 従業員へのメモ",
+        "윌로 공장 / 직원 쪽지"
+      ]
+    },
+    {
+      "en": "The helpers only return on Halloween. If the lights are on, please tell them I left the side door open for the parade. Your old drawing is still in the archive. Love, Aunt May.",
+      "values": [
+        "The helpers only return on Halloween. If the lights are on, please tell them I left the side door open for the parade. Your old drawing is still in the archive. Love, Aunt May.",
+        "小助手们只在万圣节回来。如果灯还亮着，请告诉他们：我为游行留好了侧门。你小时候的图纸，还放在档案室里。——爱你的 May 阿姨",
+        "Los ayudantes solo vuelven en Halloween. Si hay luz, diles que dejé abierta la puerta lateral para el desfile. Tu dibujo sigue en el archivo. Con cariño, tía May.",
+        "Les petits aides ne reviennent qu'à Halloween. Si les lumières sont allumées, dis-leur que la porte latérale est ouverte pour le défilé. Ton dessin est aux archives. Bisous, tante May.",
+        "Die Helfer kommen nur an Halloween zurück. Brennt Licht, sag ihnen, die Seitentür für den Umzug ist offen. Deine Zeichnung ist noch im Archiv. Alles Liebe, Tante May.",
+        "小さな仲間たちはハロウィンにだけ帰ってきます。明かりがついていたら、パレードのために横のドアを開けてあると伝えてね。あなたの昔の絵は、まだ資料室にあります。愛をこめて、May おばさん。",
+        "작은 일꾼들은 핼러윈에만 돌아온단다. 불이 켜져 있으면 퍼레이드에 가도록 옆문을 열어 뒀다고 전해 주렴. 네 옛 그림은 아직 자료실에 있어. 사랑을 담아, May 이모가."
+      ]
+    },
+    {
+      "en": "Nice work! The crate keeps the door open. Leave it there and follow the marker.",
+      "values": [
+        "Nice work! The crate keeps the door open. Leave it there and follow the marker.",
+        "做得好！箱子会让门一直开着。把它留在这里，跟着箭头穿门吧。",
+        "¡Muy bien! La caja mantiene la puerta abierta. Déjala y sigue la marca.",
+        "Bravo ! La caisse garde la porte ouverte. Laisse-la et suis le repère.",
+        "Gut gemacht! Die Kiste hält die Tür offen. Lass sie dort und folge der Markierung.",
+        "上手にできたね！箱がドアを開けておいてくれるよ。そこに置いたまま、目印をたどろう。",
+        "잘했어! 상자가 문을 열어 두고 있어. 그대로 두고 표시를 따라가자."
+      ]
+    },
+    {
+      "en": "PIP / ARCHIVE TOUR",
+      "values": [
+        "PIP / ARCHIVE TOUR",
+        "PIP / 认识档案室",
+        "PIP / VISITA AL ARCHIVO",
+        "PIP / VISITE DES ARCHIVES",
+        "PIP / ARCHIVRUNDGANG",
+        "PIP / 資料室の案内",
+        "PIP / 자료실 안내"
+      ]
+    },
+    {
+      "en": "PIP / FINAL ASSEMBLY",
+      "values": [
+        "PIP / FINAL ASSEMBLY",
+        "PIP / 最终装配",
+        "PIP / MONTAJE FINAL",
+        "PIP / ASSEMBLAGE FINAL",
+        "PIP / ENDMONTAGE",
+        "PIP / 最終組み立て",
+        "PIP / 최종 조립"
+      ]
+    },
+    {
+      "en": "This is Hush, our safety inspector. He follows a route and checks noisy machines. He cannot hurt you.",
+      "values": [
+        "This is Hush, our safety inspector. He follows a route and checks noisy machines. He cannot hurt you.",
+        "这位是安全巡逻员 Hush。他会沿路线巡视，也会去查看响动的机器。他不会伤害你。",
+        "Este es Hush, el inspector de seguridad. Sigue una ruta y revisa las máquinas ruidosas. No puede hacerte daño.",
+        "Voici Hush, notre inspecteur. Il suit un trajet et vérifie les machines bruyantes. Il ne peut pas te faire de mal.",
+        "Das ist Hush, unser Sicherheitsprüfer. Er folgt seiner Route und prüft laute Maschinen. Er kann dir nicht wehtun.",
+        "こちらは安全確認係の Hush。決まった道を巡回して、音のする機械を調べるんだ。君を傷つけたりはしないよ。",
+        "우리 안전 점검원 Hush야. 정해진 길로 순찰하고 소리 나는 기계를 확인해. 널 다치게 하지는 않아."
+      ]
+    },
+    {
+      "en": "Try the chime first. Then use the crate to open the drawing cabinet. If Hush stops you, finished work stays safe.",
+      "values": [
+        "Try the chime first. Then use the crate to open the drawing cabinet. If Hush stops you, finished work stays safe.",
+        "先试试休息铃，再用箱子打开图纸柜。如果 Hush 拦下你，已完成的工作仍会保留。",
+        "Prueba la campana. Luego usa la caja para abrir el armario del dibujo. Si Hush te para, conservarás lo terminado.",
+        "Essaie la cloche, puis ouvre l'armoire au dessin avec la caisse. Si Hush t'arrête, le travail fini est conservé.",
+        "Probiere erst die Glocke. Öffne dann den Zeichnungsschrank mit der Kiste. Hält Hush dich an, bleibt fertige Arbeit erhalten.",
+        "まずベルを試そう。それから箱を使って絵の保管庫を開けるんだ。Hush に止められても、終わった作業は残るよ。",
+        "먼저 종을 써 봐. 그다음 상자로 그림 보관함을 열면 돼. Hush가 멈춰 세워도 완성한 작업은 남아 있어."
+      ]
+    },
+    {
+      "en": "Your old drawing is safe in the notebook. Let's turn that promise into a real lantern.",
+      "values": [
+        "Your old drawing is safe in the notebook. Let's turn that promise into a real lantern.",
+        "旧图纸已经记在笔记里。我们把这个承诺做成一盏真正的灯吧。",
+        "Tu dibujo está guardado en el cuaderno. Hagamos realidad aquella promesa.",
+        "Ton dessin est dans le carnet. Transformons cette promesse en une vraie lanterne.",
+        "Deine Zeichnung ist im Notizbuch. Machen wir aus dem Versprechen eine echte Laterne.",
+        "昔の絵はノートに残っているよ。あの約束を、本物のランタンにしよう。",
+        "옛 그림은 수첩에 남아 있어. 그 약속을 진짜 랜턴으로 만들어 보자."
+      ]
+    },
+    {
+      "en": "The Engraver can work on its own. Leave its core in place and prepare the crate gate while it finishes. Keep an eye on Hush.",
+      "values": [
+        "The Engraver can work on its own. Leave its core in place and prepare the crate gate while it finishes. Keep an eye on Hush.",
+        "雕刻机可以自己工作。把核心留在里面，趁它加工时搬箱子准备门禁，也要留意 Hush。",
+        "La Grabadora trabaja sola. Deja el núcleo y prepara la puerta con la caja mientras termina. Vigila a Hush.",
+        "La Graveuse travaille seule. Laisse le noyau dedans et prépare la caisse pour la porte. Garde un œil sur Hush.",
+        "Der Gravurtisch arbeitet allein. Lass den Kern darin und bereite das Kistentor vor. Behalte Hush im Auge.",
+        "彫刻台は自動で動くよ。コアを入れたまま、箱を運んでゲートの準備をしよう。Hush の動きも見ていてね。",
+        "조각대는 혼자 작동해. 코어는 그대로 두고, 끝날 동안 상자로 문을 준비하자. Hush도 잘 살펴봐."
+      ]
+    },
+    {
+      "en": "In your hands",
+      "values": [
+        "In your hands",
+        "在你手中",
+        "En tus manos",
+        "Dans tes mains",
+        "In deinen Händen",
+        "手に持っている",
+        "손에 들고 있음"
+      ]
+    },
+    {
+      "en": "Workshop Relay",
+      "values": [
+        "Workshop Relay",
+        "紫色门禁供电柜",
+        "Relé del taller",
+        "Relais de l'atelier",
+        "Werkstattrelais",
+        "作業場の制御盤",
+        "작업장 제어반"
+      ]
+    },
+    {
+      "en": "Packaging entrance",
+      "values": [
+        "Packaging entrance",
+        "包装区入口",
+        "Entrada de embalaje",
+        "Entrée de l'emballage",
+        "Verpackungseingang",
+        "包装室の入り口",
+        "포장실 입구"
+      ]
+    },
+    {
+      "en": "Packaging floor",
+      "values": [
+        "Packaging floor",
+        "包装区地上",
+        "Suelo de embalaje",
+        "Sol de l'emballage",
+        "Verpackungsboden",
+        "包装室の床",
+        "포장실 바닥"
+      ]
+    },
+    {
+      "en": "Archive floor",
+      "values": [
+        "Archive floor",
+        "档案室地上",
+        "Suelo del archivo",
+        "Sol des archives",
+        "Archivboden",
+        "資料室の床",
+        "자료실 바닥"
+      ]
+    },
+    {
+      "en": "Assembly floor",
+      "values": [
+        "Assembly floor",
+        "装配区地上",
+        "Suelo de montaje",
+        "Sol de l'assemblage",
+        "Montageboden",
+        "組み立て室の床",
+        "조립실 바닥"
+      ]
+    },
+    {
+      "en": "Not located",
+      "values": [
+        "Not located",
+        "尚未找到",
+        "Sin localizar",
+        "Non localisé",
+        "Nicht gefunden",
+        "まだ見つかっていない",
+        "아직 찾지 못함"
+      ]
+    },
+    {
+      "en": "MOULDING TABLE",
+      "values": [
+        "MOULDING TABLE",
+        "成型机",
+        "MESA DE MOLDEO",
+        "TABLE DE MOULAGE",
+        "FORMTISCH",
+        "成形台",
+        "성형대"
+      ]
+    },
+    {
+      "en": "RIBBON CONVEYOR",
+      "values": [
+        "RIBBON CONVEYOR",
+        "丝带机",
+        "CINTA DE LAZOS",
+        "CONVOYEUR À RUBANS",
+        "BANDFÖRDERER",
+        "リボンコンベヤー",
+        "리본 컨베이어"
+      ]
+    },
+    {
+      "en": "BREAK-TIME CHIME",
+      "values": [
+        "BREAK-TIME CHIME",
+        "休息铃",
+        "CAMPANA DE DESCANSO",
+        "CLOCHE DE PAUSE",
+        "PAUSENGLOCKE",
+        "休憩ベル",
+        "휴식 종"
+      ]
+    },
+    {
+      "en": "ENGRAVING TABLE",
+      "values": [
+        "ENGRAVING TABLE",
+        "雕刻机",
+        "MESA DE GRABADO",
+        "TABLE DE GRAVURE",
+        "GRAVURTISCH",
+        "彫刻台",
+        "조각대"
+      ]
+    },
+    {
+      "en": "LANTERN PRESS",
+      "values": [
+        "LANTERN PRESS",
+        "灯笼压制机",
+        "PRENSA DE FAROLES",
+        "PRESSE À LANTERNES",
+        "LATERNENPRESSE",
+        "ランタンプレス",
+        "랜턴 프레스"
+      ]
+    },
+    {
+      "en": "Foyer crate",
+      "values": [
+        "Foyer crate",
+        "入口木箱",
+        "Caja de entrada",
+        "Caisse de l'entrée",
+        "Eingangskiste",
+        "入り口の箱",
+        "입구 상자"
+      ]
+    },
+    {
+      "en": "Workshop override crate",
+      "values": [
+        "Workshop override crate",
+        "车间木箱",
+        "Caja de anulación",
+        "Caisse de l'atelier",
+        "Werkstattkiste",
+        "作業場の箱",
+        "작업장 상자"
+      ]
+    },
+    {
+      "en": "Archive crate",
+      "values": [
+        "Archive crate",
+        "档案室木箱",
+        "Caja del archivo",
+        "Caisse des archives",
+        "Archivkiste",
+        "資料室の箱",
+        "자료실 상자"
+      ]
+    },
+    {
+      "en": "Assembly crate",
+      "values": [
+        "Assembly crate",
+        "装配区木箱",
+        "Caja de montaje",
+        "Caisse d'assemblage",
+        "Montagekiste",
+        "組み立て室の箱",
+        "조립실 상자"
+      ]
+    },
+    {
+      "en": "Movable cover",
+      "values": [
+        "Movable cover",
+        "可移动掩体",
+        "Cobertura móvil",
+        "Abri mobile",
+        "Bewegliche Deckung",
+        "動かせる目隠し",
+        "이동식 엄폐물"
+      ]
+    },
+    {
+      "en": "power core",
+      "values": [
+        "power core",
+        "金色核心",
+        "núcleo de energía",
+        "noyau d'énergie",
+        "Energiekern",
+        "電源コア",
+        "전력 코어"
+      ]
+    },
+    {
+      "en": "the last lantern",
+      "values": [
+        "the last lantern",
+        "最后一盏灯",
+        "el último farol",
+        "la dernière lanterne",
+        "die letzte Laterne",
+        "最後のランタン",
+        "마지막 랜턴"
+      ]
+    },
+    {
+      "en": "Hush notices you. Move behind a shelf or a placed crate.",
+      "values": [
+        "Hush notices you. Move behind a shelf or a placed crate.",
+        "Hush 正在注意你：绕到货架或放下的箱子后面。",
+        "Hush te ve. Ocúltate tras un estante o una caja colocada.",
+        "Hush te remarque. Cache-toi derrière une étagère ou une caisse posée.",
+        "Hush bemerkt dich. Geh hinter ein Regal oder eine abgelegte Kiste.",
+        "Hush が気づいたよ。棚や、置いた箱の陰に隠れよう。",
+        "Hush가 알아챘어요. 선반이나 내려놓은 상자 뒤로 이동하세요."
+      ]
+    },
+    {
+      "en": "Menu / free mouse · Esc",
+      "values": [
+        "Menu / free mouse · Esc",
+        "菜单 / 释放鼠标 · Esc 也可用",
+        "Menú / liberar ratón · Esc",
+        "Menu / libérer la souris · Esc",
+        "Menü / Maus freigeben · Esc",
+        "メニュー / マウスを解放 · Esc",
+        "메뉴 / 마우스 해제 · Esc"
+      ]
+    },
+    {
+      "en": "One forgotten order. Three little helpers.\nTonight, make a light for their way home.",
+      "values": [
+        "One forgotten order. Three little helpers.\nTonight, make a light for their way home.",
+        "最后一份订单，三个等你的小幽灵。\n今晚，一起做一盏照亮回家路的灯。",
+        "Un pedido olvidado. Tres pequeños ayudantes.\nHoy iluminarás su camino a casa.",
+        "Une commande oubliée. Trois petits aides.\nCe soir, éclaire leur chemin du retour.",
+        "Ein vergessener Auftrag. Drei kleine Helfer.\nHeute erhellst du ihren Heimweg.",
+        "忘れられた注文と、三人の小さな仲間。\n今夜は、みんなの帰り道を照らそう。",
+        "잊혀진 주문 하나, 작은 일꾼 셋.\n오늘 밤, 그들의 귀갓길을 밝혀 주세요."
+      ]
+    },
+    {
+      "en": "I'll show you the first steps. Follow the gold marker.",
+      "values": [
+        "I'll show you the first steps. Follow the gold marker.",
+        "我会一步步带你熟悉工厂。无需先记住所有规则。",
+        "Te guiaré paso a paso. Sigue la marca dorada.",
+        "Je te guide pas à pas. Suis le repère doré.",
+        "Folge der goldenen Markierung. Ich führe dich.",
+        "最初の一歩から案内するね。金色の目印をたどろう。",
+        "처음부터 천천히 안내할게요. 금색 표시를 따라오세요."
+      ]
+    },
+    {
+      "en": "Begin the guided night shift  →",
+      "values": [
+        "Begin the guided night shift  →",
+        "跟着 Pip 开始夜班  →",
+        "Comenzar el turno guiado →",
+        "Commencer la visite de nuit →",
+        "Geführte Nachtschicht beginnen →",
+        "案内つきの夜勤を始める →",
+        "안내와 함께 야간 근무 시작 →"
+      ]
+    },
+    {
+      "en": "Quit",
+      "values": [
+        "Quit",
+        "退出",
+        "Salir",
+        "Quitter",
+        "Beenden",
+        "終了",
+        "종료"
+      ]
+    },
+    {
+      "en": "No countdown · No combat · Pause or quit anytime",
+      "values": [
+        "No countdown · No combat · Pause or quit anytime",
+        "无倒计时 · 无战斗 · 可随时暂停或退出",
+        "Sin tiempo límite ni combate · Pausa cuando quieras",
+        "Sans chrono ni combat · Pause ou sortie à tout moment",
+        "Kein Zeitlimit, kein Kampf · Pause jederzeit",
+        "時間制限・戦闘なし。いつでも一時停止や終了ができるよ。",
+        "제한 시간과 전투 없음 · 언제든 정지하거나 종료할 수 있어요"
+      ]
+    },
+    {
+      "en": "Your first few controls",
+      "values": [
+        "Your first few controls",
+        "先认识这几个按键",
+        "Tus primeros controles",
+        "Tes premières commandes",
+        "Deine ersten Tasten",
+        "最初に覚える操作",
+        "처음 익힐 조작"
+      ]
+    },
+    {
+      "en": "Walk",
+      "values": [
+        "Walk",
+        "走动",
+        "Caminar",
+        "Marcher",
+        "Gehen",
+        "歩く",
+        "걷기"
+      ]
+    },
+    {
+      "en": "W forward, S back, A / D sideways",
+      "values": [
+        "W forward, S back, A / D sideways",
+        "W 前进，S 后退，A / D 左右移动",
+        "W delante, S atrás, A/D lados",
+        "W avant, S arrière, A/D côtés",
+        "W vor, S zurück, A / D seitwärts",
+        "W：前へ、S：後ろへ、A / D：左右へ",
+        "W 앞으로, S 뒤로, A / D 좌우로"
+      ]
+    },
+    {
+      "en": "Pick up / use",
+      "values": [
+        "Pick up / use",
+        "拿起 / 使用",
+        "Recoger / usar",
+        "Prendre / utiliser",
+        "Nehmen / nutzen",
+        "拾う / 使う",
+        "집기 / 사용"
+      ]
+    },
+    {
+      "en": "Aim the centre dot at the item first",
+      "values": [
+        "Aim the centre dot at the item first",
+        "先用屏幕中央的圆点对准物品",
+        "Apunta con el punto central",
+        "Vise l'objet avec le point au centre",
+        "Mit dem Mittelpunkt zielen",
+        "画面中央の印を物に合わせよう",
+        "화면 중앙의 점을 물건에 맞추세요"
+      ]
+    },
+    {
+      "en": "Place",
+      "values": [
+        "Place",
+        "放下",
+        "Dejar",
+        "Poser",
+        "Ablegen",
+        "置く",
+        "내려놓기"
+      ]
+    },
+    {
+      "en": "Places it one step in front of you",
+      "values": [
+        "Places it one step in front of you",
+        "放到前方一步的位置",
+        "Lo deja a un paso delante de ti",
+        "Pose l'objet un pas devant toi",
+        "Legt es einen Schritt vor dir ab",
+        "一歩前の場所に置くよ",
+        "한 걸음 앞에 내려놓습니다"
+      ]
+    },
+    {
+      "en": "Mouse / arrows: look\nSpace / Enter: next line",
+      "values": [
+        "Mouse / arrows: look\nSpace / Enter: next line",
+        "鼠标 / 方向键：观察\n空格 / 回车 / 点击：继续对话",
+        "Ratón / flechas: mirar\nEspacio / Enter: continuar",
+        "Souris / flèches : regarder\nEspace / Entrée : suite",
+        "Maus / Pfeile: umsehen\nLeertaste / Enter: weiter",
+        "マウス / 方向キー：見回す\nSpace / Enter：会話を進める",
+        "마우스 / 방향키: 둘러보기\nSpace / Enter: 다음 대사"
+      ]
+    },
+    {
+      "en": "10 / 31    TONIGHT",
+      "values": [
+        "10 / 31    TONIGHT",
+        "10 / 31    今晚的待办",
+        "31 / 10    ESTA NOCHE",
+        "31 / 10    CE SOIR",
+        "31.10.    HEUTE NACHT",
+        "10 / 31　今夜の予定",
+        "10 / 31　오늘 밤"
+      ]
+    },
+    {
+      "en": "Use",
+      "values": [
+        "Use",
+        "拿起 / 使用",
+        "Usar",
+        "Utiliser",
+        "Nutzen",
+        "使う",
+        "사용"
+      ]
+    },
+    {
+      "en": "Carrying: ",
+      "values": [
+        "Carrying: ",
+        "手中：",
+        "Llevas: ",
+        "En main : ",
+        "Du trägst: ",
+        "持ち物：",
+        "들고 있음: "
+      ]
+    },
+    {
+      "en": "Turn toward the arrow",
+      "values": [
+        "Turn toward the arrow",
+        "朝箭头方向转动视角",
+        "Mira hacia la flecha",
+        "Regarde vers la flèche",
+        "Zur Pfeilrichtung drehen",
+        "矢印の方へ視点を向けよう",
+        "화살표 쪽으로 시점을 돌리세요"
+      ]
+    },
+    {
+      "en": "◎  Q place here",
+      "values": [
+        "◎  Q place here",
+        "◎  Q 放在这里",
+        "◎  Q dejar aquí",
+        "◎  Q poser ici",
+        "◎  Q hier ablegen",
+        "◎  Q ここに置く",
+        "◎  Q 여기에 놓기"
+      ]
+    },
+    {
+      "en": "Paused for dialogue.\nClick Continue or press Space / Enter.",
+      "values": [
+        "Paused for dialogue.\nClick Continue or press Space / Enter.",
+        "阅读中，工厂已暂停。\n点“继续”，或按空格 / 回车。Tab 打开退出菜单。",
+        "En pausa durante el diálogo.\nPulsa Continuar, Espacio o Enter.",
+        "Dialogue en pause.\nClique sur Continuer ou Espace / Entrée.",
+        "Während des Dialogs pausiert.\nWeiter anklicken oder Leertaste / Enter.",
+        "会話中は一時停止しているよ。\n「次へ」を押すか、Space / Enter。",
+        "대화 중에는 일시 정지돼요.\n계속을 누르거나 Space / Enter."
+      ]
+    },
+    {
+      "en": "Continue  →",
+      "values": [
+        "Continue  →",
+        "继续  →",
+        "Continuar →",
+        "Continuer →",
+        "Weiter →",
+        "次へ →",
+        "계속 →"
+      ]
+    },
+    {
+      "en": "Take a breath",
+      "values": [
+        "Take a breath",
+        "休息一下，随时回来",
+        "Tómate un respiro",
+        "Fais une petite pause",
+        "Zeit zum Durchatmen",
+        "ひと休みしよう",
+        "잠깐 쉬어 가세요"
+      ]
+    },
+    {
+      "en": "Game paused. Your mouse is free.\nYour dialogue and current work stay here.",
+      "values": [
+        "Game paused. Your mouse is free.\nYour dialogue and current work stay here.",
+        "游戏已暂停，鼠标已释放。\n你的对话和当前工序会留在这里。",
+        "Juego en pausa. El ratón está libre.\nTu diálogo y trabajo te esperan.",
+        "Jeu en pause. La souris est libre.\nTon dialogue et ton travail sont conservés.",
+        "Spiel pausiert. Die Maus ist frei.\nDialog und Arbeit bleiben erhalten.",
+        "ゲームは一時停止中。マウスは自由に使えるよ。\n会話も作業も、そのまま残っているからね。",
+        "게임이 멈췄고 마우스가 해제됐어요.\n대화와 작업은 그대로 유지돼요."
+      ]
+    },
+    {
+      "en": "Music",
+      "values": [
+        "Music",
+        "音乐",
+        "Música",
+        "Musique",
+        "Musik",
+        "音楽",
+        "음악"
+      ]
+    },
+    {
+      "en": "Effects",
+      "values": [
+        "Effects",
+        "音效",
+        "Efectos",
+        "Effets",
+        "Effekte",
+        "効果音",
+        "효과음"
+      ]
+    },
+    {
+      "en": "Test / restore sound",
+      "values": [
+        "Test / restore sound",
+        "试听 / 恢复声音",
+        "Probar / restaurar sonido",
+        "Tester / rétablir le son",
+        "Ton testen / wiederherstellen",
+        "音を試す / 復旧",
+        "소리 테스트 / 복구"
+      ]
+    },
+    {
+      "en": "Mouse / arrow-only look",
+      "values": [
+        "Mouse / arrow-only look",
+        "切换鼠标 / 方向键观察",
+        "Vista con ratón / flechas",
+        "Vue souris / flèches seules",
+        "Mausblick / nur Pfeiltasten",
+        "マウス / 方向キーを切り替え",
+        "마우스 / 방향키 시점 전환"
+      ]
+    },
+    {
+      "en": "Resume where you left off  [Tab / Esc]",
+      "values": [
+        "Resume where you left off  [Tab / Esc]",
+        "回到刚才的位置  [Tab / Esc]",
+        "Volver donde lo dejaste [Tab / Esc]",
+        "Reprendre où tu en étais [Tab / Esc]",
+        "An gleicher Stelle fortsetzen [Tab / Esc]",
+        "続きに戻る [Tab / Esc]",
+        "하던 곳에서 계속 [Tab / Esc]"
+      ]
+    },
+    {
+      "en": "Restart this night",
+      "values": [
+        "Restart this night",
+        "重新开始这晚",
+        "Reiniciar esta noche",
+        "Recommencer la nuit",
+        "Nacht neu beginnen",
+        "今夜をやり直す",
+        "오늘 밤 다시 시작"
+      ]
+    },
+    {
+      "en": "Quit game [X]",
+      "values": [
+        "Quit game [X]",
+        "退出游戏 [X]",
+        "Salir del juego [X]",
+        "Quitter le jeu [X]",
+        "Spiel beenden [X]",
+        "ゲームを終了 [X]",
+        "게임 종료 [X]"
+      ]
+    },
+    {
+      "en": "You can also quit with Cmd Q on Mac or Alt F4 on Windows.",
+      "values": [
+        "You can also quit with Cmd Q on Mac or Alt F4 on Windows.",
+        "若按键没有响应，也可用 macOS 的 ⌘ Q 退出。",
+        "También puedes salir con Cmd Q en Mac o Alt F4 en Windows.",
+        "Pour quitter aussi : Cmd Q sur Mac ou Alt F4 sous Windows.",
+        "Auch möglich: Cmd Q am Mac oder Alt F4 unter Windows.",
+        "Mac は Cmd Q、Windows は Alt F4 でも終了できるよ。",
+        "Mac은 Cmd Q, Windows는 Alt F4로도 종료할 수 있어요."
+      ]
+    },
+    {
+      "en": "The night-shift notebook",
+      "values": [
+        "The night-shift notebook",
+        "夜班笔记",
+        "Cuaderno del turno nocturno",
+        "Le carnet de nuit",
+        "Das Nachtschicht-Notizbuch",
+        "夜勤ノート",
+        "야간 근무 수첩"
+      ]
+    },
+    {
+      "en": "Gold core location: ",
+      "values": [
+        "Gold core location: ",
+        "金色核心的位置：",
+        "Núcleo dorado: ",
+        "Position du noyau doré : ",
+        "Goldener Kern: ",
+        "金色のコアの場所：",
+        "금색 코어 위치: "
+      ]
+    },
+    {
+      "en": "Three things to remember:\n1. Leave a crate on a striped plate to keep access.\n2. There is one core; finished work stays finished.\n3. Hush cannot hurt you. Retries keep completed work.",
+      "values": [
+        "Three things to remember:\n1. Leave a crate on a striped plate to keep access.\n2. There is one core; finished work stays finished.\n3. Hush cannot hurt you. Retries keep completed work.",
+        "记住三件事就好：\n1. 箱子留在条纹板上，门就会开着。\n2. 只有一枚核心，但已经做好的东西不会消失。\n3. Hush 不会伤害你；被发现后保留完成进度重试。",
+        "Recuerda tres cosas:\n1. Una caja en la placa mantiene la puerta abierta.\n2. Hay un solo núcleo; lo terminado no se pierde.\n3. Hush no hace daño. Los reintentos conservan el trabajo.",
+        "Trois choses à retenir :\n1. Une caisse sur une plaque maintient l'accès.\n2. Un seul noyau ; le travail fini reste fini.\n3. Hush ne fait pas mal. Les essais gardent le travail.",
+        "Drei Dinge zum Merken:\n1. Eine Kiste auf der Platte hält den Zugang offen.\n2. Ein Kern; fertige Arbeit bleibt fertig.\n3. Hush tut dir nichts. Versuche behalten fertige Arbeit.",
+        "覚えておくのは三つだけ。\n1. 箱をプレートに置くと、ドアを開けておける。\n2. コアは一つ。でも、できた物は消えない。\n3. Hush は傷つけない。やり直しても作業は残る。",
+        "세 가지만 기억하세요.\n1. 줄무늬 발판에 상자를 두면 문이 열려 있어요.\n2. 코어는 하나지만, 완성한 작업은 남아요.\n3. Hush는 해치지 않아요. 재시도해도 작업은 남아요."
+      ]
+    },
+    {
+      "en": "Close notebook  [J / Esc]",
+      "values": [
+        "Close notebook  [J / Esc]",
+        "合上笔记  [J / Esc]",
+        "Cerrar cuaderno [J / Esc]",
+        "Fermer le carnet [J / Esc]",
+        "Notizbuch schließen [J / Esc]",
+        "ノートを閉じる [J / Esc]",
+        "수첩 닫기 [J / Esc]"
+      ]
+    },
+    {
+      "en": "THE LAST ORDER / DELIVERED",
+      "values": [
+        "THE LAST ORDER / DELIVERED",
+        "最后一份订单 / 已送达",
+        "ÚLTIMO PEDIDO / ENTREGADO",
+        "DERNIÈRE COMMANDE / LIVRÉE",
+        "LETZTER AUFTRAG / GELIEFERT",
+        "最後の注文 / お届け完了",
+        "마지막 주문 / 배송 완료"
+      ]
+    },
+    {
+      "en": "A light for\nthe way home.",
+      "values": [
+        "A light for\nthe way home.",
+        "照亮回家的路。",
+        "Una luz para\nel camino a casa.",
+        "Une lumière pour\nle retour.",
+        "Ein Licht für\nden Heimweg.",
+        "帰り道を\n照らす光。",
+        "집에 가는 길을\n밝히는 빛."
+      ]
+    },
+    {
+      "en": "Pip turns your note over once more.\n\n\"Then this time, we all clock out together.\"\n\nOutside, the parade is just beginning.",
+      "values": [
+        "Pip turns your note over once more.\n\n\"Then this time, we all clock out together.\"\n\nOutside, the parade is just beginning.",
+        "Pip 又看了一遍你的纸条。\n\n“这一次，我们一起下班吧。”\n\n门外的万圣节游行，才刚刚开始。",
+        "Pip vuelve a mirar tu nota.\n\n«Esta vez, salgamos todos juntos.»\n\nFuera, el desfile acaba de empezar.",
+        "Pip relit ton petit mot.\n\n« Alors cette fois, on rentre tous ensemble. »\n\nDehors, le défilé ne fait que commencer.",
+        "Pip dreht deine Notiz noch einmal um.\n\n„Dann machen wir diesmal alle zusammen Feierabend.“\n\nDraußen beginnt gerade der Umzug.",
+        "Pip はもう一度、あなたのメモを見返した。\n\n「それじゃ、今度はみんなで帰ろう。」\n\n外では、パレードが始まったばかりだ。",
+        "Pip이 당신의 쪽지를 다시 한번 읽는다.\n\n\"그럼 이번에는 다 같이 퇴근하자.\"\n\n밖에서는 퍼레이드가 막 시작되고 있다."
+      ]
+    },
+    {
+      "en": "Safety retries: ",
+      "values": [
+        "Safety retries: ",
+        "安全重试：",
+        "Reintentos: ",
+        "Nouveaux essais : ",
+        "Neue Versuche: ",
+        "安全確認のやり直し：",
+        "안전 점검 재시도: "
+      ]
+    },
+    {
+      "en": "Visit again",
+      "values": [
+        "Visit again",
+        "再来一次",
+        "Volver a jugar",
+        "Revenir une autre nuit",
+        "Erneut besuchen",
+        "もう一度訪れる",
+        "다시 방문"
+      ]
+    },
+    {
+      "en": "Pick up an item first.",
+      "values": [
+        "Pick up an item first.",
+        "先拿起一个物品。",
+        "Recoge un objeto primero.",
+        "Prends d'abord un objet.",
+        "Hebe erst einen Gegenstand auf.",
+        "まず何か拾おう。",
+        "먼저 물건을 집으세요."
+      ]
+    },
+    {
+      "en": "Find a clear, level patch of floor.",
+      "values": [
+        "Find a clear, level patch of floor.",
+        "这里放不下，找一块平整的空地。",
+        "Busca un suelo plano y despejado.",
+        "Trouve un sol plat et dégagé.",
+        "Suche freien, ebenen Boden.",
+        "平らで何もない床を探そう。",
+        "평평하고 비어 있는 바닥을 찾으세요."
+      ]
+    },
+    {
+      "en": "Place it on the floor, away from shelves and worktops.",
+      "values": [
+        "Place it on the floor, away from shelves and worktops.",
+        "请放在地上，避开柜子和工作台。",
+        "Déjalo en el suelo, lejos de estantes y mesas.",
+        "Pose-le au sol, loin des étagères et tables.",
+        "Auf den Boden legen, weg von Regalen und Tischen.",
+        "棚や作業台を避けて、床に置こう。",
+        "선반과 작업대를 피해 바닥에 놓으세요."
+      ]
+    },
+    {
+      "en": "Too close to the plate: take one step back.",
+      "values": [
+        "Too close to the plate: take one step back.",
+        "离条纹板太近：退后一步再放。",
+        "Muy cerca de la placa: retrocede un paso.",
+        "Trop près de la plaque : recule d'un pas.",
+        "Zu nah an der Platte: einen Schritt zurück.",
+        "プレートに近すぎるよ。一歩下がろう。",
+        "발판에 너무 가까워요. 한 걸음 뒤로 가세요."
+      ]
+    },
+    {
+      "en": "Something blocks this spot. Find clear floor.",
+      "values": [
+        "Something blocks this spot. Find clear floor.",
+        "前方有东西挡着：换一块空地。",
+        "Algo bloquea el lugar. Busca suelo libre.",
+        "Quelque chose gêne. Trouve un sol dégagé.",
+        "Hier ist etwas im Weg. Suche freien Boden.",
+        "何かが邪魔になっているよ。空いた床を探そう。",
+        "무언가 막고 있어요. 빈 바닥을 찾으세요."
+      ]
+    },
+    {
+      "en": "Approach the striped plate, leave one step of space, then press Q.",
+      "values": [
+        "Approach the striped plate, leave one step of space, then press Q.",
+        "靠近金色条纹板，留出一步距离。看准落点后按 Q。",
+        "Acércate a la placa rayada, deja un paso de espacio y pulsa Q.",
+        "Approche de la plaque rayée, garde un pas de recul, puis appuie sur Q.",
+        "Geh zur gestreiften Platte, lass einen Schritt Abstand und drücke Q.",
+        "縞模様のプレートに近づこう。一歩分あけて Q を押すよ。",
+        "줄무늬 발판에 다가가서 한 걸음 거리를 두고 Q를 누르세요."
+      ]
+    },
+    {
+      "en": "Go along the entrance to the right wall, then around the right side of the shelf.",
+      "values": [
+        "Go along the entrance to the right wall, then around the right side of the shelf.",
+        "先沿入口走向右墙，再从货架右侧绕过去。",
+        "Ve por la entrada hacia la pared derecha y rodea el estante por ese lado.",
+        "Longe l'entrée vers le mur droit, puis contourne l'étagère par la droite.",
+        "Geh am Eingang zur rechten Wand, dann rechts am Regal vorbei.",
+        "入り口に沿って右の壁へ進んで、棚の右側を回ろう。",
+        "입구를 따라 오른쪽 벽으로 간 뒤 선반 오른쪽으로 돌아가세요."
+      ]
+    },
+    {
+      "en": "04 / Prepare the gate",
+      "values": [
+        "04 / Prepare the gate",
+        "04 / 提前准备门禁",
+        "04 / Prepara la puerta",
+        "04 / Préparer l'accès",
+        "04 / Tor vorbereiten",
+        "04 / ゲートの準備",
+        "04 / 문 준비"
+      ]
+    },
+    {
+      "en": "Leave the core in the Engraver. Prepare the crate gate while it works; watch Hush.",
+      "values": [
+        "Leave the core in the Engraver. Prepare the crate gate while it works; watch Hush.",
+        "核心留在雕刻机里。趁它工作，把箱子搬到条纹板上；留意 Hush。",
+        "Deja el núcleo en la Grabadora. Prepara la puerta con la caja mientras trabaja; vigila a Hush.",
+        "Laisse le noyau dans la Graveuse. Prépare la caisse pour la porte ; surveille Hush.",
+        "Lass den Kern im Gravurtisch. Bereite das Kistentor vor und achte auf Hush.",
+        "コアは彫刻台に入れたまま。作動中に箱でゲートを準備しよう。Hush にも気をつけてね。",
+        "코어는 조각대에 그대로 두세요. 작동하는 동안 상자로 문을 준비하고 Hush를 살피세요."
+      ]
+    },
+    {
+      "en": "Core location: ",
+      "values": [
+        "Core location: ",
+        "核心位置：",
+        "Núcleo: ",
+        "Position du noyau : ",
+        "Kernposition: ",
+        "コアの場所：",
+        "코어 위치: "
+      ]
+    },
+    {
+      "en": "01 / Open your first door",
+      "values": [
+        "01 / Open your first door",
+        "01 / 打开第一扇门",
+        "01 / Tu primera puerta",
+        "01 / Première porte",
+        "01 / Erste Tür öffnen",
+        "01 / 最初のドアを開けよう",
+        "01 / 첫 문 열기"
+      ]
+    },
+    {
+      "en": "02 / Keep the door open",
+      "values": [
+        "02 / Keep the door open",
+        "02 / 让门保持打开",
+        "02 / Mantén el paso abierto",
+        "02 / Garder l'accès",
+        "02 / Tor offen halten",
+        "02 / ゲートを開けたままに",
+        "02 / 문 열어 두기"
+      ]
+    },
+    {
+      "en": "03 / Open drawing cabinet",
+      "values": [
+        "03 / Open drawing cabinet",
+        "03 / 打开图纸柜",
+        "03 / Abre el armario",
+        "03 / Ouvrir l'armoire",
+        "03 / Zeichnungsschrank",
+        "03 / 絵の保管庫を開けよう",
+        "03 / 그림 보관함 열기"
+      ]
+    },
+    {
+      "en": "04 / Open the assembly gate",
+      "values": [
+        "04 / Open the assembly gate",
+        "04 / 打开装配区的门",
+        "04 / Abre la puerta de montaje",
+        "04 / Ouvrir l'assemblage",
+        "04 / Montagetor öffnen",
+        "04 / 組み立てゲートを開けよう",
+        "04 / 조립실 문 열기"
+      ]
+    },
+    {
+      "en": "Walk to the marked doorway",
+      "values": [
+        "Walk to the marked doorway",
+        "先沿箭头走到中央通道",
+        "Ve a la puerta marcada",
+        "Va vers la porte indiquée",
+        "Zum markierten Durchgang gehen",
+        "目印の通路まで歩こう",
+        "표시된 통로로 이동하세요"
+      ]
+    },
+    {
+      "en": "This passage leads to: ",
+      "values": [
+        "This passage leads to: ",
+        "这条通道通往：",
+        "Este paso lleva a: ",
+        "Ce passage mène à : ",
+        "Dieser Durchgang führt zu: ",
+        "この通路の先にあるのは：",
+        "이 통로의 목적지: "
+      ]
+    },
+    {
+      "en": "Next clear passage",
+      "values": [
+        "Next clear passage",
+        "下一处通道",
+        "Siguiente paso libre",
+        "Prochain passage libre",
+        "Nächster freier Durchgang",
+        "次の通路",
+        "다음 통로"
+      ]
+    },
+    {
+      "en": "01 / FIRST STEPS",
+      "values": [
+        "01 / FIRST STEPS",
+        "01 / 第一扇门",
+        "01 / PRIMEROS PASOS",
+        "01 / PREMIERS PAS",
+        "01 / ERSTE SCHRITTE",
+        "01 / はじめの一歩",
+        "01 / 첫걸음"
+      ]
+    },
+    {
+      "en": "02 / PACKAGING",
+      "values": [
+        "02 / PACKAGING",
+        "02 / 包装区",
+        "02 / EMBALAJE",
+        "02 / EMBALLAGE",
+        "02 / VERPACKUNG",
+        "02 / 包装室",
+        "02 / 포장실"
+      ]
+    },
+    {
+      "en": "03 / THE ARCHIVE",
+      "values": [
+        "03 / THE ARCHIVE",
+        "03 / 旧图纸",
+        "03 / EL ARCHIVO",
+        "03 / LES ARCHIVES",
+        "03 / DAS ARCHIV",
+        "03 / 資料室",
+        "03 / 자료실"
+      ]
+    },
+    {
+      "en": "04 / ASSEMBLY",
+      "values": [
+        "04 / ASSEMBLY",
+        "04 / 最终装配",
+        "04 / MONTAJE",
+        "04 / ASSEMBLAGE",
+        "04 / MONTAGE",
+        "04 / 組み立て",
+        "04 / 조립"
+      ]
+    },
+    {
+      "en": "05 / DELIVERY",
+      "values": [
+        "05 / DELIVERY",
+        "05 / 最后送达",
+        "05 / ÚLTIMA ENTREGA",
+        "05 / LIVRAISON",
+        "05 / LETZTE LIEFERUNG",
+        "05 / 最後のお届け",
+        "05 / 마지막 배송"
+      ]
+    },
+    {
+      "en": "Walk through the open door",
+      "values": [
+        "Walk through the open door",
+        "穿过打开的门",
+        "Cruza la puerta abierta",
+        "Traverse la porte ouverte",
+        "Durch die offene Tür gehen",
+        "開いたドアを通ろう",
+        "열린 문을 통과하세요"
+      ]
+    },
+    {
+      "en": "Leave the crate on the plate to keep the door open.",
+      "values": [
+        "Leave the crate on the plate to keep the door open.",
+        "让箱子留在板上，门就会一直开着。",
+        "Deja la caja en la placa para mantener la puerta abierta.",
+        "Laisse la caisse sur la plaque pour garder la porte ouverte.",
+        "Lass die Kiste auf der Platte, damit die Tür offen bleibt.",
+        "箱をプレートに置いたままにすると、ドアが開いているよ。",
+        "상자를 발판에 두면 문이 계속 열려 있어요."
+      ]
+    },
+    {
+      "en": "Centre doorway",
+      "values": [
+        "Centre doorway",
+        "门的中央",
+        "Puerta central",
+        "Porte centrale",
+        "Mittlerer Durchgang",
+        "中央のドア",
+        "가운데 문"
+      ]
+    },
+    {
+      "en": "Leave the crate on the striped plate",
+      "values": [
+        "Leave the crate on the striped plate",
+        "把箱子放在条纹板上",
+        "Deja la caja en la placa rayada",
+        "Pose la caisse sur la plaque rayée",
+        "Kiste auf die gestreifte Platte stellen",
+        "箱を縞模様のプレートに置こう",
+        "상자를 줄무늬 발판에 놓으세요"
+      ]
+    },
+    {
+      "en": "Striped pressure plate",
+      "values": [
+        "Striped pressure plate",
+        "条纹压力板",
+        "Placa rayada",
+        "Plaque rayée",
+        "Gestreifte Druckplatte",
+        "縞模様のプレート",
+        "줄무늬 발판"
+      ]
+    },
+    {
+      "en": "Free your hands first",
+      "values": [
+        "Free your hands first",
+        "先腾出双手",
+        "Libera las manos primero",
+        "Libère d'abord tes mains",
+        "Erst die Hände frei machen",
+        "まず手を空けよう",
+        "먼저 손을 비우세요"
+      ]
+    },
+    {
+      "en": "Press Q on clear floor, then pick up the crate.",
+      "values": [
+        "Press Q on clear floor, then pick up the crate.",
+        "按 Q 把手中的物品放到空地，再拿箱子。",
+        "Pulsa Q en suelo despejado y luego recoge la caja.",
+        "Pose ton objet sur un sol libre avec Q, puis prends la caisse.",
+        "Mit Q auf freiem Boden ablegen, dann die Kiste nehmen.",
+        "Q で空いた床に置いてから、箱を拾おう。",
+        "Q로 빈 바닥에 내려놓은 뒤 상자를 집으세요."
+      ]
+    },
+    {
+      "en": "Crate",
+      "values": [
+        "Crate",
+        "木箱",
+        "Caja",
+        "Caisse",
+        "Kiste",
+        "木箱",
+        "상자"
+      ]
+    },
+    {
+      "en": "Walk to the crate and press E",
+      "values": [
+        "Walk to the crate and press E",
+        "走近木箱，按 E 拿起",
+        "Acércate a la caja y pulsa E",
+        "Approche de la caisse et appuie sur E",
+        "Zur Kiste gehen und E drücken",
+        "箱に近づいて E を押そう",
+        "상자에 다가가 E를 누르세요"
+      ]
+    },
+    {
+      "en": "Aim the centre dot at the crate. Press E when the pickup prompt appears.",
+      "values": [
+        "Aim the centre dot at the crate. Press E when the pickup prompt appears.",
+        "让屏幕中央的小圆点对准箱子。出现“拾取”提示再按 E。",
+        "Apunta a la caja con el punto central. Pulsa E cuando aparezca Recoger.",
+        "Vise la caisse avec le point central. Appuie sur E quand Prendre apparaît.",
+        "Ziele mit dem Mittelpunkt auf die Kiste. Drücke E, sobald Aufheben erscheint.",
+        "中央の印を箱に合わせてね。「拾う」と出たら E を押そう。",
+        "중앙 점을 상자에 맞추세요. 집기 안내가 뜨면 E를 누르세요."
+      ]
+    },
+    {
+      "en": "Crafting: leave the core in place",
+      "values": [
+        "Crafting: leave the core in place",
+        "正在制作，核心先留在机器里",
+        "Fabricando: deja el núcleo dentro",
+        "Fabrication : laisse le noyau en place",
+        "Fertigung: Kern eingesetzt lassen",
+        "製作中。コアは入れたままに",
+        "제작 중: 코어를 그대로 두세요"
+      ]
+    },
+    {
+      "en": "The checklist updates when finished. You can watch the workpiece.",
+      "values": [
+        "The checklist updates when finished. You can watch the workpiece.",
+        "完成后待办会自动更新。你可以观察作品。",
+        "La lista se actualizará al terminar. Puedes observar la pieza.",
+        "La liste se met à jour à la fin. Tu peux observer la pièce.",
+        "Die Liste aktualisiert sich danach. Du kannst das Werkstück ansehen.",
+        "終わるとリストが更新されるよ。できていく作品を見てみよう。",
+        "완료되면 목록이 갱신돼요. 만들어지는 모습을 볼 수 있어요."
+      ]
+    },
+    {
+      "en": "Machine at work",
+      "values": [
+        "Machine at work",
+        "制作中的机器",
+        "Máquina en marcha",
+        "Machine au travail",
+        "Maschine arbeitet",
+        "製作中の機械",
+        "작동 중인 기계"
+      ]
+    },
+    {
+      "en": "Aim at the machine and press E",
+      "values": [
+        "Aim at the machine and press E",
+        "对准机器，按 E 打开线路板",
+        "Apunta a la máquina y pulsa E",
+        "Vise la machine et appuie sur E",
+        "Auf die Maschine zielen und E drücken",
+        "機械に印を合わせて E を押そう",
+        "기계를 겨냥하고 E를 누르세요"
+      ]
+    },
+    {
+      "en": "Connect the circuit, then choose Start machine. The factory pauses while you plan.",
+      "values": [
+        "Connect the circuit, then choose Start machine. The factory pauses while you plan.",
+        "接通线路后，点“启动机器”。研究线路时工厂会暂停。",
+        "Conecta el circuito y pulsa Iniciar máquina. El mundo se pausa mientras lo resuelves.",
+        "Relie le circuit, puis choisis Démarrer la machine. Le monde reste en pause.",
+        "Verbinde den Stromkreis und wähle Maschine starten. Beim Planen pausiert die Fabrik.",
+        "回路をつないだら「機械を動かす」を選ぼう。考えている間、工場は一時停止するよ。",
+        "회로를 연결한 뒤 기계 가동을 누르세요. 계획하는 동안 공장은 멈춰 있어요."
+      ]
+    },
+    {
+      "en": "Machine front",
+      "values": [
+        "Machine front",
+        "机器正面",
+        "Frente de la máquina",
+        "Face de la machine",
+        "Maschinenvorderseite",
+        "機械の正面",
+        "기계 정면"
+      ]
+    },
+    {
+      "en": "Insert the gold core into this machine",
+      "values": [
+        "Insert the gold core into this machine",
+        "把金色核心插进这台机器",
+        "Inserta el núcleo en esta máquina",
+        "Insère le noyau dans cette machine",
+        "Goldenen Kern in diese Maschine einsetzen",
+        "この機械に金色のコアを入れよう",
+        "이 기계에 금색 코어를 넣으세요"
+      ]
+    },
+    {
+      "en": "Aim at the cabinet and press E. Press E again to open the circuit.",
+      "values": [
+        "Aim at the cabinet and press E. Press E again to open the circuit.",
+        "对准机器正面，按 E。然后再按 E 打开线路板。",
+        "Apunta al frente y pulsa E. Pulsa E otra vez para abrir el circuito.",
+        "Vise la face de la machine et appuie sur E. Encore E pour ouvrir le circuit.",
+        "Vorne auf die Maschine zielen und E drücken. Nochmals E öffnet den Stromkreis.",
+        "機械の正面に印を合わせて E。もう一度 E を押すと回路が開くよ。",
+        "기계 정면을 겨냥해 E를 누르세요. 다시 E를 누르면 회로가 열려요."
+      ]
+    },
+    {
+      "en": "Your next machine",
+      "values": [
+        "Your next machine",
+        "目标机器",
+        "Tu siguiente máquina",
+        "Ta prochaine machine",
+        "Deine nächste Maschine",
+        "次に使う機械",
+        "다음 기계"
+      ]
+    },
+    {
+      "en": "Retrieve the same gold core",
+      "values": [
+        "Retrieve the same gold core",
+        "先取回同一枚金色核心",
+        "Recupera el mismo núcleo dorado",
+        "Reprends le même noyau doré",
+        "Denselben goldenen Kern zurückholen",
+        "同じ金色のコアを回収しよう",
+        "같은 금색 코어를 회수하세요"
+      ]
+    },
+    {
+      "en": "Gold power core",
+      "values": [
+        "Gold power core",
+        "金色核心",
+        "Núcleo de energía dorado",
+        "Noyau d'énergie doré",
+        "Goldener Energiekern",
+        "金色の電源コア",
+        "금색 전력 코어"
+      ]
+    },
+    {
+      "en": "01 / Let me show you around",
+      "values": [
+        "01 / Let me show you around",
+        "01 / 我来带你熟悉一下",
+        "01 / Te enseñaré el lugar",
+        "01 / Je te fais visiter",
+        "01 / Ich führe dich herum",
+        "01 / 工場を案内するね",
+        "01 / 공장을 안내할게요"
+      ]
+    },
+    {
+      "en": "Look toward the crate on your left",
+      "values": [
+        "Look toward the crate on your left",
+        "先看一看左前方的木箱",
+        "Mira hacia la caja de la izquierda",
+        "Regarde la caisse à gauche",
+        "Zur Kiste links schauen",
+        "左にある箱を見てみよう",
+        "왼쪽 상자를 바라보세요"
+      ]
+    },
+    {
+      "en": "Move your mouse, or use the arrow keys to look. That's all for this step.",
+      "values": [
+        "Move your mouse, or use the arrow keys to look. That's all for this step.",
+        "移动鼠标，或按方向键转动视角。现在只需要看一看。",
+        "Mueve el ratón o usa las flechas para mirar. Por ahora, solo observa.",
+        "Bouge la souris ou les flèches pour regarder. Pour l'instant, regarde simplement.",
+        "Mit Maus oder Pfeiltasten umsehen. Für diesen Schritt reicht das schon.",
+        "マウスや方向キーで見回そう。今は見るだけで大丈夫だよ。",
+        "마우스나 방향키로 둘러보세요. 이번 단계에서는 보기만 하면 돼요."
+      ]
+    },
+    {
+      "en": "Look here first",
+      "values": [
+        "Look here first",
+        "先看这里",
+        "Mira aquí primero",
+        "Regarde d'abord ici",
+        "Zuerst hierher schauen",
+        "まずはここを見よう",
+        "먼저 여기를 보세요"
+      ]
+    },
+    {
+      "en": "01 / Take a few steps",
+      "values": [
+        "01 / Take a few steps",
+        "01 / 试着走几步",
+        "01 / Da unos pasos",
+        "01 / Fais quelques pas",
+        "01 / Ein paar Schritte",
+        "01 / 少し歩いてみよう",
+        "01 / 몇 걸음 걸어 봐요"
+      ]
+    },
+    {
+      "en": "Press W to walk toward the crate",
+      "values": [
+        "Press W to walk toward the crate",
+        "按 W 向木箱走近一点",
+        "Pulsa W para ir hacia la caja",
+        "Appuie sur W pour approcher la caisse",
+        "Mit W zur Kiste gehen",
+        "W を押して箱に近づこう",
+        "W를 눌러 상자 쪽으로 걸으세요"
+      ]
+    },
+    {
+      "en": "W forward · S back · A left · D right.",
+      "values": [
+        "W forward · S back · A left · D right.",
+        "W 前进 · S 后退 · A 左移 · D 右移。",
+        "W avanza · S retrocede · A izquierda · D derecha",
+        "W avant · S arrière · A gauche · D droite",
+        "W vor · S zurück · A links · D rechts",
+        "W：前 · S：後ろ · A：左 · D：右",
+        "W 앞으로 · S 뒤로 · A 왼쪽 · D 오른쪽"
+      ]
+    },
+    {
+      "en": "02 / Power the gate",
+      "values": [
+        "02 / Power the gate",
+        "02 / 给门供电",
+        "02 / Da corriente a la puerta",
+        "02 / Alimenter la porte",
+        "02 / Tor mit Strom öffnen",
+        "02 / ゲートに電気を送ろう",
+        "02 / 문에 전력 공급"
+      ]
+    },
+    {
+      "en": "Insert the core into the purple cabinet",
+      "values": [
+        "Insert the core into the purple cabinet",
+        "将核心插入左边的紫色柜子",
+        "Inserta el núcleo en el armario morado",
+        "Mets le noyau dans le boîtier violet",
+        "Kern in den violetten Schrank einsetzen",
+        "紫色の制御盤にコアを入れよう",
+        "보라색 제어반에 코어를 넣으세요"
+      ]
+    },
+    {
+      "en": "Aim at the purple cabinet and press E. First, just open the gate.",
+      "values": [
+        "Aim at the purple cabinet and press E. First, just open the gate.",
+        "对准紫色柜子的正面，按 E。先只负责把门打开。",
+        "Apunta al armario morado y pulsa E. Primero, abre la puerta.",
+        "Vise le boîtier violet et appuie sur E. Ouvre d'abord la porte.",
+        "Auf den violetten Schrank zielen und E drücken. Öffne erst das Tor.",
+        "紫の制御盤に印を合わせて E。まずはゲートを開けよう。",
+        "보라색 제어반을 겨냥하고 E를 누르세요. 먼저 문을 여는 거예요."
+      ]
+    },
+    {
+      "en": "Purple gate relay",
+      "values": [
+        "Purple gate relay",
+        "紫色供电柜",
+        "Relé morado de la puerta",
+        "Relais violet de la porte",
+        "Violettes Torrelais",
+        "紫色のゲート制御盤",
+        "보라색 문 제어반"
+      ]
+    },
+    {
+      "en": "02 / Find the gold core",
+      "values": [
+        "02 / Find the gold core",
+        "02 / 拾取金色核心",
+        "02 / Busca el núcleo dorado",
+        "02 / Trouver le noyau",
+        "02 / Goldenen Kern finden",
+        "02 / 金色のコアを探そう",
+        "02 / 금색 코어 찾기"
+      ]
+    },
+    {
+      "en": "Walk to the gold core and press E",
+      "values": [
+        "Walk to the gold core and press E",
+        "走近金色核心，按 E 拿起",
+        "Acércate al núcleo y pulsa E",
+        "Approche du noyau et appuie sur E",
+        "Zum goldenen Kern gehen und E drücken",
+        "金色のコアに近づいて E を押そう",
+        "금색 코어에 다가가 E를 누르세요"
+      ]
+    },
+    {
+      "en": "Look for a glowing gold capsule on the floor before the gate.",
+      "values": [
+        "Look for a glowing gold capsule on the floor before the gate.",
+        "它像一颗发光的金色胶囊，就在门前地上。",
+        "Busca una cápsula dorada brillante en el suelo, antes de la puerta.",
+        "Cherche une capsule dorée lumineuse au sol, devant la porte.",
+        "Suche eine leuchtende goldene Kapsel auf dem Boden vor dem Tor.",
+        "ゲートの手前の床に、金色に光るカプセルがあるよ。",
+        "문 앞 바닥에서 금빛으로 빛나는 캡슐을 찾아보세요."
+      ]
+    },
+    {
+      "en": "Gold core",
+      "values": [
+        "Gold core",
+        "金色核心",
+        "Núcleo dorado",
+        "Noyau doré",
+        "Goldener Kern",
+        "金色のコア",
+        "금색 코어"
+      ]
+    },
+    {
+      "en": "02 / The crate holds the door",
+      "values": [
+        "02 / The crate holds the door",
+        "02 / 箱子接替了电力",
+        "02 / La caja sujeta la puerta",
+        "02 / La caisse tient la porte",
+        "02 / Kiste hält das Tor",
+        "02 / 箱がドアを開けているよ",
+        "02 / 상자가 문을 열어 둬요"
+      ]
+    },
+    {
+      "en": "Return to the purple relay and remove the core",
+      "values": [
+        "Return to the purple relay and remove the core",
+        "回到紫色柜子，按 E 取回核心",
+        "Vuelve al relé morado y retira el núcleo",
+        "Reviens au relais violet et reprends le noyau",
+        "Zum violetten Relais zurück und Kern entnehmen",
+        "紫色の制御盤に戻ってコアを取り出そう",
+        "보라색 제어반으로 돌아가 코어를 꺼내세요"
+      ]
+    },
+    {
+      "en": "The crate keeps access open. You can now lend the power to a machine.",
+      "values": [
+        "The crate keeps access open. You can now lend the power to a machine.",
+        "箱子让门保持打开。现在可以把电力借给别的机器。",
+        "La caja mantiene el paso abierto. Ya puedes prestar la energía a una máquina.",
+        "La caisse garde l'accès ouvert. Tu peux prêter l'énergie à une machine.",
+        "Die Kiste hält den Zugang offen. Nun kannst du den Strom einer Maschine leihen.",
+        "箱がゲートを開けておいてくれるよ。今度はコアを機械に貸そう。",
+        "상자가 통로를 열어 두고 있어요. 이제 기계에 전력을 빌려줄 수 있어요."
+      ]
+    },
+    {
+      "en": "Retrieve the core",
+      "values": [
+        "Retrieve the core",
+        "取回核心",
+        "Recuperar el núcleo",
+        "Reprendre le noyau",
+        "Kern zurückholen",
+        "コアを回収",
+        "코어 회수"
+      ]
+    },
+    {
+      "en": "02 / Make the lantern shell",
+      "values": [
+        "02 / Make the lantern shell",
+        "02 / 制作灯笼外壳",
+        "02 / Haz la carcasa",
+        "02 / Fabriquer la coque",
+        "02 / Laternenhülle formen",
+        "02 / ランタンの外枠を作ろう",
+        "02 / 랜턴 틀 만들기"
+      ]
+    },
+    {
+      "en": "02 / Add the ribbon",
+      "values": [
+        "02 / Add the ribbon",
+        "02 / 给外壳系上丝带",
+        "02 / Añade el lazo",
+        "02 / Ajouter le ruban",
+        "02 / Band anbringen",
+        "02 / リボンをつけよう",
+        "02 / 리본 달기"
+      ]
+    },
+    {
+      "en": "03 / Find the old drawing",
+      "values": [
+        "03 / Find the old drawing",
+        "03 / 寻找旧图纸",
+        "03 / Busca el viejo dibujo",
+        "03 / Trouver le dessin",
+        "03 / Alte Zeichnung finden",
+        "03 / 古い絵を探そう",
+        "03 / 옛 그림 찾기"
+      ]
+    },
+    {
+      "en": "Enter the archive through the centre door",
+      "values": [
+        "Enter the archive through the centre door",
+        "从中央门进入档案室",
+        "Entra al archivo por la puerta central",
+        "Entre aux archives par la porte centrale",
+        "Durch die mittlere Tür ins Archiv gehen",
+        "中央のドアから資料室に入ろう",
+        "가운데 문으로 자료실에 들어가세요"
+      ]
+    },
+    {
+      "en": "Walk around the conveyor and through the centre door.",
+      "values": [
+        "Walk around the conveyor and through the centre door.",
+        "绕过传送带，从房间中央的门前进。",
+        "Rodea la cinta y cruza la puerta central.",
+        "Contourne le convoyeur et passe la porte centrale.",
+        "Geh um das Förderband und durch die mittlere Tür.",
+        "コンベヤーを回り込んで、中央のドアを通ろう。",
+        "컨베이어를 돌아 가운데 문으로 가세요."
+      ]
+    },
+    {
+      "en": "Archive entrance",
+      "values": [
+        "Archive entrance",
+        "档案室入口",
+        "Entrada del archivo",
+        "Entrée des archives",
+        "Archiveingang",
+        "資料室の入り口",
+        "자료실 입구"
+      ]
+    },
+    {
+      "en": "03 / Try the break-time chime",
+      "values": [
+        "03 / Try the break-time chime",
+        "03 / 试一试休息铃",
+        "03 / Prueba la campana",
+        "03 / Essayer la cloche",
+        "03 / Pausenglocke testen",
+        "03 / 休憩ベルを試そう",
+        "03 / 휴식 종 써 보기"
+      ]
+    },
+    {
+      "en": "03 / Call Hush to the chime",
+      "values": [
+        "03 / Call Hush to the chime",
+        "03 / 叫巡逻员去听铃声",
+        "03 / Llama a Hush",
+        "03 / Appeler Hush",
+        "03 / Hush zur Glocke rufen",
+        "03 / ベルで Hush を呼ぼう",
+        "03 / 종으로 Hush 부르기"
+      ]
+    },
+    {
+      "en": "Aim at the chime and press E again",
+      "values": [
+        "Aim at the chime and press E again",
+        "对准休息铃，再按一次 E",
+        "Apunta a la campana y pulsa E otra vez",
+        "Vise la cloche et appuie encore sur E",
+        "Auf die Glocke zielen und nochmals E drücken",
+        "ベルに印を合わせて、もう一度 E を押そう",
+        "종을 겨냥하고 E를 한 번 더 누르세요"
+      ]
+    },
+    {
+      "en": "Hush only checks safety. He cannot hurt you. The bell calls him over.",
+      "values": [
+        "Hush only checks safety. He cannot hurt you. The bell calls him over.",
+        "Hush 只做安全检查，不会伤害你。铃声能把他叫过去。",
+        "Hush solo vigila la seguridad. No hace daño. La campana lo atrae.",
+        "Hush veille juste à la sécurité. Il ne fait pas mal. La cloche l'attire.",
+        "Hush prüft nur die Sicherheit. Er tut dir nichts. Die Glocke ruft ihn her.",
+        "Hush は安全を確かめるだけで、傷つけたりしないよ。ベルを鳴らすと来てくれるんだ。",
+        "Hush는 안전만 점검해요. 해치지 않아요. 종을 울리면 이쪽으로 와요."
+      ]
+    },
+    {
+      "en": "Break-time chime",
+      "values": [
+        "Break-time chime",
+        "休息铃",
+        "Campana de descanso",
+        "Cloche de pause",
+        "Pausenglocke",
+        "休憩ベル",
+        "휴식 종"
+      ]
+    },
+    {
+      "en": "03 / Who drew this?",
+      "values": [
+        "03 / Who drew this?",
+        "03 / 看看是谁的图纸",
+        "03 / ¿Quién lo dibujó?",
+        "03 / Qui l'a dessiné ?",
+        "03 / Wer hat das gemalt?",
+        "03 / 誰が描いた絵だろう？",
+        "03 / 누가 그렸을까?"
+      ]
+    },
+    {
+      "en": "Go through the centre door and read the drawing",
+      "values": [
+        "Go through the centre door and read the drawing",
+        "穿过中央门，对准旧图纸按 E",
+        "Cruza la puerta central y lee el dibujo",
+        "Passe la porte centrale et lis le dessin",
+        "Durch die mittlere Tür und Zeichnung lesen",
+        "中央のドアを通って、古い絵を読もう",
+        "가운데 문을 지나 옛 그림을 읽으세요"
+      ]
+    },
+    {
+      "en": "Leave the crate on the plate. Reading saves the drawing in your notebook.",
+      "values": [
+        "Leave the crate on the plate. Reading saves the drawing in your notebook.",
+        "把箱子留在条纹板上。图纸不用拿走，读过就会记下。",
+        "Deja la caja en la placa. Al leer el dibujo se guarda en el cuaderno.",
+        "Laisse la caisse sur la plaque. Lire le dessin l'enregistre dans ton carnet.",
+        "Lass die Kiste auf der Platte. Die Zeichnung wird beim Lesen im Notizbuch gespeichert.",
+        "箱はプレートに置いたままに。絵は読めばノートに残るから、持ち運ばなくていいよ。",
+        "상자는 발판에 두세요. 그림을 읽으면 수첩에 기록돼요."
+      ]
+    },
+    {
+      "en": "Old drawing",
+      "values": [
+        "Old drawing",
+        "旧图纸",
+        "Viejo dibujo",
+        "Ancien dessin",
+        "Alte Zeichnung",
+        "古い絵",
+        "옛 그림"
+      ]
+    },
+    {
+      "en": "04 / Engrave the old promise",
+      "values": [
+        "04 / Engrave the old promise",
+        "04 / 刻下旧日的承诺",
+        "04 / Graba la vieja promesa",
+        "04 / Graver la promesse",
+        "04 / Altes Versprechen gravieren",
+        "04 / 昔の約束を刻もう",
+        "04 / 옛 약속 새기기"
+      ]
+    },
+    {
+      "en": "04 / Light the last lantern",
+      "values": [
+        "04 / Light the last lantern",
+        "04 / 点亮最后一盏灯",
+        "04 / Enciende el último farol",
+        "04 / Allumer la lanterne",
+        "04 / Letzte Laterne entzünden",
+        "04 / 最後のランタンを灯そう",
+        "04 / 마지막 랜턴 밝히기"
+      ]
+    },
+    {
+      "en": "05 / One last delivery",
+      "values": [
+        "05 / One last delivery",
+        "05 / 最后一次送达",
+        "05 / Una última entrega",
+        "05 / Dernière livraison",
+        "05 / Eine letzte Lieferung",
+        "05 / 最後のお届け",
+        "05 / 마지막 배송"
+      ]
+    },
+    {
+      "en": "Pick up the finished lantern with E",
+      "values": [
+        "Pick up the finished lantern with E",
+        "走近成品灯笼，按 E 拿起",
+        "Recoge el farol terminado con E",
+        "Prends la lanterne finie avec E",
+        "Fertige Laterne mit E aufheben",
+        "できあがったランタンを E で拾おう",
+        "완성된 랜턴을 E로 집으세요"
+      ]
+    },
+    {
+      "en": "It's on the small brass pedestal beside the Press.",
+      "values": [
+        "It's on the small brass pedestal beside the Press.",
+        "成品在机器旁边的小金色台座上。",
+        "Está en el pequeño pedestal de latón junto a la Prensa.",
+        "Elle est sur le petit socle en laiton près de la Presse.",
+        "Sie steht auf dem kleinen Messingsockel neben der Presse.",
+        "プレスの隣にある、小さな真ちゅうの台座に載っているよ。",
+        "프레스 옆 작은 황동 받침대 위에 있어요."
+      ]
+    },
+    {
+      "en": "Finished lantern",
+      "values": [
+        "Finished lantern",
+        "成品灯笼",
+        "Farol terminado",
+        "Lanterne terminée",
+        "Fertige Laterne",
+        "完成したランタン",
+        "완성된 랜턴"
+      ]
+    },
+    {
+      "en": "05 / Let's go home together",
+      "values": [
+        "05 / Let's go home together",
+        "05 / 一起下班吧",
+        "05 / Volvamos juntos a casa",
+        "05 / Rentrons ensemble",
+        "05 / Gemeinsam heimgehen",
+        "05 / みんなで帰ろう",
+        "05 / 다 같이 집에 가자"
+      ]
+    },
+    {
+      "en": "Give the lantern to Pip behind the desk",
+      "values": [
+        "Give the lantern to Pip behind the desk",
+        "把灯笼交给桌后的 Pip",
+        "Dale el farol a Pip tras el mostrador",
+        "Donne la lanterne à Pip au comptoir",
+        "Laterne an Pip hinter dem Schreibtisch geben",
+        "窓口の向こうの Pip にランタンを渡そう",
+        "데스크 뒤 Pip에게 랜턴을 전하세요"
+      ]
+    },
+    {
+      "en": "Aim at Pip and press E to finish your last order.",
+      "values": [
+        "Aim at Pip and press E to finish your last order.",
+        "对准 Pip 按 E，完成你的最后一份订单。",
+        "Apunta a Pip y pulsa E para terminar tu último pedido.",
+        "Vise Pip et appuie sur E pour finir ta dernière commande.",
+        "Ziele auf Pip und drücke E für deinen letzten Auftrag.",
+        "Pip に印を合わせて E。最後の注文を届けよう。",
+        "Pip을 겨냥하고 E를 눌러 마지막 주문을 마치세요."
+      ]
+    },
+    {
+      "en": "Pip / Deliver",
+      "values": [
+        "Pip / Deliver",
+        "Pip / 交付",
+        "Pip / Entregar",
+        "Pip / Livrer",
+        "Pip / Liefern",
+        "Pip / お届け",
+        "Pip / 전달"
+      ]
+    },
+    {
+      "en": "Look toward the crate",
+      "values": [
+        "Look toward the crate",
+        "看看木箱",
+        "Mira hacia la caja",
+        "Regarder la caisse",
+        "Zur Kiste schauen",
+        "箱を見てみよう",
+        "상자 바라보기"
+      ]
+    },
+    {
+      "en": "Try walking",
+      "values": [
+        "Try walking",
+        "试着移动",
+        "Prueba a caminar",
+        "Essayer de marcher",
+        "Gehen ausprobieren",
+        "歩いてみよう",
+        "걸어 보기"
+      ]
+    },
+    {
+      "en": "Leave crate on plate",
+      "values": [
+        "Leave crate on plate",
+        "箱子压住条纹板",
+        "Caja en la placa",
+        "Poser la caisse",
+        "Kiste auf Platte",
+        "箱をプレートに置く",
+        "발판에 상자 놓기"
+      ]
+    },
+    {
+      "en": "Walk through the door",
+      "values": [
+        "Walk through the door",
+        "穿过中央门",
+        "Cruza la puerta",
+        "Passer la porte",
+        "Durch die Tür gehen",
+        "ドアを通る",
+        "문 통과하기"
+      ]
+    },
+    {
+      "en": "Crate holds the gate",
+      "values": [
+        "Crate holds the gate",
+        "箱子保持门打开",
+        "La caja sujeta la puerta",
+        "La caisse tient la porte",
+        "Kiste hält das Tor",
+        "箱でゲートを開けておく",
+        "상자로 문 열어 두기"
+      ]
+    },
+    {
+      "en": "Make the shell",
+      "values": [
+        "Make the shell",
+        "做好灯笼外壳",
+        "Haz la carcasa",
+        "Fabriquer la coque",
+        "Hülle herstellen",
+        "外枠を作る",
+        "틀 만들기"
+      ]
+    },
+    {
+      "en": "Add the ribbon",
+      "values": [
+        "Add the ribbon",
+        "系好丝带",
+        "Añade el lazo",
+        "Ajouter le ruban",
+        "Band anbringen",
+        "リボンをつける",
+        "리본 달기"
+      ]
+    },
+    {
+      "en": "Try the chime",
+      "values": [
+        "Try the chime",
+        "试用休息铃",
+        "Prueba la campana",
+        "Essayer la cloche",
+        "Glocke ausprobieren",
+        "ベルを試す",
+        "종 써 보기"
+      ]
+    },
+    {
+      "en": "Open drawing cabinet",
+      "values": [
+        "Open drawing cabinet",
+        "箱子打开图纸柜",
+        "Abre el armario",
+        "Ouvrir l'armoire",
+        "Schrank öffnen",
+        "絵の保管庫を開ける",
+        "그림 보관함 열기"
+      ]
+    },
+    {
+      "en": "Read the old drawing",
+      "values": [
+        "Read the old drawing",
+        "读一读旧图纸",
+        "Lee el viejo dibujo",
+        "Lire l'ancien dessin",
+        "Alte Zeichnung lesen",
+        "古い絵を読む",
+        "옛 그림 읽기"
+      ]
+    },
+    {
+      "en": "Engrave the promise",
+      "values": [
+        "Engrave the promise",
+        "刻下承诺",
+        "Graba la promesa",
+        "Graver la promesse",
+        "Versprechen gravieren",
+        "約束を刻む",
+        "약속 새기기"
+      ]
+    },
+    {
+      "en": "Keep assembly access",
+      "values": [
+        "Keep assembly access",
+        "箱子保持装配门打开",
+        "Mantén abierto el paso",
+        "Garder l'accès",
+        "Montagezugang sichern",
+        "組み立て室の道を確保",
+        "조립실 통로 확보"
+      ]
+    },
+    {
+      "en": "Light the lantern",
+      "values": [
+        "Light the lantern",
+        "点亮灯笼",
+        "Enciende el farol",
+        "Allumer la lanterne",
+        "Laterne entzünden",
+        "ランタンを灯す",
+        "랜턴 밝히기"
+      ]
+    },
+    {
+      "en": "Pick up the lantern",
+      "values": [
+        "Pick up the lantern",
+        "拿起灯笼",
+        "Recoge el farol",
+        "Prendre la lanterne",
+        "Laterne aufheben",
+        "ランタンを拾う",
+        "랜턴 집기"
+      ]
+    },
+    {
+      "en": "Deliver to Pip",
+      "values": [
+        "Deliver to Pip",
+        "交给 Pip",
+        "Entrega a Pip",
+        "Livrer à Pip",
+        "An Pip liefern",
+        "Pip に届ける",
+        "Pip에게 전달"
+      ]
+    },
+    {
+      "en": "Language",
+      "values": [
+        "Language",
+        "语言",
+        "Idioma",
+        "Langue",
+        "Sprache",
+        "言語",
+        "언어"
+      ]
+    },
+    {
+      "en": "English is the default. Your choice is saved.",
+      "values": [
+        "English is the default. Your choice is saved.",
+        "默认英文，选择会保存。",
+        "El inglés es el idioma inicial. Tu elección se guarda.",
+        "L'anglais est la langue par défaut. Ton choix est conservé.",
+        "Englisch ist voreingestellt. Deine Wahl wird gespeichert.",
+        "最初は英語です。選んだ言語は保存されます。",
+        "기본 언어는 영어예요. 선택한 언어는 저장돼요."
+      ]
+    },
+    {
+      "en": "Arrows: choose   Enter: confirm   Esc: back",
+      "values": [
+        "Arrows: choose   Enter: confirm   Esc: back",
+        "方向键选择 · 回车确认 · Esc 返回",
+        "Flechas: elegir   Enter: confirmar   Esc: volver",
+        "Flèches : choisir   Entrée : valider   Esc : retour",
+        "Pfeile: wählen   Enter: bestätigen   Esc: zurück",
+        "方向キー：選択　Enter：決定　Esc：戻る",
+        "방향키: 선택   Enter: 확인   Esc: 돌아가기"
+      ]
+    },
+    {
+      "en": "Back [Esc]",
+      "values": [
+        "Back [Esc]",
+        "返回 [Esc]",
+        "Volver [Esc]",
+        "Retour [Esc]",
+        "Zurück [Esc]",
+        "戻る [Esc]",
+        "돌아가기 [Esc]"
+      ]
+    },
+    {
+      "en": "E  Retrieve core / ",
+      "values": [
+        "E  Retrieve core / ",
+        "E  取回核心 / ",
+        "E  Recuperar núcleo / ",
+        "E  Reprendre le noyau / ",
+        "E  Kern entnehmen / ",
+        "E  コアを取り出す / ",
+        "E  코어 회수 / "
+      ]
+    },
+    {
+      "en": "E  Stop & retrieve core / ",
+      "values": [
+        "E  Stop & retrieve core / ",
+        "E  停止并取回核心 / ",
+        "E  Parar y retirar núcleo / ",
+        "E  Arrêter et retirer / ",
+        "E  Stoppen und Kern nehmen / ",
+        "E  停止してコアを回収 / ",
+        "E  정지하고 코어 회수 / "
+      ]
+    },
+    {
+      "en": "E  Open / ",
+      "values": [
+        "E  Open / ",
+        "E  打开 / ",
+        "E  Abrir / ",
+        "E  Ouvrir / ",
+        "E  Öffnen / ",
+        "E  開く / ",
+        "E  열기 / "
+      ]
+    },
+    {
+      "en": "E  Talk to Button",
+      "values": [
+        "E  Talk to Button",
+        "E  和 Button 聊聊",
+        "E  Hablar con Button",
+        "E  Parler à Button",
+        "E  Mit Button sprechen",
+        "E  Button と話す",
+        "E  Button과 대화"
+      ]
+    },
+    {
+      "en": "E  Talk to Pip / deliver lantern",
+      "values": [
+        "E  Talk to Pip / deliver lantern",
+        "E  和 Pip 交谈 / 送达灯笼",
+        "E  Hablar con Pip / entregar",
+        "E  Parler à Pip / livrer",
+        "E  Mit Pip sprechen / liefern",
+        "E  Pip と話す / ランタンを渡す",
+        "E  Pip과 대화 / 랜턴 전달"
+      ]
+    },
+    {
+      "en": "E  Read the old drawing",
+      "values": [
+        "E  Read the old drawing",
+        "E  读旧图纸",
+        "E  Leer el viejo dibujo",
+        "E  Lire l'ancien dessin",
+        "E  Alte Zeichnung lesen",
+        "E  古い絵を読む",
+        "E  옛 그림 읽기"
+      ]
+    },
+    {
+      "en": "E  Read",
+      "values": [
+        "E  Read",
+        "E  读纸条",
+        "E  Leer",
+        "E  Lire",
+        "E  Lesen",
+        "E  読む",
+        "E  읽기"
+      ]
+    },
+    {
+      "en": "Place what you're carrying first.",
+      "values": [
+        "Place what you're carrying first.",
+        "先放下手中的物品。",
+        "Deja primero lo que llevas.",
+        "Pose d'abord ce que tu portes.",
+        "Lege erst ab, was du trägst.",
+        "まず持っている物を置こう。",
+        "먼저 들고 있는 물건을 내려놓으세요."
+      ]
+    },
+    {
+      "en": "Insert the power core to open the workshop. The striped plate is a manual override.",
+      "values": [
+        "Insert the power core to open the workshop. The striped plate is a manual override.",
+        "插入核心打开车间门；条纹板可以代替供电。",
+        "Inserta el núcleo para abrir el taller. La placa permite mantenerlo abierto sin corriente.",
+        "Insère le noyau pour ouvrir l'atelier. La plaque maintient l'accès sans courant.",
+        "Setze den Kern ein, um die Werkstatt zu öffnen. Die Platte hält das Tor auch ohne Strom offen.",
+        "コアを入れると作業場が開くよ。縞模様のプレートを使えば、電気がなくても開けておける。",
+        "코어를 넣으면 작업장이 열려요. 줄무늬 발판으로 전력 없이도 문을 열어 둘 수 있어요."
+      ]
+    },
+    {
+      "en": "CRATE OVERRIDE SET / The gate will stay open. You can now take the core to Moulding.",
+      "values": [
+        "CRATE OVERRIDE SET / The gate will stay open. You can now take the core to Moulding.",
+        "箱子已接替供电！门会保持打开，现在可以把核心带到成型机。",
+        "CAJA COLOCADA / La puerta sigue abierta. Ya puedes llevar el núcleo a Moldeo.",
+        "CAISSE EN PLACE / La porte reste ouverte. Porte le noyau au Moulage.",
+        "KISTE PLATZIERT / Das Tor bleibt offen. Bring den Kern zum Formtisch.",
+        "箱でゲートを固定できたよ / コアを成形台に持っていこう。",
+        "상자로 문 고정 완료 / 이제 코어를 성형대로 가져가세요."
+      ]
+    },
+    {
+      "en": "Your hands are full. Press Q to place the item first.",
+      "values": [
+        "Your hands are full. Press Q to place the item first.",
+        "双手正忙，先按 Q 放下物品。",
+        "Manos ocupadas. Deja el objeto con Q.",
+        "Mains prises. Pose d'abord l'objet avec Q.",
+        "Hände voll. Gegenstand erst mit Q ablegen.",
+        "両手がいっぱい。まず Q で持ち物を置こう。",
+        "손이 가득 찼어요. 먼저 Q로 물건을 내려놓으세요."
+      ]
+    },
+    {
+      "en": "Hush: 'Final inspection! I'll check the machines as you finish each job.'",
+      "values": [
+        "Hush: 'Final inspection! I'll check the machines as you finish each job.'",
+        "Hush：“最终巡检！你每完成一道工序，我都会去检查机器。”",
+        "Hush: «¡Inspección final! Revisaré las máquinas al terminar cada trabajo».",
+        "Hush : « Inspection finale ! Je vérifierai les machines à chaque étape. »",
+        "Hush: „Endkontrolle! Ich prüfe die Maschinen nach jedem Arbeitsschritt.“",
+        "Hush：「最後の点検だよ！作業が終わるたびに機械を確認するね。」",
+        "Hush: \"최종 점검이야! 작업이 끝날 때마다 기계를 확인할게.\""
+      ]
+    },
+    {
+      "en": ". Your core stays with you.",
+      "values": [
+        ". Your core stays with you.",
+        "。核心仍在你手里。",
+        ". El núcleo sigue contigo.",
+        ". Tu gardes le noyau.",
+        ". Der Kern bleibt bei dir.",
+        "。コアは手に持ったままだよ。",
+        ". 코어는 그대로 들고 있어요."
+      ]
+    },
+    {
+      "en": ". Take the core back and finish that job.",
+      "values": [
+        ". Take the core back and finish that job.",
+        "。取回核心，先完成那项工作。",
+        ". Recupera el núcleo y termina ese trabajo.",
+        ". Reprends le noyau et termine cette tâche.",
+        ". Nimm den Kern zurück und erledige diese Aufgabe.",
+        "。コアを取り出して、先にその作業を終えよう。",
+        ". 코어를 회수해 먼저 그 작업을 끝내세요."
+      ]
+    },
+    {
+      "en": "MOUSE / ARROWS",
+      "values": [
+        "MOUSE / ARROWS",
+        "鼠标 / 方向键",
+        "RATÓN / FLECHAS",
+        "SOURIS / FLÈCHES",
+        "MAUS / PFEILE",
+        "マウス / 方向キー",
+        "마우스 / 방향키"
+      ]
+    },
+    {
+      "en": "Make the shell first. Your core stays with you.",
+      "values": [
+        "Make the shell first. Your core stays with you.",
+        "先制作灯笼外壳。核心仍在你手里。",
+        "Haz primero la carcasa. El núcleo sigue contigo.",
+        "Fabrique d'abord la coque. Tu gardes le noyau.",
+        "Erst die Hülle herstellen. Der Kern bleibt bei dir.",
+        "先に外枠を作ろう。コアは手に持ったままだよ。",
+        "먼저 틀을 만드세요. 코어는 그대로 들고 있어요."
+      ]
+    },
+    {
+      "en": "Make the shell first. Take the core back and finish that job.",
+      "values": [
+        "Make the shell first. Take the core back and finish that job.",
+        "先制作灯笼外壳。取回核心，先完成那项工作。",
+        "Haz primero la carcasa. Recupera el núcleo y termina ese trabajo.",
+        "Fabrique d'abord la coque. Reprends le noyau et termine cette tâche.",
+        "Erst die Hülle herstellen. Nimm den Kern zurück und erledige diese Aufgabe.",
+        "先に外枠を作ろう。コアを取り出して、先にその作業を終えよう。",
+        "먼저 틀을 만드세요. 코어를 회수해 먼저 그 작업을 끝내세요."
+      ]
+    },
+    {
+      "en": "Read the old drawing first. Your core stays with you.",
+      "values": [
+        "Read the old drawing first. Your core stays with you.",
+        "先读旧图纸。核心仍在你手里。",
+        "Lee primero el dibujo. El núcleo sigue contigo.",
+        "Lis d'abord l'ancien dessin. Tu gardes le noyau.",
+        "Erst die Zeichnung lesen. Der Kern bleibt bei dir.",
+        "先に古い絵を読もう。コアは手に持ったままだよ。",
+        "먼저 옛 그림을 읽으세요. 코어는 그대로 들고 있어요."
+      ]
+    },
+    {
+      "en": "Read the old drawing first. Take the core back and finish that job.",
+      "values": [
+        "Read the old drawing first. Take the core back and finish that job.",
+        "先读旧图纸。取回核心，先完成那项工作。",
+        "Lee primero el dibujo. Recupera el núcleo y termina ese trabajo.",
+        "Lis d'abord l'ancien dessin. Reprends le noyau et termine cette tâche.",
+        "Erst die Zeichnung lesen. Nimm den Kern zurück und erledige diese Aufgabe.",
+        "先に古い絵を読もう。コアを取り出して、先にその作業を終えよう。",
+        "먼저 옛 그림을 읽으세요. 코어를 회수해 먼저 그 작업을 끝내세요."
+      ]
+    },
+    {
+      "en": "Engrave the shell first. Your core stays with you.",
+      "values": [
+        "Engrave the shell first. Your core stays with you.",
+        "先完成雕刻。核心仍在你手里。",
+        "Graba primero la carcasa. El núcleo sigue contigo.",
+        "Grave d'abord la coque. Tu gardes le noyau.",
+        "Erst die Hülle gravieren. Der Kern bleibt bei dir.",
+        "先に外枠へ彫刻しよう。コアは手に持ったままだよ。",
+        "먼저 틀에 새기세요. 코어는 그대로 들고 있어요."
+      ]
+    },
+    {
+      "en": "Engrave the shell first. Take the core back and finish that job.",
+      "values": [
+        "Engrave the shell first. Take the core back and finish that job.",
+        "先完成雕刻。取回核心，先完成那项工作。",
+        "Graba primero la carcasa. Recupera el núcleo y termina ese trabajo.",
+        "Grave d'abord la coque. Reprends le noyau et termine cette tâche.",
+        "Erst die Hülle gravieren. Nimm den Kern zurück und erledige diese Aufgabe.",
+        "先に外枠へ彫刻しよう。コアを取り出して、先にその作業を終えよう。",
+        "먼저 틀에 새기세요. 코어를 회수해 먼저 그 작업을 끝내세요."
+      ]
+    }
+  ]
+}
