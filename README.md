@@ -4,29 +4,31 @@ Willow Works 的万圣节最后一班。Unity 6.6 / 6000.6.5f1 / Built-in Render
 
 ## 当前版本
 
-v0.2：可玩机制与故事原型。当前不视为最终课程提交版。未完成陌生玩家试玩，不能声称已达到 5–10 分钟或已验证学习成效。
+v0.3：可玩机制与故事原型。包含四个从教学到综合运用的线路谜题。当前不视为最终课程提交版。未完成陌生玩家试玩，不能声称已达到 5–10 分钟或已验证学习成效。
 
 ## 打开游戏
 
-Mac 测试版如已构建，位于 `Builds/Mac/Midnight Shift.app`，双击运行。
+双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift.app`。
+
+源文件仍在桌面。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.3.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
 
 编辑项目：Unity Hub → Projects → Add → Add project from disk → 选择整个 `MidnightShift` 文件夹。打开后在 Project 面板双击 `Assets/Scenes/WillowWorks.unity`，再按编辑器上方 Play。
 
 ## 操作
 
-- WASD：移动；鼠标：视角。
+- WASD：移动；鼠标或方向键：视角。
 - E：拾取／插入核心／启动机器／读取说明／交付。
-- Q：放置手中物品。一次只能拿一件。
+- Q：把物品放在前方一步的位置。货箱靠近压板时会轻微吸附对齐；一次只能拿一件。
 - Space 或 Return：继续对白。阅读时世界暂停。
 - H：当前任务提示。
 - J：值班笔记，查看当前目标、规则和已发现的故事。
 - Esc：暂停，调节音乐、效果音和鼠标灵敏度。
 
-机器插入核心后需要再按 E 启动。完成后按 E 取出核心，用于下一台。核心始终只有一枚，不会消耗。没有全局倒计时。
+生产机器插入核心后，再按 E 打开线路板。旋转线路，使电源经过标记接点并到达全部出口，再点 Send power 启动。线路板支持鼠标，也支持方向键选格、空格旋转、回车启动、Esc 关闭。休息铃无需线路谜题。完成后按 E 取出核心，用于下一台。核心始终只有一枚，不会消耗。没有全局倒计时。
 
 ## 本地试玩记录
 
-游戏自动记录当前局部任务完成、活跃操作时间、阅读、暂停、笔记、提示次数和重试次数，仅保存在本机，不上传。位置为 `~/Library/Application Support/Willow Works/Midnight Shift - The Last Lantern/Playtests/`。自动检查会标记为 automated，不能当作真人试玩证据。
+游戏自动记录当前局部任务完成、活跃操作时间、阅读、暂停、笔记、提示次数和重试次数，仅保存在本机，不上传。位置为 `~/Library/Application Support/Willow Works/Midnight Shift - The Last Lantern/Playtests/`。自动检查及带 --agent-playtest 的操作会标记为 automated；其余记录默认 reviewer=unattributed，不能仅凭日志认定是真人试玩。
 
 ## 第一次检查重点
 
@@ -38,6 +40,8 @@ Unity 顶部 `Willow Works`：
 - Build factory scene：根据生成工具重建场景，会覆盖 `WillowWorks.unity` 中的手工改动。
 - Build Mac playable：生成 Mac 通用版本。
 - Build Windows / Linux playable：安装相应模块后可用。
+
+`Tools/build-mac.zsh` 提供可重现的构建、本机副本签名、发布包启动检查和 ZIP 打包流程。脚本会重建生成场景，手工改过场景时先保存到 Git 或另存副本。
 
 场景是实际保存的 Unity 场景，正常打开不需要每次重建。
 `Assets/Editor/FactoryVerification.cs` 包含引擎集成检查与场景画面检查工具。

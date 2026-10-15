@@ -41,3 +41,28 @@ Automated navigation isolates geometry by disabling inspector movement, then use
 - Added automatic pause on loss of window focus and ensured keyboard start does not also skip the first dialogue line in the same frame.
 
 These improvements come from implementation review and automated/visual inspection. Human feedback remains unrecorded until a real participant tests the build.
+
+
+## v0.3 / depth and sequence review
+
+- Expert review identified a duration/content risk: the original jobs mostly required carrying a core and waiting for a result. Added four authored power-routing boards, progressing from a single path to split outputs and multiple required contacts. No processing time was increased to make the game longer.
+- Added visible power propagation, contact/outlet counters, persistent rotations and both pointer and keyboard operation. The simulation pauses during planning; that time counts as active gameplay.
+- An out-of-order interaction review found that inserting the sole core into a machine before its prerequisite could strand it there. Machines now reject premature insertion without taking the core, and report the missing prerequisite. Added an explicit recovery check.
+- Added checks that a connected outlet cannot replace a missing contact, touching edges must match reciprocally, the inlet must face its supply, and incomplete circuits cannot start machines.
+- The full physical walkthrough now solves the boards through their rotation API before continuing the existing crate/core route. These are known authored solutions, not evidence of player skill or a measured first-play duration.
+
+Next priority is observation of first-time players, especially whether they understand contact markers, branching and why the final lantern belongs to the helpers. No duration is claimed until those sessions occur.
+
+## v0.3 / native application operation review
+
+The developer agent operated the signed macOS application through native keyboard input. This was an agent-controlled inspection, not a first-time human playtest. Verified title start, all introductory dialogue, walking, arrow-key camera movement, crate pickup/placement, notebook open/close and pause display. The first placement attempt near a plate was rejected; a later placement succeeded but did not provide a reliable full-door traversal in this native session.
+
+Changes from this observation:
+- The opening HUD had described the later workshop gate before the foyer door. It now teaches the immediate crate/plate/centre-door task.
+- Added a 1.35-unit placement assist around nearby pressure plates; collision validation still runs at the resulting position. An actual engine check places from outside the plate edge, verifies its final position and verifies the gate condition.
+- Added arrow-key look for keyboard users and for robust operation without relative mouse input.
+- Explicitly mark agent-operated logs as automated and other sessions as unattributed.
+
+The deterministic full route and inspector checks remain separate from the native UI inspection. Native uninterrupted evasion and a first-time player's duration still need to be observed.
+
+Updated-build native retest: the same near-edge Q placement now visibly aligned the crate on the plate and opened the foyer gate. Traversal through the opening switched the HUD to the workshop objective. Low-core pickup also succeeded. Full uninterrupted native traversal remains unverified.

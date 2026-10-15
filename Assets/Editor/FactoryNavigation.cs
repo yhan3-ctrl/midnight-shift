@@ -12,7 +12,7 @@ public static class FactoryNavigation {
     static void OnState(PlayModeStateChange state){if(state!=PlayModeStateChange.EnteredPlayMode)return;SessionState.SetBool("WillowWalkthrough",false);EditorApplication.playModeStateChanged-=OnState;new GameObject("Physical walkthrough check").AddComponent<FactoryWalker>();}
 }
 public class FactoryWalker : MonoBehaviour {
-    FactoryGame g;PlayerMotor p;CharacterController cc;int interactions,placements;float began, heartbeat;bool failed;
+    FactoryGame g;PlayerMotor p;CharacterController cc;int interactions,placements,routingSolved;float began, heartbeat;bool failed;
     void Update(){if(!g)return;if(Time.realtimeSinceStartup-heartbeat>8){heartbeat=Time.realtimeSinceStartup;Debug.Log("NAV_HEARTBEAT dt="+Time.deltaTime+" scale="+Time.timeScale+" paused="+g.paused+" reading="+g.Reading+" journal="+g.journal+" ended="+g.ended);if(Time.realtimeSinceStartup-began>240)Fail("Overall watchdog timeout");}}
     IEnumerator Start(){
         yield return null;g=FactoryGame.I;p=g.player;cc=p.GetComponent<CharacterController>();p.enabled=false;g.inspector.enabled=false;Application.runInBackground=true;QualitySettings.vSyncCount=0;Application.targetFrameRate=120;Time.captureDeltaTime=1f/60;
@@ -36,7 +36,7 @@ public class FactoryWalker : MonoBehaviour {
         Use(new Vector3(5.4f,.8f,56.8f),"LANTERN PRESS");Use(new Vector3(5.4f,.8f,56.8f),"LANTERN PRESS");yield return Job("press");Close();Time.timeScale=5;
         yield return Go(3.5f,55.8f);yield return Go(3.5f,56.8f);Use(new Vector3(3.6f,1.1f,58.5f),"The last lantern");yield return Go(0,58.2f);Use(new Vector3(0,1.4f,60.3f),"Pip");
         if(!g.ended)Fail("Delivery did not reach ending");
-        if(!failed){string report=$"PASS: physical route to ending. {interactions} raycast interactions, {placements} validated Q placements.\nAll traversal after initial spawn used CharacterController.Move, with live wall/gate/collision geometry.\nInspector locomotion disabled for deterministic navigation isolation; inspector behaviour has separate integration checks.\nTime accelerated; this is NOT an unassisted human playtest or a valid duration measurement.\n";File.WriteAllText("Work/navigation.txt",report);Debug.Log("NAVIGATION_PASS / "+report);EditorApplication.Exit(0);}
+        if(!failed){string report=$"PASS: physical route to ending. {interactions} raycast interactions, {placements} validated Q placements, {routingSolved} authored circuits executed.\nAll traversal after initial spawn used CharacterController.Move, with live wall/gate/collision geometry.\nInspector locomotion disabled for deterministic navigation isolation; inspector behaviour has separate integration checks.\nRouting solved using the known authored solution; does not measure puzzle skill.\nTime accelerated; this is NOT an unassisted human playtest or a valid duration measurement.\n";File.WriteAllText("Work/navigation.txt",report);Debug.Log("NAVIGATION_PASS / "+report);EditorApplication.Exit(0);}
     }
     void Close(){for(int i=0;i<30&&g.Reading;i++)g.Advance();}
     IEnumerator Wait(float gameSeconds){float t=0;while(t<gameSeconds&&!failed){t+=Time.deltaTime;yield return null;}}
@@ -54,7 +54,8 @@ public class FactoryWalker : MonoBehaviour {
     void Use(Vector3 target,string expected){
         if(failed)return;p.view.transform.LookAt(target);Physics.SyncTransforms();p.ScanFocus();
         if(!p.focus||!p.focus.name.StartsWith(expected)){Physics.Raycast(p.view.transform.position,p.view.transform.forward,out RaycastHit raw,3.1f,~0,QueryTriggerInteraction.Ignore);Fail("Raycast expected "+expected+", found "+(p.focus?p.focus.name:"nothing")+" collider="+(raw.collider?raw.collider.name:"none")+" view="+p.view.transform.position+" dir="+p.view.transform.forward+" from "+p.transform.position);return;}
-        p.TryInteract();interactions++;Debug.Log("NAV_USE / "+expected);
+        p.TryInteract();interactions++;
+        if(g.activeCircuit){var circuit=g.activeCircuit.puzzle;for(int i=0;i<circuit.turns.Length;i++)while(circuit.turns[i]!=0)circuit.Rotate(i);if(!circuit.Solved){Fail("Authored routing solution invalid");return;}g.PowerCircuit();routingSolved++;}Debug.Log("NAV_USE / "+expected);
     }
     void Place(float yaw,string gate){
         if(failed)return;p.transform.rotation=Quaternion.Euler(0,yaw,0);p.TryPlace();placements++;Physics.SyncTransforms();

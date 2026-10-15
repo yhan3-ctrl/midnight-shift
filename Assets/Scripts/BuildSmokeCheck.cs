@@ -23,6 +23,9 @@ public class BuildSmokeCheck : MonoBehaviour {
         var g=FactoryGame.I;g.Begin();yield return new WaitForSecondsRealtime(.7f);
         ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01-dialogue-runtime.png"));yield return new WaitForSecondsRealtime(.7f);
         while(g.Reading)g.Advance();g.player.enabled=false;g.inspector.enabled=false;
+        Machine mould=null;foreach(var m in FindObjectsByType<Machine>(FindObjectsSortMode.None))if(m.machineId=="mould")mould=m;
+        g.player.Pick(g.sharedCore);mould.Use(g.player);mould.Use(g.player);yield return new WaitForSecondsRealtime(.7f);
+        ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"02-circuit-runtime.png"));yield return new WaitForSecondsRealtime(.7f);g.CloseCircuit();
         g.shell=true;g.transferred=true;g.inspectorLesson=true;g.blueprint=true;g.etched=true;g.assembled=true;
         g.player.Teleport(new Vector3(0,0,58.2f),0);g.lantern.gameObject.SetActive(true);g.player.Pick(g.lantern);g.Deliver();
         yield return new WaitForSecondsRealtime(13);

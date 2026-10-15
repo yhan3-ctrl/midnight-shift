@@ -20,8 +20,11 @@ public class EndOfShift : MonoBehaviour {
         button.position=Vector3.Lerp(buttonStart,new Vector3(-1.2f,0,71.5f),t);
         hush.position=Vector3.Lerp(hushStart,new Vector3(1.2f,0,72.5f),t);
         float ct=Mathf.SmoothStep(0,1,time/2.5f);
-        view.transform.position=Vector3.Lerp(cameraStart,new Vector3(2.5f,2.15f,61.2f),ct);
-        var final=Quaternion.LookRotation(new Vector3(0,1.4f,70)-view.transform.position);
+        Vector3 inside=new Vector3(0,1.9f,62.2f),outside=new Vector3(0,1.9f,66.4f),watch=new Vector3(3.4f,2.1f,67);
+        if(time<2.5f)view.transform.position=Vector3.Lerp(cameraStart,inside,ct);
+        else if(time<6)view.transform.position=Vector3.Lerp(inside,outside,Mathf.SmoothStep(0,1,(time-2.5f)/3.5f));
+        else view.transform.position=Vector3.Lerp(outside,watch,Mathf.SmoothStep(0,1,(time-6)/2.5f));
+        var final=Quaternion.LookRotation(new Vector3(0,1.4f,72)-view.transform.position);
         view.transform.rotation=Quaternion.Slerp(cameraRotation,final,ct);
     }
 }

@@ -11,3 +11,5 @@
 *.slnx
 *.user
 .DS_Store
+/开始试玩.app
+/.vscode/

@@ -10,13 +10,15 @@ public class FactoryGame : MonoBehaviour {
     public Inspector inspector;
     public Pickup lantern, sharedCore;
     public AudioScore audioScore;
+    int circuitOpenedFrame;
+    public Machine activeCircuit; CircuitView circuitView=new CircuitView();
     public bool started, paused, ended, journal;
     public bool shell, transferred, blueprint, etched, assembled, inspectorLesson;
     public int resets, hintsRequested;
     public float playSeconds;
     public string toast="", speaker="", line="";
     public bool Reading => dialogue.Count>0;
-    public bool Frozen => !started || paused || Reading || ended || journal;
+    public bool Frozen => !started || paused || Reading || ended || journal || activeCircuit!=null;
     readonly Queue<string> dialogue=new Queue<string>();
     float toastUntil;
     public float musicVolume=.38f, effectsVolume=.65f, sensitivity=1.7f;
@@ -33,6 +35,7 @@ public class FactoryGame : MonoBehaviour {
     }
     public string Objective {
         get {
+            if(!shell&&player&&player.transform.position.z<12) return "00  /  OPEN THE FIRST DOOR\nCarry the foyer crate toward the striped plate. Q places it a step ahead; leave it on the plate, then walk through the centre door.";
             if(!shell) return "01  /  MAKE THE LANTERN SHELL\nPower the workshop gate. Bring its crate back to the override plate, then reuse the core.";
             if(!transferred) return "02  /  SHARE THE POWER\nThe shell stays finished. Move the SAME core to the Ribbon Conveyor.";
             if(!blueprint) return "03  /  FIND THE OLD DRAWING\nPower the Break-time Chime to call Hush, then hold the archive plate with a crate.";
@@ -42,29 +45,43 @@ public class FactoryGame : MonoBehaviour {
         }
     }
     void Awake(){ I=this; Time.timeScale=1; }
-    void Start(){ SetCursor(true); Notify("A warm Halloween story about finishing what we started.",6); }
+    void Start(){ SetCursor(true); }
     void Update(){
         if(!started&&(Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.Space))){Begin();return;}
         if(started&&!paused&&!Reading&&!ended&&!journal) playSeconds+=Time.unscaledDeltaTime;
+        if(activeCircuit){
+            if(Time.frameCount==circuitOpenedFrame)return;
+            if(Input.GetKeyDown(KeyCode.Escape)){CloseCircuit();return;}
+            var grid=activeCircuit.puzzle;int x=activeCircuit.selectedTile%grid.size,y=activeCircuit.selectedTile/grid.size;
+            if(Input.GetKeyDown(KeyCode.LeftArrow))x=Mathf.Max(0,x-1);if(Input.GetKeyDown(KeyCode.RightArrow))x=Mathf.Min(grid.size-1,x+1);
+            if(Input.GetKeyDown(KeyCode.UpArrow))y=Mathf.Max(0,y-1);if(Input.GetKeyDown(KeyCode.DownArrow))y=Mathf.Min(grid.size-1,y+1);
+            activeCircuit.selectedTile=grid.Index(x,y);
+            if(Input.GetKeyDown(KeyCode.Space)){grid.Rotate(activeCircuit.selectedTile);audioScore.Tick(550);}
+            if(Input.GetKeyDown(KeyCode.Return)&&grid.Solved)PowerCircuit();return;
+        }
         if(Input.GetKeyDown(KeyCode.Escape)&&started&&!ended&&!Reading){if(journal)ToggleJournal();else TogglePause();}
         if(Input.GetKeyDown(KeyCode.J))ToggleJournal();
         if(Reading&&(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return))) Advance();
         if(started&&!Frozen&&Input.GetKeyDown(KeyCode.H)) Hint();
     }
+    public void OpenCircuit(Machine m){activeCircuit=m;circuitOpenedFrame=Time.frameCount;SyncFreeze();}
+    public void CloseCircuit(){activeCircuit=null;SyncFreeze();}
+    public void PowerCircuit(){if(!activeCircuit||!activeCircuit.puzzle.Solved)return;var machine=activeCircuit;CloseCircuit();machine.StartWork();}
     public void TogglePause(){if(!started||ended||Reading||journal)return;paused=!paused;SyncFreeze();}
     public void ToggleJournal(){if(!started||ended||Reading||paused)return;journal=!journal;SyncFreeze();}
     public void Begin(){ started=true; SyncFreeze(); Say("PIP / NIGHT FOREMAN",
         "Oh! You must be Aunt May's helper. Welcome to the last night shift.",
         "The factory is closing, but there's still one order on my desk. A pumpkin lantern. No readable name... just a child's drawing.",
         "Would you help us finish it? Button left a crate by the striped plate. Try leaving it there to hold the door open.",
-        "WASD to walk. Mouse to look. E to pick up or use. Q to place. H for a hint. There's no timer to beat."); }
+        "WASD to walk. Mouse or arrow keys to look. E to pick up or use. Q to place. H for a hint. There's no timer to beat."); }
     public void Say(string who, params string[] text){ speaker=who; dialogue.Clear(); foreach(var s in text) dialogue.Enqueue(s); line=dialogue.Peek(); SyncFreeze(); }
     public void Advance(){ if(!Reading)return; dialogue.Dequeue(); if(Reading)line=dialogue.Peek(); SyncFreeze(); }
     void SyncFreeze(){ Time.timeScale=Frozen?0:1; SetCursor(Frozen); }
     void SetCursor(bool free){ Cursor.lockState=free?CursorLockMode.None:CursorLockMode.Locked; Cursor.visible=free; }
     public void Notify(string text,float seconds=3){toast=text;toastUntil=Time.unscaledTime+seconds;}
     public void Hint(){hintsRequested++;
-        string h=!shell?"Leave the foyer crate on its plate. Power the Workshop Relay, fetch the crate beyond its gate, and leave that crate on the override plate before taking the core to Moulding.":
+        string h=!shell&&player&&player.transform.position.z<12?"E picks up the foyer crate. Stand one step before the striped plate, facing it, and press Q. Leave the crate there and walk through the centre door.":
+        !shell?"Leave the foyer crate on its plate. Power the Workshop Relay, fetch the crate beyond its gate, and leave that crate on the override plate before taking the core to Moulding.":
         !transferred?"E on a completed or running machine removes its core. Carry it to the Ribbon Conveyor; the finished shell will remain.":
         !blueprint?"The archive gate opens while a crate rests on its plate. Stored crates block Hush's sight. A powered Chime distracts him.":
         !etched?"Take your core north to the Engraving Table. The old drawing is saved in your journal; you do not need to carry it.":
@@ -89,7 +106,7 @@ public class FactoryGame : MonoBehaviour {
     }
     public void Deliver(){
         if(!assembled||!player.held||player.held.kind!=Pickup.Kind.Lantern){Say("PIP / DISPATCH","One last order, then we can all go home. I'll keep the desk warm.");return;}
-        player.ReleaseForDelivery(); ended=true; Time.timeScale=1; SetCursor(true); if(audioScore)audioScore.Chord();
+        player.ReleaseForDelivery();player.hand.gameObject.SetActive(false); ended=true; Time.timeScale=1; SetCursor(true); if(audioScore)audioScore.Chord();
     }
     public void ResetSection(){
         if(Frozen)return; resets++;
@@ -124,7 +141,7 @@ public class FactoryGame : MonoBehaviour {
             GUI.Label(new Rect(100,345,520,110),"One old order. Three little ghosts.\nA promise you left here long ago.",body);
             GUI.Label(new Rect(100,477,510,85),"Explore a warm toy factory, share its last power core, and make a light for the ones who stayed late.",small);
             if(GUI.Button(new Rect(100,610,330,58),"Begin the night shift",button))Begin();
-            GUI.Label(new Rect(100,690,510,65),"WASD  Walk    Mouse  Look    E  Use\nQ  Place    H  Hint    J  Journal    Esc  Pause\nEarly playable / v0.2 — timing not yet playtested",small);return;
+            GUI.Label(new Rect(100,690,510,100),"WASD  Walk    Mouse / arrows  Look    E  Use\nQ  Place    H  Hint    J  Journal    Esc  Pause\nEarly playable / v0.3 — timing not yet playtested",small);return;
         }
         if(ended){
             Panel(new Rect(40,80,570,h-160));GUI.Label(new Rect(75,110,500,40),"THE LAST ORDER / DELIVERED",heading);
@@ -135,13 +152,14 @@ public class FactoryGame : MonoBehaviour {
         }
         Panel(new Rect(24,24,560,104));GUI.Label(new Rect(42,35,525,86),Objective,small);
         GUI.Label(new Rect(w-310,28,280,35),"WILLOW WORKS / OCTOBER 31",small);
-        if(!Reading&&!paused&&!journal){
+        if(!Reading&&!paused&&!journal&&!activeCircuit){
             GUI.Label(new Rect(w/2-12,h/2-15,24,30),"·",prompt);
             if(player&&player.focus){ Panel(new Rect(w/2-290,h-155,580,58)); GUI.Label(new Rect(w/2-280,h-148,560,48),player.focus.Prompt(player),prompt); }
             GUI.Label(new Rect(30,h-48,1000,30),player&&player.held?"E  Use socket / machine    Q  Place "+player.held.displayName+"    H  Hint    J  Journal    Esc  Pause":"WASD  Walk    E  Interact    Q  Place    H  Hint    J  Journal    Esc  Pause",small);
         }
         if(Time.unscaledTime<toastUntil){Panel(new Rect(w/2-380,145,760,80));GUI.Label(new Rect(w/2-360,158,720,66),toast,small);}
         if(inspector&&inspector.Alertness>0&&!Reading&&!paused&&!journal){GUI.color=new Color(1,.65f,.3f);GUI.Box(new Rect(w/2-140,240,280*inspector.Alertness,7),GUIContent.none);GUI.color=Color.white;GUI.Label(new Rect(w/2-140,254,280,30),"HUSH / "+inspector.state.ToString().ToUpper(),small);}
+        if(activeCircuit){circuitView.Draw(activeCircuit,w,h,paper);return;}
         if(Reading){ Panel(new Rect(w/2-470,h-300,940,250));GUI.Label(new Rect(w/2-435,h-278,870,34),speaker,heading);GUI.Label(new Rect(w/2-435,h-228,865,135),line,body);if(GUI.Button(new Rect(w/2+220,h-115,210,45),"Continue  [Space]",button))Advance(); }
         if(journal){
             Panel(new Rect(w/2-440,70,880,h-140));

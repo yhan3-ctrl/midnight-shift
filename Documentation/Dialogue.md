@@ -10,7 +10,7 @@ The factory is closing, but there's still one order on my desk. A pumpkin lanter
 
 Would you help us finish it? Button left a crate by the striped plate. Try leaving it there to hold the door open.
 
-WASD to walk. Mouse to look. E to pick up or use. Q to place. H for a hint. There's no timer to beat.
+WASD to walk. Mouse or arrow keys to look. E to pick up or use. Q to place. H for a hint. There's no timer to beat.
 
 ## Aunt May's note / optional foyer reading
 

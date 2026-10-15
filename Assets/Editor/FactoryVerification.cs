@@ -41,6 +41,13 @@ public class FactoryPlaycheck : MonoBehaviour {
         try{Check(g&&p&&g.inspector,"scene references survive serialization");Check(FindObjectsByType<Machine>(FindObjectsSortMode.None).Length==5,"five machines present");Check(FindObjectsByType<StoryPoint>(FindObjectsSortMode.None).Length==3,"story interaction components survive serialization");}
         catch(Exception e){Fail(e);yield break;}
         g.Begin();CloseDialogue();
+        try{
+            var graph=CircuitGrid.Create("mould");graph.shapes=new int[9];graph.turns=new int[9];for(int i=3;i<=5;i++)graph.shapes[i]=CircuitGrid.W|CircuitGrid.E;graph.sourceRow=1;graph.targets=new[]{5};graph.beacons=new[]{1};graph.Refresh();
+            Check(graph.LitOutlets==1&&!graph.Solved,"an outlet alone cannot bypass required contacts");
+            graph.shapes[4]=CircuitGrid.N|CircuitGrid.S;graph.Refresh();Check(graph.LitOutlets==0,"adjacent tiles require matching reciprocal edges");
+            graph.shapes[4]=CircuitGrid.W|CircuitGrid.E;graph.Rotate(3);Check(!graph.Powered(3)&&graph.LitOutlets==0,"source must face the incoming supply");
+        }catch(Exception e){Fail(e);yield break;}
+
         var gates=FindObjectsByType<FactoryGate>(FindObjectsSortMode.None);
         var crates=FindObjectsByType<Pickup>(FindObjectsInactive.Include,FindObjectsSortMode.None).Where(x=>x.kind==Pickup.Kind.Crate).ToArray();
         var core=FindObjectsByType<Pickup>(FindObjectsSortMode.None).Single(x=>x.kind==Pickup.Kind.Core);
@@ -54,8 +61,13 @@ public class FactoryPlaycheck : MonoBehaviour {
         try{
             p.Teleport(new Vector3(0,0,-6),0);Physics.SyncTransforms();
             Check(!foyer.Evaluate(),"foyer initially blocks progression");
+            Check(g.Objective.Contains("OPEN THE FIRST DOOR"),"foyer objective teaches the immediate task before power mechanics");
+            var tutorialCrate=crates.Single(x=>x.name=="Foyer crate");p.Pick(tutorialCrate);p.Teleport(new Vector3(-4.8f,0,5.3f),0);Physics.SyncTransforms();p.TryPlace();
+            Check(p.held==null&&Vector3.Distance(tutorialCrate.transform.position,foyer.plate.position+Vector3.up*.885f)<.05f&&foyer.Evaluate(),"near-edge crate placement snaps onto plate and opens gate");
+            p.Teleport(new Vector3(0,0,-6),0);
+
             crates.Single(x=>x.name=="Foyer crate").transform.position=foyer.plate.position+Vector3.up*.885f;Physics.SyncTransforms();Check(foyer.Evaluate(),"placed crate opens pressure gate");
-            p.Pick(core);g.ToggleJournal();Check(g.Frozen&&Time.timeScale==0&&p.held==core,"journal freezes world and retains held item");g.ToggleJournal();Check(!g.Frozen&&Time.timeScale==1,"journal returns to active play");g.TogglePause();Check(g.Frozen&&Time.timeScale==0,"pause freezes world");g.TogglePause();Check(!g.Frozen&&p.held==core,"resume preserves held item");var mould=machines.Single(x=>x.machineId=="mould");mould.Use(p);Check(mould.core==core&&p.held==null,"core inserted into machine");mould.Use(p);
+            p.Pick(core);g.ToggleJournal();Check(g.Frozen&&Time.timeScale==0&&p.held==core,"journal freezes world and retains held item");g.ToggleJournal();Check(!g.Frozen&&Time.timeScale==1,"journal returns to active play");g.TogglePause();Check(g.Frozen&&Time.timeScale==0,"pause freezes world");g.TogglePause();Check(!g.Frozen&&p.held==core,"resume preserves held item");var blocked=machines.Single(x=>x.machineId=="press");blocked.Use(p);Check(p.held==core&&blocked.core==null,"out-of-order machine never traps the only core");var mould=machines.Single(x=>x.machineId=="mould");mould.Use(p);Check(mould.core==core&&p.held==null,"core inserted into machine");mould.Use(p);SolveRouting(mould);
         }catch(Exception e){Fail(e);yield break;}
         yield return new WaitForSecondsRealtime(.1f);Time.timeScale=16;
         yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
@@ -63,7 +75,7 @@ public class FactoryPlaycheck : MonoBehaviour {
         try{
             Check(g.shell,"mould completes using game update");
             machines.Single(x=>x.machineId=="mould").Use(p);Check(p.held==core,"completed machine returns same core");
-            ribbon.Use(p);ribbon.Use(p);Check(g.shell,"processed shell survives power transfer");
+            ribbon.Use(p);ribbon.Use(p);SolveRouting(ribbon);Check(g.shell,"processed shell survives power transfer");
         }catch(Exception e){Fail(e);yield break;}
         Time.timeScale=16;yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
         try{
@@ -83,12 +95,12 @@ public class FactoryPlaycheck : MonoBehaviour {
             p.Teleport(new Vector3(0,0,47.2f),0);g.inspector.assemblyDuty=true;g.inspector.route=new[]{new Vector3(4,0,52),new Vector3(-1,0,50)};g.inspector.ResetPatrol();
             p.Pick(core);g.ResetSection();Check(p.transform.position.z>46&&core.transform.position.z>46,"final-area retry recovers player and held core locally");Check(!g.inspector.CanSeePlayer(),"safety reset grants a brief detection grace period");
             g.inspector.enabled=true;g.inspector.assemblyDuty=false;g.inspector.route=new[]{new Vector3(-2.3f,0,35.5f),new Vector3(2.3f,0,40.5f)};g.inspector.ResetPatrol();p.Teleport(new Vector3(0,0,15),0);
-            var etch=machines.Single(x=>x.machineId=="etch");p.Pick(core);etch.Use(p);etch.Use(p);
+            var etch=machines.Single(x=>x.machineId=="etch");p.Pick(core);etch.Use(p);etch.Use(p);SolveRouting(etch);
         }catch(Exception e){Fail(e);yield break;}
         Time.timeScale=16;yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
         try{
             Check(g.etched,"engraving completes");machines.Single(x=>x.machineId=="etch").Use(p);
-            var press=machines.Single(x=>x.machineId=="press");press.Use(p);press.Use(p);
+            var press=machines.Single(x=>x.machineId=="press");press.Use(p);press.Use(p);SolveRouting(press);
         }catch(Exception e){Fail(e);yield break;}
         Time.timeScale=16;yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
         try{
@@ -101,6 +113,14 @@ public class FactoryPlaycheck : MonoBehaviour {
         try{var ending=FindFirstObjectByType<EndOfShift>();Check(ending&&ending.pip.position.z>70&&ending.exitDoor.position.y>5,"ending opens exit and takes the helpers into the village");File.WriteAllText("Work/playcheck.txt",$"PASS: {checks} engine integration checks, including the animated ending.\nActual scene components, physics visibility, progression, retries and delivery exercised.\nNot an unassisted human playthrough or timing validation.\n");}
         catch(Exception e){Fail(e);yield break;}
         Application.logMessageReceived-=OnLog;EditorApplication.Exit(0);
+    }
+    void SolveRouting(Machine machine){
+        Check(g.activeCircuit==machine&&g.Frozen&&Time.timeScale==0,"routing mode freezes workshop: "+machine.machineId);
+        g.PowerCircuit();Check(g.activeCircuit==machine&&!machine.running,"unconnected routing cannot start the machine: "+machine.machineId);
+        var grid=machine.puzzle;Check(!grid.Solved,"authored circuit begins unsolved: "+machine.machineId);
+        for(int i=0;i<grid.turns.Length;i++)while(grid.turns[i]!=0)grid.Rotate(i);
+        Check(grid.Solved,"authored circuit has a valid connected solution: "+machine.machineId);
+        g.PowerCircuit();Check(g.activeCircuit==null&&machine.running,"connected circuit starts machine: "+machine.machineId);
     }
     void CloseDialogue(){for(int i=0;i<20&&g.Reading;i++)g.Advance();Time.timeScale=1;}
     void Check(bool ok,string what){if(!ok)throw new Exception(what);checks++;Debug.Log("CHECK_PASS / "+what);}

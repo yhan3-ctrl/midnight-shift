@@ -1,10 +1,10 @@
-# Game Script / v0.2 implemented rules
+# Game Script / v0.3 implemented rules
 
 This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. A future final report must update this document to match its submitted version.
 
 ## Player role, controls and modes
 
-The player is Aunt May's visitor helping magical toy-factory workers finish a childhood order. Exploration/puzzle play uses a first-person camera, WASD movement at 4.1 units/s, mouse look, E interaction, Q placement, H hint, J journal and Esc pause. No jumping, combat, health pool or global time limit. Interactions use the first collider on a camera ray, maximum distance 3.1 units.
+The player is Aunt May's visitor helping magical toy-factory workers finish a childhood order. Exploration/puzzle play uses a first-person camera, WASD movement at 4.1 units/s, mouse/arrow-key look, E interaction, Q placement, H hint, J journal and Esc pause. Circuit routing has its own mode with clickable tiles, arrow-key selection, Space rotation, Return activation and Esc close. No jumping, combat, health pool or global time limit. Interactions use the first collider on a camera ray, maximum distance 3.1 units.
 
 Exploration permits walking, looking, carrying and interacting. Reading/dialogue restricts locomotion and freezes world simulation; Space, Return or the visible button advances. The journal freezes simulation and displays the current task, rules and discovered story, then restores the previous carrying state. Pause freezes simulation and offers music/effects/sensitivity sliders, resume and restart. The title screen begins the night; the ending offers restart. Reading and pause are not secretly timed hazards.
 
@@ -24,7 +24,7 @@ The Packaging gate permanently unlocks after Moulding and Ribbon work completes.
 
 ## Machines
 
-A machine accepts one core. E with the core inserts it, then E with empty hands starts work. E while running stops work and removes the core. E after completion retrieves the core. Removing power stops processing, but partial processing and completed output persist.
+A machine accepts one core only if its prerequisite is satisfied. An out-of-order attempt keeps the core in the player’s hands and states what is missing. E with the core inserts it. For production machines, E with empty hands opens a power-routing board until that board has a valid solution; after a solution is accepted the machine starts. The Chime starts directly. E while running stops work and removes the core. E after completion retrieves the core. Removing power stops processing, but partial processing and completed output persist.
 
 Every current job lasts five seconds. These short processing times communicate action results and are not designed as a mechanism to reach the length requirement.
 
@@ -35,6 +35,19 @@ Every current job lasts five seconds. These short processing times communicate a
 - Lantern Press requires engraving and creates a physical lantern beside its pedestal.
 
 Machine work starts emit the same inspector stimulus. He responds to sources in his current duty region: archive z = 31–46 or assembly z = 47–54. After reading the drawing and entering Final Assembly, Hush changes to a final-inspection route. Machine starts in that region then draw his attention as well. There is no random machine failure.
+
+## Power-routing mode
+
+The world and inspector freeze while the player manipulates a circuit. Active play time still counts because solving is gameplay. Click a tile to rotate it clockwise, or select with arrows and rotate with Space. Return or Send power starts a valid circuit. Esc / Close preserves tile orientation and resumes the world. Remove core closes the board and retrieves the core. Reset tiles restores the board's initial orientation.
+
+Each tile has connectors on some of its north, east, south and west edges. Power begins only if the leftmost source tile faces the incoming supply. It crosses to an adjacent tile only if both touching edges have connectors. Straight pieces carry, elbows turn and T pieces split power. Unused open ends do not cause failure. The board succeeds only when every marked contact is powered and every marked right-edge outlet receives power with its east connector facing out.
+
+- Moulding: 3 by 3 board, one outlet and one required contact, introducing rotation and visible connectivity.
+- Ribbon: 3 by 3 board, two outlets and one contact, applying a T junction to split one input.
+- Engraving: 4 by 4 board, one outlet and two required contacts, requiring a route through intermediate points rather than only the shortest connection.
+- Press: 4 by 4 board, two outlets and two contacts, combining turning, branching and intermediate routing.
+
+All four are authored and have validated solutions. Tile rotations persist when power is removed. The machine cannot start while the board is disconnected or a contact is missing. No hint claims a unique solution. Automated tests use known authored solutions and do not measure real puzzle-solving time or enjoyment.
 
 ## Inspector
 
@@ -52,7 +65,7 @@ The reveal unlocks assembly. The player engraves, powers the press, picks up the
 
 ## State machines
 
-Player: Active.EmptyHands / Active.Carrying. Pickup enters Carrying; placement, insertion or delivery leaves it. Movement may coexist with either state. Reading, Journal and Paused retain carrying state while freezing time. Safety reset returns to Active.EmptyHands. Delivery enters Ending.
+Player: Active.EmptyHands / Active.Carrying. Pickup enters Carrying; placement, insertion or delivery leaves it. Movement may coexist with either state. Reading, Journal, Routing and Paused retain carrying state while freezing time. Safety reset returns to Active.EmptyHands. Delivery enters Ending.
 
 Inspector: Patrol -> Alert -> Approach -> Search -> Return -> Patrol. A machine sound may replace Patrol/Search/Return with Investigate; seeing the player replaces investigation with Alert. The return route and sound priority are specified above.
 
@@ -64,10 +77,12 @@ Implicit: players engage through the supplied controls. No rule relies on an unw
 
 ## Schemas and evidence
 
-Systems of Information: machine labels, job states, plate state, objectives, inspector alert and dialogue reveal different information needed for planning. See Rules of Play slides 86–95.
+Systems of Information: the circuit’s lit connections and outlet/contact counters expose connectivity without showing the answer. Machine labels, job states, plate state, objectives, inspector alert and dialogue reveal different information needed for planning. See Rules of Play slides 86–95.
 Systems of Uncertainty: outcomes depend on the player's incomplete layout knowledge, sequence and traversal timing, without random inspector detection. See slides 68–84.
 Emergence remains a design hypothesis. Do not claim emergent depth until different viable player strategies are observed.
 
 ## Current validation limits
 
 Engine integration checks exercise serialized scene references and actual components for power transfer, gate conditions, job progression, inspector noise, retries and delivery. They place objects and accelerate time deliberately. They do not prove unaided navigation, time-to-completion, music quality, fun or learning. Record real player observations before claiming any of those.
+
+Crate placement has a 1.35-unit horizontal assist around a pressure plate at the same floor level. Placement still rejects solid obstructions. The opening objective describes the foyer crate before introducing the workshop power problem.

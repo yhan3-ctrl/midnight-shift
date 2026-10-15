@@ -13,6 +13,9 @@ stateDiagram-v2
         EmptyHands --> Carrying: valid pickup
         Carrying --> EmptyHands: valid place / insert / deliver
     }
+    Active --> Routing: powered production machine
+    Routing --> Active: close / remove core
+    Routing --> Active: connected route accepted, machine starts
     Active --> Reading: story interaction or job dialogue
     Reading --> Active: final line advanced
     Active --> Journal: J
@@ -26,7 +29,7 @@ stateDiagram-v2
     Ending --> Title: restart scene
 ```
 
-Movement can coexist with both carrying states. Reading, Journal and Paused retain the previous carrying state and freeze world simulation. A safety reset returns held items to known home positions and preserves completed jobs. There is no player death state.
+Movement can coexist with both carrying states. Reading, Journal, Routing and Paused retain the previous carrying state and freeze world simulation. A safety reset returns held items to known home positions and preserves completed jobs. There is no player death state.
 
 ## Inspector
 

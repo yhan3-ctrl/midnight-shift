@@ -7,8 +7,10 @@ public class PlayerMotor : MonoBehaviour {
     void Awake(){cc=GetComponent<CharacterController>();}
     void Update(){
         if(!FactoryGame.I||FactoryGame.I.Frozen){focus=null;return;}
-        transform.Rotate(0,Input.GetAxisRaw("Mouse X")*FactoryGame.I.sensitivity,0);
-        pitch=Mathf.Clamp(pitch-Input.GetAxisRaw("Mouse Y")*FactoryGame.I.sensitivity,-72,72);
+        float keyYaw=(Input.GetKey(KeyCode.RightArrow)?1:0)-(Input.GetKey(KeyCode.LeftArrow)?1:0);
+        float keyPitch=(Input.GetKey(KeyCode.DownArrow)?1:0)-(Input.GetKey(KeyCode.UpArrow)?1:0);
+        transform.Rotate(0,Input.GetAxisRaw("Mouse X")*FactoryGame.I.sensitivity+keyYaw*85*Time.deltaTime,0);
+        pitch=Mathf.Clamp(pitch-Input.GetAxisRaw("Mouse Y")*FactoryGame.I.sensitivity+keyPitch*65*Time.deltaTime,-72,72);
         view.transform.localRotation=Quaternion.Euler(pitch,0,0);
         Vector3 move=Vector3.ClampMagnitude(new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical")),1);
         fall=cc.isGrounded?-2:fall-22*Time.deltaTime;
@@ -34,11 +36,22 @@ public class PlayerMotor : MonoBehaviour {
     public void TryPlace(){
         Vector3 ahead=transform.position+transform.forward*1.5f+Vector3.up*2;
         if(!Physics.Raycast(ahead,Vector3.down,out RaycastHit ground,3.5f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore)||ground.normal.y<.85f){FactoryGame.I.Notify("Find a clear, level surface to place it.");return;}
-        Vector3 at=ground.point+Vector3.up*(held.kind==Pickup.Kind.Crate?.835f:.43f);
+        Vector3 surface=ground.point;
+        // A small placement assist makes the raised plate forgiving at its edges.
+        // The same solid-obstacle validation below still applies after snapping.
+        if(held.kind==Pickup.Kind.Crate){
+            float nearest=1.35f;
+            foreach(var gate in FindObjectsByType<FactoryGate>(FindObjectsSortMode.None)){
+                if(!gate.plate||Mathf.Abs(gate.plate.position.y-surface.y)>.25f)continue;
+                Vector3 delta=gate.plate.position-ahead;delta.y=0;
+                if(delta.magnitude<nearest){nearest=delta.magnitude;surface=gate.plate.position+Vector3.up*.05f;}
+            }
+        }
+        Vector3 at=surface+Vector3.up*(held.kind==Pickup.Kind.Crate?.835f:.43f);
         Vector3 half=held.kind==Pickup.Kind.Crate?new Vector3(.58f,.8f,.58f):Vector3.one*.25f;
         foreach(var c in Physics.OverlapBox(at,half,Quaternion.identity,~0,QueryTriggerInteraction.Ignore)){
             if(c.transform.IsChildOf(transform)||c.transform.IsChildOf(held.transform))continue;
-            if(c.bounds.max.y<=ground.point.y+.08f)continue;
+            if(c.bounds.max.y<=surface.y+.08f)continue;
             FactoryGame.I.Notify("There's not enough room here. Try a clear patch of floor.");return;
         }
         held.PlaceAt(at);held=null;FactoryGame.I.audioScore.Tick(330);
