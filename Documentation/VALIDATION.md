@@ -12,7 +12,7 @@ Build: Unity 6000.6.5f1, macOS, 2026-10-14 local project session. Evidence descr
 | Foyer usability | Correct immediate HUD objective and near-edge plate snap verified | New player comprehension not yet observed |
 | Actual native application operation | Start, dialogue, movement, keyboard look, pickup/place, first-door traversal and objective transition, low-core pickup, notebook and pause inspected | Agent controlled; no valid first-play duration or complete native run |
 | Runtime visual inspection | Title, dialogue, routing board and staged ending rendered/inspected; world text depth and ending camera corrected | Staged capture is not evidence of a natural playthrough |
-| macOS packaging | Local signed universal app built; package startup smoke check | Current host is Apple Silicon; Intel execution untested |
+| macOS packaging | Local signed universal app built; ZIP integrity and extracted-app strict signature verification passed; extracted-app startup smoke check passed | Current host is Apple Silicon; Intel execution untested |
 
 Source test tools: Assets/Editor/FactoryVerification.cs, FactoryNavigation.cs, FactoryRebuild.cs. Build script: Tools/build-mac.zsh. Local raw logs: Work/playcheck.log, playcheck.txt, navigation.log, navigation.txt, packaged-smoke.log, runtime-preview.log and agent-playtest.log. Work is deliberately excluded from version control.
 

@@ -25,8 +25,8 @@ public class Machine : Interactable {
         if(!core){FactoryGame.I.Notify("Bring a power core to this machine.");return;}
         if(running||done){Remove(p);return;}
         if(Requirement!=""){FactoryGame.I.Notify(Requirement+". Take the core back and finish that job.");Remove(p);return;}
-        
-        
+
+
         if(puzzle!=null&&!puzzle.Solved){FactoryGame.I.OpenCircuit(this);return;}
         StartWork();
     }
