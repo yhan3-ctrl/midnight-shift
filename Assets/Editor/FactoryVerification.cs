@@ -38,7 +38,7 @@ public class FactoryPlaycheck : MonoBehaviour {
         Application.logMessageReceived+=OnLog;
         yield return null;
         Application.runInBackground=true;Time.captureDeltaTime=1f/60;
-        g=FactoryGame.I;p=g.player;
+        g=FactoryGame.I;p=g.player;p.SetLookMode(1,false);
         try{Check(g&&p&&g.inspector,"scene references survive serialization");Check(FindObjectsByType<Machine>(FindObjectsSortMode.None).Length==5,"five machines present");Check(FindObjectsByType<StoryPoint>(FindObjectsSortMode.None).Length==4,"story interaction components survive serialization");}
         catch(Exception e){Fail(e);yield break;}
         int initialLanguage=UiCopy.Selected;UiCopy.Language(0,false);
@@ -56,7 +56,25 @@ public class FactoryPlaycheck : MonoBehaviour {
         }catch(Exception e){Fail(e);yield break;}
 
         try{
-            Check(g.guide&&g.guide.Current.key=="RMB / ARROWS","opening guide teaches looking before future power rules");
+            Check(g.guide&&g.guide.Current.key=="RIGHT-DRAG","optional pointer mode teaches right-drag without implying the default view is fixed");
+            p.SetLookMode(0,false);Check(g.AwaitingLook&&g.Frozen&&Time.timeScale==0&&!p.LookCaptured&&Cursor.visible,"default FPS mode waits for explicit click before capturing the pointer or running hazards");
+            Check(g.guide.Current.key=="MOUSE","default opening guide explicitly teaches mouse turning");
+            Check(g.guide.Navigate(g.guide.Current).key=="MOUSE","distance navigation must not replace the initial mouse-look instruction with a walking task");
+            g.TogglePause();Check(!p.CaptureMouseLook()&&!p.LookCaptured&&Cursor.visible,"pause menu rejects mouse capture");g.TogglePause();Check(g.AwaitingLook&&!p.LookCaptured,"resuming pause never silently captures the pointer");
+            g.ToggleMap();Check(!p.CaptureMouseLook()&&g.mapOpen,"map rejects capture");g.ToggleMap();Check(g.AwaitingLook&&!p.LookCaptured,"map Back returns to explicit look entry");
+            g.TogglePhoto();Check(!p.CaptureMouseLook()&&Cursor.visible,"screenshot view rejects capture");g.TogglePhoto();Check(g.AwaitingLook&&!p.LookCaptured,"closing screenshot view never silently captures");
+            g.Say("Control regression","One last line.");Check(!p.CaptureMouseLook(),"dialogue rejects capture");CloseDialogue();Check(g.AwaitingLook&&!p.LookCaptured,"finishing dialogue never silently captures");
+            g.HoldForDesktop();Check(g.desktopHold&&g.Frozen,"desktop hold also works while awaiting look entry");g.ResumeDesktop();Check(g.AwaitingLook&&!p.LookCaptured,"desktop resume requires a fresh click");
+            g.OpenComfort();Check(g.Modal&&!p.CaptureMouseLook()&&Cursor.visible,"comfort settings are paused and reject capture");g.CloseComfort(false);Check(g.AwaitingLook,"closing comfort restores underlying look entry");
+            g.sensitivity=1.7f;g.verticalSensitivity=1.5f;p.Teleport(new Vector3(0,0,-7),0);p.ApplyLook(new Vector2(20,10),0,0,0);
+            Check(Mathf.Abs(Mathf.DeltaAngle(p.transform.eulerAngles.y,34))<.01f&&Mathf.Abs(p.Pitch+15)<.01f,"actual look transform applies raw mouse motion on independent horizontal and vertical axes");
+            p.ApplyLook(new Vector2(-40,-20),0,0,0);Check(Mathf.Abs(Mathf.DeltaAngle(p.transform.eulerAngles.y,-34))<.01f&&Mathf.Abs(p.Pitch-15)<.01f,"mouse look turns in both directions rather than only strafing");
+            p.ApplyLook(new Vector2(720,1000),0,0,0);Check(Mathf.Abs(p.Pitch+72)<.01f,"large mouse motion clamps pitch without rolling the view");
+            p.ApplyLook(Vector2.zero,0,0,0);Check(Mathf.Abs(p.Pitch+72)<.01f,"stationary pointer causes no auto-turn or recentering");
+            p.ComfortDefaults(false);Check(!p.handMotion&&p.speed==3.3f&&p.view.fieldOfView==72&&p.LookMode==0,"comfort defaults use static hands, adjustable FOV and default mouse look");
+            p.SetLookMode(2,false);Check(!g.AwaitingLook&&!p.NeedsLookStart&&g.guide.Current.key=="ARROWS","explicit arrow-only alternative runs without capturing the pointer");
+            p.SetLookMode(1,false);p.Teleport(new Vector3(0,0,-7),0);
+
             Check(Cursor.lockState==CursorLockMode.None&&Cursor.visible,"active exploration keeps the operating-system pointer free");
             g.TogglePhoto();Check(g.photoMode&&g.Frozen&&Time.timeScale==0&&Cursor.lockState==CursorLockMode.None,"screenshot view freezes hazards without capturing the pointer");g.TogglePhoto();Check(!g.Frozen,"screenshot view returns to the previous active state");
             g.HoldForDesktop();Check(g.desktopHold&&g.Frozen&&!g.paused,"desktop focus loss freezes without covering the game with the pause menu");g.ResumeDesktop();Check(!g.Frozen&&Cursor.visible,"desktop resume restores play with a free pointer");

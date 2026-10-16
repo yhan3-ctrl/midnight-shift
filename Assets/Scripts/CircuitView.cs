@@ -12,6 +12,7 @@ public class CircuitView {
         for(int y=0;y<p.size;y++)for(int x=0;x<p.size;x++){
             int i=p.Index(x,y);Rect r=new Rect(gridX+x*(step+gap),gridY+y*(step+gap),step,step);
             UiTheme.Fill(r,new Color(.16f,.30f,.32f));
+            if(UiTheme.Hover(r))UiTheme.Outline(r,UiTheme.Gold);
             if(GUI.Button(r,GUIContent.none,GUIStyle.none)){m.selectedTile=i;p.Rotate(i);g.audioScore.Tick(500+i*9);}
             if(m.selectedTile==i){UiTheme.Fill(new Rect(r.x,r.y,r.width,3),UiTheme.Cream);UiTheme.Fill(new Rect(r.x,r.yMax-3,r.width,3),UiTheme.Cream);UiTheme.Fill(new Rect(r.x,r.y,3,r.height),UiTheme.Cream);UiTheme.Fill(new Rect(r.xMax-3,r.y,3,r.height),UiTheme.Cream);}
             int mask=p.Mask(i);Color c=p.Powered(i)?UiTheme.Gold:new Color(.62f,.74f,.72f);float cx=r.center.x,cy=r.center.y;

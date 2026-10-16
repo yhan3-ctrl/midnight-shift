@@ -7,7 +7,7 @@ public class BuildSmokeCheck : MonoBehaviour {
     static void Install(){foreach(string arg in System.Environment.GetCommandLineArgs())if(arg=="--verify-build"||arg=="--capture-preview"){capture=arg=="--capture-preview";new GameObject("Packaged build check").AddComponent<BuildSmokeCheck>();break;}}
     IEnumerator Start(){
         Application.runInBackground=true;yield return null;
-        if(capture){yield return Capture();yield break;}
+        if(capture){FactoryGame.I.player.SetLookMode(1,false);yield return Capture();yield break;}
         var g=FactoryGame.I;
         if(!g||!g.player||!g.inspector||!g.lantern||!g.sharedCore||!FindFirstObjectByType<EndOfShift>()||!g.buttonHelper||!g.pipHelper||!g.workshopRelay){Debug.LogError("PACKAGED_BUILD_FAIL / Missing serialized references");Application.Quit(1);yield break;}
         g.Begin();while(g.Reading)g.Advance();g.ToggleJournal();

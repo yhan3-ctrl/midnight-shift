@@ -7,40 +7,48 @@ These diagrams describe current states and transitions. They are design document
 ```mermaid
 stateDiagram-v2
     [*] --> Title
-    Title --> Active: Begin
+    Title --> Reading: Begin
+    Reading --> LookEntry: final line advanced
+    LookEntry --> Active: explicit click / Enter
     state Active {
         [*] --> EmptyHands
         EmptyHands --> Carrying: valid pickup
         Carrying --> EmptyHands: valid place / insert / deliver
     }
-    Active --> Routing: powered production machine
-    Routing --> Active: close / remove core
-    Routing --> Active: connected route accepted, machine starts
-    Active --> Reading: story interaction or job dialogue
-    Reading --> Active: final line advanced
+    Active --> Routing: interact with production console
+    Routing --> LookEntry: close / remove / start
+    Active --> Reading: story / job dialogue
     Active --> Journal: J
-    Journal --> Active: J / Backspace / Close
-    Active --> Map: M / map button
-    Map --> Active: M / Esc / Back
-    Reading --> Map: M / map button
-    Map --> Reading: close, if reading was retained
-    Active --> Screenshot: F2 / screenshot button
-    Screenshot --> Active: F2 / Esc
-    Active --> DesktopHold: lose OS focus
-    DesktopHold --> Active: Enter / Resume
+    Journal --> LookEntry: J / Backspace / Close
+    Active --> Map: M
+    Map --> LookEntry: Esc / M / Back
+    Reading --> Map: M
+    Map --> Reading: close, reading retained
+    Active --> Screenshot: F2
+    Screenshot --> LookEntry: F2 / Esc
+    Active --> DesktopHold: lose focus / system modifier
+    LookEntry --> DesktopHold: lose focus
+    DesktopHold --> LookEntry: Enter / Resume
+    Active --> Paused: Esc / Tab / F1
     Reading --> Paused: Esc / Tab / F1
     Routing --> Paused: Esc / Tab / F1
-    Journal --> Paused: Esc / Tab / F1
-    Active --> Paused: Esc
-    Paused --> Active: Esc / Resume
+    Paused --> LookEntry: resume exploration
+    Paused --> Reading: resume retained dialogue
+    Paused --> Routing: resume retained circuit
+    Title --> Comfort: C / settings button
+    Paused --> Comfort: C / settings button
+    LookEntry --> Comfort: C / settings button
+    Comfort --> Title: Back, if opened from title
+    Comfort --> Paused: Back, if opened from pause
+    Comfort --> LookEntry: Back, if opened from look entry
     Active --> SafetyReset: inspector contact
-    SafetyReset --> Active: restore safe position and recover held item
-    Active --> Ending: deliver completed lantern to Pip
-    Paused --> Title: restart scene
-    Ending --> Title: restart scene
+    SafetyReset --> Reading: checkpoint restored
+    Active --> Ending: deliver completed lantern
+    Paused --> Title: restart
+    Ending --> Title: restart
 ```
 
-Movement can coexist with both carrying states. Reading, Journal, Routing, Map, Screenshot, DesktopHold and Paused retain the previous carrying state and freeze world simulation. A safety reset returns held items to known home positions and preserves completed jobs. There is no player death state.
+The diagram shows the default mouse-look mode. Only explicit entry captures the pointer. All other modes shown have a free pointer; returning from any interruption cannot capture it automatically. LookEntry freezes simulation and is excluded from active-play time. Closing nested interfaces preserves the underlying dialogue, circuit and carrying state. In the explicitly selected free-pointer/right-drag or arrow-only alternative, exploration returns directly to Active without LookEntry. A safety reset preserves completed jobs. There is no death state.
 
 ## Inspector
 

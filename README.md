@@ -1,34 +1,34 @@
 # Midnight Shift: The Last Lantern
 
-v0.9 adds forgiving visible-core interactions, one-action core insertion/circuit opening, an expandable factory map (M), physics-checked gold floor trails, and persistent green star contacts. The factory map labels rooms, stations, crates, plates, player and core. It pauses safely. Full validation: Documentation/WAYFINDING-REVIEW-v0.9.md.
+v0.10 responds to a friend's user-reported playtest: default relative mouse look after an explicit click (or Enter), clear Esc pointer release, hover highlights/hand cursors, a simple map Back arrow, and persisted comfort options. See Documentation/MOUSE-LOOK-REVIEW-v0.10.md for evidence and limitations.
 
-Current production controls: press E near the console to insert a core and open its circuit in one action. Every star and every outlet must receive power. M opens/closes the map; Esc closes it. The floor trail and map share one route around obstacles.
+Move the mouse to turn; WASD walks. Esc pauses and releases the pointer. Map, dialogue, circuits, notebook, screenshot view, system modifiers and focus loss also release it. Returning to exploration requires a deliberate click/Enter, never automatic capture. Controls & comfort [C] is available on the title, pause and look-entry screens.
 
 Willow Works 的万圣节最后一班。Unity 6.6 / 6000.6.5f1 / Built-in Render Pipeline。
 
 ## 当前版本
 
-v0.9 retains the seven-language interface (English default), warm story, four circuits and visible lantern crafting. This is a playable revision, not a verified final course submission. Independent human timing and learning outcomes remain unverified.
+v0.10 retains the seven-language interface (English default), warm story, four circuits and visible lantern crafting. This is a playable revision, not a verified final course submission. Independent human timing and learning outcomes remain unverified.
 
 ## 打开游戏
 
-双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift.app`。
+双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift v0.10.app`。
 
-当前开发源文件位于本机 `~/Developer/MidnightShift`，避免 iCloud 卸载源代码。桌面旧项目保留为 v0.5 参考。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.9.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
+当前开发源文件位于本机 `~/Developer/MidnightShift`，避免 iCloud 卸载源代码。桌面旧项目保留为 v0.5 参考。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.10.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
 
 编辑项目：Unity Hub → Projects → Add → Add project from disk → 选择整个 `MidnightShift` 文件夹。打开后在 Project 面板双击 `Assets/Scenes/WillowWorks.unity`，再按编辑器上方 Play。
 
 ## 操作
 
-- WASD：移动；按住鼠标右键拖动或使用方向键：视角。松开右键，鼠标始终自由。K 切换为仅方向键观察。
+- WASD：移动。点击 Click to look around（或 Enter）后，移动鼠标即可自由转头，不用按住鼠标键。Esc 立即释放鼠标并打开菜单。方向键也可以转头；设置页可选自由指针／右键拖动或仅方向键模式。
 - E：拾取／插入核心／启动机器／读取说明／交付。
 - Q：放置物品。发光条纹木板是任务目标，箱子轮廓是实际落点；轮廓在木板上变绿后按 Q。靠近目标木板时会对齐，碰撞与墙壁仍会阻止放置。
 - Space 或 Return：继续对白。阅读时世界暂停。
 - H：当前任务提示。
 - J：值班笔记，查看当前目标、规则和已发现的故事。
 - Tab / F1：随时打开菜单、释放鼠标，包括对话与线路板期间。Esc 在对话、线路板、笔记中统一打开菜单；线路板用 Backspace 返回。
-- F2：冻结世界并隐藏主要界面，方便用系统截图；F2 / Esc 返回。切换到其他窗口时冻结世界，返回后 Enter 继续。
-- 菜单内可退出游戏、试听/恢复声音，并打开七种语言的选择菜单（L）。
+- F2：冻结世界并隐藏主要界面，方便用系统截图；F2 / Esc 返回。切换到其他窗口时冻结世界，返回后 Enter 恢复，再点击／Enter 主动进入鼠标视角。
+- 菜单内可退出游戏、试听/恢复声音，并打开七种语言的选择菜单（L）。Controls & comfort [C] 可调左右／上下灵敏度、垂直视野和走路速度；手部晃动默认关闭。设置关闭后保存。
 - 对话暂停世界；点击继续或按空格/回车推进。右侧挂历与金色箭头逐步指路。
 
 Production machines: E near the console inserts the core and opens the circuit. Turn tiles to power every OUT and every star; green stars remain visible. Choose Start machine. Click/Space rotates, arrows select, Return starts, Backspace returns and Esc opens the menu. The Chime needs no routing puzzle. Completed output persists when the same core is retrieved and reused.
@@ -37,7 +37,7 @@ Production machines: E near the console inserts the core and opens the circuit. 
 
 游戏自动记录当前局部任务完成、活跃操作时间、阅读、暂停、笔记、提示次数和重试次数，仅保存在本机，不上传。Mac 独立应用位置为 `~/Library/Application Support/com.Willow-Works.Midnight-Shift---The-Last-Lantern/Playtests/`；编辑器检查记录位于 `~/Library/Application Support/Willow Works/Midnight Shift - The Last Lantern/Playtests/`。自动检查及带 --agent-playtest 的操作会标记为 automated，并自动静音；其余记录默认 reviewer=unattributed，不能仅凭日志认定是真人试玩。
 
-计时包含未暂停时的思考与停顿，长时间离开或系统休眠会污染数据；这类记录必须剔除，不能作为课程时长证据。完整开发者试玩见 `Documentation/NATIVE-FULL-REVIEW-v0.5.md`；本轮鼠标与放置修正的验证及限制见 `Documentation/CONTROLS-REVIEW-v0.8.md`。
+计时包含未暂停时的思考与停顿，等待主动进入鼠标视角和舒适度设置的时间也计入暂停，不计入活跃时间。长时间离开或系统休眠会污染数据；这类记录必须剔除，不能作为课程时长证据。完整开发者试玩见 `Documentation/NATIVE-FULL-REVIEW-v0.5.md`；本轮鼠标与放置修正的验证及限制见 `Documentation/CONTROLS-REVIEW-v0.8.md`。
 
 ## 第一次检查重点
 

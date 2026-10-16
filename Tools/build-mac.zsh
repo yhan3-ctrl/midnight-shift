@@ -5,7 +5,7 @@ unity_editor='/Applications/Unity/Hub/Editor/6000.6.5f1/Unity.app/Contents/MacOS
 mkdir -p "$game_root/Work"
 "$unity_editor" -batchmode -quit -projectPath "$game_root" -executeMethod FactoryDelivery.Prepare -logFile "$game_root/Work/build-mac.log"
 built_app="$game_root/Builds/Mac/Midnight Shift.app"
-local_app="$HOME/Applications/Midnight Shift.app"
+local_app="${1:-$HOME/Applications/Midnight Shift.app}"
 expected_id='com.Willow-Works.Midnight-Shift---The-Last-Lantern'
 if [[ -d "$local_app" ]]; then
     existing_id=$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$local_app/Contents/Info.plist")
@@ -23,4 +23,4 @@ mkdir -p "$HOME/Applications"
 /usr/bin/codesign --force --deep --sign - "$local_app"
 /usr/bin/codesign --verify --deep --strict "$local_app"
 "$local_app/Contents/MacOS/Midnight Shift - The Last Lantern" -batchmode -nographics --verify-build -logFile "$game_root/Work/packaged-smoke.log"
-/usr/bin/ditto -c -k --norsrc --keepParent "$local_app" "$game_root/Builds/MidnightShift-Mac-v0.9.zip"
+/usr/bin/ditto -c -k --norsrc --keepParent "$local_app" "$game_root/Builds/MidnightShift-Mac-v0.10.zip"

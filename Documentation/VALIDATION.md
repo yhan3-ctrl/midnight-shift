@@ -77,3 +77,8 @@ Direct feedback exposed automatic cursor locking and an ambiguous spatial Q mark
 ## v0.9 / forgiving interaction and actual navigation
 
 Direct user screenshots revealed precision pickup failures, unclear console/star instructions and looping archive directions. Added visible-object interaction assistance, direct retrieval from finished sockets, one-action circuit opening, persistent green stars, an expandable labeled map and a shared physics-checked floor trail. Archive guidance now requests the core before leaving Packaging. 124 engine checks and complete deterministic traversal (20 interactions, four placements, four circuits) passed. See WAYFINDING-REVIEW-v0.9.md for actual evidence, course requirements and limits.
+
+
+## v0.10 / friend-reported first-person control feedback
+
+The user reported a friend could not discover turning, mainly strafed and felt 3D nausea. Replaced the right-drag default with explicit-entry relative mouse look, added safe Esc/modal/focus release without auto-recapture, hand-cursor/hover feedback, a simple map Back arrow, and saved comfort options. Preserved the first look lesson against distance-navigation overrides. Final checks: 145 engine checks, complete deterministic traversal (20 interactions, four placements, four circuits), 147 seven-language staged screens and installed/extracted package smoke/signature checks. Native keyboard entry, release and settings access pass; physical mouse/hover feel and human comfort remain unverified because CUA mouse events were unreliable. See MOUSE-LOOK-REVIEW-v0.10.md for evidence and limits.

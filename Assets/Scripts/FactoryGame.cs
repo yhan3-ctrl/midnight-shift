@@ -19,10 +19,13 @@ public class FactoryGame : MonoBehaviour {
     public float playSeconds;
     public string toast="", speaker="", line="";
     public bool Reading => dialogue.Count>0;
-    public bool Frozen => !started || paused || Reading || ended || journal || activeCircuit!=null || photoMode || desktopHold || mapOpen;
+    public bool Modal => !started || paused || Reading || ended || journal || activeCircuit!=null || photoMode || desktopHold || mapOpen || screen.ComfortOpen;
+    public bool ComfortOpen=>screen.ComfortOpen;
+    public bool AwaitingLook=>!Modal&&player&&player.NeedsLookStart;
+    public bool Frozen=>Modal||AwaitingLook;
     readonly Queue<string> dialogue=new Queue<string>();
     float toastUntil;
-    public float musicVolume=.38f, effectsVolume=.65f, sensitivity=1.7f;
+    public float musicVolume=.38f, effectsVolume=.65f, sensitivity=1.7f,verticalSensitivity=1.5f,fieldOfView=72;
     public FactoryPath navigation; public FactoryMap factoryMap=new FactoryMap();
     public ShiftGuide guide; ShiftInterface screen=new ShiftInterface();
     int dialogueOpenedFrame;bool archiveWelcome,assemblyWelcome,foyerSuccess;
@@ -59,10 +62,12 @@ public class FactoryGame : MonoBehaviour {
         }
     }
     void Awake(){ I=this; Time.timeScale=1;guide=GetComponent<ShiftGuide>();if(!guide)guide=gameObject.AddComponent<ShiftGuide>();navigation=GetComponent<FactoryPath>();if(!navigation)navigation=gameObject.AddComponent<FactoryPath>();if(!GetComponent<PlacementPreview>())gameObject.AddComponent<PlacementPreview>(); }
-    void Start(){ ReleaseCursor();if(!Application.isBatchMode&&!PlayerPrefs.HasKey("shift-v08-window")){Screen.SetResolution(1280,800,FullScreenMode.Windowed);PlayerPrefs.SetInt("shift-v08-window",1);} }
+    void Start(){ player.LoadComfort();ReleaseCursor();if(!Application.isBatchMode&&!PlayerPrefs.HasKey("shift-v08-window")){Screen.SetResolution(1280,800,FullScreenMode.Windowed);PlayerPrefs.SetInt("shift-v08-window",1);} }
     void Update(){
-        ReleaseCursor();
-        if(PlayerMotor.SystemShortcutHeld)return;
+        if(PlayerMotor.SystemShortcutHeld){if(player.LookCaptured)HoldForDesktop();return;}
+        if(Modal&&player.LookCaptured){ReleaseCursor();RefreshFreeze();}
+        if((!started||paused||AwaitingLook)&&!screen.ComfortOpen&&Input.GetKeyDown(KeyCode.C)){OpenComfort();return;}
+        if(screen.ComfortOpen){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Backspace))CloseComfort();return;}
         if(Input.GetKeyDown(KeyCode.F2)&&started&&!ended){TogglePhoto();return;}
         if(photoMode){if(Input.GetKeyDown(KeyCode.Escape))TogglePhoto();return;}
         if(desktopHold){if(Input.GetKeyDown(KeyCode.Return))ResumeDesktop();else if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Tab)){desktopHold=false;TogglePause();}return;}
@@ -75,7 +80,7 @@ public class FactoryGame : MonoBehaviour {
         if(paused){if(Input.GetKeyDown(KeyCode.X)){Quit();return;}if(menu||escape)TogglePause();return;}
         if(menu&&started&&!ended){TogglePause();return;}
         if(!started&&(Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.Space))){Begin();return;}
-        if(started&&!paused&&!Reading&&!ended&&!journal&&!photoMode&&!desktopHold&&!mapOpen)playSeconds+=Time.unscaledDeltaTime;
+        if(started&&!paused&&!Reading&&!ended&&!journal&&!photoMode&&!desktopHold&&!mapOpen&&!AwaitingLook)playSeconds+=Time.unscaledDeltaTime;
         if(escape&&started&&!ended){TogglePause();return;}
         if(activeCircuit){
             if(Time.frameCount==circuitOpenedFrame)return;
@@ -89,7 +94,8 @@ public class FactoryGame : MonoBehaviour {
         }
         if(journal&&Input.GetKeyDown(KeyCode.Backspace)){ToggleJournal();return;}
         if(Input.GetKeyDown(KeyCode.J)&&!Reading)ToggleJournal();
-        if(Reading&&Time.frameCount!=dialogueOpenedFrame&&(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return)))Advance();
+        if(Reading&&Time.frameCount!=dialogueOpenedFrame&&(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return))){Advance();return;}
+        if(AwaitingLook&&Input.GetKeyDown(KeyCode.Return)){StartMouseLook();return;}
         if(started&&!Frozen&&Input.GetKeyDown(KeyCode.H))Hint();
         if(started&&!Frozen){
             if(!foyerSuccess&&player.transform.position.z<12){foreach(var gate in FindObjectsByType<FactoryGate>(FindObjectsSortMode.None))if(gate.name=="Foyer gate"&&gate.CrateHoldsPlate){foyerSuccess=true;Notify("Nice work! The crate keeps the door open. Leave it there and follow the marker.",5);if(buttonHelper)buttonHelper.Celebrate();audioScore.Chord();break;}}
@@ -97,7 +103,11 @@ public class FactoryGame : MonoBehaviour {
             else if(blueprint&&!etched&&!assemblyWelcome&&player.transform.position.z>46.6f){assemblyWelcome=true;Say("PIP / FINAL ASSEMBLY","Your old drawing is safe in the notebook. Let's turn that promise into a real lantern.","The Engraver can work on its own. Leave its core in place and prepare the crate gate while it finishes. Keep an eye on Hush.");}
         }
     }
-    public void OpenLanguages(){screen.OpenLanguages();}
+    public void OpenComfort(){screen.ComfortOpen=true;SyncFreeze();}
+    public void CloseComfort(bool save=true){screen.ComfortOpen=false;if(save)player.SaveComfort();SyncFreeze();}
+    public void StartMouseLook(){if(player.CaptureMouseLook())RefreshFreeze();}
+    public void RefreshFreeze(){Time.timeScale=Frozen?0:1;}
+    public void OpenLanguages(){ReleaseCursor();screen.OpenLanguages();}
     public void CloseLanguages(){screen.CloseLanguages();}
     public void OpenCircuit(Machine m){activeCircuit=m;circuitOpenedFrame=Time.frameCount;SyncFreeze();}
     public void CloseCircuit(){activeCircuit=null;SyncFreeze();}
@@ -105,7 +115,7 @@ public class FactoryGame : MonoBehaviour {
     public void ToggleMap(){if(!started||ended)return;mapOpen=!mapOpen;SyncFreeze();}
     public void TogglePhoto(){if(!started||ended)return;photoMode=!photoMode;SyncFreeze();}
     public void ResumeDesktop(){desktopHold=false;SyncFreeze();}
-    public void HoldForDesktop(){if(!started||Frozen)return;desktopHold=true;SyncFreeze();}
+    public void HoldForDesktop(){ReleaseCursor();if(!started||Modal)return;desktopHold=true;SyncFreeze();}
     public void TogglePause(){if(!started||ended)return;paused=!paused;SyncFreeze();}
     public void ToggleJournal(){if(!started||ended||Reading||paused)return;journal=!journal;SyncFreeze();}
     public void Begin(){started=true;SyncFreeze();Say("PIP / NIGHT FOREMAN",
@@ -113,8 +123,8 @@ public class FactoryGame : MonoBehaviour {
         "We have one forgotten pumpkin lantern to finish tonight. First, let's open this door together. Follow the gold marker; your checklist is on the right.");}
     public void Say(string who, params string[] text){screen.ResetDialoguePages(); dialogueOpenedFrame=Time.frameCount;speaker=who; dialogue.Clear(); foreach(var s in text) dialogue.Enqueue(s); line=dialogue.Peek(); SyncFreeze(); }
     public void Advance(){ if(!Reading)return;if(screen.AdvancePage(this))return; dialogue.Dequeue(); if(Reading)line=dialogue.Peek(); SyncFreeze(); }
-    void SyncFreeze(){ Time.timeScale=Frozen?0:1; ReleaseCursor();if(player)player.ResetLookInput(); }
-    void ReleaseCursor(){if(Cursor.lockState!=CursorLockMode.None)Cursor.lockState=CursorLockMode.None;if(!Cursor.visible)Cursor.visible=true;}
+    void SyncFreeze(){ReleaseCursor();RefreshFreeze();}
+    void ReleaseCursor(){if(player)player.ReleaseMouseLook();if(Cursor.lockState!=CursorLockMode.None)Cursor.lockState=CursorLockMode.None;if(!Cursor.visible)Cursor.visible=true;}
     public void Notify(string text,float seconds=3){toast=text;toastUntil=Time.unscaledTime+seconds;}
     public void Hint(){
         hintsRequested++;
@@ -165,8 +175,8 @@ public class FactoryGame : MonoBehaviour {
     public void Restart(){ Time.timeScale=1; SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
     public void Quit(){Time.timeScale=1;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;Application.Quit();}
     public void DrawCircuit(float w,float h){circuitView.Draw(activeCircuit,w,h,Texture2D.whiteTexture);}
-    void OnGUI(){screen.Draw(this);}
-    void OnApplicationFocus(bool focused){ReleaseCursor();if(!focused&&!Application.isBatchMode)HoldForDesktop();}
+    void OnGUI(){UiTheme.BeginPointer();try{screen.Draw(this);}finally{UiTheme.EndPointer();}}
+    void OnApplicationFocus(bool focused){ReleaseCursor();RefreshFreeze();if(!focused&&!Application.isBatchMode)HoldForDesktop();}
     void OnDestroy(){if(I==this){Time.timeScale=1;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}}
 }
 public abstract class Interactable : MonoBehaviour { public abstract string Prompt(PlayerMotor p); public abstract void Use(PlayerMotor p); }

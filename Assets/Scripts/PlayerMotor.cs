@@ -3,29 +3,43 @@ namespace LastLantern {
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMotor : MonoBehaviour {
     public Camera view; public Transform hand; public Pickup held; public Interactable focus;
-    public float speed=4.1f; float pitch,fall,bob,stepClock; CharacterController cc;
-    public bool keyboardLook;bool wasDragging;
+    public float speed=3.3f; float pitch,fall,bob,stepClock; CharacterController cc;
+    public bool keyboardLook, pointerMode, handMotion; bool wasDragging,lookCaptured;
+    public bool LookCaptured=>lookCaptured;
+    public bool NeedsLookStart=>!pointerMode&&!keyboardLook&&!lookCaptured;
     public static bool SystemShortcutHeld=>Input.GetKey(KeyCode.LeftCommand)||Input.GetKey(KeyCode.RightCommand)||Input.GetKey(KeyCode.LeftControl)||Input.GetKey(KeyCode.RightControl)||Input.GetKey(KeyCode.LeftAlt)||Input.GetKey(KeyCode.RightAlt);
-    public bool MouseLookHeld=>!keyboardLook&&Input.GetMouseButton(1)&&!SystemShortcutHeld; public float Pitch=>pitch; int ignoreMouseFrames;
-    public void ResetLookInput(){ignoreMouseFrames=3;}
+    public bool MouseLookHeld=>!keyboardLook&&!SystemShortcutHeld&&(lookCaptured||(pointerMode&&Input.GetMouseButton(1))); public float Pitch=>pitch; int ignoreMouseFrames;
+    public void ResetLookInput(){ignoreMouseFrames=3;wasDragging=false;}
+    public void ReleaseMouseLook(){lookCaptured=false;if(Cursor.lockState!=CursorLockMode.None)Cursor.lockState=CursorLockMode.None;if(!Cursor.visible)Cursor.visible=true;ResetLookInput();}
+    public bool CaptureMouseLook(){
+        var g=FactoryGame.I;if(!g||g.Modal||pointerMode||keyboardLook||SystemShortcutHeld||!Application.isFocused)return false;
+        lookCaptured=true;Cursor.SetCursor(null,Vector2.zero,CursorMode.Auto);Cursor.lockState=CursorLockMode.Locked;Cursor.visible=false;ResetLookInput();return true;
+    }
+    public void SetLookMode(int mode,bool save=true){ReleaseMouseLook();pointerMode=mode==1;keyboardLook=mode==2;if(save)SaveComfort();if(FactoryGame.I)FactoryGame.I.RefreshFreeze();}
+    public int LookMode=>keyboardLook?2:pointerMode?1:0;
+    public void LoadComfort(){var g=FactoryGame.I;int mode=Mathf.Clamp(PlayerPrefs.GetInt("shift-look-mode",0),0,2);pointerMode=mode==1;keyboardLook=mode==2;handMotion=PlayerPrefs.GetInt("shift-hand-motion",0)==1;speed=Mathf.Clamp(PlayerPrefs.GetFloat("shift-walk-speed",3.3f),2,4.5f);g.sensitivity=Mathf.Clamp(PlayerPrefs.GetFloat("shift-look-x",1.7f),.3f,4);g.verticalSensitivity=Mathf.Clamp(PlayerPrefs.GetFloat("shift-look-y",1.5f),.3f,4);g.fieldOfView=Mathf.Clamp(PlayerPrefs.GetFloat("shift-fov",72),55,90);view.fieldOfView=g.fieldOfView;}
+    public void SaveComfort(){var g=FactoryGame.I;PlayerPrefs.SetInt("shift-look-mode",LookMode);PlayerPrefs.SetInt("shift-hand-motion",handMotion?1:0);PlayerPrefs.SetFloat("shift-walk-speed",speed);PlayerPrefs.SetFloat("shift-look-x",g.sensitivity);PlayerPrefs.SetFloat("shift-look-y",g.verticalSensitivity);PlayerPrefs.SetFloat("shift-fov",g.fieldOfView);PlayerPrefs.Save();}
+    public void ComfortDefaults(bool save=true){var g=FactoryGame.I;handMotion=false;speed=3.3f;g.sensitivity=1.7f;g.verticalSensitivity=1.5f;g.fieldOfView=72;view.fieldOfView=72;SetLookMode(0,save);}
+    // Raw relative mouse motion: no automatic turns, acceleration, recentering or camera bob.
+    public void ApplyLook(Vector2 delta,float keyYaw,float keyPitch,float dt){var g=FactoryGame.I;transform.Rotate(0,delta.x*g.sensitivity+keyYaw*65*dt,0);pitch=Mathf.Clamp(pitch-delta.y*g.verticalSensitivity+keyPitch*55*dt,-72,72);view.transform.localRotation=Quaternion.Euler(pitch,0,0);}
     void Awake(){cc=GetComponent<CharacterController>();}
     void Update(){
-        if(!FactoryGame.I||FactoryGame.I.Frozen||SystemShortcutHeld){focus=null;wasDragging=false;return;}
+        var g=FactoryGame.I;if(!g)return;
+        if(lookCaptured&&(Cursor.lockState!=CursorLockMode.Locked||!Application.isFocused)){ReleaseMouseLook();g.RefreshFreeze();}
+        if(g.Frozen||SystemShortcutHeld){focus=null;return;}
         float keyYaw=(Input.GetKey(KeyCode.RightArrow)?1:0)-(Input.GetKey(KeyCode.LeftArrow)?1:0);
         float keyPitch=(Input.GetKey(KeyCode.DownArrow)?1:0)-(Input.GetKey(KeyCode.UpArrow)?1:0);
-        if(Input.GetKeyDown(KeyCode.K)){keyboardLook=!keyboardLook;FactoryGame.I.Notify(keyboardLook?"Arrow-key look / mouse look off. K switches back.":"Hold right mouse to look; release to use your pointer. Arrows also work. K selects arrows only.");ResetLookInput();}
+        if(Input.GetKeyDown(KeyCode.K)){SetLookMode(keyboardLook?0:2);return;}
         bool dragging=MouseLookHeld;if(dragging&&!wasDragging)ignoreMouseFrames=2;wasDragging=dragging;
         bool mouse=dragging&&ignoreMouseFrames<=0;if(ignoreMouseFrames>0)ignoreMouseFrames--;
-        transform.Rotate(0,(mouse?Input.GetAxisRaw("Mouse X")*FactoryGame.I.sensitivity:0)+keyYaw*85*Time.deltaTime,0);
-        pitch=Mathf.Clamp(pitch-(mouse?Input.GetAxisRaw("Mouse Y")*FactoryGame.I.sensitivity:0)+keyPitch*65*Time.deltaTime,-72,72);
-        view.transform.localRotation=Quaternion.Euler(pitch,0,0);
+        ApplyLook(mouse?new Vector2(Input.GetAxisRaw("Mouse X"),Input.GetAxisRaw("Mouse Y")):Vector2.zero,keyYaw,keyPitch,Time.deltaTime);
         // Unity legacy axes also contain arrow keys; reserve those exclusively for looking.
         Vector3 move=Vector3.ClampMagnitude(new Vector3((Input.GetKey(KeyCode.D)?1:0)-(Input.GetKey(KeyCode.A)?1:0),0,(Input.GetKey(KeyCode.W)?1:0)-(Input.GetKey(KeyCode.S)?1:0)),1);
         fall=cc.isGrounded?-2:fall-22*Time.deltaTime;
         cc.Move((transform.TransformDirection(move)*speed+Vector3.up*fall)*Time.deltaTime);
         bob+=move.magnitude*Time.deltaTime*6;
         stepClock+=move.magnitude*Time.deltaTime;if(stepClock>.48f&&cc.isGrounded&&cc.velocity.magnitude>.2f){stepClock=0;FactoryGame.I.audioScore.Step();}
-        hand.localPosition=Vector3.Lerp(hand.localPosition,new Vector3(.25f,-.33f+Mathf.Sin(bob)*.012f,.8f),Time.deltaTime*12);
+        hand.localPosition=Vector3.Lerp(hand.localPosition,new Vector3(.25f,-.33f+(handMotion?Mathf.Sin(bob)*.012f:0),.8f),Time.deltaTime*12);
         ScanFocus();
         if(Input.GetKeyDown(KeyCode.E))TryInteract();
         if(Input.GetKeyDown(KeyCode.Q)&&held)TryPlace();

@@ -29,12 +29,12 @@ public class FactoryMap {
         Vector2 here=Point(r,g.player.transform.position);Vector2 forward=new Vector2(Mathf.Sin(g.player.transform.eulerAngles.y*Mathf.Deg2Rad),-Mathf.Cos(g.player.transform.eulerAngles.y*Mathf.Deg2Rad));
         UiTheme.Fill(new Rect(here.x-5,here.y-5,10,10),UiTheme.Cream);Line(here,here+forward*(large?22:12),UiTheme.Cream,3);
     }
-    public void Mini(FactoryGame game){g=game;Rect panel=new Rect(28,92,225,230);UiTheme.Panel(panel);if(GUI.Button(panel,GUIContent.none,GUIStyle.none))g.ToggleMap();UiTheme.Label(new Rect(43,98,195,46),T("地图 [M]","Map [M]"),23,UiTheme.Gold,true);Plan(new Rect(43,146,57,158),false);
+    public void Mini(FactoryGame game){g=game;Rect panel=new Rect(28,92,225,230);UiTheme.Panel(panel);bool hot=UiTheme.Hover(panel);if(hot)UiTheme.Outline(panel,UiTheme.Cream);if(GUI.Button(panel,GUIContent.none,GUIStyle.none))g.ToggleMap();UiTheme.Label(new Rect(43,98,195,46),T("地图 [M]","Map [M]"),23,UiTheme.Gold,true);Plan(new Rect(43,146,57,158),false);
         string[] rooms={T("装配区","Assembly"),T("档案室","Archive"),T("包装区","Packaging"),T("入口","Entrance")};for(int i=0;i<4;i++)UiTheme.Label(new Rect(111,150+i*39,128,36),rooms[i],20);
     }
     public void Draw(FactoryGame game,float w,float h){g=game;UiTheme.Fill(new Rect(0,0,w,h),new Color(.02f,.06f,.07f,.96f));float x=w/2-650;UiTheme.Panel(new Rect(x,30,1300,h-60));
         UiTheme.Label(new Rect(x+30,53,900,60),T("Willow Works / 工厂地图","Willow Works / Factory map"),35,UiTheme.Gold,true,true);
-        if(UiTheme.Button(new Rect(x+1020,52,250,52),T("返回 [M / Esc]","Back [M / Esc]"),true))g.ToggleMap();
+        if(UiTheme.Button(new Rect(x+1020,52,250,52),T("← 返回","← Back"),true))g.ToggleMap();
         Rect plan=new Rect(x+38,145,400,h-205);Plan(plan,true);
         UiTheme.Label(new Rect(x+458,145,785,55),g.guide.ChapterTitle,29,UiTheme.Gold,true);
         var task=g.guide.Current;UiTheme.Label(new Rect(x+458,210,785,85),task.action,28,null,true);

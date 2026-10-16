@@ -15,7 +15,7 @@ public class FactoryWalker : MonoBehaviour {
     FactoryGame g;PlayerMotor p;CharacterController cc;int interactions,placements,routingSolved;float began, heartbeat;bool failed;
     void Update(){if(!g)return;if(Time.realtimeSinceStartup-heartbeat>8){heartbeat=Time.realtimeSinceStartup;Debug.Log("NAV_HEARTBEAT dt="+Time.deltaTime+" scale="+Time.timeScale+" paused="+g.paused+" reading="+g.Reading+" journal="+g.journal+" ended="+g.ended);if(Time.realtimeSinceStartup-began>240)Fail("Overall watchdog timeout");}}
     IEnumerator Start(){
-        yield return null;g=FactoryGame.I;p=g.player;cc=p.GetComponent<CharacterController>();p.enabled=false;g.inspector.enabled=false;Application.runInBackground=true;QualitySettings.vSyncCount=0;Application.targetFrameRate=120;Time.captureDeltaTime=1f/60;
+        yield return null;g=FactoryGame.I;p=g.player;cc=p.GetComponent<CharacterController>();p.enabled=false;p.SetLookMode(1,false);g.inspector.enabled=false;Application.runInBackground=true;QualitySettings.vSyncCount=0;Application.targetFrameRate=120;Time.captureDeltaTime=1f/60;
         began=Time.realtimeSinceStartup;g.Begin();Close();Time.timeScale=5;
         yield return Go(-4.8f,2.2f);Use(new Vector3(-4.8f,.61f,3.8f),"Foyer crate");
         yield return Go(-4.8f,6.5f);Place(0,"Foyer gate");yield return Wait(.9f);

@@ -3623,6 +3623,354 @@
         "地図 [M]",
         "지도 [M]"
       ]
+    },
+    {
+      "en": "← Back",
+      "values": [
+        "← Back",
+        "← 返回",
+        "← Volver",
+        "← Retour",
+        "← Zurück",
+        "← 戻る",
+        "← 뒤로"
+      ]
+    },
+    {
+      "en": "Controls & comfort",
+      "values": [
+        "Controls & comfort",
+        "操作与舒适度",
+        "Controles y comodidad",
+        "Commandes et confort",
+        "Steuerung und Komfort",
+        "操作と快適さ",
+        "조작과 편의 설정"
+      ]
+    },
+    {
+      "en": "First, try looking around",
+      "values": [
+        "First, try looking around",
+        "先试着转头看看",
+        "Primero, mira alrededor",
+        "Commence par regarder autour",
+        "Sieh dich zuerst um",
+        "まずは周りを見よう",
+        "먼저 주변을 둘러보세요"
+      ]
+    },
+    {
+      "en": "Click below, then move your mouse to turn left, right, up or down. No button needs to be held.\nWASD walks. Arrow keys also turn.",
+      "values": [
+        "Click below, then move your mouse to turn left, right, up or down. No button needs to be held.\nWASD walks. Arrow keys also turn.",
+        "点击下方按钮，然后移动鼠标：左右转头，上下观察。不用按住鼠标键。\nWASD 走动，方向键也能转头。",
+        "Haz clic abajo y mueve el ratón para mirar en cualquier dirección. No hace falta mantener ningún botón.\nWASD: caminar. Flechas: girar.",
+        "Clique ci-dessous puis bouge la souris pour regarder dans toutes les directions, sans maintenir de bouton.\nWASD : marcher. Flèches : tourner.",
+        "Klicke unten und bewege die Maus, um dich umzusehen. Du musst keine Taste gedrückt halten.\nWASD: gehen. Pfeiltasten: drehen.",
+        "下のボタンを押したら、マウスを動かして上下左右を見よう。ボタンを押し続ける必要はないよ。\nWASD で移動。矢印キーでも視点を動かせるよ。",
+        "아래 버튼을 누른 뒤 마우스를 움직여 상하좌우를 보세요. 버튼을 누르고 있을 필요는 없어요.\nWASD: 이동. 방향키로도 시점을 돌려요."
+      ]
+    },
+    {
+      "en": "Esc frees your pointer and opens the menu. Desktop shortcuts and switching windows also release it.",
+      "values": [
+        "Esc frees your pointer and opens the menu. Desktop shortcuts and switching windows also release it.",
+        "Esc 立即释放鼠标并打开菜单。截图或切换窗口时也会释放鼠标。",
+        "Esc libera el cursor y abre el menú. Los atajos del sistema y cambiar de ventana también lo liberan.",
+        "Échap libère le pointeur et ouvre le menu. Les raccourcis système et les changements de fenêtre le libèrent aussi.",
+        "Esc gibt den Mauszeiger frei und öffnet das Menü. Systemkürzel und Fensterwechsel geben ihn ebenfalls frei.",
+        "Esc でマウスを解放し、メニューを開くよ。システムのショートカットやウィンドウ切替でも解放されるよ。",
+        "Esc를 누르면 포인터가 풀리고 메뉴가 열려요. 시스템 단축키와 창 전환도 포인터를 풀어 줘요."
+      ]
+    },
+    {
+      "en": "Click to look around  [Enter]",
+      "values": [
+        "Click to look around  [Enter]",
+        "点击开始转头  [Enter]",
+        "Clic para mirar  [Enter]",
+        "Cliquer pour regarder  [Entrée]",
+        "Zum Umsehen klicken  [Enter]",
+        "クリックして見回す  [Enter]",
+        "클릭하여 둘러보기  [Enter]"
+      ]
+    },
+    {
+      "en": "Ready to continue? Move the mouse to look. Esc frees your pointer.",
+      "values": [
+        "Ready to continue? Move the mouse to look. Esc frees your pointer.",
+        "准备继续？移动鼠标转头，Esc 释放鼠标。",
+        "¿Seguimos? Mueve el ratón para mirar. Esc libera el cursor.",
+        "On continue ? Bouge la souris pour regarder. Échap libère le pointeur.",
+        "Bereit? Bewege die Maus zum Umsehen. Esc gibt den Zeiger frei.",
+        "続けよう。マウスを動かして見回そう。Esc でマウスを解放できるよ。",
+        "계속할까요? 마우스를 움직여 둘러보세요. Esc로 포인터를 풀어요."
+      ]
+    },
+    {
+      "en": "Mouse look is the default. Esc frees your pointer.\nNo camera shake, automatic turning or motion blur.",
+      "values": [
+        "Mouse look is the default. Esc frees your pointer.\nNo camera shake, automatic turning or motion blur.",
+        "默认用鼠标自由转头，Esc 释放鼠标。\n视角不晃动、不自动转向，也没有动态模糊。",
+        "Por defecto, mira con el ratón. Esc libera el cursor.\nSin sacudidas de cámara, giros automáticos ni desenfoque de movimiento.",
+        "La souris contrôle la vue. Échap libère le pointeur.\nSans secousses de caméra, rotation automatique ni flou de mouvement.",
+        "Standard: mit der Maus umsehen. Esc gibt den Zeiger frei.\nKein Kamerawackeln, automatisches Drehen oder Bewegungsunschärfe.",
+        "初期設定はマウス視点。Esc でマウスを解放するよ。\n画面の揺れ、自動回転、モーションブラーはないよ。",
+        "기본은 마우스 시점이에요. Esc로 포인터를 풀어요.\n카메라 흔들림, 자동 회전, 모션 블러는 없어요."
+      ]
+    },
+    {
+      "en": "Horizontal sensitivity",
+      "values": [
+        "Horizontal sensitivity",
+        "左右灵敏度",
+        "Sensibilidad horizontal",
+        "Sensibilité horizontale",
+        "Horizontale Empfindlichkeit",
+        "左右の感度",
+        "좌우 감도"
+      ]
+    },
+    {
+      "en": "Vertical sensitivity",
+      "values": [
+        "Vertical sensitivity",
+        "上下灵敏度",
+        "Sensibilidad vertical",
+        "Sensibilité verticale",
+        "Vertikale Empfindlichkeit",
+        "上下の感度",
+        "상하 감도"
+      ]
+    },
+    {
+      "en": "Vertical field of view",
+      "values": [
+        "Vertical field of view",
+        "垂直视野范围",
+        "Campo de visión vertical",
+        "Champ de vision vertical",
+        "Vertikales Sichtfeld",
+        "縦の視野角",
+        "수직 시야각"
+      ]
+    },
+    {
+      "en": "Walking speed",
+      "values": [
+        "Walking speed",
+        "走路速度",
+        "Velocidad al caminar",
+        "Vitesse de marche",
+        "Gehgeschwindigkeit",
+        "歩く速さ",
+        "걷기 속도"
+      ]
+    },
+    {
+      "en": "Mouse look",
+      "values": [
+        "Mouse look",
+        "鼠标自由转头",
+        "Vista con ratón",
+        "Vue à la souris",
+        "Maussteuerung",
+        "マウス視点",
+        "마우스 시점"
+      ]
+    },
+    {
+      "en": "Free pointer: right-drag",
+      "values": [
+        "Free pointer: right-drag",
+        "自由鼠标：右键拖动",
+        "Cursor libre: arrastre derecho",
+        "Pointeur libre : clic droit",
+        "Freier Zeiger: rechts ziehen",
+        "自由マウス：右ドラッグ",
+        "자유 포인터: 우클릭 드래그"
+      ]
+    },
+    {
+      "en": "Arrow keys only",
+      "values": [
+        "Arrow keys only",
+        "仅用方向键转头",
+        "Solo flechas",
+        "Flèches uniquement",
+        "Nur Pfeiltasten",
+        "矢印キーのみ",
+        "방향키만 사용"
+      ]
+    },
+    {
+      "en": "Hand motion: on",
+      "values": [
+        "Hand motion: on",
+        "手部晃动：开",
+        "Movimiento de manos: sí",
+        "Mouvement des mains : oui",
+        "Handbewegung: an",
+        "手の揺れ：オン",
+        "손 흔들림: 켜짐"
+      ]
+    },
+    {
+      "en": "Hand motion: off",
+      "values": [
+        "Hand motion: off",
+        "手部晃动：关",
+        "Movimiento de manos: no",
+        "Mouvement des mains : non",
+        "Handbewegung: aus",
+        "手の揺れ：オフ",
+        "손 흔들림: 꺼짐"
+      ]
+    },
+    {
+      "en": "Restore defaults",
+      "values": [
+        "Restore defaults",
+        "恢复默认设置",
+        "Restaurar valores",
+        "Réglages par défaut",
+        "Standard wiederherstellen",
+        "初期設定に戻す",
+        "기본값 복원"
+      ]
+    },
+    {
+      "en": "Choose the view and speed that feel comfortable. Saved when closed.",
+      "values": [
+        "Choose the view and speed that feel comfortable. Saved when closed.",
+        "选择你感觉舒适的视野和速度。关闭时会保存。",
+        "Elige una vista y velocidad cómodas. Se guardan al cerrar.",
+        "Choisis une vue et une vitesse confortables. Sauvegarde à la fermeture.",
+        "Wähle eine angenehme Sicht und Geschwindigkeit. Wird beim Schließen gespeichert.",
+        "見やすい視野と速さを選ぼう。閉じると保存されるよ。",
+        "편안한 시야와 속도를 선택하세요. 닫을 때 저장돼요."
+      ]
+    },
+    {
+      "en": "Move mouse: look around\nEsc: free pointer / menu",
+      "values": [
+        "Move mouse: look around\nEsc: free pointer / menu",
+        "移动鼠标：转头\nEsc：释放鼠标并打开菜单",
+        "Mover ratón: mirar\nEsc: cursor libre / menú",
+        "Bouger la souris : regarder\nÉchap : pointeur libre / menu",
+        "Maus bewegen: umsehen\nEsc: freier Zeiger / Menü",
+        "マウス移動：見回す\nEsc：マウス解放 / メニュー",
+        "마우스 이동: 둘러보기\nEsc: 포인터 해제 / 메뉴"
+      ]
+    },
+    {
+      "en": "Mouse: look around\nEsc: menu / free pointer",
+      "values": [
+        "Mouse: look around\nEsc: menu / free pointer",
+        "移动鼠标：转头\nEsc：菜单 / 释放鼠标",
+        "Ratón: mirar\nEsc: menú / cursor libre",
+        "Souris : regarder\nÉchap : menu / pointeur libre",
+        "Maus: umsehen\nEsc: Menü / freier Zeiger",
+        "マウス：見回す\nEsc：メニュー / マウス解放",
+        "마우스: 둘러보기\nEsc: 메뉴 / 포인터 해제"
+      ]
+    },
+    {
+      "en": "Right-drag: look",
+      "values": [
+        "Right-drag: look",
+        "右键拖动：转头",
+        "Arrastre derecho: mirar",
+        "Glisser au clic droit : regarder",
+        "Rechts ziehen: umsehen",
+        "右ドラッグ：見回す",
+        "우클릭 드래그: 둘러보기"
+      ]
+    },
+    {
+      "en": "Arrows: look",
+      "values": [
+        "Arrows: look",
+        "方向键：转头",
+        "Flechas: mirar",
+        "Flèches : regarder",
+        "Pfeiltasten: umsehen",
+        "矢印キー：見回す",
+        "방향키: 둘러보기"
+      ]
+    },
+    {
+      "en": "Move the mouse to turn. WASD walks. Esc frees your pointer and opens the menu.",
+      "values": [
+        "Move the mouse to turn. WASD walks. Esc frees your pointer and opens the menu.",
+        "移动鼠标转头，WASD 走动。Esc 释放鼠标并打开菜单。",
+        "Mueve el ratón para girar. WASD camina. Esc libera el cursor y abre el menú.",
+        "Bouge la souris pour tourner. WASD pour marcher. Échap libère le pointeur et ouvre le menu.",
+        "Bewege die Maus zum Drehen. WASD zum Gehen. Esc gibt den Zeiger frei und öffnet das Menü.",
+        "マウスで見回して、WASD で歩こう。Esc でマウスを解放してメニューを開くよ。",
+        "마우스로 시점을 돌리고 WASD로 걸어요. Esc는 포인터를 풀고 메뉴를 열어요."
+      ]
+    },
+    {
+      "en": "Hold right mouse and drag to look. Arrow keys also turn.",
+      "values": [
+        "Hold right mouse and drag to look. Arrow keys also turn.",
+        "按住右键拖动来观察，方向键也可以。",
+        "Mantén el botón derecho y arrastra para mirar. Las flechas también giran.",
+        "Maintiens le clic droit et glisse pour regarder. Les flèches tournent aussi.",
+        "Halte die rechte Maustaste und ziehe zum Umsehen. Pfeiltasten drehen auch.",
+        "右ボタンを押しながらドラッグして見回そう。矢印キーでも回せるよ。",
+        "오른쪽 버튼을 누르고 드래그해 둘러보세요. 방향키로도 돌릴 수 있어요."
+      ]
+    },
+    {
+      "en": "Arrow keys turn. WASD walks.",
+      "values": [
+        "Arrow keys turn. WASD walks.",
+        "方向键转头，WASD 走动。",
+        "Flechas para girar. WASD para caminar.",
+        "Flèches pour tourner. WASD pour marcher.",
+        "Pfeiltasten zum Drehen. WASD zum Gehen.",
+        "矢印キーで見回す。WASD で歩く。",
+        "방향키로 돌리고 WASD로 걸어요."
+      ]
+    },
+    {
+      "en": "MOUSE",
+      "values": [
+        "MOUSE",
+        "鼠标",
+        "RATÓN",
+        "SOURIS",
+        "MAUS",
+        "マウス",
+        "마우스"
+      ]
+    },
+    {
+      "en": "ARROWS",
+      "values": [
+        "ARROWS",
+        "方向键",
+        "FLECHAS",
+        "FLÈCHES",
+        "PFEILE",
+        "矢印",
+        "방향키"
+      ]
+    },
+    {
+      "en": "RIGHT-DRAG",
+      "values": [
+        "RIGHT-DRAG",
+        "右键拖动",
+        "ARRASTRE DER.",
+        "GLISSER DROIT",
+        "RECHTS ZIEHEN",
+        "右ドラッグ",
+        "우클릭 드래그"
+      ]
     }
   ]
 }

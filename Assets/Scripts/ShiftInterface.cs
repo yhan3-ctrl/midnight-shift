@@ -16,12 +16,25 @@ public static class UiTheme {
     }
     public static void Fill(Rect r,Color color){var before=GUI.color;GUI.color=color;GUI.DrawTexture(r,Texture2D.whiteTexture);GUI.color=before;}
     public static void Panel(Rect r,Color? color=null){Fill(new Rect(r.x+4,r.y+5,r.width,r.height),new Color(0,0,0,.25f));Fill(r,color??Teal);}
-    public static bool Button(Rect r,string text,bool secondary=false,Font face=null){Setup();var s=new GUIStyle(GUI.skin.button){font=face?face:body,fontSize=24,wordWrap=true,padding=new RectOffset(12,12,8,8)};while(s.fontSize>20&&s.CalcHeight(new GUIContent(text),r.width)>r.height+3)s.fontSize--;if(s.CalcHeight(new GUIContent(text),r.width)>r.height+3&&overflow.Add(text+"/"+r))Debug.LogWarning("UI_LAYOUT_OVERFLOW / button / "+text+" / "+r);s.normal.textColor=secondary?Cream:Ink;s.hover.textColor=s.normal.textColor;s.active.textColor=s.normal.textColor;s.normal.background=Texture2D.whiteTexture;s.hover.background=Texture2D.whiteTexture;s.active.background=Texture2D.whiteTexture;s.focused.background=Texture2D.whiteTexture;var old=GUI.backgroundColor;GUI.backgroundColor=secondary?new Color(.18f,.34f,.35f):Gold;Fill(r,secondary?new Color(.18f,.34f,.35f):Gold);bool clicked=GUI.Button(r,text,s);GUI.backgroundColor=old;return clicked;}
+    public static void BeginPointer(){UiPointer.Begin();}
+    public static void EndPointer(){UiPointer.End();}
+    public static bool Hover(Rect r){return UiPointer.Hover(r);}
+    public static void Outline(Rect r,Color color){Fill(new Rect(r.x,r.y,r.width,3),color);Fill(new Rect(r.x,r.yMax-3,r.width,3),color);Fill(new Rect(r.x,r.y,3,r.height),color);Fill(new Rect(r.xMax-3,r.y,3,r.height),color);}
+    public static bool Button(Rect r,string text,bool secondary=false,Font face=null){
+        Setup();bool hot=Hover(r);var s=new GUIStyle(GUI.skin.button){font=face?face:body,fontSize=24,wordWrap=true,padding=new RectOffset(12,12,8,8)};
+        while(s.fontSize>20&&s.CalcHeight(new GUIContent(text),r.width)>r.height+3)s.fontSize--;
+        if(s.CalcHeight(new GUIContent(text),r.width)>r.height+3&&overflow.Add(text+"/"+r))Debug.LogWarning("UI_LAYOUT_OVERFLOW / button / "+text+" / "+r);
+        s.normal.textColor=secondary?Cream:Ink;s.hover.textColor=s.normal.textColor;s.active.textColor=s.normal.textColor;
+        s.normal.background=Texture2D.whiteTexture;s.hover.background=Texture2D.whiteTexture;s.active.background=Texture2D.whiteTexture;s.focused.background=Texture2D.whiteTexture;
+        var old=GUI.backgroundColor;Color fill=secondary?new Color(.18f,.34f,.35f):Gold;if(hot)fill=Color.Lerp(fill,Cream,.22f);if(!GUI.enabled)fill=Color.Lerp(fill,Ink,.55f);
+        GUI.backgroundColor=fill;Fill(r,fill);bool clicked=GUI.Button(r,text,s);GUI.backgroundColor=old;
+        if(hot)Outline(r,Cream);return clicked;
+    }
     public static void Key(Rect r,string key){Fill(new Rect(r.x,r.y+3,r.width,r.height),new Color(.02f,.07f,.08f));Fill(r,Cream);Label(r,key,23,Ink,true,false,TextAnchor.MiddleCenter);}
 }
 public class ShiftInterface {
     FactoryGame g;ShiftGuide guide;float w,h,scale;ShiftGuide.Task task;
-    public bool LanguageOpen {get;private set;}int languageFocus;
+    public bool LanguageOpen {get;private set;}public bool ComfortOpen;int languageFocus;bool hasCaptured;
     string dialogueText;string[] dialoguePages;int dialoguePage,dialogueLanguage;
     public void CloseLanguages(){LanguageOpen=false;}
     public void ResetDialoguePages(){dialoguePages=null;dialoguePage=0;}
@@ -30,6 +43,7 @@ public class ShiftInterface {
     public void LanguageKeys(){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.L)){LanguageOpen=false;return;}if(Input.GetKeyDown(KeyCode.LeftArrow))languageFocus=Mathf.Max(0,languageFocus-1);if(Input.GetKeyDown(KeyCode.RightArrow))languageFocus=Mathf.Min(UiCopy.Codes.Length-1,languageFocus+1);if(Input.GetKeyDown(KeyCode.UpArrow))languageFocus=Mathf.Max(0,languageFocus-2);if(Input.GetKeyDown(KeyCode.DownArrow))languageFocus=Mathf.Min(UiCopy.Codes.Length-1,languageFocus+2);if(Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.Space)){UiCopy.Language(languageFocus);LanguageOpen=false;}}
     string T(string zh,string en)=>UiCopy.Pick(zh,en);
     public void Draw(FactoryGame game){g=game;guide=g.guide;UiTheme.Setup();scale=Mathf.Min(Screen.width/1440f,Screen.height/900f);w=Screen.width/scale;h=Screen.height/scale;GUI.matrix=Matrix4x4.TRS(Vector3.zero,Quaternion.identity,Vector3.one*scale);
+        if(ComfortOpen){Comfort();return;}
         if(g.photoMode){Photo();return;}
         if(g.mapOpen){g.factoryMap.Draw(g,w,h);return;}
         if(LanguageOpen){Languages();return;}
@@ -38,11 +52,13 @@ public class ShiftInterface {
         if(g.activeCircuit){g.DrawCircuit(w,h);MenuTab();return;}
         task=guide.Navigate(guide.Current);
         if(g.journal){Notebook();MenuTab();return;}
+        if(g.AwaitingLook){LookStart();return;}
+        if(g.player.LookCaptured)hasCaptured=true;
         Calendar();MenuTab();g.factoryMap.Mini(g);
         if(g.Reading){Dialogue();DesktopResume();return;}
         Pointer();Coach();
         UiTheme.Label(new Rect(w/2-15,h/2-25,30,40),"+",27,UiTheme.Cream,false,false,TextAnchor.MiddleCenter);
-        if(g.player.focus){UiTheme.Panel(new Rect(w/2-290,h-110,580,44));UiTheme.Label(new Rect(w/2-277,h-110,554,44),UiCopy.Prompt(g.player),23,null,true,false,TextAnchor.MiddleCenter);}
+        if(g.player.focus){UiTheme.Panel(new Rect(700,h-135,w-728,44));UiTheme.Label(new Rect(713,h-135,w-754,44),UiCopy.Prompt(g.player),23,null,true,false,TextAnchor.MiddleCenter);}
         Controls();
         if(g.ToastVisible){UiTheme.Panel(new Rect(28,337,Mathf.Min(710,w-430),125));UiTheme.Label(new Rect(46,352,Mathf.Min(674,w-466),100),UiCopy.Translate(g.toast),23);}
         if(g.inspector.Alertness>0){UiTheme.Fill(new Rect(w/2-155,110,310,12),UiTheme.Ink);UiTheme.Fill(new Rect(w/2-155,110,310*g.inspector.Alertness,12),UiTheme.Gold);UiTheme.Label(new Rect(w/2-200,128,400,62),T("Hush 正在注意你：绕到货架或放下的箱子后面。","Hush notices you. Move behind a shelf or a placed crate."),22,null,false,false,TextAnchor.MiddleCenter);}
@@ -62,13 +78,41 @@ public class ShiftInterface {
         if(UiTheme.Button(new Rect(92,638,463,58),T("语言","Language")+": "+UiCopy.Names[UiCopy.Selected]+"  [L]",true))OpenLanguages();
         if(UiTheme.Button(new Rect(576,638,151,58),T("退出","Quit"),true))g.Quit();
         UiTheme.Label(new Rect(92,724,640,45),T("无倒计时 · 无战斗 · 可随时暂停或退出","No countdown · No combat · Pause or quit anytime"),22,UiTheme.Muted);
-        float x=Mathf.Max(860,w-510);UiTheme.Panel(new Rect(x,130,440,585),UiTheme.Cream);
+        float x=Mathf.Max(860,w-510);UiTheme.Panel(new Rect(x,130,440,665),UiTheme.Cream);
         UiTheme.Label(new Rect(x+30,157,380,65),T("先认识这几个按键","Your first few controls"),30,UiTheme.Ink,true,true);
         ControlCard(x+30,255,"W A S D",T("走动","Walk"),T("W 前进，S 后退，A / D 左右移动","W forward, S back, A / D sideways"));
         ControlCard(x+30,375,"E",T("拿起 / 使用","Pick up / use"),T("先用屏幕中央的圆点对准物品","Aim the centre dot at the item first"));
         ControlCard(x+30,495,"Q",T("放下物品","Place"),T("绿色对准木板后按 Q","Green on the plate? Press Q."));
-        UiTheme.Label(new Rect(x+30,635,385,70),T("右键拖动 / 方向键：观察\n松开右键：自由鼠标","Right-drag / arrows: look\nRelease right button: free pointer"),21,UiTheme.Ink);
+        UiTheme.Label(new Rect(x+30,635,385,70),T("移动鼠标：转头\nEsc：释放鼠标并打开菜单","Move mouse: look around\nEsc: free pointer / menu"),21,UiTheme.Ink);
+        if(UiTheme.Button(new Rect(x+30,723,380,54),T("操作与舒适度","Controls & comfort")+" [C]",true))g.OpenComfort();
     }
+    void LookStart(){
+        MenuTab();float x=w/2-480;float y=hasCaptured?h/2-125:h/2-230;
+        UiTheme.Panel(new Rect(x,y,960,hasCaptured?270:460),new Color(.04f,.12f,.14f,.98f));
+        if(!hasCaptured){
+            UiTheme.Label(new Rect(x+35,y+24,890,65),T("先试着转头看看","First, try looking around"),38,UiTheme.Gold,true,true);
+            UiTheme.Label(new Rect(x+35,y+112,890,138),T("点击下方按钮，然后移动鼠标：左右转头，上下观察。不用按住鼠标键。\nWASD 走动，方向键也能转头。","Click below, then move your mouse to turn left, right, up or down. No button needs to be held.\nWASD walks. Arrow keys also turn."),27);
+            UiTheme.Label(new Rect(x+35,y+264,890,80),T("Esc 立即释放鼠标并打开菜单。截图或切换窗口时也会释放鼠标。","Esc frees your pointer and opens the menu. Desktop shortcuts and switching windows also release it."),24,UiTheme.Muted);
+        }else UiTheme.Label(new Rect(x+35,y+24,890,95),T("准备继续？移动鼠标转头，Esc 释放鼠标。","Ready to continue? Move the mouse to look. Esc frees your pointer."),27);
+        if(UiTheme.Button(new Rect(x+35,y+(hasCaptured?130:365),890,64),T("点击开始转头  [Enter]","Click to look around  [Enter]"))){g.StartMouseLook();hasCaptured=g.player.LookCaptured;}
+        if(UiTheme.Button(new Rect(w/2-240,h-95,480,58),T("操作与舒适度","Controls & comfort")+" [C]",true))g.OpenComfort();
+    }
+    void Comfort(){
+        UiTheme.Fill(new Rect(0,0,w,h),new Color(.015f,.04f,.05f,.9f));float x=w/2-520;UiTheme.Panel(new Rect(x,35,1040,h-70));
+        UiTheme.Label(new Rect(x+35,57,970,65),T("操作与舒适度","Controls & comfort"),40,UiTheme.Gold,true,true);
+        UiTheme.Label(new Rect(x+35,139,970,85),T("默认用鼠标自由转头，Esc 释放鼠标。\n视角不晃动、不自动转向，也没有动态模糊。","Mouse look is the default. Esc frees your pointer.\nNo camera shake, automatic turning or motion blur."),25);
+        g.sensitivity=Setting(x,249,T("左右灵敏度","Horizontal sensitivity"),g.sensitivity,.3f,4,g.sensitivity.ToString("0.0"));
+        g.verticalSensitivity=Setting(x,319,T("上下灵敏度","Vertical sensitivity"),g.verticalSensitivity,.3f,4,g.verticalSensitivity.ToString("0.0"));
+        float fov=Setting(x,389,T("垂直视野范围","Vertical field of view"),g.fieldOfView,55,90,Mathf.RoundToInt(g.fieldOfView)+"°");g.fieldOfView=fov;g.player.view.fieldOfView=fov;
+        g.player.speed=Setting(x,459,T("走路速度","Walking speed"),g.player.speed,2,4.5f,g.player.speed.ToString("0.0"));
+        string[] modes={T("鼠标自由转头","Mouse look"),T("自由鼠标：右键拖动","Free pointer: right-drag"),T("仅用方向键转头","Arrow keys only")};
+        for(int i=0;i<3;i++)if(UiTheme.Button(new Rect(x+35+i*325,542,310,68),(g.player.LookMode==i?"✓ ":"")+modes[i],g.player.LookMode!=i))g.player.SetLookMode(i);
+        if(UiTheme.Button(new Rect(x+35,631,470,60),g.player.handMotion?T("手部晃动：开","Hand motion: on"):T("手部晃动：关","Hand motion: off"),true))g.player.handMotion=!g.player.handMotion;
+        if(UiTheme.Button(new Rect(x+535,631,470,60),T("恢复默认设置","Restore defaults"),true))g.player.ComfortDefaults();
+        UiTheme.Label(new Rect(x+35,709,970,52),T("选择你感觉舒适的视野和速度。关闭时会保存。","Choose the view and speed that feel comfortable. Saved when closed."),22,UiTheme.Muted);
+        if(UiTheme.Button(new Rect(x+35,h-110,970,58),T("← 返回","← Back"),true))g.CloseComfort();
+    }
+    float Setting(float x,float y,string label,float value,float min,float max,string shown){UiTheme.Label(new Rect(x+35,y-8,390,55),label,24);UiTheme.Hover(new Rect(x+445,y,450,35));value=GUI.HorizontalSlider(new Rect(x+445,y+8,450,35),value,min,max);UiTheme.Label(new Rect(x+920,y-8,85,55),shown,24,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);return value;}
     void Languages(){
         UiTheme.Fill(new Rect(0,0,w,h),new Color(.015f,.04f,.05f,.88f));float x=w/2-480;UiTheme.Panel(new Rect(x,65,960,h-130));
         UiTheme.Label(new Rect(x+35,95,890,65),T("语言","Language"),42,null,false,true);
@@ -86,6 +130,7 @@ public class ShiftInterface {
     }
     void Coach(){UiTheme.Panel(new Rect(28,h-356,650,246));UiTheme.Key(new Rect(49,h-339,task.key.Length>3?240:75,39),string.IsNullOrEmpty(task.key)?"...":UiCopy.Translate(task.key));UiTheme.Label(new Rect(49,h-290,610,93),task.action,27,UiTheme.Gold,true);UiTheme.Label(new Rect(49,h-190,610,74),task.reason,23);}
     void Controls(){UiTheme.Key(new Rect(28,h-61,143,40),"W A S D");UiTheme.Label(new Rect(183,h-56,130,40),T("走动","Walk"),22);UiTheme.Key(new Rect(287,h-61,52,40),"E");UiTheme.Label(new Rect(350,h-56,145,40),T("拿起 / 使用","Use"),22);UiTheme.Key(new Rect(503,h-61,52,40),"Q");UiTheme.Label(new Rect(567,h-56,130,40),T("放下","Place"),22);
+        UiTheme.Label(new Rect(720,h-77,360,75),g.player.pointerMode?T("右键拖动：转头","Right-drag: look"):g.player.keyboardLook?T("方向键：转头","Arrows: look"):T("移动鼠标：转头\nEsc：菜单 / 释放鼠标","Mouse: look around\nEsc: menu / free pointer"),20,UiTheme.Muted);
         if(g.player.held)UiTheme.Label(new Rect(w-360,h-91,330,70),T("手中：","Carrying: ")+UiCopy.Translate(g.player.held.displayName),23,UiTheme.Gold);}
     void Pointer(){if(!task.hasTarget)return;var camera=g.player.view;Vector3 target=task.target+Vector3.up*.55f;Vector3 sp=camera.WorldToScreenPoint(target);Vector2 centre=new Vector2(w/2,h/2);Vector2 xy=new Vector2(sp.x/scale,(Screen.height-sp.y)/scale);if(sp.z<0)xy=centre-(xy-centre)*2;
         bool offscreen=sp.z<0||xy.x<0||xy.x>w||xy.y<0||xy.y>h;
@@ -122,7 +167,7 @@ public class ShiftInterface {
         UiTheme.Label(new Rect(x+40,263,730,50),T("音乐","Music"),25);g.musicVolume=GUI.HorizontalSlider(new Rect(x+190,280,575,35),g.musicVolume,0,1);
         UiTheme.Label(new Rect(x+40,328,730,50),T("音效","Effects"),25);g.effectsVolume=GUI.HorizontalSlider(new Rect(x+190,345,575,35),g.effectsVolume,0,1);
         if(UiTheme.Button(new Rect(x+40,403,350,60),T("试听 / 恢复声音","Test / restore sound"),true))g.audioScore.RestoreAudio(true);
-        if(UiTheme.Button(new Rect(x+425,403,340,60),T("切换鼠标 / 方向键观察","Mouse / arrow-only look"),true)){g.player.keyboardLook=!g.player.keyboardLook;g.player.ResetLookInput();}
+        if(UiTheme.Button(new Rect(x+425,403,340,60),T("操作与舒适度","Controls & comfort")+" [C]",true))g.OpenComfort();
         if(UiTheme.Button(new Rect(x+40,485,725,65),T("回到刚才的位置  [Tab / Esc]","Resume where you left off  [Tab / Esc]")))g.TogglePause();
         if(UiTheme.Button(new Rect(x+40,572,350,60),T("重新开始这晚","Restart this night"),true))g.Restart();
         if(UiTheme.Button(new Rect(x+425,572,340,60),T("退出游戏 [X]","Quit game [X]"),true))g.Quit();

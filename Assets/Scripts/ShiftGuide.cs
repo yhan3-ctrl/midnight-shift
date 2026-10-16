@@ -19,7 +19,7 @@ public class ShiftGuide : MonoBehaviour {
         if(lookTime>.25f)looked=true;
         if(Vector3.Distance(g.player.transform.position,foyerCrate.transform.position)<3.3f||g.player.held==foyerCrate)walked=true;
     }
-    Task Make(string zh,string en,string azh,string aen,string rzh,string ren,string key,Vector3 target,string nzh,string nen){return new Task{title=UiCopy.Pick(zh,en),action=UiCopy.Pick(azh,aen),reason=UiCopy.Pick(rzh,ren),key=key,target=target,targetName=UiCopy.Pick(nzh,nen),hasTarget=true};}
+    Task Make(string zh,string en,string azh,string aen,string rzh,string ren,string key,Vector3 target,string nzh,string nen){return new Task{title=UiCopy.Pick(zh,en),action=UiCopy.Pick(azh,aen),reason=UiCopy.Pick(rzh,ren),key=key=="MOUSE"?(g.player.keyboardLook?"ARROWS":g.player.pointerMode?"RIGHT-DRAG":"MOUSE"):key,target=target,targetName=UiCopy.Pick(nzh,nen),hasTarget=true};}
     Task CrateTask(Pickup crate,FactoryGate gate,string chapter){
         if(gate.CrateHoldsPlate)return Make(chapter,chapter,"穿过打开的门","Walk through the open door","让箱子留在板上，门就会一直开着。","Leave the crate on the plate to keep the door open.","W A S D",gate.closedPosition+Vector3.forward*2,"门的中央","Centre doorway");
         if(g.player.held==crate){
@@ -42,7 +42,7 @@ public class ShiftGuide : MonoBehaviour {
     public Task Current {
         get {Ensure();var p=g.player;
             if(p.transform.position.z<12&&!g.shell){
-                if(!looked&&!p.held&&!foyer.CrateHoldsPlate)return Make("01 / 我来带你熟悉一下","01 / Let me show you around","先看一看左前方的木箱","Look toward the crate on your left","按住鼠标右键并拖动来观察，松开即可自由使用鼠标。方向键也可以。","Hold the right mouse button and drag to look. Release it to free your pointer. Arrow keys also work.","RMB / ARROWS",foyerCrate.transform.position,"先看这里","Look here first");
+                if(!looked&&!p.held&&!foyer.CrateHoldsPlate)return Make("01 / 我来带你熟悉一下","01 / Let me show you around","先看一看左前方的木箱","Look toward the crate on your left",g.player.pointerMode?"按住右键拖动来观察，方向键也可以。":g.player.keyboardLook?"方向键转头，WASD 走动。":"移动鼠标转头，WASD 走动。Esc 释放鼠标并打开菜单。",g.player.pointerMode?"Hold right mouse and drag to look. Arrow keys also turn.":g.player.keyboardLook?"Arrow keys turn. WASD walks.":"Move the mouse to turn. WASD walks. Esc frees your pointer and opens the menu.","MOUSE",foyerCrate.transform.position,"先看这里","Look here first");
                 if(!walked&&!p.held&&!foyer.CrateHoldsPlate)return Make("01 / 试着走几步","01 / Take a few steps","按 W 向木箱走近一点","Press W to walk toward the crate","W 前进 · S 后退 · A 左移 · D 右移。","W forward · S back · A left · D right.","W A S D",foyerCrate.transform.position,"木箱","Crate");
                 return CrateTask(foyerCrate,foyer,UiCopy.Pick("01 / 打开第一扇门","01 / Open your first door"));
             }
@@ -74,7 +74,7 @@ public class ShiftGuide : MonoBehaviour {
         }
     }
     public Task Navigate(Task t){
-        if(!t.hasTarget||!g.navigation)return t;
+        if(!t.hasTarget||!g.navigation||t.key=="MOUSE"||t.key=="ARROWS"||t.key=="RIGHT-DRAG")return t;
         g.navigation.Refresh(t);
         if(g.navigation.Points.Count>1&&g.navigation.Distance>4.2f){
             var original=t.targetName;t.routeDistance=g.navigation.Distance;t.target=g.navigation.LookAhead(2.6f);t.key="W A S D";
