@@ -30,6 +30,7 @@ public class ShiftInterface {
     public void LanguageKeys(){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.L)){LanguageOpen=false;return;}if(Input.GetKeyDown(KeyCode.LeftArrow))languageFocus=Mathf.Max(0,languageFocus-1);if(Input.GetKeyDown(KeyCode.RightArrow))languageFocus=Mathf.Min(UiCopy.Codes.Length-1,languageFocus+1);if(Input.GetKeyDown(KeyCode.UpArrow))languageFocus=Mathf.Max(0,languageFocus-2);if(Input.GetKeyDown(KeyCode.DownArrow))languageFocus=Mathf.Min(UiCopy.Codes.Length-1,languageFocus+2);if(Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.Space)){UiCopy.Language(languageFocus);LanguageOpen=false;}}
     string T(string zh,string en)=>UiCopy.Pick(zh,en);
     public void Draw(FactoryGame game){g=game;guide=g.guide;UiTheme.Setup();scale=Mathf.Min(Screen.width/1440f,Screen.height/900f);w=Screen.width/scale;h=Screen.height/scale;GUI.matrix=Matrix4x4.TRS(Vector3.zero,Quaternion.identity,Vector3.one*scale);
+        if(g.photoMode){Photo();return;}
         if(LanguageOpen){Languages();return;}
         if(!g.started){Title();return;}if(g.ended){Ending();return;}
         if(g.paused){Menu();return;}
@@ -37,16 +38,19 @@ public class ShiftInterface {
         task=guide.Navigate(guide.Current);
         if(g.journal){Notebook();MenuTab();return;}
         Calendar();MenuTab();
-        if(g.Reading){Dialogue();return;}
+        if(g.Reading){Dialogue();DesktopResume();return;}
         Pointer();Coach();
         UiTheme.Label(new Rect(w/2-15,h/2-25,30,40),"+",27,UiTheme.Cream,false,false,TextAnchor.MiddleCenter);
         if(g.player.focus){UiTheme.Panel(new Rect(w/2-290,h-110,580,44));UiTheme.Label(new Rect(w/2-277,h-110,554,44),UiCopy.Prompt(g.player),23,null,true,false,TextAnchor.MiddleCenter);}
         Controls();
         if(g.ToastVisible){UiTheme.Panel(new Rect(28,100,Mathf.Min(710,w-430),125));UiTheme.Label(new Rect(46,115,Mathf.Min(674,w-466),100),UiCopy.Translate(g.toast),23);}
         if(g.inspector.Alertness>0){UiTheme.Fill(new Rect(w/2-155,110,310,12),UiTheme.Ink);UiTheme.Fill(new Rect(w/2-155,110,310*g.inspector.Alertness,12),UiTheme.Gold);UiTheme.Label(new Rect(w/2-200,128,400,62),T("Hush 正在注意你：绕到货架或放下的箱子后面。","Hush notices you. Move behind a shelf or a placed crate."),22,null,false,false,TextAnchor.MiddleCenter);}
+        DesktopResume();
         if(Array.IndexOf(Environment.GetCommandLineArgs(),"--agent-playtest")>=0){var p=g.player.transform.position;UiTheme.Label(new Rect(28,76,850,35),$"AGENT REVIEW / {p.x:F2}, {p.z:F2} / yaw {g.player.transform.eulerAngles.y:F1} pitch {g.player.Pitch:F1}",18);}
     }
-    void MenuTab(){UiTheme.Key(new Rect(28,24,65,40),"TAB");UiTheme.Label(new Rect(106,27,410,42),T("菜单 / 释放鼠标 · Esc 也可用","Menu / free mouse · Esc"),22);}
+    void MenuTab(){if(UiTheme.Button(new Rect(28,22,225,54),T("菜单 [Esc]","Menu [Esc]"),true))g.TogglePause();if(UiTheme.Button(new Rect(269,22,305,54),T("截图视图 [F2]","Screenshot view [F2]"),true))g.TogglePhoto();}
+    void DesktopResume(){if(!g.desktopHold||!Application.isFocused)return;UiTheme.Panel(new Rect(w/2-290,90,580,120));UiTheme.Label(new Rect(w/2-270,102,540,48),T("已暂停，方便你操作系统窗口。","Paused while you use desktop controls."),23);if(UiTheme.Button(new Rect(w/2-270,151,540,48),T("继续游戏 [Enter]","Resume game [Enter]")))g.ResumeDesktop();}
+    void Photo(){if(UiTheme.Button(new Rect(28,22,460,54),T("返回游戏 [F2 / Esc]","Return to game [F2 / Esc]"),true))g.TogglePhoto();}
     void Title(){
         UiTheme.Panel(new Rect(48,50,775,h-100),new Color(.045f,.12f,.14f,.98f));
         UiTheme.Label(new Rect(90,82,680,40),"WILLOW WORKS  /  OCTOBER 31",25,UiTheme.Gold);
@@ -61,8 +65,8 @@ public class ShiftInterface {
         UiTheme.Label(new Rect(x+30,157,380,65),T("先认识这几个按键","Your first few controls"),30,UiTheme.Ink,true,true);
         ControlCard(x+30,255,"W A S D",T("走动","Walk"),T("W 前进，S 后退，A / D 左右移动","W forward, S back, A / D sideways"));
         ControlCard(x+30,375,"E",T("拿起 / 使用","Pick up / use"),T("先用屏幕中央的圆点对准物品","Aim the centre dot at the item first"));
-        ControlCard(x+30,495,"Q",T("放下物品","Place"),T("放到前方一步的位置","Places it one step in front of you"));
-        UiTheme.Label(new Rect(x+30,635,385,70),T("鼠标 / 方向键：观察\n空格 / 回车 / 点击：继续对话","Mouse / arrows: look\nSpace / Enter: next line"),21,UiTheme.Ink);
+        ControlCard(x+30,495,"Q",T("放下物品","Place"),T("绿色对准木板后按 Q","Green on the plate? Press Q."));
+        UiTheme.Label(new Rect(x+30,635,385,70),T("右键拖动 / 方向键：观察\n松开右键：自由鼠标","Right-drag / arrows: look\nRelease right button: free pointer"),21,UiTheme.Ink);
     }
     void Languages(){
         UiTheme.Fill(new Rect(0,0,w,h),new Color(.015f,.04f,.05f,.88f));float x=w/2-480;UiTheme.Panel(new Rect(x,65,960,h-130));
@@ -89,12 +93,15 @@ public class ShiftInterface {
         UiTheme.Label(new Rect(xy.x-30,xy.y-20,60,50),clipped?direction:"▼",42,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);
         UiTheme.Panel(new Rect(xy.x-155,xy.y-105,310,80));UiTheme.Label(new Rect(xy.x-148,xy.y-101,296,42),task.targetName,22,null,true,false,TextAnchor.MiddleCenter);
         UiTheme.Label(new Rect(xy.x-148,xy.y-61,296,30),Vector3.Distance(g.player.transform.position,task.target).ToString("0.0")+" m",20,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
-        if(clipped)UiTheme.Label(new Rect(xy.x-145,xy.y+27,290,44),T("朝箭头方向转动视角","Turn toward the arrow"),20,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
+        if(clipped&&!g.player.ReadyOnPlate(guide.PlacementGate))UiTheme.Label(new Rect(xy.x-145,xy.y+27,290,44),T("朝箭头方向转动视角","Turn toward the arrow"),20,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
         if(g.player.held){
-            if(g.player.Placement(out Vector3 at,out string why)){var q=camera.WorldToScreenPoint(at);if(q.z>0){float x=q.x/scale,y=(Screen.height-q.y)/scale;if(y+40<h-356||x-110>690)UiTheme.Label(new Rect(x-110,y-20,220,60),T("◎  Q 放在这里","◎  Q place here"),25,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);}}
-            else {UiTheme.Panel(new Rect(w-365,h-310,337,172));UiTheme.Label(new Rect(w-345,h-295,297,140),UiCopy.Translate(why),23,UiTheme.Gold);}
+            var gate=guide.PlacementGate;bool valid=g.player.Placement(out var at,out var why);bool ready=valid&&gate&&g.player.ReadyOnPlate(gate);
+            UiTheme.Panel(new Rect(w-365,h-330,337,192));
+            if(ready){UiTheme.Key(new Rect(w-345,h-315,55,40),"Q");UiTheme.Label(new Rect(w-345,h-261,297,110),T("按 Q 键：把箱子放到条纹木板上。","Press Q: place crate on the striped plate."),24,UiTheme.Gold,true);}
+            else UiTheme.Label(new Rect(w-345,h-315,297,165),!valid?UiCopy.Translate(why):gate?T("目标是发光的条纹木板。靠近它，直到绿色箱子轮廓出现在木板上。","Target: the glowing striped plate. Move closer until the green crate outline sits on it."):T("箱子轮廓显示落点。Q 键放下。","The outline shows the landing spot. Q places the item."),23,UiTheme.Gold);
         }
     }
+
     void Dialogue(){float left=(w-1040)/2,top=h-355;UiTheme.Panel(new Rect(left,top,1040,322),new Color(.04f,.12f,.14f,.98f));
         UiTheme.Label(new Rect(left+30,top+20,960,40),UiCopy.Translate(g.speaker),25,UiTheme.Gold,true);
         string translated=UiCopy.Translate(g.line);
@@ -124,7 +131,7 @@ public class ShiftInterface {
         UiTheme.Label(new Rect(x+35,190,890,125),task.action+"\n"+task.reason,27,UiTheme.Ink,true);
         UiTheme.Label(new Rect(x+35,340,890,75),T("金色核心的位置：","Gold core location: ")+UiCopy.Translate(g.CoreLocation),26,UiTheme.Ink);
         UiTheme.Label(new Rect(x+35,445,890,220),T("记住三件事就好：\n1. 箱子留在条纹板上，门就会开着。\n2. 只有一枚核心，但已经做好的东西不会消失。\n3. Hush 不会伤害你；被发现后保留完成进度重试。","Three things to remember:\n1. Leave a crate on a striped plate to keep access.\n2. There is one core; finished work stays finished.\n3. Hush cannot hurt you. Retries keep completed work."),25,UiTheme.Ink);
-        if(UiTheme.Button(new Rect(x+35,h-175,890,60),T("合上笔记  [J / Esc]","Close notebook  [J / Esc]")))g.ToggleJournal();
+        if(UiTheme.Button(new Rect(x+35,h-175,890,60),T("合上笔记  [J]","Close notebook  [J]")))g.ToggleJournal();
     }
     void Ending(){UiTheme.Panel(new Rect(35,70,600,h-140),new Color(.04f,.12f,.14f,.94f));UiTheme.Label(new Rect(65,100,530,42),T("最后一份订单 / 已送达","THE LAST ORDER / DELIVERED"),25,UiTheme.Gold,true);UiTheme.Label(new Rect(65,175,530,135),T("照亮回家的路。","A light for\nthe way home."),49,null,false,true);UiTheme.Label(new Rect(65,335,530,275),T("Pip 又看了一遍你的纸条。\n\n“这一次，我们一起下班吧。”\n\n门外的万圣节游行，才刚刚开始。","Pip turns your note over once more.\n\n\"Then this time, we all clock out together.\"\n\nOutside, the parade is just beginning."),26);
         UiTheme.Label(new Rect(65,h-250,530,50),T("安全重试：","Safety retries: ")+g.resets,23,UiTheme.Muted);

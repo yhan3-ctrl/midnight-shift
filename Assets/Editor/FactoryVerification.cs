@@ -56,7 +56,11 @@ public class FactoryPlaycheck : MonoBehaviour {
         }catch(Exception e){Fail(e);yield break;}
 
         try{
-            Check(g.guide&&g.guide.Current.key=="MOUSE / ARROWS","opening guide teaches looking before future power rules");
+            Check(g.guide&&g.guide.Current.key=="RMB / ARROWS","opening guide teaches looking before future power rules");
+            Check(Cursor.lockState==CursorLockMode.None&&Cursor.visible,"active exploration keeps the operating-system pointer free");
+            g.TogglePhoto();Check(g.photoMode&&g.Frozen&&Time.timeScale==0&&Cursor.lockState==CursorLockMode.None,"screenshot view freezes hazards without capturing the pointer");g.TogglePhoto();Check(!g.Frozen,"screenshot view returns to the previous active state");
+            g.HoldForDesktop();Check(g.desktopHold&&g.Frozen&&!g.paused,"desktop focus loss freezes without covering the game with the pause menu");g.ResumeDesktop();Check(!g.Frozen&&Cursor.visible,"desktop resume restores play with a free pointer");
+
             g.guide.looked=true;Check(g.guide.Current.key=="W A S D","guide advances to walking only after observing look input");
             g.guide.walked=true;Check(g.guide.Current.key=="E","guide then asks for the crate interaction");
             g.Say("Menu regression","This line must survive opening the menu.");g.TogglePause();
@@ -96,10 +100,11 @@ public class FactoryPlaycheck : MonoBehaviour {
             Check(powerGate.Evaluate(),"crate override keeps workshop gate open without a core");
             p.Teleport(new Vector3(0,0,15),0);Check(g.Objective.Contains("Moulding"),"objective advances from gate preparation to manufacturing once crate holds access");p.Teleport(new Vector3(0,0,-6),0);overrideCrate.ResetHome();Physics.SyncTransforms();
 
+            p.Pick(overrideCrate);p.Teleport(new Vector3(4.8f,0,18.6f),180);Physics.SyncTransforms();Check(!p.Placement(out _,out _)&&!p.ReadyOnPlate(powerGate),"plate assistance never places a crate through a wall");p.PutBackHeld();
             var tutorialCrate=crates.Single(x=>x.name=="Foyer crate");p.Pick(tutorialCrate);
             p.Teleport(new Vector3(-4.8f,0,7.3f),0);Physics.SyncTransforms();p.TryPlace();Check(p.held==tutorialCrate,"plate assist refuses to place a crate over the player");
             var worktop=GameObject.CreatePrimitive(PrimitiveType.Cube);worktop.transform.position=new Vector3(0,1,1.5f);worktop.transform.localScale=new Vector3(2,.2f,2);p.Teleport(Vector3.zero,0);Physics.SyncTransforms();p.TryPlace();Check(p.held==tutorialCrate,"placement refuses elevated worktops");DestroyImmediate(worktop);Physics.SyncTransforms();
-            p.Teleport(new Vector3(-4.8f,0,5.3f),0);Physics.SyncTransforms();p.TryPlace();
+            p.Teleport(new Vector3(-4.8f,0,5.3f),0);Physics.SyncTransforms();Check(p.ReadyOnPlate(foyer)&&g.guide.Current.action.Contains("Press Q"),"green plate-ready guidance refers to the same validated Q landing point");p.TryPlace();
             Check(p.held==null&&Vector3.Distance(tutorialCrate.transform.position,foyer.plate.position+Vector3.up*.885f)<.05f&&foyer.Evaluate(),"near-edge crate placement snaps onto plate and opens gate");
             p.Teleport(new Vector3(0,0,-6),0);
 

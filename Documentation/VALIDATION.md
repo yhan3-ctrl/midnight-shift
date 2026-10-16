@@ -69,3 +69,7 @@ The final packaged preview pass completed with no UI_LAYOUT_OVERFLOW warnings or
 ### Unlocked native follow-up
 
 The blocked v0.7 checks have now completed on the same build. Final staged render: 105 screens, seven successful pagination stress continuations, no layout-overflow or runtime-exception log entries. Native keyboard review selected Japanese, quit/reopened and confirmed it persisted; changed Japanese to German during paused dialogue without advancing that line; restored English, quit via Tab/X, reopened and confirmed English persisted. Both normal quit paths exited 0. The silent agent instance is closed. See LOCALIZATION-v0.7.md for scope and raw log paths. This supersedes the previous lock-screen pending status without claiming independent human usability or native-language editorial review.
+
+## v0.8 / operating-system access and placement clarity
+
+Direct feedback exposed automatic cursor locking and an ambiguous spatial Q marker. Removed all locking, introduced right-button drag looking, consistent Esc menu access, F2 screenshot view and desktop-focus freezing. A gold target plate and validated full-size landing outline now explain Q placement. 112 engine checks, complete deterministic traversal and seven-language layout checks passed. Native opening placement/door transition, screenshot-view keyboard control, fullscreen/window access and red-button exit were verified. OS region screenshot output could not be verified through CUA and is explicitly not counted as passed. See CONTROLS-REVIEW-v0.8.md for evidence, package hash and limits.

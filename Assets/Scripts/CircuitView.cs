@@ -38,11 +38,11 @@ public class CircuitView {
         if(example){UiTheme.Label(new Rect(sx,top+563,465,70),T("IN → ── → ┐\n横线传电，弯角转弯，T 形可以分流。","IN → ── → ┐\nStraights carry; corners turn; T shapes split."),24,UiTheme.Gold);}
         else UiTheme.Label(new Rect(sx,top+563,465,70),T("看线路时世界暂停。\n不用着急，按 Tab 可以打开菜单。","The world is paused. Take your time.\nTab opens the menu."),23,UiTheme.Muted);
         float bottom=height-112;
-        UiTheme.Label(new Rect(left+35,bottom-62,1125,44),T("鼠标点击：转动   |   方向键：选格   空格：转动   回车：启动   Esc：返回","Click / Space: turn   Arrows: select   Enter: start   Esc: return"),23,UiTheme.Muted);
+        UiTheme.Label(new Rect(left+35,bottom-62,1125,44),T("鼠标点击：转动   |   方向键：选格   空格：转动   回车：启动   Backspace：返回   Esc：菜单","Click / Space: turn   Arrows: select   Enter: start   Backspace: return   Esc: menu"),23,UiTheme.Muted);
         GUI.enabled=p.Solved;if(UiTheme.Button(new Rect(left+35,bottom,375,65),p.Solved?T("启动机器  →","Start machine  →"):T("先接通出口和星标","Connect OUT + ★ first"),!p.Solved))g.PowerCircuit();GUI.enabled=true;
         if(UiTheme.Button(new Rect(left+430,bottom,220,65),T("重置方格","Reset tiles"),true))p.Reset();
         if(UiTheme.Button(new Rect(left+670,bottom,220,65),T("取回核心","Remove core"),true)){g.CloseCircuit();m.Remove(g.player);}
-        if(UiTheme.Button(new Rect(left+910,bottom,255,65),T("返回工厂 [Esc]","Return [Esc]"),true))g.CloseCircuit();
+        if(UiTheme.Button(new Rect(left+910,bottom,255,65),T("返回工厂","Return to factory"),true))g.CloseCircuit();
     }
 }
 }

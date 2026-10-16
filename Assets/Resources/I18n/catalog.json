@@ -3155,6 +3155,246 @@
         "先に外枠へ彫刻しよう。コアを取り出して、先にその作業を終えよう。",
         "먼저 틀에 새기세요. 코어를 회수해 먼저 그 작업을 끝내세요."
       ]
+    },
+    {
+      "en": "RMB / ARROWS",
+      "values": [
+        "RMB / ARROWS",
+        "右键 / 方向键",
+        "BOTÓN DCHO. / FLECHAS",
+        "CLIC DROIT / FLÈCHES",
+        "RECHTSKLICK / PFEILE",
+        "右ボタン / 方向キー",
+        "오른쪽 버튼 / 방향키"
+      ]
+    },
+    {
+      "en": "Hold the right mouse button and drag to look. Release it to free your pointer. Arrow keys also work.",
+      "values": [
+        "Hold the right mouse button and drag to look. Release it to free your pointer. Arrow keys also work.",
+        "按住鼠标右键并拖动来观察，松开即可自由使用鼠标。方向键也可以。",
+        "Mantén el botón derecho y arrastra para mirar. Suelta para usar el puntero. También puedes usar las flechas.",
+        "Maintiens le clic droit et glisse pour regarder. Relâche pour libérer le pointeur. Les flèches fonctionnent aussi.",
+        "Zum Umsehen rechte Maustaste halten und ziehen. Loslassen gibt den Zeiger frei. Pfeiltasten gehen auch.",
+        "右ボタンを押しながらドラッグで見回せるよ。離すとポインターは自由に動くよ。方向キーも使える。",
+        "마우스 오른쪽 버튼을 누르고 드래그해 둘러보세요. 놓으면 포인터를 자유롭게 쓸 수 있어요. 방향키도 가능해요."
+      ]
+    },
+    {
+      "en": "Right-drag / arrows: look\nRelease right button: free pointer",
+      "values": [
+        "Right-drag / arrows: look\nRelease right button: free pointer",
+        "右键拖动 / 方向键：观察\n松开右键：自由鼠标",
+        "Arrastra botón derecho / flechas\nSuelta: puntero libre",
+        "Glisser clic droit / flèches : voir\nRelâcher : pointeur libre",
+        "Rechts ziehen / Pfeile: umsehen\nLoslassen: Zeiger frei",
+        "右ドラッグ / 矢印：視点\n離す：自由なポインター",
+        "우클릭 드래그 / 방향키: 시점\n버튼 놓기: 포인터 해제"
+      ]
+    },
+    {
+      "en": "Green on the plate? Press Q.",
+      "values": [
+        "Green on the plate? Press Q.",
+        "绿色对准木板后按 Q",
+        "¿Verde en la placa? Pulsa Q.",
+        "Vert sur la plaque ? Touche Q.",
+        "Grün auf der Platte? Q drücken.",
+        "木板に緑の輪郭が出たら Q。",
+        "발판 위가 초록이면 Q."
+      ]
+    },
+    {
+      "en": "When the green crate outline is on the striped plate, press the Q key.",
+      "values": [
+        "When the green crate outline is on the striped plate, press the Q key.",
+        "绿色箱子轮廓在条纹木板上时，按 Q 键放置。",
+        "Cuando el contorno verde esté en la placa rayada, pulsa la tecla Q.",
+        "Quand le contour vert de la caisse est sur la plaque rayée, appuie sur Q.",
+        "Steht der grüne Kistenumriss auf der gestreiften Platte, drücke Q.",
+        "緑の箱の輪郭が縞模様の木板に載ったら、Q キーで置こう。",
+        "초록 상자 윤곽이 줄무늬 발판 위에 있으면 Q를 눌러 놓으세요."
+      ]
+    },
+    {
+      "en": "Press Q to place the crate on this plate",
+      "values": [
+        "Press Q to place the crate on this plate",
+        "按 Q 键，把箱子放到这块木板上",
+        "Pulsa Q para poner la caja en esta placa",
+        "Appuie sur Q pour poser la caisse sur cette plaque",
+        "Mit Q die Kiste auf diese Platte stellen",
+        "Q キーで箱をこの木板に置こう",
+        "Q를 눌러 이 발판 위에 상자를 놓으세요"
+      ]
+    },
+    {
+      "en": "Bring the crate to the glowing striped plate",
+      "values": [
+        "Bring the crate to the glowing striped plate",
+        "把箱子带到发光的条纹木板前",
+        "Lleva la caja a la placa rayada brillante",
+        "Apporte la caisse à la plaque rayée lumineuse",
+        "Kiste zur leuchtenden gestreiften Platte bringen",
+        "光る縞模様の木板まで箱を運ぼう",
+        "빛나는 줄무늬 발판으로 상자를 가져가세요"
+      ]
+    },
+    {
+      "en": "Hold right mouse to look; release to use your pointer. Arrows also work. K selects arrows only.",
+      "values": [
+        "Hold right mouse to look; release to use your pointer. Arrows also work. K selects arrows only.",
+        "按住右键观察，松开即可自由使用鼠标；方向键也可以。K 切换为仅方向键。",
+        "Mantén el botón derecho para mirar; suelta para usar el puntero. También hay flechas. K: solo flechas.",
+        "Clic droit maintenu : regarder ; relâche pour le pointeur. Flèches aussi. K : flèches seules.",
+        "Rechts halten zum Umsehen, loslassen für den Zeiger. Pfeile gehen auch. K: nur Pfeile.",
+        "右ボタンで見回し、離すとポインターは自由。方向キーも使えるよ。K で方向キーのみ。",
+        "오른쪽 버튼으로 둘러보고 놓으면 포인터가 해제돼요. 방향키도 가능해요. K: 방향키 전용."
+      ]
+    },
+    {
+      "en": "Menu [Esc]",
+      "values": [
+        "Menu [Esc]",
+        "菜单 [Esc]",
+        "Menú [Esc]",
+        "Menu [Esc]",
+        "Menü [Esc]",
+        "メニュー [Esc]",
+        "메뉴 [Esc]"
+      ]
+    },
+    {
+      "en": "Screenshot view [F2]",
+      "values": [
+        "Screenshot view [F2]",
+        "截图视图 [F2]",
+        "Vista de captura [F2]",
+        "Vue capture [F2]",
+        "Bildschirmfoto [F2]",
+        "撮影ビュー [F2]",
+        "스크린샷 보기 [F2]"
+      ]
+    },
+    {
+      "en": "Paused while you use desktop controls.",
+      "values": [
+        "Paused while you use desktop controls.",
+        "已暂停，方便你操作系统窗口。",
+        "En pausa mientras usas el escritorio.",
+        "En pause pendant l'usage du bureau.",
+        "Für die Desktop-Steuerung pausiert.",
+        "デスクトップの操作中は一時停止。",
+        "데스크톱을 사용하는 동안 일시 정지돼요."
+      ]
+    },
+    {
+      "en": "Resume game [Enter]",
+      "values": [
+        "Resume game [Enter]",
+        "继续游戏 [Enter]",
+        "Reanudar [Enter]",
+        "Reprendre [Entrée]",
+        "Fortsetzen [Enter]",
+        "ゲームに戻る [Enter]",
+        "게임 계속 [Enter]"
+      ]
+    },
+    {
+      "en": "Return to game [F2 / Esc]",
+      "values": [
+        "Return to game [F2 / Esc]",
+        "返回游戏 [F2 / Esc]",
+        "Volver al juego [F2 / Esc]",
+        "Revenir au jeu [F2 / Esc]",
+        "Zurück zum Spiel [F2 / Esc]",
+        "ゲームに戻る [F2 / Esc]",
+        "게임으로 돌아가기 [F2 / Esc]"
+      ]
+    },
+    {
+      "en": "Press Q: place crate on the striped plate.",
+      "values": [
+        "Press Q: place crate on the striped plate.",
+        "按 Q 键：把箱子放到条纹木板上。",
+        "Pulsa Q: coloca la caja en la placa rayada.",
+        "Q : pose la caisse sur la plaque rayée.",
+        "Q drücken: Kiste auf die gestreifte Platte stellen.",
+        "Q キー：箱を縞模様の木板に置く。",
+        "Q 누르기: 줄무늬 발판에 상자 놓기."
+      ]
+    },
+    {
+      "en": "Target: the glowing striped plate. Move closer until the green crate outline sits on it.",
+      "values": [
+        "Target: the glowing striped plate. Move closer until the green crate outline sits on it.",
+        "目标是发光的条纹木板。靠近它，直到绿色箱子轮廓出现在木板上。",
+        "Objetivo: la placa rayada brillante. Acércate hasta que el contorno verde esté encima.",
+        "Cible : la plaque rayée lumineuse. Approche jusqu'à ce que le contour vert soit dessus.",
+        "Ziel: die leuchtende Platte. Näher herangehen, bis der grüne Kistenumriss darauf steht.",
+        "目標は光る縞模様の木板。緑の箱の輪郭が木板に載るまで近づこう。",
+        "목표는 빛나는 줄무늬 발판이에요. 초록 상자 윤곽이 그 위에 놓일 때까지 다가가세요."
+      ]
+    },
+    {
+      "en": "The outline shows the landing spot. Q places the item.",
+      "values": [
+        "The outline shows the landing spot. Q places the item.",
+        "箱子轮廓显示落点。Q 键放下。",
+        "El contorno indica dónde caerá. Q coloca el objeto.",
+        "Le contour montre l'arrivée. Q pose l'objet.",
+        "Der Umriss zeigt den Landeplatz. Q legt ab.",
+        "輪郭が置く場所を示すよ。Q キーで置ける。",
+        "윤곽이 놓일 곳을 보여 줘요. Q로 내려놓으세요."
+      ]
+    },
+    {
+      "en": "Close notebook  [J]",
+      "values": [
+        "Close notebook  [J]",
+        "合上笔记  [J]",
+        "Cerrar cuaderno [J]",
+        "Fermer le carnet [J]",
+        "Notizbuch schließen [J]",
+        "ノートを閉じる [J]",
+        "수첩 닫기 [J]"
+      ]
+    },
+    {
+      "en": "Return to factory",
+      "values": [
+        "Return to factory",
+        "返回工厂",
+        "Volver a la fábrica",
+        "Retour à l'usine",
+        "Zurück zur Fabrik",
+        "工場へ戻る",
+        "공장으로 돌아가기"
+      ]
+    },
+    {
+      "en": "Click / Space: turn   Arrows: select   Enter: start   Backspace: return   Esc: menu",
+      "values": [
+        "Click / Space: turn   Arrows: select   Enter: start   Backspace: return   Esc: menu",
+        "点击 / 空格：转动   方向键：选格   回车：启动   Backspace：返回   Esc：菜单",
+        "Clic / Espacio: girar   Flechas: elegir   Enter: iniciar   Retroceso: volver   Esc: menú",
+        "Clic / Espace : tourner   Flèches : choisir   Entrée : démarrer   Retour arrière : retour   Esc : menu",
+        "Klick / Leertaste: drehen   Pfeile: wählen   Enter: starten   Rücktaste: zurück   Esc: Menü",
+        "クリック / Space：回転　方向キー：選択　Enter：始動　Backspace：戻る　Esc：メニュー",
+        "클릭 / Space: 회전   방향키: 선택   Enter: 가동   Backspace: 돌아가기   Esc: 메뉴"
+      ]
+    },
+    {
+      "en": "The wall blocks this landing spot. Move through the doorway first.",
+      "values": [
+        "The wall blocks this landing spot. Move through the doorway first.",
+        "墙挡住了落点，请先从门口通过。",
+        "La pared bloquea ese lugar. Cruza primero la puerta.",
+        "Le mur bloque cet endroit. Passe d'abord par la porte.",
+        "Die Wand versperrt den Platz. Geh zuerst durch den Durchgang.",
+        "壁に遮られているよ。先にドアを通ろう。",
+        "벽이 가로막고 있어요. 먼저 문을 통과하세요."
+      ]
     }
   ]
 }

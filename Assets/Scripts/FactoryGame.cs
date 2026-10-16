@@ -13,13 +13,13 @@ public class FactoryGame : MonoBehaviour {
     public GridRelay workshopRelay; public GhostIdle buttonHelper,pipHelper;
     int circuitOpenedFrame;
     public Machine activeCircuit; CircuitView circuitView=new CircuitView();
-    public bool started, paused, ended, journal;
+    public bool started, paused, ended, journal, photoMode, desktopHold;
     public bool shell, transferred, blueprint, etched, assembled, inspectorLesson;
     public int resets, hintsRequested;
     public float playSeconds;
     public string toast="", speaker="", line="";
     public bool Reading => dialogue.Count>0;
-    public bool Frozen => !started || paused || Reading || ended || journal || activeCircuit!=null;
+    public bool Frozen => !started || paused || Reading || ended || journal || activeCircuit!=null || photoMode || desktopHold;
     readonly Queue<string> dialogue=new Queue<string>();
     float toastUntil;
     public float musicVolume=.38f, effectsVolume=.65f, sensitivity=1.7f;
@@ -57,9 +57,14 @@ public class FactoryGame : MonoBehaviour {
             return "06  /  ONE LAST DELIVERY\nPick up the finished lantern and give it to Pip at the dispatch desk.";
         }
     }
-    void Awake(){ I=this; Time.timeScale=1;guide=GetComponent<ShiftGuide>();if(!guide)guide=gameObject.AddComponent<ShiftGuide>(); }
-    void Start(){ SetCursor(true);if(!Application.isBatchMode&&!PlayerPrefs.HasKey("shift-v06-window")){Screen.SetResolution(1280,800,FullScreenMode.Windowed);PlayerPrefs.SetInt("shift-v06-window",1);} }
+    void Awake(){ I=this; Time.timeScale=1;guide=GetComponent<ShiftGuide>();if(!guide)guide=gameObject.AddComponent<ShiftGuide>();if(!GetComponent<PlacementPreview>())gameObject.AddComponent<PlacementPreview>(); }
+    void Start(){ ReleaseCursor();if(!Application.isBatchMode&&!PlayerPrefs.HasKey("shift-v08-window")){Screen.SetResolution(1280,800,FullScreenMode.Windowed);PlayerPrefs.SetInt("shift-v08-window",1);} }
     void Update(){
+        ReleaseCursor();
+        if(PlayerMotor.SystemShortcutHeld)return;
+        if(Input.GetKeyDown(KeyCode.F2)&&started&&!ended){TogglePhoto();return;}
+        if(photoMode){if(Input.GetKeyDown(KeyCode.Escape))TogglePhoto();return;}
+        if(desktopHold){if(Input.GetKeyDown(KeyCode.Return))ResumeDesktop();else if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Tab)){desktopHold=false;TogglePause();}return;}
         if(screen.LanguageOpen){screen.LanguageKeys();return;}
         if((paused||!started)&&Input.GetKeyDown(KeyCode.L)){screen.OpenLanguages();return;}
         bool menu=Input.GetKeyDown(KeyCode.Tab)||Input.GetKeyDown(KeyCode.F1);
@@ -67,10 +72,11 @@ public class FactoryGame : MonoBehaviour {
         if(paused){if(Input.GetKeyDown(KeyCode.X)){Quit();return;}if(menu||escape)TogglePause();return;}
         if(menu&&started&&!ended){TogglePause();return;}
         if(!started&&(Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.Space))){Begin();return;}
-        if(started&&!paused&&!Reading&&!ended&&!journal)playSeconds+=Time.unscaledDeltaTime;
+        if(started&&!paused&&!Reading&&!ended&&!journal&&!photoMode&&!desktopHold)playSeconds+=Time.unscaledDeltaTime;
+        if(escape&&started&&!ended){TogglePause();return;}
         if(activeCircuit){
             if(Time.frameCount==circuitOpenedFrame)return;
-            if(escape){CloseCircuit();return;}
+            if(Input.GetKeyDown(KeyCode.Backspace)){CloseCircuit();return;}
             var grid=activeCircuit.puzzle;int x=activeCircuit.selectedTile%grid.size,y=activeCircuit.selectedTile/grid.size;
             if(Input.GetKeyDown(KeyCode.LeftArrow))x=Mathf.Max(0,x-1);if(Input.GetKeyDown(KeyCode.RightArrow))x=Mathf.Min(grid.size-1,x+1);
             if(Input.GetKeyDown(KeyCode.UpArrow))y=Mathf.Max(0,y-1);if(Input.GetKeyDown(KeyCode.DownArrow))y=Mathf.Min(grid.size-1,y+1);
@@ -78,7 +84,7 @@ public class FactoryGame : MonoBehaviour {
             if(Input.GetKeyDown(KeyCode.Space)){grid.Rotate(activeCircuit.selectedTile);audioScore.Tick(550);}
             if(Input.GetKeyDown(KeyCode.Return)&&grid.Solved)PowerCircuit();return;
         }
-        if(escape&&started&&!ended){if(journal)ToggleJournal();else TogglePause();return;}
+        if(journal&&Input.GetKeyDown(KeyCode.Backspace)){ToggleJournal();return;}
         if(Input.GetKeyDown(KeyCode.J)&&!Reading)ToggleJournal();
         if(Reading&&Time.frameCount!=dialogueOpenedFrame&&(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return)))Advance();
         if(started&&!Frozen&&Input.GetKeyDown(KeyCode.H))Hint();
@@ -93,6 +99,9 @@ public class FactoryGame : MonoBehaviour {
     public void OpenCircuit(Machine m){activeCircuit=m;circuitOpenedFrame=Time.frameCount;SyncFreeze();}
     public void CloseCircuit(){activeCircuit=null;SyncFreeze();}
     public void PowerCircuit(){if(!activeCircuit||!activeCircuit.puzzle.Solved)return;var machine=activeCircuit;CloseCircuit();machine.StartWork();}
+    public void TogglePhoto(){if(!started||ended)return;photoMode=!photoMode;SyncFreeze();}
+    public void ResumeDesktop(){desktopHold=false;SyncFreeze();}
+    public void HoldForDesktop(){if(!started||Frozen)return;desktopHold=true;SyncFreeze();}
     public void TogglePause(){if(!started||ended)return;paused=!paused;SyncFreeze();}
     public void ToggleJournal(){if(!started||ended||Reading||paused)return;journal=!journal;SyncFreeze();}
     public void Begin(){started=true;SyncFreeze();Say("PIP / NIGHT FOREMAN",
@@ -100,8 +109,8 @@ public class FactoryGame : MonoBehaviour {
         "We have one forgotten pumpkin lantern to finish tonight. First, let's open this door together. Follow the gold marker; your checklist is on the right.");}
     public void Say(string who, params string[] text){screen.ResetDialoguePages(); dialogueOpenedFrame=Time.frameCount;speaker=who; dialogue.Clear(); foreach(var s in text) dialogue.Enqueue(s); line=dialogue.Peek(); SyncFreeze(); }
     public void Advance(){ if(!Reading)return;if(screen.AdvancePage(this))return; dialogue.Dequeue(); if(Reading)line=dialogue.Peek(); SyncFreeze(); }
-    void SyncFreeze(){ Time.timeScale=Frozen?0:1; SetCursor(Frozen);if(player)player.ResetLookInput(); }
-    void SetCursor(bool free){ Cursor.lockState=free?CursorLockMode.None:CursorLockMode.Locked; Cursor.visible=free; }
+    void SyncFreeze(){ Time.timeScale=Frozen?0:1; ReleaseCursor();if(player)player.ResetLookInput(); }
+    void ReleaseCursor(){if(Cursor.lockState!=CursorLockMode.None)Cursor.lockState=CursorLockMode.None;if(!Cursor.visible)Cursor.visible=true;}
     public void Notify(string text,float seconds=3){toast=text;toastUntil=Time.unscaledTime+seconds;}
     public void Hint(){
         hintsRequested++;
@@ -135,7 +144,7 @@ public class FactoryGame : MonoBehaviour {
     }
     public void Deliver(){
         if(!assembled||!player.held||player.held.kind!=Pickup.Kind.Lantern){Say("PIP / DISPATCH","One last order, then we can all go home. I'll keep the desk warm.");return;}
-        player.ReleaseForDelivery();player.hand.gameObject.SetActive(false); ended=true; Time.timeScale=1; SetCursor(true); if(audioScore)audioScore.Chord();
+        player.ReleaseForDelivery();player.hand.gameObject.SetActive(false); ended=true; Time.timeScale=1; ReleaseCursor(); if(audioScore)audioScore.Chord();
     }
     public void ResetSection(){
         if(Frozen)return; resets++;
@@ -153,7 +162,7 @@ public class FactoryGame : MonoBehaviour {
     public void Quit(){Time.timeScale=1;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;Application.Quit();}
     public void DrawCircuit(float w,float h){circuitView.Draw(activeCircuit,w,h,Texture2D.whiteTexture);}
     void OnGUI(){screen.Draw(this);}
-    void OnApplicationFocus(bool focused){if(!focused&&!Application.isBatchMode&&started&&!ended&&!paused){paused=true;SyncFreeze();}}
+    void OnApplicationFocus(bool focused){ReleaseCursor();if(!focused&&!Application.isBatchMode)HoldForDesktop();}
     void OnDestroy(){if(I==this){Time.timeScale=1;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;}}
 }
 public abstract class Interactable : MonoBehaviour { public abstract string Prompt(PlayerMotor p); public abstract void Use(PlayerMotor p); }

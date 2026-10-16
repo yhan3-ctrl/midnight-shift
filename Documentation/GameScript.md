@@ -1,4 +1,4 @@
-# Game Script / v0.7 implemented rules
+# Game Script / v0.8 implemented rules
 
 This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. A future final report must update this document to match its submitted version.
 
@@ -126,3 +126,13 @@ The 263-entry resource catalog covers interface, instructional actions/reasons, 
 Long dialogue is split using actual font measurements. Continue/Space/Enter first advances the visible page, then advances the underlying story line after its final page. The page counter is visible when needed. Opening a new conversation resets pagination; changing language restarts the current line at its first page. This avoids clipping translations or shrinking narrative text to an unreadable size.
 
 Translations are authored implementation drafts, not a claim of professional native-speaker proofreading. Visual and coverage checks do not establish culturally natural dialogue or new-player comprehension in every language.
+
+## v0.8 / operating-system access and unambiguous placement
+
+Based on direct player feedback, active play no longer locks or confines the hardware cursor. Hold the right mouse button and drag to look; release it for a free pointer. Arrow-key looking remains available. Ordinary pointer motion alone cannot rotate the view or satisfy the initial look lesson. System modifiers suspend game input, so system shortcuts do not also place/use objects. The first v0.8 launch restores a normal 1280×800 resizable window; fullscreen switching is enabled for the native window controls.
+
+Esc opens the menu consistently during dialogue, circuits and notebook; Backspace returns from circuits, and J/Backspace closes the notebook. The menu retains the underlying mode. The top-left Menu and Screenshot controls are clickable. F2 freezes the world and hides the main HUD for system screenshots; F2/Esc returns to the previous mode. Losing focus during active play freezes without covering the scene with the pause menu. Returning requires Enter or the visible Resume button. Screenshot/desktop hold time is excluded from active play timing.
+
+The destination striped plate has a pulsing gold border. A world-space crate outline uses the same validated landing position as Q: green when it is on the target plate, pale blue for ordinary floor placement, red for an invalid candidate. Q appears only as a keycap/fixed instruction, never as a spatial location marker. The carried crate is smaller (26% visual scale) so the plate remains visible. Within 3 units and in front of the player, a clear target plate can be selected directly; collision, player separation and line-of-sight validation still apply. The final placement cannot pass through a wall. The physical output remains full size.
+
+Reference decisions: Minecraft's official control guide ties placement to the surface being pointed at (https://www.minecraft.net/article/minecraft-controls). Unity documents that a locked cursor blocks UI interaction and recommends capture only after user action (https://docs.unity.com/en-us/engine/6000.0/script-reference/unityengine/cursor/lockstate). This game uses an unconfined drag gesture and visible world feedback to suit the player's desktop/screenshot requirements. Apple documents Shift-Command-4 region selection at https://support.apple.com/en-gb/102646 . These references informed the redesign; they are not claims of identical controls across all games.

@@ -15,7 +15,7 @@ public class ShiftGuide : MonoBehaviour {
         foreach(var m in FindObjectsByType<Machine>(FindObjectsSortMode.None)){switch(m.machineId){case "mould":mould=m;break;case "ribbon":ribbon=m;break;case "chime":chime=m;break;case "etch":etch=m;break;case "press":press=m;break;}}
     }
     void Update(){Ensure();if(!g.started||g.Frozen)return;
-        if(Input.GetKey(KeyCode.LeftArrow)||Input.GetKey(KeyCode.RightArrow)||Input.GetKey(KeyCode.UpArrow)||Input.GetKey(KeyCode.DownArrow)||Mathf.Abs(Input.GetAxisRaw("Mouse X"))+Mathf.Abs(Input.GetAxisRaw("Mouse Y"))>.03f)lookTime+=Time.unscaledDeltaTime;
+        if(Input.GetKey(KeyCode.LeftArrow)||Input.GetKey(KeyCode.RightArrow)||Input.GetKey(KeyCode.UpArrow)||Input.GetKey(KeyCode.DownArrow)||(g.player.MouseLookHeld&&(Mathf.Abs(Input.GetAxisRaw("Mouse X"))+Mathf.Abs(Input.GetAxisRaw("Mouse Y"))>.03f)))lookTime+=Time.unscaledDeltaTime;
         if(lookTime>.25f)looked=true;
         if(Vector3.Distance(g.player.transform.position,foyerCrate.transform.position)<3.3f||g.player.held==foyerCrate)walked=true;
     }
@@ -23,9 +23,10 @@ public class ShiftGuide : MonoBehaviour {
     Task CrateTask(Pickup crate,FactoryGate gate,string chapter){
         if(gate.CrateHoldsPlate)return Make(chapter,chapter,"穿过打开的门","Walk through the open door","让箱子留在板上，门就会一直开着。","Leave the crate on the plate to keep the door open.","W A S D",gate.closedPosition+Vector3.forward*2,"门的中央","Centre doorway");
         if(g.player.held==crate){
-            Vector3 target=gate.plate.position;string detail=UiCopy.Pick("靠近金色条纹板，留出一步距离。看准落点后按 Q。","Approach the striped plate, leave one step of space, then press Q.");
+            Vector3 target=gate.plate.position;string detail=UiCopy.Pick("绿色箱子轮廓在条纹木板上时，按 Q 键放置。","When the green crate outline is on the striped plate, press the Q key.");
             if(crate==archiveCrate&&g.player.transform.position.z<40.5f){target=g.player.transform.position.x<7.65f?new Vector3(8,0,31.4f):new Vector3(8,0,41.3f);detail=UiCopy.Pick("先沿入口走向右墙，再从货架右侧绕过去。","Go along the entrance to the right wall, then around the right side of the shelf.");}
-            var t=Make(chapter,chapter,"把箱子放在条纹板上","Leave the crate on the striped plate",detail,detail,"Q",target,"条纹压力板","Striped pressure plate");return t;
+            bool ready=g.player.ReadyOnPlate(gate);
+            var t=Make(chapter,chapter,ready?"按 Q 键，把箱子放到这块木板上":"把箱子带到发光的条纹木板前",ready?"Press Q to place the crate on this plate":"Bring the crate to the glowing striped plate",detail,detail,ready?"Q":"W A S D",target,"条纹压力板","Striped pressure plate");return t;
         }
         if(g.player.held)return Make(chapter,chapter,"先腾出双手","Free your hands first","按 Q 把手中的物品放到空地，再拿箱子。","Press Q on clear floor, then pick up the crate.","Q",crate.transform.position,"木箱","Crate");
         return Make(chapter,chapter,"走近木箱，按 E 拿起","Walk to the crate and press E","让屏幕中央的小圆点对准箱子。出现“拾取”提示再按 E。","Aim the centre dot at the crate. Press E when the pickup prompt appears.","E",crate.transform.position,"木箱","Crate");
@@ -42,7 +43,7 @@ public class ShiftGuide : MonoBehaviour {
     public Task Current {
         get {Ensure();var p=g.player;
             if(p.transform.position.z<12&&!g.shell){
-                if(!looked&&!p.held&&!foyer.CrateHoldsPlate)return Make("01 / 我来带你熟悉一下","01 / Let me show you around","先看一看左前方的木箱","Look toward the crate on your left","移动鼠标，或按方向键转动视角。现在只需要看一看。","Move your mouse, or use the arrow keys to look. That's all for this step.","MOUSE / ARROWS",foyerCrate.transform.position,"先看这里","Look here first");
+                if(!looked&&!p.held&&!foyer.CrateHoldsPlate)return Make("01 / 我来带你熟悉一下","01 / Let me show you around","先看一看左前方的木箱","Look toward the crate on your left","按住鼠标右键并拖动来观察，松开即可自由使用鼠标。方向键也可以。","Hold the right mouse button and drag to look. Release it to free your pointer. Arrow keys also work.","RMB / ARROWS",foyerCrate.transform.position,"先看这里","Look here first");
                 if(!walked&&!p.held&&!foyer.CrateHoldsPlate)return Make("01 / 试着走几步","01 / Take a few steps","按 W 向木箱走近一点","Press W to walk toward the crate","W 前进 · S 后退 · A 左移 · D 右移。","W forward · S back · A left · D right.","W A S D",foyerCrate.transform.position,"木箱","Crate");
                 return CrateTask(foyerCrate,foyer,UiCopy.Pick("01 / 打开第一扇门","01 / Open your first door"));
             }
@@ -84,6 +85,7 @@ public class ShiftGuide : MonoBehaviour {
         if(route){t.target=waypoint;t.key="W A S D";t.action=UiCopy.Pick("先沿箭头走到中央通道","Walk to the marked doorway");t.reason=UiCopy.Pick("这条通道通往：","This passage leads to: ")+t.targetName;t.targetName=UiCopy.Pick("下一处通道","Next clear passage");}
         return t;
     }
+    public FactoryGate PlacementGate {get{Ensure();var held=g.player.held;if(held==foyerCrate)return foyer;if(held==overrideCrate)return g.workshopRelay.gate;if(held==archiveCrate)return archive;if(held==assemblyCrate)return assembly;return null;}}
     public int Chapter=>!g||g.player.transform.position.z<12?0:!g.transferred?1:!g.blueprint?2:!g.assembled?3:4;
     public string ChapterTitle {get{switch(Chapter){case 0:return UiCopy.Pick("01 / 第一扇门","01 / FIRST STEPS");case 1:return UiCopy.Pick("02 / 包装区","02 / PACKAGING");case 2:return UiCopy.Pick("03 / 旧图纸","03 / THE ARCHIVE");case 3:return UiCopy.Pick("04 / 最终装配","04 / ASSEMBLY");default:return UiCopy.Pick("05 / 最后送达","05 / DELIVERY");}}}
     public string[] Checklist {get{Ensure();switch(Chapter){
