@@ -1,0 +1,56 @@
+name: Verify packaged releases
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Download and check the frozen Linux package
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 https://github.com/yhan3-ctrl/midnight-shift/releases/download/v0.15/MidnightShift-Linux-v0.15.zip -o "$RUNNER_TEMP/game.zip"
+          echo "af0639fabcdaf0d12f8774fd376cd59fbb930fa0c4ad8a25079dbba12ee49496  $RUNNER_TEMP/game.zip" | sha256sum --check -
+          unzip -q "$RUNNER_TEMP/game.zip" -d "$RUNNER_TEMP/game"
+      - name: Execute the native Linux player without graphics
+        shell: bash
+        run: |
+          timeout 60s "$RUNNER_TEMP/game/MidnightShift-Linux-v0.15/Midnight Shift.x86_64" -batchmode -nographics --verify-build -logFile "$RUNNER_TEMP/linux-smoke.log"
+          cat "$RUNNER_TEMP/linux-smoke.log"
+          python3 -c 'import pathlib,os; s=(pathlib.Path(os.environ["RUNNER_TEMP"])/"linux-smoke.log").read_text(); assert "PACKAGED_BUILD_PASS /" in s; assert "PACKAGED_BUILD_FAIL /" not in s'
+      - name: Preserve the native startup log
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: linux-native-startup-v015
+          path: ${{ runner.temp }}/linux-smoke.log
+          if-no-files-found: warn
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 5
+    steps:
+      - name: Download and check the frozen Windows package
+        shell: pwsh
+        run: |
+          $zipPath = Join-Path $env:RUNNER_TEMP 'game.zip'
+          Invoke-WebRequest 'https://github.com/yhan3-ctrl/midnight-shift/releases/download/v0.15/MidnightShift-Windows-v0.15.zip' -OutFile $zipPath
+          if ((Get-FileHash $zipPath -Algorithm SHA256).Hash.ToLower() -ne 'd44d505e5c132487d147899ca10bc5d71a9d2210c51b864ed51abd0bb47149d9') { throw 'Release checksum mismatch' }
+          Expand-Archive $zipPath -DestinationPath (Join-Path $env:RUNNER_TEMP 'game')
+      - name: Execute the native Windows player without graphics
+        shell: pwsh
+        run: |
+          $exePath = Join-Path $env:RUNNER_TEMP 'game/MidnightShift-Windows-v0.15/Midnight Shift.exe'
+          $logPath = Join-Path $env:RUNNER_TEMP 'windows-smoke.log'
+          $process = Start-Process -FilePath $exePath -ArgumentList @('-batchmode', '-nographics', '--verify-build', '-logFile', "`"$logPath`"") -Wait -PassThru
+          if (Test-Path $logPath) { Get-Content $logPath }
+          if ($process.ExitCode -ne 0) { throw "Player exit code $($process.ExitCode)" }
+          if (!(Select-String -Path $logPath -SimpleMatch 'PACKAGED_BUILD_PASS /' -Quiet)) { throw 'Missing startup success marker' }
+      - name: Preserve the native startup log
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-native-startup-v015
+          path: ${{ runner.temp }}/windows-smoke.log
+          if-no-files-found: warn
