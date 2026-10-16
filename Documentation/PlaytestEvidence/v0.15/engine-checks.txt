@@ -1,0 +1,3 @@
+PASS: 222 engine integration checks, including the animated ending.
+Actual scene components, physics visibility, progression, retries and delivery exercised.
+Not an unassisted human playthrough or timing validation.

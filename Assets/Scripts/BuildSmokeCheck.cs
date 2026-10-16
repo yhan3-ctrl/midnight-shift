@@ -26,9 +26,9 @@ public class BuildSmokeCheck : MonoBehaviour {
         while(g.Reading)g.Advance();g.player.enabled=false;g.inspector.enabled=false;
         yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01c-guide-runtime.png"));yield return new WaitForSecondsRealtime(.5f);
         foreach(var crate in FindObjectsByType<Pickup>(FindObjectsSortMode.None))if(crate.name=="Foyer crate"){g.player.Pick(crate);break;}
-        g.player.Teleport(new Vector3(-4.8f,0,7.3f),0);yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01d-placement-runtime.png"));yield return new WaitForSecondsRealtime(.5f);g.player.Teleport(new Vector3(-4.8f,0,5.3f),0);g.player.view.transform.LookAt(new Vector3(-4.8f,.1f,8));yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01e-plate-ready-runtime.png"));yield return new WaitForSecondsRealtime(.5f);
+        g.player.Teleport(new Vector3(-4.8f,0,5.3f),0);yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01d-placement-runtime.png"));yield return new WaitForSecondsRealtime(.5f);g.player.Teleport(new Vector3(-4.8f,0,5.3f),0);g.player.view.transform.LookAt(new Vector3(-4.8f,.1f,8));yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01e-plate-ready-runtime.png"));yield return new WaitForSecondsRealtime(.5f);
         g.TogglePhoto();yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01f-screenshot-view-runtime.png"));yield return new WaitForSecondsRealtime(.5f);g.TogglePhoto();
-        g.player.PutBackHeld();g.player.Teleport(new Vector3(0,0,-7),0);
+        g.player.PutBackHeld();g.player.Teleport(new Vector3(2.2f,0,1),0);g.player.view.transform.LookAt(g.buttonHelper.transform.position+Vector3.up);yield return new WaitForSecondsRealtime(.5f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"01g-button-desk-runtime.png"));yield return new WaitForSecondsRealtime(.5f);g.player.Teleport(new Vector3(0,0,-7),0);
         Machine mould=null;foreach(var m in FindObjectsByType<Machine>(FindObjectsSortMode.None))if(m.machineId=="mould")mould=m;
         g.player.Pick(g.sharedCore);mould.Use(g.player);mould.Use(g.player);yield return new WaitForSecondsRealtime(.7f);
         ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"02-circuit-runtime.png"));yield return new WaitForSecondsRealtime(.7f);g.CloseCircuit();
@@ -40,7 +40,7 @@ public class BuildSmokeCheck : MonoBehaviour {
         yield return new WaitForSecondsRealtime(.7f);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"04b-childhood-drawing-runtime.png"));yield return new WaitForSecondsRealtime(.7f);
         g.shell=true;g.transferred=true;g.inspectorLesson=true;g.blueprint=true;g.etched=true;g.assembled=true;
         g.player.Teleport(new Vector3(0,0,58.2f),0);g.lantern.gameObject.SetActive(true);g.player.Pick(g.lantern);g.Deliver();
-        yield return new WaitForSecondsRealtime(13);
+        yield return new WaitForSecondsRealtime(6);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"05a-ending-queue-runtime.png"));yield return new WaitForSecondsRealtime(7);ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"05b-ending-exit-runtime.png"));yield return new WaitForSecondsRealtime(6);
         ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(dir,"05-ending-runtime.png"));yield return new WaitForSecondsRealtime(1);
         Debug.Log("RUNTIME_PREVIEWS_READY / staged visual capture, not a playtest");Application.Quit(0);
     }

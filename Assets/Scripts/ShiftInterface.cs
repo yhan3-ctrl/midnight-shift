@@ -4,7 +4,7 @@ using UnityEngine;
 namespace LastLantern {
 public static class UiTheme {
     public static readonly Color Ink=new Color(.10f,.19f,.20f),Cream=new Color(.98f,.94f,.84f),Gold=new Color(.98f,.74f,.35f),Teal=new Color(.10f,.25f,.27f),Muted=new Color(.70f,.79f,.75f);
-    static Font body,display;static HashSet<string> overflow=new HashSet<string>();static Dictionary<string,GUIStyle> styles=new Dictionary<string,GUIStyle>();static int language=-1;
+    static Font body,display,title;static Texture2D round,disc,bat,triangle;static HashSet<string> overflow=new HashSet<string>();static Dictionary<string,GUIStyle> styles=new Dictionary<string,GUIStyle>();static int language=-1;
     public static void Setup(){if(!display)display=Resources.Load<Font>("Fonts/Fraunces");if(language!=UiCopy.Selected||!body){language=UiCopy.Selected;body=UiCopy.BodyFont(language);styles.Clear();overflow.Clear();}}
     public static GUIStyle Style(int size,Color color,bool bold=false,bool art=false,TextAnchor align=TextAnchor.UpperLeft){Setup();string key=size+"/"+color+"/"+bold+"/"+art+"/"+align;if(!styles.TryGetValue(key,out var s)){s=new GUIStyle(GUI.skin.label){font=(art?display:body),fontSize=size,fontStyle=bold?FontStyle.Bold:FontStyle.Normal,wordWrap=true,alignment=align,richText=false};s.normal.textColor=color;styles[key]=s;}return s;}
     public static void Label(Rect r,string text,int size=24,Color? color=null,bool bold=false,bool art=false,TextAnchor align=TextAnchor.UpperLeft){
@@ -14,6 +14,17 @@ public static class UiTheme {
         if(align==TextAnchor.UpperLeft&&style.CalcHeight(content,r.width)>r.height+3&&overflow.Add(text+"/"+r))Debug.LogWarning("UI_LAYOUT_OVERFLOW / "+UiCopy.Codes[UiCopy.Selected]+" / "+text+" / "+r);
         GUI.Label(r,text,style);
     }
+    static Texture2D Mask(Vector2[] polygon){var t=new Texture2D(128,64,TextureFormat.RGBA32,false);t.wrapMode=TextureWrapMode.Clamp;for(int y=0;y<64;y++)for(int x=0;x<128;x++){Vector2 p=new Vector2((x+.5f)/128,(y+.5f)/64);bool inside=false;for(int i=0,j=polygon.Length-1;i<polygon.Length;j=i++)if((polygon[i].y>p.y)!=(polygon[j].y>p.y)&&p.x<(polygon[j].x-polygon[i].x)*(p.y-polygon[i].y)/(polygon[j].y-polygon[i].y)+polygon[i].x)inside=!inside;t.SetPixel(x,y,inside?Color.white:Color.clear);}t.Apply();return t;}
+    static void Image(Rect r,Texture2D image,Color tint){var old=GUI.color;GUI.color=tint;GUI.DrawTexture(r,image);GUI.color=old;}
+    public static void Pumpkin(Rect r){if(!disc){disc=new Texture2D(64,64,TextureFormat.RGBA32,false);for(int y=0;y<64;y++)for(int x=0;x<64;x++)disc.SetPixel(x,y,new Vector2(x-31.5f,y-31.5f).magnitude<31?Color.white:Color.clear);disc.Apply();triangle=Mask(new[]{new Vector2(0,0),new Vector2(1,0),new Vector2(.5f,1)});}
+        Fill(new Rect(r.x+r.width*.46f,r.y,r.width*.12f,r.height*.25f),Teal);
+        for(int i=-1;i<=1;i++)Image(new Rect(r.x+r.width*(.24f+i*.2f),r.y+r.height*.18f,r.width*.52f,r.height*.78f),disc,i==0?new Color(.94f,.56f,.2f):new Color(.84f,.36f,.14f));
+        Image(new Rect(r.x+r.width*.24f,r.y+r.height*.44f,r.width*.16f,r.height*.17f),triangle,Ink);Image(new Rect(r.x+r.width*.61f,r.y+r.height*.44f,r.width*.16f,r.height*.17f),triangle,Ink);
+        Fill(new Rect(r.x+r.width*.35f,r.y+r.height*.72f,r.width*.3f,r.height*.055f),Ink);
+    }
+    public static void Bat(Rect r,Color color){if(!bat)bat=Mask(new[]{new Vector2(0,.8f),new Vector2(.2f,.6f),new Vector2(.37f,.65f),new Vector2(.43f,1),new Vector2(.5f,.8f),new Vector2(.57f,1),new Vector2(.63f,.65f),new Vector2(.8f,.6f),new Vector2(1,.8f),new Vector2(.9f,.25f),new Vector2(.72f,.35f),new Vector2(.6f,.2f),new Vector2(.5f,0),new Vector2(.4f,.2f),new Vector2(.28f,.35f),new Vector2(.1f,.25f)});Image(r,bat,color);}
+    public static void Paper(Rect r){Panel(r,Cream);Outline(new Rect(r.x+10,r.y+10,r.width-20,r.height-20),new Color(.53f,.32f,.2f,.5f));for(int i=0;i<3;i++){float x=r.x+27+i*14;Fill(new Rect(x,r.y+24,7,3),Gold);Fill(new Rect(r.xMax-34-i*14,r.yMax-27,7,3),Gold);}}
+    public static void Brand(Rect r,string copy,int size){if(!title)title=Resources.Load<Font>("Fonts/BerkshireSwash");var s=new GUIStyle(GUI.skin.label){font=title,fontSize=size,wordWrap=false};s.normal.textColor=new Color(.31f,.18f,.24f);GUI.Label(r,copy,s);}
     public static void Fill(Rect r,Color color){var before=GUI.color;GUI.color=color;GUI.DrawTexture(r,Texture2D.whiteTexture);GUI.color=before;}
     public static void Panel(Rect r,Color? color=null){Fill(new Rect(r.x+4,r.y+5,r.width,r.height),new Color(0,0,0,.25f));Fill(r,color??Teal);}
     public static void BeginPointer(){UiPointer.Begin();}
@@ -25,10 +36,10 @@ public static class UiTheme {
         while(s.fontSize>20&&s.CalcHeight(new GUIContent(text),r.width)>r.height+3)s.fontSize--;
         if(s.CalcHeight(new GUIContent(text),r.width)>r.height+3&&overflow.Add(text+"/"+r))Debug.LogWarning("UI_LAYOUT_OVERFLOW / button / "+text+" / "+r);
         s.normal.textColor=secondary?Cream:Ink;s.hover.textColor=s.normal.textColor;s.active.textColor=s.normal.textColor;
-        s.normal.background=Texture2D.whiteTexture;s.hover.background=Texture2D.whiteTexture;s.active.background=Texture2D.whiteTexture;s.focused.background=Texture2D.whiteTexture;
+        if(!round){round=new Texture2D(32,32,TextureFormat.RGBA32,false);for(int y=0;y<32;y++)for(int x=0;x<32;x++){float dx=Mathf.Max(7.5f-x,x-23.5f),dy=Mathf.Max(7.5f-y,y-23.5f);round.SetPixel(x,y,Mathf.Max(dx,0)*Mathf.Max(dx,0)+Mathf.Max(dy,0)*Mathf.Max(dy,0)<64?Color.white:Color.clear);}round.Apply();}s.border=new RectOffset(9,9,9,9);s.normal.background=round;s.hover.background=round;s.active.background=round;s.focused.background=round;
         var old=GUI.backgroundColor;Color fill=secondary?new Color(.18f,.34f,.35f):Gold;if(hot)fill=Color.Lerp(fill,Cream,.22f);if(!GUI.enabled)fill=Color.Lerp(fill,Ink,.55f);
-        GUI.backgroundColor=fill;Fill(r,fill);bool clicked=GUI.Button(r,text,s);GUI.backgroundColor=old;
-        if(hot)Outline(r,Cream);return clicked;
+        GUI.backgroundColor=fill;bool clicked=GUI.Button(r,text,s);GUI.backgroundColor=old;
+        if(hot)Fill(new Rect(r.x+15,r.yMax-5,r.width-30,2),Cream);return clicked;
     }
     public static void Key(Rect r,string key){Fill(new Rect(r.x,r.y+3,r.width,r.height),new Color(.02f,.07f,.08f));Fill(r,Cream);Label(r,key,23,Ink,true,false,TextAnchor.MiddleCenter);}
 }
@@ -55,7 +66,7 @@ public class ShiftInterface {
         if(g.journal){Notebook();MenuTab();return;}
         if(g.AwaitingLook){LookStart();return;}
         if(g.player.LookCaptured)hasCaptured=true;
-        if(g.Reading){if(UiTheme.Button(new Rect(28,22,180,50),T("菜单 [Esc]","Menu [Esc]"),true))g.TogglePause();Dialogue();return;}
+        if(g.Reading){if(UiTheme.Button(new Rect(28,22,180,50),T("菜单 [Esc]","Menu [Esc]"),true))g.TogglePause();if(g.ShiftBriefing)ShiftStart();else Dialogue();return;}
         Calendar();MenuTab();g.factoryMap.Mini(g);
         Pointer();Coach();
         UiTheme.Label(new Rect(w/2-15,h/2-25,30,40),"+",27,UiTheme.Cream,false,false,TextAnchor.MiddleCenter);
@@ -76,15 +87,15 @@ public class ShiftInterface {
     }
     void Photo(){if(UiTheme.Button(new Rect(28,22,460,54),T("返回游戏 [F2 / Esc]","Return to game [F2 / Esc]"),true))g.TogglePhoto();}
     void Title(){
-        UiTheme.Panel(new Rect(48,50,775,h-100),new Color(.045f,.12f,.14f,.98f));
-        UiTheme.Label(new Rect(90,82,680,40),"WILLOW WORKS  /  OCTOBER 31",25,UiTheme.Gold);
-        UiTheme.Label(new Rect(85,148,690,155),"Midnight Shift\nThe Last Lantern",54,UiTheme.Cream,false,true);
-        UiTheme.Label(new Rect(92,325,660,95),T("最后一份订单，三个等你的小幽灵。\n今晚，一起做一盏照亮回家路的灯。","One forgotten order. Three little helpers.\nTonight, make a light for their way home."),28);
-        UiTheme.Label(new Rect(92,445,660,65),T("我会一步步带你熟悉工厂。无需先记住所有规则。","I'll show you the first steps. Follow the gold marker."),25,UiTheme.Muted);
-        if(UiTheme.Button(new Rect(92,547,635,68),T("跟着 Pip 开始夜班  →","Begin the guided night shift  →")))g.Begin();
+        UiTheme.Paper(new Rect(48,50,775,h-100));UiTheme.Pumpkin(new Rect(669,86,92,85));UiTheme.Bat(new Rect(571,109,74,35),new Color(.31f,.18f,.24f));
+        UiTheme.Label(new Rect(90,82,680,40),"WILLOW WORKS  /  HALLOWEEN NIGHT",21,UiTheme.Ink);
+        UiTheme.Brand(new Rect(88,154,690,100),"Midnight Shift",68);UiTheme.Brand(new Rect(92,249,650,80),"The Last Lantern",51);UiTheme.Fill(new Rect(94,338,631,2),new Color(.65f,.39f,.22f,.5f));
+        UiTheme.Label(new Rect(92,365,660,95),T("最后一份订单，三个等你的小幽灵。\n今晚，一起做一盏照亮回家路的灯。","One forgotten order. Three little helpers.\nTonight, make a light for their way home."),28,UiTheme.Ink);
+        UiTheme.Label(new Rect(92,469,660,65),T("我会一步步带你熟悉工厂。无需先记住所有规则。","I'll show you the first steps. Follow the gold marker."),25,UiTheme.Ink);
+        if(UiTheme.Button(new Rect(92,547,635,68),T("开始教学  →","Start the tutorial  →")))g.Begin();
         if(UiTheme.Button(new Rect(92,638,463,58),T("语言","Language")+": "+UiCopy.Names[UiCopy.Selected]+"  [L]",true))OpenLanguages();
         if(UiTheme.Button(new Rect(576,638,151,58),T("退出","Quit"),true))g.Quit();
-        UiTheme.Label(new Rect(92,724,640,45),T("无倒计时 · 无战斗 · 可随时暂停或退出","No countdown · No combat · Pause or quit anytime"),22,UiTheme.Muted);
+        UiTheme.Label(new Rect(92,724,640,45),T("无倒计时 · 无战斗 · 可随时暂停或退出","No countdown · No combat · Pause or quit anytime"),22,UiTheme.Ink);
         float x=Mathf.Max(860,w-510);UiTheme.Panel(new Rect(x,130,440,665),UiTheme.Cream);
         UiTheme.Label(new Rect(x+30,157,380,65),T("先认识这几个按键","Your first few controls"),30,UiTheme.Ink,true,true);
         ControlCard(x+30,255,"W A S D",T("走动","Walk"),T("W 前进，S 后退，A / D 左右移动","W forward, S back, A / D sideways"));
@@ -92,6 +103,14 @@ public class ShiftInterface {
         ControlCard(x+30,495,"Q",T("放下物品","Place"),T("绿色对准木板后按 Q","Green on the plate? Press Q."));
         UiTheme.Label(new Rect(x+30,635,385,70),T("移动鼠标：转头\nEsc：释放鼠标并打开菜单","Move mouse: look around\nEsc: free pointer / menu"),21,UiTheme.Ink);
         if(UiTheme.Button(new Rect(x+30,723,380,54),T("操作与舒适度","Controls & comfort")+" [C]",true))g.OpenComfort();
+    }
+    void ShiftStart(){
+        float x=w/2-480,y=Mathf.Max(110,h/2-290);UiTheme.Paper(new Rect(x,y,960,580));UiTheme.Pumpkin(new Rect(x+795,y+35,100,90));UiTheme.Bat(new Rect(x+705,y+46,62,32),UiTheme.Teal);
+        UiTheme.Label(new Rect(x+40,y+36,700,45),T("教学完成","TUTORIAL COMPLETE"),26,UiTheme.Ink,true);
+        UiTheme.Label(new Rect(x+40,y+110,850,105),T("正式夜班，现在开始","Your night shift begins"),44,UiTheme.Ink,false,true);
+        UiTheme.Label(new Rect(x+40,y+232,850,145),UiCopy.Translate(g.line),28,UiTheme.Ink);
+        UiTheme.Label(new Rect(x+40,y+394,850,62),T("接下来：包装区 → 档案室 → 最终装配","Next: Packaging → Archive → Assembly"),23,UiTheme.Ink,true);
+        if(UiTheme.Button(new Rect(x+40,y+478,880,65),T("开始制作灯笼 [Enter]","Start making the lantern [Enter]")))g.Advance();
     }
     void LookStart(){
         MenuTab();float x=w/2-480;float y=hasCaptured?h/2-125:h/2-230;
@@ -129,11 +148,12 @@ public class ShiftInterface {
         if(UiTheme.Button(new Rect(x+35,h-185,890,60),T("返回 [Esc]","Back [Esc]"),true))LanguageOpen=false;
     }
     void ControlCard(float x,float y,string key,string title,string copy){UiTheme.Key(new Rect(x,y,key.Length>3?160:60,43),key);UiTheme.Label(new Rect(x+(key.Length>3?178:80),y,370-(key.Length>3?178:80),45),title,28,UiTheme.Ink,true);UiTheme.Label(new Rect(x,y+54,370,54),copy,22,UiTheme.Ink);}
-    void Calendar(){float x=w-330;UiTheme.Panel(new Rect(x,94,302,210),UiTheme.Cream);UiTheme.Fill(new Rect(x,94,302,48),UiTheme.Teal);
-        UiTheme.Label(new Rect(x+18,101,270,38),T("10 / 31    今晚的待办","10 / 31    TONIGHT"),22,null,true);
+    void Calendar(){float x=w-330;UiTheme.Panel(new Rect(x,94,302,244),UiTheme.Cream);UiTheme.Fill(new Rect(x,94,302,48),UiTheme.Teal);
+        UiTheme.Label(new Rect(x+18,101,266,38),g.BasicsComplete?T("正式夜班","NIGHT SHIFT"):T("教学 / 熟悉操作","TUTORIAL"),22,null,true);
         UiTheme.Label(new Rect(x+18,151,266,76),guide.ChapterTitle,24,UiTheme.Ink,true,true);
         string[] rows=guide.Checklist;int done=0;foreach(var row in rows)if(row.StartsWith("[+]"))done++;
-        if(UiTheme.Button(new Rect(x+18,238,266,48),T("待办 [J]","Tasks [J]")+"  "+done+" / "+rows.Length,true))g.ToggleJournal();
+        UiTheme.Label(new Rect(x+18,229,266,36),T("已完成任务：","Tasks completed: ")+done+" / "+rows.Length,20,UiTheme.Ink);
+        if(UiTheme.Button(new Rect(x+18,274,266,46),T("查看待办 [J]","View tasks [J]"),true))g.ToggleJournal();
     }
     void Coach(){var socket=g.player.NearbyCoreSocket();if(socket&&guide.IsCurrentCoreSocket(socket)){task.key="E / Q";task.action=T("按 E 或 Q，把核心插入机器","Press E or Q to insert the core");task.reason=T("不用把核心放在桌上。靠近机器就能插入。","No need to drop it on the worktop. Insert it directly near the machine.");if(socket is Machine machine&&machine.Requirement!=""){task.action=UiCopy.Translate(machine.Requirement);task.reason=T("先完成这一步，核心会留在手中。","Finish this step first. The core stays in your hands.");}}else if(g.player.IntendedCoreSocket()&&!socket){task.key=g.player.CoreAccessKey;task.action=g.player.CoreAccessHint();}
         float height=246;float top=h-95-height;
@@ -145,7 +165,7 @@ public class ShiftInterface {
     }
     void WorkProgress(){
         foreach(var machine in UnityEngine.Object.FindObjectsByType<Machine>(FindObjectsSortMode.None))if(machine.running&&machine.machineId!="chime"){
-            float x=w-330,y=327;UiTheme.Panel(new Rect(x,y,302,142));
+            float x=w-330,y=361;UiTheme.Panel(new Rect(x,y,302,142));
             UiTheme.Label(new Rect(x+18,y+10,190,36),T("制作中","CRAFTING"),22,UiTheme.Gold,true);
             UiTheme.Label(new Rect(x+210,y+10,74,36),Mathf.FloorToInt(machine.WorkFraction*100)+"%",22,null,true,false,TextAnchor.MiddleRight);
             UiTheme.Label(new Rect(x+18,y+48,266,54),UiCopy.Translate(machine.displayName),20);
@@ -196,8 +216,8 @@ public class ShiftInterface {
         UiTheme.Label(new Rect(x+35,625,890,95),g.blueprint?UiCopy.Translate("For the last one to leave. So the way home is bright, too."):T("完成的工序会保留。箱子留在板上，门就会开着。","Finished work stays finished. Leave crates on plates to keep access."),24,UiTheme.Ink);
         if(UiTheme.Button(new Rect(x+35,h-175,890,60),T("合上笔记  [J]","Close notebook  [J]")))g.ToggleJournal();
     }
-    void Ending(){UiTheme.Panel(new Rect(35,70,600,h-140),new Color(.04f,.12f,.14f,.94f));UiTheme.Label(new Rect(65,100,530,42),T("最后一份订单 / 已送达","THE LAST ORDER / DELIVERED"),25,UiTheme.Gold,true);UiTheme.Label(new Rect(65,175,530,135),T("照亮回家的路。","A light for\nthe way home."),49,null,false,true);UiTheme.Label(new Rect(65,335,530,275),T("Pip 又看了一遍你的纸条。\n\n“这一次，我们一起下班吧。”\n\n门外的万圣节游行，才刚刚开始。","Pip turns your note over once more.\n\n\"Then this time, we all clock out together.\"\n\nOutside, the parade is just beginning."),26);
-        UiTheme.Label(new Rect(65,h-250,530,50),T("安全重试：","Safety retries: ")+g.resets,23,UiTheme.Muted);
+    void Ending(){UiTheme.Paper(new Rect(35,70,600,h-140));UiTheme.Bat(new Rect(525,136,62,30),UiTheme.Teal);UiTheme.Label(new Rect(65,100,530,42),T("最后一份订单 / 已送达","THE LAST ORDER / DELIVERED"),25,UiTheme.Ink,true);UiTheme.Label(new Rect(65,175,530,135),T("照亮回家的路。","A light for\nthe way home."),49,UiTheme.Ink,false,true);UiTheme.Label(new Rect(65,335,530,275),T("Pip 又看了一遍你的纸条。\n\n“这一次，我们一起下班吧。”\n\n门外的万圣节游行，才刚刚开始。","Pip turns your note over once more.\n\n\"Then this time, we all clock out together.\"\n\nOutside, the parade is just beginning."),26,UiTheme.Ink);
+        UiTheme.Label(new Rect(65,h-250,530,50),T("安全重试：","Safety retries: ")+g.resets,23,UiTheme.Ink);
         if(UiTheme.Button(new Rect(65,h-190,330,65),T("再来一次","Visit again")))g.Restart();if(UiTheme.Button(new Rect(415,h-190,185,65),T("退出","Quit"),true))g.Quit();}
 }
 }

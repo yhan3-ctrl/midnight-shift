@@ -41,6 +41,20 @@ public class FactoryPlaycheck : MonoBehaviour {
         g=FactoryGame.I;p=g.player;p.SetLookMode(1,false);
         try{Check(g&&p&&g.inspector,"scene references survive serialization");Check(FindObjectsByType<Machine>(FindObjectsSortMode.None).Length==5,"five machines present");Check(FindObjectsByType<StoryPoint>(FindObjectsSortMode.None).Length==4,"story interaction components survive serialization");var decor=GameObject.Find("Halloween decorations / non-interactive");Check(decor&&decor.GetComponentsInChildren<Collider>().Length==0&&decor.GetComponentsInChildren<Interactable>().Length==0,"Halloween decorations add no collision, pickup or navigation obstacles");}
         catch(Exception e){Fail(e);yield break;}
+        try{
+            var titleFace=Resources.Load<Font>("Fonts/BerkshireSwash");Check(titleFace&&"Midnight Shift The Last Lantern".All(c=>char.IsWhiteSpace(c)||titleFace.HasCharacter(c)),"decorative title face is bundled and covers the English brand");
+            foreach(var helper in new[]{g.buttonHelper,g.pipHelper}){
+                var desk=FindObjectsByType<BoxCollider>(FindObjectsSortMode.None).Where(x=>x.name=="Desk top").OrderBy(x=>Vector3.Distance(x.transform.position,helper.transform.position)).First();var saved=helper.transform.rotation;
+                bool clear=true;for(int degrees=0;degrees<360;degrees+=15){helper.transform.rotation=Quaternion.Euler(0,degrees,0);foreach(var sleeve in helper.GetComponentsInChildren<Transform>().Where(x=>x.name.EndsWith("sleeve")))sleeve.localRotation=Quaternion.Euler(0,0,80);Physics.SyncTransforms();foreach(var renderer in helper.GetComponentsInChildren<Renderer>())if(renderer.bounds.Intersects(desk.bounds))clear=false;}
+                helper.transform.rotation=saved;foreach(var sleeve in helper.GetComponentsInChildren<Transform>().Where(x=>x.name.EndsWith("sleeve")))sleeve.localRotation=Quaternion.identity;Check(clear,"helper and waving sleeves clear the desk through a full turn: "+helper.role);
+            }
+            bool spacing=true,doorway=true,deskClear=true;
+            for(float t=0;t<20;t+=.05f)for(int a=0;a<3;a++){
+                Vector3 at=EndOfShift.ParadePosition(a,t);if(Mathf.Abs(at.z-64)<.85f&&Mathf.Abs(at.x)+.95f>1.8f)doorway=false;if(at.z-.95f<60.65f)deskClear=false;
+                for(int b=a+1;b<3;b++)if(Vector3.Distance(at,EndOfShift.ParadePosition(b,t))<1.9f)spacing=false;
+            }
+            Check(spacing,"entire ending trajectory keeps helper roots at least 1.9 metres apart");Check(doorway,"ending queue stays within the doorway visual clearance before spreading out");Check(deskClear,"ending starts beyond the dispatch desk and never moves through it");
+        }catch(Exception e){Fail(e);yield break;}
         int initialLanguage=UiCopy.Selected;UiCopy.Language(0,false);
         g.Begin();CloseDialogue();
         try{
@@ -153,6 +167,7 @@ public class FactoryPlaycheck : MonoBehaviour {
         try{
             p.Teleport(new Vector3(0,0,-6),0);Physics.SyncTransforms();
             Check(!foyer.Evaluate(),"foyer initially blocks progression");
+            Check(g.GetComponent<PlacementPreview>().LitTarget==foyer&&!p.held,"current pressure plate glows before picking up the tutorial crate");
             Check(g.Objective.Contains("OPEN THE FIRST DOOR"),"foyer objective teaches the immediate task before power mechanics");
             var powerGate=gates.Single(x=>x.name=="Workshop power gate");
             var overrideCrate=crates.Single(x=>x.name=="Workshop override crate");overrideCrate.PlaceAt(powerGate.plate.position+Vector3.up*.885f);Physics.SyncTransforms();
@@ -169,6 +184,7 @@ public class FactoryPlaycheck : MonoBehaviour {
             p.Teleport(new Vector3(0,0,-6),0);
 
             crates.Single(x=>x.name=="Foyer crate").transform.position=foyer.plate.position+Vector3.up*.885f;Physics.SyncTransforms();Check(foyer.Evaluate(),"placed crate opens pressure gate");
+            g.StartShiftBriefing();Check(g.BasicsComplete&&g.ShiftBriefing&&g.Reading&&g.Frozen&&Time.timeScale==0,"tutorial completion opens an acknowledged paused transition before formal work");string briefingLine=g.line;g.StartShiftBriefing();Check(g.line==briefingLine,"tutorial transition cannot be restarted after completion");CloseDialogue();Check(!g.ShiftBriefing&&!g.Reading&&g.guide.Chapter==1,"closing transition begins formal tasks even when walking back into the foyer");
             p.Pick(core);g.ToggleJournal();Check(g.Frozen&&Time.timeScale==0&&p.held==core,"journal freezes world and retains held item");g.ToggleJournal();Check(!g.Frozen&&Time.timeScale==1,"journal returns to active play");g.TogglePause();Check(g.Frozen&&Time.timeScale==0,"pause freezes world");g.TogglePause();Check(!g.Frozen&&p.held==core,"resume preserves held item");var blocked=machines.Single(x=>x.machineId=="press");blocked.Use(p);Check(p.held==core&&blocked.core==null,"out-of-order machine never traps the only core");var mould=machines.Single(x=>x.machineId=="mould");mould.Use(p);Check(mould.core==core&&p.held==null&&g.activeCircuit==mould,"one console interaction inserts core and opens the routing board");mould.Use(p);SolveRouting(mould);
         }catch(Exception e){Fail(e);yield break;}
         yield return new WaitForSecondsRealtime(.1f);Time.timeScale=16;
@@ -234,8 +250,8 @@ public class FactoryPlaycheck : MonoBehaviour {
             File.WriteAllText("Work/playcheck.txt",$"PASS: {checks} engine integration checks.\nChecks use actual scene components and Update processing.\nThis is not an unassisted human playthrough or a timing validation.\n");Debug.Log("PLAYCHECK_PASS / "+checks);
         }catch(Exception e){Fail(e);yield break;}
         float endStarted=Time.realtimeSinceStartup;
-        while(Time.realtimeSinceStartup-endStarted<15){yield return null;}
-        try{var ending=FindFirstObjectByType<EndOfShift>();Check(ending&&ending.pip.position.z>70&&ending.exitDoor.position.y>5,"ending opens exit and takes the helpers into the village");File.WriteAllText("Work/playcheck.txt",$"PASS: {checks} engine integration checks, including the animated ending.\nActual scene components, physics visibility, progression, retries and delivery exercised.\nNot an unassisted human playthrough or timing validation.\n");}
+        while(Time.realtimeSinceStartup-endStarted<19){yield return null;}
+        try{var ending=FindFirstObjectByType<EndOfShift>();Check(ending&&ending.pip.position.z>70&&ending.exitDoor.position.y>5,"ending opens exit and takes the helpers into the village");Check(ending.button.position.z>71&&ending.hush.position.z>71,"all helpers finish the single-file exit and reach the parade");foreach(var helper in new[]{ending.pip,ending.button,ending.hush}){var screen=p.view.WorldToViewportPoint(helper.position+Vector3.up);Check(screen.z>0&&screen.x>.49f&&screen.x<.94f&&screen.y>.1f&&screen.y<.9f,"ending composition keeps helper on the unobscured right side: "+helper.name);}File.WriteAllText("Work/playcheck.txt",$"PASS: {checks} engine integration checks, including the animated ending.\nActual scene components, physics visibility, progression, retries and delivery exercised.\nNot an unassisted human playthrough or timing validation.\n");}
         catch(Exception e){Fail(e);yield break;}
         UiCopy.Language(initialLanguage,false);Application.logMessageReceived-=OnLog;EditorApplication.Exit(0);
     }

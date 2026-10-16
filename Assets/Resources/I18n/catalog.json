@@ -4511,6 +4511,126 @@
         "持てるのは一つだけ。コアを預けて木箱を運びましょう。",
         "한 번에 하나만 들 수 있어요. 코어를 넣어 두고 상자를 옮기세요."
       ]
+    },
+    {
+      "en": "TUTORIAL",
+      "values": [
+        "TUTORIAL",
+        "教学 / 熟悉操作",
+        "TUTORIAL",
+        "DIDACTICIEL",
+        "EINFÜHRUNG",
+        "チュートリアル",
+        "튜토리얼"
+      ]
+    },
+    {
+      "en": "NIGHT SHIFT",
+      "values": [
+        "NIGHT SHIFT",
+        "正式夜班",
+        "TURNO NOCTURNO",
+        "SERVICE DE NUIT",
+        "NACHTSCHICHT",
+        "夜の仕事",
+        "야간 근무"
+      ]
+    },
+    {
+      "en": "Tasks completed: ",
+      "values": [
+        "Tasks completed: ",
+        "已完成任务：",
+        "Tareas listas: ",
+        "Tâches terminées : ",
+        "Aufgaben erledigt: ",
+        "完了した仕事：",
+        "완료한 작업: "
+      ]
+    },
+    {
+      "en": "View tasks [J]",
+      "values": [
+        "View tasks [J]",
+        "查看待办 [J]",
+        "Ver tareas [J]",
+        "Voir les tâches [J]",
+        "Aufgaben ansehen [J]",
+        "仕事を見る [J]",
+        "작업 보기 [J]"
+      ]
+    },
+    {
+      "en": "TUTORIAL COMPLETE",
+      "values": [
+        "TUTORIAL COMPLETE",
+        "教学完成",
+        "TUTORIAL COMPLETO",
+        "DIDACTICIEL TERMINÉ",
+        "EINFÜHRUNG BEENDET",
+        "練習おしまい",
+        "튜토리얼 완료"
+      ]
+    },
+    {
+      "en": "Your night shift begins",
+      "values": [
+        "Your night shift begins",
+        "正式夜班，现在开始",
+        "Empieza tu turno nocturno",
+        "Ton service de nuit commence",
+        "Deine Nachtschicht beginnt",
+        "夜の仕事が始まるよ",
+        "야간 근무가 시작돼요"
+      ]
+    },
+    {
+      "en": "Your night shift begins. Help Button make the shell, find the old drawing, then bring the finished lantern to Pip.",
+      "values": [
+        "Your night shift begins. Help Button make the shell, find the old drawing, then bring the finished lantern to Pip.",
+        "正式夜班开始了。帮 Button 做好灯笼外壳，找到旧图纸，最后把完成的灯笼交给 Pip。",
+        "Empieza tu turno. Ayuda a Button a hacer la carcasa, busca el viejo dibujo y lleva el farol terminado a Pip.",
+        "Ton service commence. Aide Button à fabriquer la coque, retrouve le vieux dessin, puis apporte la lanterne à Pip.",
+        "Deine Schicht beginnt. Hilf Button beim Gehäuse, finde die alte Zeichnung und bring die fertige Laterne zu Pip.",
+        "夜の仕事が始まるよ。Button と外枠を作って、古い絵を見つけたら、完成したランタンを Pip に届けよう。",
+        "야간 근무 시작이에요. Button과 틀을 만들고 옛 그림을 찾은 뒤, 완성한 등불을 Pip에게 전해 주세요."
+      ]
+    },
+    {
+      "en": "Next: Packaging → Archive → Assembly",
+      "values": [
+        "Next: Packaging → Archive → Assembly",
+        "接下来：包装区 → 档案室 → 最终装配",
+        "Después: Embalaje → Archivo → Montaje",
+        "Ensuite : Emballage → Archives → Montage",
+        "Weiter: Verpackung → Archiv → Montage",
+        "次は：包装室 → 資料室 → 組立室",
+        "다음: 포장실 → 기록실 → 조립실"
+      ]
+    },
+    {
+      "en": "Start making the lantern [Enter]",
+      "values": [
+        "Start making the lantern [Enter]",
+        "开始制作灯笼 [Enter]",
+        "Crear el farol [Enter]",
+        "Fabriquer la lanterne [Enter]",
+        "Laterne anfertigen [Enter]",
+        "ランタンを作ろう [Enter]",
+        "등불 만들기 시작 [Enter]"
+      ]
+    },
+    {
+      "en": "Start the tutorial  →",
+      "values": [
+        "Start the tutorial  →",
+        "开始教学  →",
+        "Empezar el tutorial  →",
+        "Commencer le didacticiel  →",
+        "Einführung starten  →",
+        "練習を始めよう  →",
+        "튜토리얼 시작  →"
+      ]
     }
   ]
 }

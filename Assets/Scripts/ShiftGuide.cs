@@ -43,7 +43,7 @@ public class ShiftGuide : MonoBehaviour {
     }
     public Task Current {
         get {Ensure();var p=g.player;
-            if(p.transform.position.z<12&&!g.shell){
+            if(!g.BasicsComplete&&p.transform.position.z<12&&!g.shell){
                 if(!looked&&!p.held&&!foyer.CrateHoldsPlate)return Make("01 / 我来带你熟悉一下","01 / Let me show you around","先看一看左前方的木箱","Look toward the crate on your left",g.player.pointerMode?"按住右键拖动来观察，方向键也可以。":g.player.keyboardLook?"方向键转头，WASD 走动。":"移动鼠标转头，WASD 走动。Esc 释放鼠标并打开菜单。",g.player.pointerMode?"Hold right mouse and drag to look. Arrow keys also turn.":g.player.keyboardLook?"Arrow keys turn. WASD walks.":"Move the mouse to turn. WASD walks. Esc frees your pointer and opens the menu.","MOUSE",foyerCrate.transform.position,"先看这里","Look here first");
                 if(!walked&&!p.held&&!foyer.CrateHoldsPlate)return Make("01 / 试着走几步","01 / Take a few steps","按 W 向木箱走近一点","Press W to walk toward the crate","W 前进 · S 后退 · A 左移 · D 右移。","W forward · S back · A left · D right.","W A S D",foyerCrate.transform.position,"木箱","Crate");
                 return CrateTask(foyerCrate,foyer,UiCopy.Pick("01 / 打开第一扇门","01 / Open your first door"));
@@ -78,7 +78,7 @@ public class ShiftGuide : MonoBehaviour {
     public string Purpose {get{Ensure();
         if(g.player.held==g.sharedCore&&((g.inspectorLesson&&!g.blueprint&&!archive.CrateHoldsPlate)||(g.blueprint&&g.etched&&!assembly.CrateHoldsPlate)))return UiCopy.Translate("Carry one item at a time. Park the core to free your hands for the crate.");
         if(g.sharedCore&&g.player.held!=g.sharedCore&&Current.key=="E"&&Vector3.Distance(Current.target,g.sharedCore.transform.position)<.2f)return UiCopy.Translate("There is one core. Finished work stays finished without power.");
-        if(g.player.transform.position.z<12&&!g.shell)return UiCopy.Translate("Leave the crate on the plate to keep the door open.");
+        if(!g.BasicsComplete&&g.player.transform.position.z<12&&!g.shell)return UiCopy.Translate("Leave the crate on the plate to keep the door open.");
         if(!g.shell){if(!g.workshopRelay.OverrideHeld)return UiCopy.Translate("A crate replaces gate power, freeing the core for crafting.");return UiCopy.Translate("Build the shell first; it becomes the lantern's body.");}
         if(!g.transferred)return UiCopy.Translate("The ribbon finishes the shell before we take it to assembly.");
         if(!g.blueprint){if(g.player.transform.position.z<30.5f)return UiCopy.Translate("The old drawing explains who this lantern is for.");if(!g.inspectorLesson)return UiCopy.Translate("The bell calls Hush away so you can move the crate.");if(!archive.CrateHoldsPlate)return UiCopy.Translate("Leave the crate on the plate to keep the door open.");return UiCopy.Translate("The old drawing explains who this lantern is for.");}
@@ -108,7 +108,14 @@ public class ShiftGuide : MonoBehaviour {
         return t;
     }
     public FactoryGate PlacementGate {get{Ensure();var held=g.player.held;if(held==foyerCrate)return foyer;if(held==overrideCrate)return g.workshopRelay.gate;if(held==archiveCrate)return archive;if(held==assemblyCrate)return assembly;return null;}}
-    public int Chapter=>!g||g.player.transform.position.z<12?0:!g.transferred?1:!g.blueprint?2:!g.assembled?3:4;
+    public FactoryGate CurrentPlateGoal {get{Ensure();if(g.ended)return null;
+        if(!g.BasicsComplete&&!foyer.CrateHoldsPlate)return foyer;
+        if(!g.shell&&g.workshopRelay.core&&!g.workshopRelay.OverrideHeld)return g.workshopRelay.gate;
+        if(g.transferred&&!g.blueprint&&g.inspectorLesson&&!archive.CrateHoldsPlate)return archive;
+        if(g.blueprint&&!g.assembled&&(etch.running||g.etched)&&!assembly.CrateHoldsPlate)return assembly;
+        return null;
+    }}
+    public int Chapter=>!g||(!g.BasicsComplete&&g.player.transform.position.z<12)?0:!g.transferred?1:!g.blueprint?2:!g.assembled?3:4;
     public string ChapterTitle {get{switch(Chapter){case 0:return UiCopy.Pick("01 / 第一扇门","01 / FIRST STEPS");case 1:return UiCopy.Pick("02 / 包装区","02 / PACKAGING");case 2:return UiCopy.Pick("03 / 旧图纸","03 / THE ARCHIVE");case 3:return UiCopy.Pick("04 / 最终装配","04 / ASSEMBLY");default:return UiCopy.Pick("05 / 最后送达","05 / DELIVERY");}}}
     public string[] Checklist {get{Ensure();switch(Chapter){
         case 0:return new[]{Row(looked,"看看木箱","Look toward the crate"),Row(walked,"试着移动","Try walking"),Row(foyer.CrateHoldsPlate,"箱子压住条纹板","Leave crate on plate"),Row(g.player.transform.position.z>12,"穿过中央门","Walk through the door")};

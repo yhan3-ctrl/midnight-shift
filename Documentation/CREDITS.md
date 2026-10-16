@@ -22,3 +22,5 @@ v0.4: staged lantern meshes (ceramic ribs, brass handle, plum bow, handwritten t
 - Spanish, French, German, Japanese and Korean text was drafted for this project; no external translation service or user-content upload was used. Native-language editorial review has not been performed.
 
 v0.14 adds original synthesized circuit-reward, machine-start and bell cues plus four original synthesized production loops in AudioScore.cs. These use no external samples or recorded voices.
+
+Berkshire Swash by Brian J. Bonislawsky / Astigmatic is used only for the English game title. Source: https://github.com/google/fonts/tree/main/ofl/berkshireswash . Distributed under SIL Open Font License 1.1; license included at Assets/Resources/Fonts/BerkshireSwash-OFL.txt. Decorative UI pumpkin and bat silhouettes are original procedural drawings.

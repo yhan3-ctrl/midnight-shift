@@ -44,7 +44,7 @@ public static class FactoryBuild {
         Crate("Foyer crate",new Vector3(-4.8f,.61f,3.8f));
         Board("CRATE + PLATE = OPEN DOOR",new Vector3(-4.8f,2.65f,9.8f),3.8f);
         var welcome=Board("AUNT MAY'S NOTE\nE TO READ",new Vector3(4.8f,1.6f,-4),2.4f).AddComponent<StoryPoint>();welcome.kind=StoryPoint.StoryKind.Note;welcome.note="The helpers only return on Halloween. If the lights are on, please tell them I left the side door open for the parade. Your old drawing is still in the archive. Love, Aunt May.";
-        Desk(new Vector3(5.2f,0,3));buttonGhost=Ghost("Button",new Vector3(5.2f,0,3),false).transform;
+        Desk(new Vector3(5.2f,0,3));buttonGhost=Ghost("Button",new Vector3(5.2f,0,4.65f),false).transform;
         game.buttonHelper=buttonGhost.GetComponent<GhostIdle>();game.buttonHelper.role="button";
         var buttonTalk=buttonGhost.gameObject.AddComponent<StoryPoint>();buttonTalk.kind=StoryPoint.StoryKind.Button;var buttonCol=buttonGhost.gameObject.AddComponent<BoxCollider>();buttonCol.center=Vector3.up*1.2f;buttonCol.size=new Vector3(1.3f,1.9f,1);
         for(int i=0;i<3;i++){Shape("Lunch tin",PrimitiveType.Cube,new Vector3(4.5f+i*.65f,1.07f,2.8f),new Vector3(.42f,.18f,.3f),i==1?orange:teal);}
@@ -86,12 +86,12 @@ public static class FactoryBuild {
         var finished=LanternModel(lanternRoot.transform.position,.7f,lanternRoot.transform);finished.portable=true;var finalCollider=lanternRoot.AddComponent<SphereCollider>();finalCollider.radius=.48f;
         Shape("Lantern base",PrimitiveType.Cylinder,new Vector3(3.6f,.45f,58.5f),new Vector3(.8f,.45f,.8f),brass);
         game.lantern=lp;lanternRoot.SetActive(false);
-        Desk(new Vector3(0,0,60));var pip=Ghost("Pip / night foreman",new Vector3(0,0,60.5f),false);var talk=pip.AddComponent<StoryPoint>();talk.kind=StoryPoint.StoryKind.Pip;var talkCollider=pip.AddComponent<BoxCollider>();talkCollider.center=Vector3.up*1.2f;talkCollider.size=new Vector3(1.5f,2,1.2f);game.pipHelper=pip.GetComponent<GhostIdle>();game.pipHelper.role="pip";
+        Desk(new Vector3(0,0,60));var pip=Ghost("Pip / night foreman",new Vector3(0,0,61.65f),false);var talk=pip.AddComponent<StoryPoint>();talk.kind=StoryPoint.StoryKind.Pip;var talkCollider=pip.AddComponent<BoxCollider>();talkCollider.center=Vector3.up*1.2f;talkCollider.size=new Vector3(1.5f,2,1.2f);game.pipHelper=pip.GetComponent<GhostIdle>();game.pipHelper.role="pip";
         Board("DISPATCH / PIP\nONE LAST ORDER",new Vector3(-3.8f,1.8f,61),2.6f);
         Pumpkin(new Vector3(-6,.5f,60),.9f);
         var ending=game.gameObject.AddComponent<EndOfShift>();ending.pip=pip.transform;ending.button=buttonGhost;ending.hush=ig.transform;ending.exitDoor=exitDoor;ending.view=cam;
         HalloweenDecorations();Festival();
-        PlayerSettings.bundleVersion="0.14";PlayerSettings.companyName="Willow Works";PlayerSettings.productName="Midnight Shift - The Last Lantern";
+        PlayerSettings.bundleVersion="0.15";PlayerSettings.companyName="Willow Works";PlayerSettings.productName="Midnight Shift - The Last Lantern";
         PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=false;PlayerSettings.resizableWindow=true;PlayerSettings.allowFullscreenSwitch=true;
         var ps=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);var active=ps.FindProperty("activeInputHandler");if(active!=null){active.intValue=0;ps.ApplyModifiedPropertiesWithoutUndo();}
         EditorSceneManager.SaveScene(SceneManager.GetActiveScene(),"Assets/Scenes/WillowWorks.unity");

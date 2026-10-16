@@ -2,30 +2,37 @@ using UnityEngine;
 namespace LastLantern {
 public class EndOfShift : MonoBehaviour {
     public Transform pip,button,hush,exitDoor; public Camera view;
-    bool playing; float time; Vector3 pipStart,buttonStart,hushStart,cameraStart; Quaternion cameraRotation;
+    bool playing;float time;
+    public float Elapsed=>time;
+    // The helpers queue in the clear space behind dispatch. Only one crosses the narrow door at a time.
+    public static Vector3 ParadePosition(int helper,float elapsed){
+        float t=elapsed-3-helper*2.6f;float side=helper==1?-2.1f:helper==2?2.1f:0;
+        Vector3 start=new Vector3(side,0,62.3f),queue=new Vector3(0,0,62.3f),outside=new Vector3(0,0,66.2f);
+        if(t<=0)return start;
+        if(t<1.6f)return Vector3.Lerp(start,queue,t/1.6f);
+        if(t<5.6f)return Vector3.Lerp(queue,outside,(t-1.6f)/4);
+        return Vector3.Lerp(outside,new Vector3(side,0,72),Mathf.SmoothStep(0,1,Mathf.Clamp01((t-5.6f)/4)));
+    }
     void Update(){
         if(!FactoryGame.I||!FactoryGame.I.ended)return;
         if(!playing){
-            playing=true;time=0;pipStart=new Vector3(0,0,60.5f);buttonStart=new Vector3(-1.2f,0,60.6f);hushStart=new Vector3(1.2f,0,60.8f);
-            pip.position=pipStart;button.position=buttonStart;hush.position=hushStart;
-            foreach(var ghost in new[]{pip,button,hush})ghost.rotation=Quaternion.Euler(0,180,0);
-            var inspector=hush.GetComponent<Inspector>();if(inspector){inspector.enabled=false;inspector.visual.localRotation=Quaternion.identity;hush.gameObject.AddComponent<GhostIdle>();}
-            var lantern=FactoryGame.I.lantern.transform;lantern.SetParent(pip.Find("Ghost body"));lantern.localPosition=new Vector3(.68f,.02f,0);lantern.localScale=Vector3.one;
-            cameraStart=view.transform.position;cameraRotation=view.transform.rotation;
+            playing=true;time=0;
+            var inspector=hush.GetComponent<Inspector>();if(inspector){inspector.enabled=false;inspector.visual.localRotation=Quaternion.identity;if(!hush.GetComponent<GhostIdle>())hush.gameObject.AddComponent<GhostIdle>();}
+            var lantern=FactoryGame.I.lantern.transform;lantern.SetParent(pip.Find("Ghost body"));lantern.localPosition=new Vector3(.82f,.02f,-.65f);lantern.localScale=Vector3.one;
+            // A cinematic cut avoids sweeping the first-person camera through the desk and helpers.
+            view.transform.position=new Vector3(4.8f,2.7f,76);
         }
         time+=Time.unscaledDeltaTime;
         if(exitDoor)exitDoor.position=Vector3.Lerp(new Vector3(0,1.65f,64),new Vector3(0,5.5f,64),Mathf.SmoothStep(0,1,time/3));
-        float t=Mathf.SmoothStep(0,1,Mathf.Clamp01((time-1.5f)/12));
-        pip.position=Vector3.Lerp(pipStart,new Vector3(0,0,72),t);
-        button.position=Vector3.Lerp(buttonStart,new Vector3(-1.2f,0,71.5f),t);
-        hush.position=Vector3.Lerp(hushStart,new Vector3(1.2f,0,72.5f),t);
-        float ct=Mathf.SmoothStep(0,1,time/2.5f);
-        Vector3 inside=new Vector3(0,1.9f,62.2f),outside=new Vector3(0,1.9f,66.4f),watch=new Vector3(3.4f,2.1f,67);
-        if(time<2.5f)view.transform.position=Vector3.Lerp(cameraStart,inside,ct);
-        else if(time<6)view.transform.position=Vector3.Lerp(inside,outside,Mathf.SmoothStep(0,1,(time-2.5f)/3.5f));
-        else view.transform.position=Vector3.Lerp(outside,watch,Mathf.SmoothStep(0,1,(time-6)/2.5f));
-        var final=Quaternion.LookRotation(new Vector3(0,1.4f,72)-view.transform.position);
-        view.transform.rotation=Quaternion.Slerp(cameraRotation,final,ct);
+        Transform[] helpers={pip,button,hush};float centreZ=0;
+        for(int i=0;i<helpers.Length;i++){
+            helpers[i].position=ParadePosition(i,time);centreZ+=helpers[i].position.z/3;
+            Quaternion heading=Quaternion.Euler(0,180,0);
+            if(time>12.6f+i*2.6f)heading=Quaternion.LookRotation(helpers[i].position-view.transform.position);
+            helpers[i].rotation=Quaternion.Slerp(helpers[i].rotation,heading,Time.unscaledDeltaTime*3);
+        }
+        // Keep the whole group on the open right side of the ending card.
+        view.transform.LookAt(new Vector3(2.8f,1.2f,centreZ));
     }
 }
 }

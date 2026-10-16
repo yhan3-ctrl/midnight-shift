@@ -29,6 +29,8 @@ public class FactoryGame : MonoBehaviour {
     public FactoryPath navigation; public FactoryMap factoryMap=new FactoryMap();
     public ShiftGuide guide; ShiftInterface screen=new ShiftInterface();
     int dialogueOpenedFrame;bool archiveWelcome,assemblyWelcome,foyerSuccess,workshopWelcome;
+    public bool BasicsComplete=>workshopWelcome;
+    public bool ShiftBriefing {get;private set;}
     public bool ToastVisible=>Time.unscaledTime<toastUntil;
     public string CoreLocation {
         get {
@@ -100,7 +102,7 @@ public class FactoryGame : MonoBehaviour {
         if(started&&!Frozen&&Input.GetKeyDown(KeyCode.H))Hint();
         if(started&&!Frozen){
             if(!foyerSuccess&&player.transform.position.z<12){foreach(var gate in FindObjectsByType<FactoryGate>(FindObjectsSortMode.None))if(gate.name=="Foyer gate"&&gate.CrateHoldsPlate){foyerSuccess=true;Notify("Nice work! The crate keeps the door open. Leave it there and follow the marker.",5);if(buttonHelper)buttonHelper.Celebrate();audioScore.Chord();break;}}
-            if(!workshopWelcome&&player.transform.position.z>12){workshopWelcome=true;Notify("BASICS COMPLETE / Your night shift begins. Make the lantern shell with Button and the reusable power core.",7);}
+            if(!workshopWelcome&&player.transform.position.z>12){StartShiftBriefing();}
             else if(transferred&&!blueprint&&!archiveWelcome&&player.transform.position.z>30.4f){archiveWelcome=true;Say("PIP / ARCHIVE TOUR","Meet Hush, our friendly safety inspector. This archive is safe practice: he will not send you back here.","Power the chime and ring it with E. It calls Hush away. Move the crate to the striped plate while he checks it. You do not need to wait for him to finish.");}
             else if(blueprint&&!etched&&!assemblyWelcome&&player.transform.position.z>46.6f){assemblyWelcome=true;Say("PIP / FINAL ASSEMBLY","Your old drawing is safe in the notebook. Let's turn that promise into a real lantern.","The real safety check starts here. If Hush sees you in the active aisle, step behind a shelf or a placed crate. A full warning and contact send you to this room entrance; finished jobs stay safe.");}
         }
@@ -124,7 +126,8 @@ public class FactoryGame : MonoBehaviour {
         "Welcome to Willow Works. I'm Pip. Let me show you around, one little step at a time.",
         "We have one forgotten pumpkin lantern to finish tonight. First, let's open this door together. Follow the gold marker; your checklist is on the right.");}
     public void Say(string who, params string[] text){screen.ResetDialoguePages(); dialogueOpenedFrame=Time.frameCount;speaker=who; dialogue.Clear(); foreach(var s in text) dialogue.Enqueue(s); line=dialogue.Peek(); SyncFreeze(); }
-    public void Advance(){ if(!Reading)return;if(screen.AdvancePage(this))return; dialogue.Dequeue(); if(Reading)line=dialogue.Peek(); SyncFreeze(); }
+    public void StartShiftBriefing(){if(workshopWelcome)return;workshopWelcome=true;ShiftBriefing=true;Say("TUTORIAL COMPLETE","Your night shift begins. Help Button make the shell, find the old drawing, then bring the finished lantern to Pip.");}
+    public void Advance(){ if(!Reading)return;if(screen.AdvancePage(this))return; dialogue.Dequeue(); if(Reading)line=dialogue.Peek();else ShiftBriefing=false; SyncFreeze(); }
     void SyncFreeze(){ReleaseCursor();RefreshFreeze();}
     void ReleaseCursor(){if(player)player.ReleaseMouseLook();if(Cursor.lockState!=CursorLockMode.None)Cursor.lockState=CursorLockMode.None;if(!Cursor.visible)Cursor.visible=true;}
     public void Notify(string text,float seconds=3){toast=text;toastUntil=Time.unscaledTime+seconds;}

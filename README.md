@@ -2,11 +2,11 @@
 
 A warm Halloween puzzle game set inside Willow Works. Finish a forgotten pumpkin lantern, share the factory's last power core and discover who the gift was meant for.
 
-Unity 6000.6.5f1, 3D, Built-in Render Pipeline. Current gameplay revision: **v0.14**. English is the default; Chinese, Spanish, French, German, Japanese and Korean are optional.
+Unity 6000.6.5f1, 3D, Built-in Render Pipeline. Current gameplay revision: **v0.15**. English is the default; Chinese, Spanish, French, German, Japanese and Korean are optional.
 
 ## Play on macOS
 
-Open `开始试玩.app` in the project folder, or the installed `Midnight Shift v0.14.app`. The distributable archive is `Builds/MidnightShift-Mac-v0.14.zip`.
+Open `开始试玩.app` in the project folder, or the installed `Midnight Shift v0.15.app`. The distributable archive is `Builds/MidnightShift-Mac-v0.15.zip`.
 
 ## Controls
 
@@ -31,7 +31,9 @@ Mouse look never resumes automatically after a menu, dialogue or desktop interru
 
 ## Playing the night shift
 
-Follow the stable gold route and the next-action card. Each step includes a short Why explanation. A striped pressure plate is a physical target; the green crate outline shows a valid placement. Leave the crate there to keep the door open.
+Start the tutorial on the title screen. The short foyer teaches looking, walking and crate placement. After walking through its door, confirm TUTORIAL COMPLETE to begin the formal night shift: Packaging, Archive, Assembly and delivery. The phase label stays NIGHT SHIFT even when backtracking. The task panel states the completed-task count separately; it no longer displays a numeric date.
+
+Follow the stable gold route and the next-action card. Each step includes a short Why explanation. The current striped pressure plate lights up mint green before pickup; the green crate outline shows a valid placement. Leave the crate there to keep the door open.
 
 There is one reusable gold core. If you retrieve it before a crate task, the guide shows where to park it safely in a console to free your hands. E or Q near a visible console inserts it and opens the circuit board. Rotate tiles to connect IN to every OUT **through every star contact**, then choose Start machine. Connected circuits give a success cue; production has start/work sounds and a percentage progress bar. Completed work remains finished after retrieving the core. The archive introduces Hush safely: ring the chime, then move the crate without waiting. He cannot send you back there. Only Final Assembly activates the explained safety check: watch his route and hide behind shelves or placed crates. Retries preserve completed jobs, the drawing and crates already holding access.
 
@@ -41,6 +43,7 @@ Dialogue hides the exploration HUD. The compact calendar opens the complete chec
 
 Open this directory through Unity Hub, then open `Assets/Scenes/WillowWorks.unity`. The scene generator and build commands are in Unity's Willow Works menu. `Tools/build-mac.zsh` regenerates the authored scene, builds, signs, smoke-checks and packages the Mac app. Save any manual scene changes before running the generator.
 
+- [Tutorial boundary, character clearance and interface](Documentation/INTERFACE-REVIEW-v0.15.md)
 - [Walking, purpose and crafting feedback](Documentation/FEEDBACK-REVIEW-v0.14.md)
 - [Hush clarity and Halloween review](Documentation/HUSH-REVIEW-v0.13.md)
 - [Playtesting findings and revisions](Documentation/FINAL-GAME-PLAYTEST.md)

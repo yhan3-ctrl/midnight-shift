@@ -1,0 +1,6 @@
+Profile: wayfinding; 5 additional scenario checks.
+PASS: physical route to ending. 20 raycast interactions, 4 validated Q placements, 4 authored circuits executed.
+All traversal after initial spawn used CharacterController.Move, with live wall/gate/collision geometry.
+Inspector locomotion disabled for deterministic navigation isolation; inspector behaviour has separate integration checks.
+Routing solved using the known authored solution; does not measure puzzle skill.
+Time accelerated; this is NOT an unassisted human playtest or a valid duration measurement.
