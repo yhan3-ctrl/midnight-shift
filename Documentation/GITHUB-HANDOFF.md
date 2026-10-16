@@ -1,6 +1,6 @@
 # GitHub publication / October 16, 2026
 
-Repository: https://github.com/yhan3-ctrl/midnight-shift (private).
+Repository: https://github.com/yhan3-ctrl/midnight-shift (public). The user explicitly requested public visibility on October 16, 2026, after the initial private publication.
 
 Game release: https://github.com/yhan3-ctrl/midnight-shift/releases/tag/v0.15 .
 
@@ -13,7 +13,7 @@ Game release: https://github.com/yhan3-ctrl/midnight-shift/releases/tag/v0.15 .
 
 ## Still separate from publication
 
-- The instructor's account, cwwalterOleMiss, is listed in the assignment. An explicit user confirmation to send a collaborator invitation is pending. Do not interpret repository creation as proof that the instructor already has access. A private repository needs authorized access for grading.
+- The instructor's account, cwwalterOleMiss, is listed in the assignment. The user chose to send the collaborator invitation personally. Its sending and acceptance have not been verified. Public visibility permits reading the repository without an invitation; it does not itself fulfill the assignment's separate collaborator request.
 - Windows and Linux releases still require their own builds and execution checks. The current release asset is Mac only.
 - Final releases must also be uploaded to the course-required Box location; this GitHub release does not replace that requirement.
 - The final course report, Blackboard report/repository-link submission and final rubric review remain pending. Existing design and game-script documentation is not labeled as a completed final submitted report.
