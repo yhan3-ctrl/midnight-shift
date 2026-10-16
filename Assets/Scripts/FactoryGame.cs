@@ -135,7 +135,7 @@ public class FactoryGame : MonoBehaviour {
     public void Complete(string id){
         switch(id){
             case "mould": shell=true; Say("BUTTON / STORES", "A perfect little shell! I kept the mould right where that child left it.","They used to ask who switched off the lights. Not what we'd make them. Who would get home last.","The shell is safe now. Take the power core out and use it on the Ribbon Conveyor.");break;
-            case "ribbon": transferred=true; Notify("PACKAGING COMPLETE / The archive door is now unlocked.",5);break;
+            case "ribbon": transferred=true; Say("BUTTON / STORES","I left the ribbon a little crooked. That was how the child drew it.","Pip kept that drawing in the archive. Take our core with you. I think you should see it before we add the light.");break;
             case "etch": etched=true; Notify("THE PROMISE IS ENGRAVED / Move the core to the Lantern Press.",5);break;
             case "press": assembled=true; lantern.gameObject.SetActive(true); Say("PIP / OVER THE SPEAKER","Look at that. Every little crooked line, just like the drawing.","I'll be at dispatch. Shall we see who this one's for?");break;
         }
@@ -168,10 +168,13 @@ public class FactoryGame : MonoBehaviour {
         if(held&&held.kind==Pickup.Kind.Core)held.transform.position=new Vector3(1.4f,.6f,checkpoint);
         player.Teleport(new Vector3(0,0,checkpoint),0);
         foreach(var p in FindObjectsByType<Pickup>(FindObjectsInactive.Include,FindObjectsSortMode.None))
-            if(p.kind==Pickup.Kind.Crate && (final?p.home.z>46:p.home.z>30&&p.home.z<46))p.ResetHome();
+            if(p.kind==Pickup.Kind.Crate && (final?p.home.z>46:p.home.z>30&&p.home.z<46)){
+                bool holdsAccess=false;foreach(var gate in FindObjectsByType<FactoryGate>(FindObjectsSortMode.None))if(gate.plate&&gate.CrateHoldsPlate){var delta=p.transform.position-gate.plate.position;delta.y=0;if(delta.magnitude<1.2f){holdsAccess=true;break;}}
+                if(!holdsAccess)p.ResetHome();
+            }
         inspector.ResetPatrol(true);
-        Say("HUSH / SAFETY CHECK", "Let's try that delivery again. You're back at the room entrance, and this room's crates are back where you found them. Your finished jobs and drawing are safe.",
-            "Check your notebook [J] if you need the core's location. A crate only blocks my view after you place it. The chime can call me away before I spot you.");
+        Say("HUSH / SAFETY CHECK", "Back at the room entrance. Finished jobs, your drawing and crates already holding a door stay safe.",
+            "Take a moment. Watch my route, then move behind a shelf or a placed crate. Your next step is still marked in gold.");
     }
     public void Restart(){ Time.timeScale=1; SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); }
     public void Quit(){Time.timeScale=1;Cursor.lockState=CursorLockMode.None;Cursor.visible=true;Application.Quit();}

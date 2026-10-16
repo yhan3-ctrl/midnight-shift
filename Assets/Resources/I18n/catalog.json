@@ -3906,7 +3906,7 @@
         "Move the mouse to turn. WASD walks. Esc frees your pointer and opens the menu.",
         "移动鼠标转头，WASD 走动。Esc 释放鼠标并打开菜单。",
         "Mueve el ratón para girar. WASD camina. Esc libera el cursor y abre el menú.",
-        "Bouge la souris pour tourner. WASD pour marcher. Échap libère le pointeur et ouvre le menu.",
+        "Souris : tourner. WASD : marcher. Échap : pointeur libre et menu.",
         "Bewege die Maus zum Drehen. WASD zum Gehen. Esc gibt den Zeiger frei und öffnet das Menü.",
         "マウスで見回して、WASD で歩こう。Esc でマウスを解放してメニューを開くよ。",
         "마우스로 시점을 돌리고 WASD로 걸어요. Esc는 포인터를 풀고 메뉴를 열어요."
@@ -4102,6 +4102,90 @@
         "Blick gerade [R]",
         "水平に戻す [R]",
         "수평 시점 [R]"
+      ]
+    },
+    {
+      "en": "Tasks [J]",
+      "values": [
+        "Tasks [J]",
+        "待办 [J]",
+        "Tareas [J]",
+        "Tâches [J]",
+        "Aufgaben [J]",
+        "やること [J]",
+        "할 일 [J]"
+      ]
+    },
+    {
+      "en": "Help [H]",
+      "values": [
+        "Help [H]",
+        "提示 [H]",
+        "Ayuda [H]",
+        "Aide [H]",
+        "Hilfe [H]",
+        "ヒント [H]",
+        "도움말 [H]"
+      ]
+    },
+    {
+      "en": "Finished work stays finished. Leave crates on plates to keep access.",
+      "values": [
+        "Finished work stays finished. Leave crates on plates to keep access.",
+        "完成的工序会保留。箱子留在板上，门就会开着。",
+        "El trabajo terminado se conserva. Deja las cajas sobre las placas para mantener el acceso.",
+        "Le travail terminé reste acquis. Laisse les caisses sur les plaques pour garder le passage ouvert.",
+        "Fertige Arbeit bleibt erhalten. Lass Kisten auf den Platten, damit die Wege offen bleiben.",
+        "完成した作業は残ります。箱をプレートに置いたままにすると、通路を開けておけます。",
+        "완료한 작업은 유지됩니다. 상자를 발판에 두면 통로가 열린 채로 유지됩니다."
+      ]
+    },
+    {
+      "en": "Back at the room entrance. Finished jobs, your drawing and crates already holding a door stay safe.",
+      "values": [
+        "Back at the room entrance. Finished jobs, your drawing and crates already holding a door stay safe.",
+        "回到房间入口。已完成的工序、图纸和已经压住门禁板的箱子都会保留。",
+        "Vuelves a la entrada. Se conservan los trabajos terminados, el dibujo y las cajas que ya mantienen una puerta abierta.",
+        "De retour à l’entrée. Le travail terminé, ton dessin et les caisses qui maintiennent déjà une porte restent en place.",
+        "Zurück am Raumeingang. Fertige Arbeit, deine Zeichnung und Kisten, die schon eine Tür offen halten, bleiben erhalten.",
+        "部屋の入口に戻りました。完成した作業、図面、すでに扉を開けている箱はそのままです。",
+        "방 입구로 돌아왔어요. 완료한 작업과 그림, 이미 문을 열어 둔 상자는 그대로 유지됩니다."
+      ]
+    },
+    {
+      "en": "Take a moment. Watch my route, then move behind a shelf or a placed crate. Your next step is still marked in gold.",
+      "values": [
+        "Take a moment. Watch my route, then move behind a shelf or a placed crate. Your next step is still marked in gold.",
+        "慢慢来。观察我的路线，再走到货架或放好的箱子后面。金色标记仍会指引下一步。",
+        "Tómate un momento. Observa mi ruta y pasa detrás de un estante o una caja colocada. El siguiente paso sigue marcado en dorado.",
+        "Prends un instant. Observe mon trajet, puis passe derrière une étagère ou une caisse posée. L’or indique toujours ta prochaine étape.",
+        "Lass dir Zeit. Beobachte meinen Weg und geh hinter ein Regal oder eine abgestellte Kiste. Gold zeigt weiter deinen nächsten Schritt.",
+        "少し落ち着いて。巡回ルートを見てから、棚や置いた箱の陰へ。次の行き先は金色の印で分かります。",
+        "잠깐 쉬어 가요. 제 경로를 보고 선반이나 내려놓은 상자 뒤로 이동하세요. 다음 목표는 계속 금색으로 표시됩니다."
+      ]
+    },
+    {
+      "en": "I left the ribbon a little crooked. That was how the child drew it.",
+      "values": [
+        "I left the ribbon a little crooked. That was how the child drew it.",
+        "我把丝带系得有点歪。那个孩子就是这样画的。",
+        "Dejé el lazo un poco torcido. Así lo había dibujado aquel niño.",
+        "J’ai laissé le ruban un peu de travers. C’est ainsi que l’enfant l’avait dessiné.",
+        "Ich habe die Schleife etwas schief gelassen. So hatte das Kind sie gezeichnet.",
+        "リボンは少し曲がったままにしたよ。あの子の絵と同じように。",
+        "리본을 조금 삐뚤게 묶었어요. 그 아이가 그린 모습 그대로요."
+      ]
+    },
+    {
+      "en": "Pip kept that drawing in the archive. Take our core with you. I think you should see it before we add the light.",
+      "values": [
+        "Pip kept that drawing in the archive. Take our core with you. I think you should see it before we add the light.",
+        "Pip 把那张图纸保存在档案室。带上我们的核心吧。点亮灯之前，你应该先看看它。",
+        "Pip guardó el dibujo en el archivo. Llévate nuestro núcleo. Deberías verlo antes de añadir la luz.",
+        "Pip a gardé ce dessin aux archives. Emporte notre noyau. Tu devrais le voir avant d’ajouter la lumière.",
+        "Pip hat die Zeichnung im Archiv aufbewahrt. Nimm unseren Kern mit. Sieh sie dir an, bevor wir das Licht einsetzen.",
+        "Pip が図面を保管室にしまっているよ。コアも持っていって。明かりを入れる前に、見ておいたほうがいい。",
+        "Pip이 그 그림을 기록실에 보관했어요. 코어도 가져가세요. 불을 켜기 전에 먼저 보면 좋겠어요."
       ]
     }
   ]

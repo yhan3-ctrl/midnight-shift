@@ -7,7 +7,7 @@ namespace LastLantern {
 public class LocalPlaytestLog : MonoBehaviour {
     [Serializable]public class Event {public float seconds;public string action;}
     [Serializable]public class Record {
-        public string version="0.11", startedUtc, reviewer="unattributed";
+        public string version="0.12", startedUtc, reviewer="unattributed";
         public bool automated,completed;
         public float elapsedSeconds,activeSeconds,readingSeconds,pausedSeconds,journalSeconds;
         public int safetyRetries,hintsRequested;

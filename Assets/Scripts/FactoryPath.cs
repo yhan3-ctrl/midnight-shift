@@ -59,7 +59,7 @@ public class FactoryPath : MonoBehaviour {
     public Vector3 LookAhead(float distance){if(Points.Count==0)return plannedTarget;for(int i=1;i<Points.Count;i++){float d=Vector3.Distance(Points[i-1],Points[i]);if(distance<=d)return Vector3.Lerp(Points[i-1],Points[i],distance/Mathf.Max(.001f,d));distance-=d;}return Points[Points.Count-1];}
     void LateUpdate(){DrawTrail();}
     void DrawTrail(){if(trail==null)return;foreach(var l in trail)l.enabled=false;foreach(var l in beacons)l.enabled=false;if(!g||!g.started||g.ended||g.mapOpen||g.paused||g.Reading||g.activeCircuit||g.journal||g.photoMode||g.desktopHold||g.ComfortOpen||g.AwaitingLook)return;
-        Refresh(g.guide.Current);if(!Available)return;float walked=0;int drawn=0;Color c=new Color(1,.78f,.30f,1);
+        var objective=g.guide.Current;if(string.IsNullOrEmpty(objective.key)||g.guide.CanActHere(objective))return;Refresh(objective);if(!Available)return;float walked=0;int drawn=0;Color c=new Color(1,.78f,.30f,1);
         for(int i=1;i<Points.Count&&drawn<trail.Length;i++){Vector3 a=Points[i-1]+Vector3.up*.055f,b=Points[i]+Vector3.up*.055f;float len=Vector3.Distance(a,b);for(float t=0;t<len&&drawn<trail.Length;t+=.85f){var l=trail[drawn++];l.SetPosition(0,Vector3.Lerp(a,b,t/Mathf.Max(.001f,len)));l.SetPosition(1,Vector3.Lerp(a,b,Mathf.Min(t+.56f,len)/Mathf.Max(.001f,len)));l.startColor=l.endColor=c;l.enabled=true;}walked+=len;if(walked>32)break;}
         // Stationary lantern-shaped markers rise into a level camera's view. Real depth testing hides them behind walls.
         Vector3 side=g.player.view.transform.right;side.y=0;side.Normalize();int count=0;

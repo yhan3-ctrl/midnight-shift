@@ -8,7 +8,7 @@ public class Inspector : MonoBehaviour {
     public float Alertness=>alert; public bool assemblyDuty;
     int waypoint; float timer,alert,graceUntil; Vector3 destination,lastSeen; Quaternion facing;
     void Start(){ResetPatrol();}
-    public void ResetPatrol(bool grantGrace=false){graceUntil=grantGrace?Time.time+2.5f:0;if(route==null||route.Length==0)return;transform.position=route[0];waypoint=1;state=State.Patrol;alert=0;timer=0;facing=Quaternion.identity;}
+    public void ResetPatrol(bool grantGrace=false){graceUntil=grantGrace?Time.time+5f:0;if(route==null||route.Length==0)return;transform.position=route[0];waypoint=1;state=State.Patrol;alert=0;timer=0;facing=Quaternion.identity;}
     public void Hear(Vector3 location){
         if(state==State.Alert||state==State.Approach)return;
         float min=assemblyDuty?47:31,max=assemblyDuty?54:46;
@@ -33,7 +33,7 @@ public class Inspector : MonoBehaviour {
         }
         bool seen=CanSeePlayer();
         if(seen&&state!=State.Alert&&state!=State.Approach)FactoryGame.I.audioScore.Tick(880);
-        if(seen){lastSeen=FactoryGame.I.player.transform.position;lastSeen.y=0;alert=Mathf.Min(1,alert+dt/.95f);if(state!=State.Approach)state=State.Alert;if(alert>=1)state=State.Approach;}
+        if(seen){lastSeen=FactoryGame.I.player.transform.position;lastSeen.y=0;alert=Mathf.Min(1,alert+dt/1.6f);if(state!=State.Approach)state=State.Alert;if(alert>=1)state=State.Approach;}
         else {alert=Mathf.Max(0,alert-dt*.5f);if(state==State.Alert||state==State.Approach){state=State.Search;timer=0;destination=lastSeen;}}
         switch(state){
             case State.Patrol: Move(route[waypoint],1.45f);if(Distance(route[waypoint])<.3f)waypoint=(waypoint+1)%route.Length;break;

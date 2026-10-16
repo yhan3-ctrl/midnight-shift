@@ -25,6 +25,7 @@ public class ShiftGuide : MonoBehaviour {
         if(g.player.held==crate){
             Vector3 target=gate.plate.position;string detail=UiCopy.Pick("绿色箱子轮廓在条纹木板上时，按 Q 键放置。","When the green crate outline is on the striped plate, press the Q key.");
             bool ready=g.player.ReadyOnPlate(gate);
+            if(!g.player.Placement(out _,out var why))detail=why;
             var t=Make(chapter,chapter,ready?"按 Q 键，把箱子放到这块木板上":"把箱子带到发光的条纹木板前",ready?"Press Q to place the crate on this plate":"Bring the crate to the glowing striped plate",detail,detail,ready?"Q":"W A S D",target,"条纹压力板","Striped pressure plate");return t;
         }
         if(g.player.held)return Make(chapter,chapter,"先腾出双手","Free your hands first","按 Q 把手中的物品放到空地，再拿箱子。","Press Q on clear floor, then pick up the crate.","Q",crate.transform.position,"木箱","Crate");
@@ -74,8 +75,17 @@ public class ShiftGuide : MonoBehaviour {
         }
     }
     public bool IsCurrentCoreSocket(Interactable socket){if(!socket)return false;var t=Current;if(!t.hasTarget||t.key!="E")return false;Vector3 delta=t.target-g.player.InteractionPoint(socket);delta.y=0;return delta.magnitude<1.1f;}
+    // Keep an already reachable action instead of routing to the far side of its furniture.
+    public bool CanActHere(Task t){
+        if(t.key!="E"||!t.hasTarget)return false;
+        foreach(var item in FindObjectsByType<Interactable>(FindObjectsSortMode.None)){
+            if(item is Pickup pick&&pick.carried)continue;
+            if(Vector3.Distance(t.target,g.player.InteractionPoint(item))>.75f&&Vector3.Distance(t.target,item.transform.position)>.75f)continue;
+            if(g.player.CanReach(item))return true;
+        }return false;
+    }
     public Task Navigate(Task t){
-        if(!t.hasTarget||!g.navigation||t.key=="MOUSE"||t.key=="ARROWS"||t.key=="RIGHT-DRAG")return t;
+        if(!t.hasTarget||string.IsNullOrEmpty(t.key)||CanActHere(t)||!g.navigation||t.key=="MOUSE"||t.key=="ARROWS"||t.key=="RIGHT-DRAG")return t;
         g.navigation.Refresh(t);
         if(g.navigation.Points.Count>1&&g.navigation.Distance>4.2f){
             var original=t.targetName;t.routeDistance=g.navigation.Distance;t.target=g.navigation.LookAhead(2.6f);t.key="W A S D";

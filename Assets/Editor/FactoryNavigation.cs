@@ -12,11 +12,12 @@ public static class FactoryNavigation {
     static void OnState(PlayModeStateChange state){if(state!=PlayModeStateChange.EnteredPlayMode)return;SessionState.SetBool("WillowWalkthrough",false);EditorApplication.playModeStateChanged-=OnState;new GameObject("Physical walkthrough check").AddComponent<FactoryWalker>();}
 }
 public class FactoryWalker : MonoBehaviour {
-    FactoryGame g;PlayerMotor p;CharacterController cc;int interactions,placements,routingSolved;float began, heartbeat;bool failed;
+    FactoryGame g;PlayerMotor p;CharacterController cc;int interactions,placements,routingSolved;float began, heartbeat;bool failed;string profile="baseline";int scenarioChecks;
     void Update(){if(!g)return;if(Time.realtimeSinceStartup-heartbeat>8){heartbeat=Time.realtimeSinceStartup;Debug.Log("NAV_HEARTBEAT dt="+Time.deltaTime+" scale="+Time.timeScale+" paused="+g.paused+" reading="+g.Reading+" journal="+g.journal+" ended="+g.ended);if(Time.realtimeSinceStartup-began>240)Fail("Overall watchdog timeout");}}
     IEnumerator Start(){
         yield return null;g=FactoryGame.I;p=g.player;cc=p.GetComponent<CharacterController>();p.enabled=false;p.SetLookMode(1,false);g.inspector.enabled=false;Application.runInBackground=true;QualitySettings.vSyncCount=0;Application.targetFrameRate=120;Time.captureDeltaTime=1f/60;
-        began=Time.realtimeSinceStartup;g.Begin();Close();Time.timeScale=5;
+        foreach(var arg in Environment.GetCommandLineArgs())if(arg.StartsWith("--review-profile="))profile=arg.Substring("--review-profile=".Length);
+        began=Time.realtimeSinceStartup;g.Begin();Close();Scenario("opening");Time.timeScale=5;
         yield return Go(-4.8f,2.2f);Use(new Vector3(-4.8f,.61f,3.8f),"Foyer crate");
         yield return Go(-4.8f,6.5f);Place(0,"Foyer gate");yield return Wait(.9f);
         yield return Go(0,10);yield return Go(0,15.3f);Use(new Vector3(0,.6f,16),"Shared power core");
@@ -27,7 +28,7 @@ public class FactoryWalker : MonoBehaviour {
         yield return Go(-6.3f,31.7f);yield return Go(-6.3f,33.3f);Use(new Vector3(-6.3f,.8f,34.3f),"BREAK-TIME CHIME");Use(new Vector3(-6.3f,.8f,34.3f),"BREAK-TIME CHIME");
         yield return Go(-4,31.3f);Use(new Vector3(-4,.61f,32.8f),"Archive crate");
         yield return Go(8,31.5f);yield return Go(8,41.3f);yield return Go(7,41.3f);Place(270,"Drawing cabinet");yield return Wait(.9f);
-        yield return Go(7,42.4f);yield return Go(2.3f,42.4f);yield return Go(0,42.5f);yield return Go(0,44.1f);Use(new Vector3(2.6f,1.5f,44.83f),"Notice / AN OLD DRAWING");Close();Time.timeScale=5;
+        yield return Go(7,42.4f);yield return Go(2.3f,42.4f);yield return Go(0,42.5f);yield return Go(0,44.1f);Use(new Vector3(2.6f,1.5f,44.83f),"Notice / AN OLD DRAWING");Close();Scenario("drawing");Time.timeScale=5;
         yield return Go(0,42);yield return Go(-3.2f,42);yield return Go(-3.2f,37);yield return Go(-6.3f,37);Use(new Vector3(-6.3f,.8f,35.7f),"BREAK-TIME CHIME");
         yield return Go(-3.2f,37);yield return Go(-3.2f,42);yield return Go(0,42);yield return Go(0,44.1f);yield return Go(0,45.4f);yield return Wait(.9f);yield return Go(0,48);
         yield return Go(-5.4f,49.1f);Use(new Vector3(-5.4f,.8f,50.1f),"ENGRAVING TABLE");yield return Job("etch");
@@ -35,8 +36,8 @@ public class FactoryWalker : MonoBehaviour {
         yield return Go(-5.4f,49.1f);Use(new Vector3(-5.4f,.8f,50.1f),"ENGRAVING TABLE");yield return Go(0,49);yield return Go(0,52);yield return Go(0,55);yield return Go(5.4f,55.8f);
         Use(new Vector3(5.4f,.8f,56.8f),"LANTERN PRESS");yield return Job("press");Close();Time.timeScale=5;
         yield return Go(3.5f,55.8f);yield return Go(3.5f,56.8f);Use(new Vector3(3.6f,1.1f,58.5f),"The last lantern");yield return Go(0,58.2f);Use(new Vector3(0,1.4f,60.3f),"Pip");
-        if(!g.ended)Fail("Delivery did not reach ending");
-        if(!failed){string report=$"PASS: physical route to ending. {interactions} raycast interactions, {placements} validated Q placements, {routingSolved} authored circuits executed.\nAll traversal after initial spawn used CharacterController.Move, with live wall/gate/collision geometry.\nInspector locomotion disabled for deterministic navigation isolation; inspector behaviour has separate integration checks.\nRouting solved using the known authored solution; does not measure puzzle skill.\nTime accelerated; this is NOT an unassisted human playtest or a valid duration measurement.\n";File.WriteAllText("Work/navigation.txt",report);Debug.Log("NAVIGATION_PASS / "+report);EditorApplication.Exit(0);}
+        if(!g.ended)Fail("Delivery did not reach ending");Scenario("ending");
+        if(!failed){string report=$"Profile: {profile}; {scenarioChecks} additional scenario checks.\nPASS: physical route to ending. {interactions} raycast interactions, {placements} validated Q placements, {routingSolved} authored circuits executed.\nAll traversal after initial spawn used CharacterController.Move, with live wall/gate/collision geometry.\nInspector locomotion disabled for deterministic navigation isolation; inspector behaviour has separate integration checks.\nRouting solved using the known authored solution; does not measure puzzle skill.\nTime accelerated; this is NOT an unassisted human playtest or a valid duration measurement.\n";File.WriteAllText("Work/navigation.txt",report);File.WriteAllText("Work/scenario-"+profile+".txt",report);Debug.Log("NAVIGATION_PASS / "+report);EditorApplication.Exit(0);}
     }
     void Close(){for(int i=0;i<30&&g.Reading;i++)g.Advance();}
     IEnumerator Wait(float gameSeconds){float t=0;while(t<gameSeconds&&!failed){t+=Time.deltaTime;yield return null;}}
@@ -55,13 +56,36 @@ public class FactoryWalker : MonoBehaviour {
         if(failed)return;p.view.transform.LookAt(target);Physics.SyncTransforms();p.ScanFocus();
         var owner=p.focus==g.sharedCore?(Component)g.sharedCore.socket:null;if(!owner&&p.focus==g.sharedCore)owner=g.sharedCore.GetComponentInParent<GridRelay>();bool coreAlias=owner&&owner.name.StartsWith(expected);
         if(!p.focus||(!p.focus.name.StartsWith(expected)&&!coreAlias)){Physics.Raycast(p.view.transform.position,p.view.transform.forward,out RaycastHit raw,3.1f,~0,QueryTriggerInteraction.Ignore);Fail("Raycast expected "+expected+", found "+(p.focus?p.focus.name:"nothing")+" collider="+(raw.collider?raw.collider.name:"none")+" view="+p.view.transform.position+" dir="+p.view.transform.forward+" from "+p.transform.position);return;}
-        p.TryInteract();interactions++;
+        p.TryInteract();interactions++;Scenario(expected);
         if(g.activeCircuit){var circuit=g.activeCircuit.puzzle;for(int i=0;i<circuit.turns.Length;i++)while(circuit.turns[i]!=0)circuit.Rotate(i);if(!circuit.Solved){Fail("Authored routing solution invalid");return;}g.PowerCircuit();routingSolved++;}Debug.Log("NAV_USE / "+expected);
     }
     void Place(float yaw,string gate){
         if(failed)return;p.transform.rotation=Quaternion.Euler(0,yaw,0);p.TryPlace();placements++;Physics.SyncTransforms();
         if(p.held){Fail("Q placement failed near "+gate+": "+g.toast);return;}
         var door=FindObjectsByType<FactoryGate>(FindObjectsSortMode.None).Single(x=>x.name==gate);if(!door.Evaluate())Fail("Placement missed plate for "+gate);else Debug.Log("NAV_PLACED / "+gate);
+    }
+    void Require(bool ok,string what){if(!ok){Fail("Scenario "+profile+": "+what);return;}scenarioChecks++;Debug.Log("SCENARIO_PASS / "+profile+" / "+what);}
+    void Scenario(string stage){
+        if(failed)return;
+        if(profile=="newcomer"&&stage=="opening"){
+            g.ToggleMap();Require(g.Frozen&&g.mapOpen,"map safely pauses before learning movement");g.ToggleMap();
+            p.ApplyLook(new Vector2(15,10),0,0,0);float yaw=p.transform.eulerAngles.y;p.LevelView();Require(p.Pitch==0&&Mathf.Abs(Mathf.DeltaAngle(yaw,p.transform.eulerAngles.y))<.01f,"level-view recovery preserves heading");p.Teleport(new Vector3(0,0,-7),0);
+        }
+        if(profile=="wayfinding"&&(stage=="opening"||stage=="drawing")){
+            string before=g.guide.Current.action;g.ToggleMap();g.ToggleMap();g.ToggleJournal();Require(g.journal&&g.Frozen,"map-to-notebook exploration remains paused");g.ToggleJournal();Require(before==g.guide.Current.action,"navigation aids preserve the actual objective");
+        }
+        if(profile=="story"&&stage=="drawing"){
+            g.ReadDrawing();Require(g.Reading&&g.blueprint,"old drawing can be reread without removing progress");g.TogglePause();g.TogglePause();Require(g.Reading,"pause preserves the story line");Close();
+        }
+        if(profile=="fast"&&(stage=="MOULDING TABLE"||stage=="RIBBON CONVEYOR")&&g.activeCircuit){
+            var m=g.activeCircuit;g.PowerCircuit();Require(g.activeCircuit==m&&!m.running,"rapid start cannot bypass an unsolved circuit");
+        }
+        if(profile=="explorer"&&stage=="opening"){
+            var press=FindObjectsByType<Machine>(FindObjectsSortMode.None).Single(x=>x.machineId=="press");p.Pick(g.sharedCore);press.Use(p);Require(p.held==g.sharedCore&&!press.core,"out-of-order final machine keeps the sole core recoverable");p.PutBackHeld();
+            g.HoldForDesktop();Require(g.Frozen&&g.desktopHold,"desktop shortcut interruption freezes hazards");g.ResumeDesktop();
+        }
+        if(stage=="ending")Require(g.ended&&g.assembled,"profile reaches actual delivery ending");
+        if(!g.Frozen)Time.timeScale=5;
     }
     void Fail(string message){if(failed)return;failed=true;File.WriteAllText("Work/navigation.txt","FAIL: "+message);Debug.LogError("NAVIGATION_FAIL / "+message);EditorApplication.Exit(1);}
 }

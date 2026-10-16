@@ -55,8 +55,8 @@ public class ShiftInterface {
         if(g.journal){Notebook();MenuTab();return;}
         if(g.AwaitingLook){LookStart();return;}
         if(g.player.LookCaptured)hasCaptured=true;
+        if(g.Reading){if(UiTheme.Button(new Rect(28,22,180,50),T("菜单 [Esc]","Menu [Esc]"),true))g.TogglePause();Dialogue();return;}
         Calendar();MenuTab();g.factoryMap.Mini(g);
-        if(g.Reading){Dialogue();return;}
         Pointer();Coach();
         UiTheme.Label(new Rect(w/2-15,h/2-25,30,40),"+",27,UiTheme.Cream,false,false,TextAnchor.MiddleCenter);
         if(g.player.focus){UiTheme.Panel(new Rect(700,h-135,w-728,44));UiTheme.Label(new Rect(713,h-135,w-754,44),UiCopy.Prompt(g.player),23,null,true,false,TextAnchor.MiddleCenter);}
@@ -127,31 +127,30 @@ public class ShiftInterface {
         if(UiTheme.Button(new Rect(x+35,h-185,890,60),T("返回 [Esc]","Back [Esc]"),true))LanguageOpen=false;
     }
     void ControlCard(float x,float y,string key,string title,string copy){UiTheme.Key(new Rect(x,y,key.Length>3?160:60,43),key);UiTheme.Label(new Rect(x+(key.Length>3?178:80),y,370-(key.Length>3?178:80),45),title,28,UiTheme.Ink,true);UiTheme.Label(new Rect(x,y+54,370,54),copy,22,UiTheme.Ink);}
-    void Calendar(){float x=w-365;UiTheme.Panel(new Rect(x,90,337,390),UiTheme.Cream);UiTheme.Fill(new Rect(x,90,337,66),UiTheme.Teal);
-        for(int i=0;i<5;i++){UiTheme.Fill(new Rect(x+33+i*62,79,8,26),UiTheme.Gold);}
-        UiTheme.Label(new Rect(x+22,104,290,45),T("10 / 31    今晚的待办","10 / 31    TONIGHT"),23,UiTheme.Cream,true);
-        UiTheme.Label(new Rect(x+22,177,292,64),guide.ChapterTitle,26,UiTheme.Ink,true,true);
-        string[] rows=guide.Checklist;for(int i=0;i<rows.Length;i++){bool done=rows[i].StartsWith("[+]");float y=251+i*49;UiTheme.Fill(new Rect(x+22,y+9,20,20),UiTheme.Ink);UiTheme.Fill(new Rect(x+24,y+11,16,16),UiTheme.Cream);if(done)UiTheme.Label(new Rect(x+18,y-1,30,37),"✓",25,UiTheme.Teal,true,false,TextAnchor.MiddleCenter);UiTheme.Label(new Rect(x+54,y,259,49),rows[i].Substring(4),23,done?new Color(.32f,.47f,.4f):UiTheme.Ink);}
+    void Calendar(){float x=w-330;UiTheme.Panel(new Rect(x,94,302,210),UiTheme.Cream);UiTheme.Fill(new Rect(x,94,302,48),UiTheme.Teal);
+        UiTheme.Label(new Rect(x+18,101,270,38),T("10 / 31    今晚的待办","10 / 31    TONIGHT"),22,null,true);
+        UiTheme.Label(new Rect(x+18,151,266,76),guide.ChapterTitle,24,UiTheme.Ink,true,true);
+        string[] rows=guide.Checklist;int done=0;foreach(var row in rows)if(row.StartsWith("[+]"))done++;
+        if(UiTheme.Button(new Rect(x+18,238,266,48),T("待办 [J]","Tasks [J]")+"  "+done+" / "+rows.Length,true))g.ToggleJournal();
     }
-    void Coach(){var socket=g.player.NearbyCoreSocket();if(socket&&guide.IsCurrentCoreSocket(socket)){task.key="E / Q";task.action=T("按 E 或 Q，把核心插入机器","Press E or Q to insert the core");task.reason=T("不用把核心放在桌上。靠近机器就能插入。","No need to drop it on the worktop. Insert it directly near the machine.");if(socket is Machine machine&&machine.Requirement!=""){task.action=UiCopy.Translate(machine.Requirement);task.reason=T("先完成这一步，核心会留在手中。","Finish this step first. The core stays in your hands.");}}if(task.routeDistance>4.2f&&task.key=="W A S D"){
-        UiTheme.Panel(new Rect(28,h-330,485,220));UiTheme.Key(new Rect(49,h-315,190,39),"W A S D");UiTheme.Label(new Rect(49,h-265,445,73),task.action,25,UiTheme.Gold,true);UiTheme.Label(new Rect(49,h-187,445,71),task.reason,22);return;
-        }UiTheme.Panel(new Rect(28,h-356,650,246));UiTheme.Key(new Rect(49,h-339,task.key.Length>3?240:75,39),string.IsNullOrEmpty(task.key)?"...":UiCopy.Translate(task.key));UiTheme.Label(new Rect(49,h-290,610,93),task.action,27,UiTheme.Gold,true);UiTheme.Label(new Rect(49,h-190,610,74),task.reason,23);}
+    void Coach(){var socket=g.player.NearbyCoreSocket();if(socket&&guide.IsCurrentCoreSocket(socket)){task.key="E / Q";task.action=T("按 E 或 Q，把核心插入机器","Press E or Q to insert the core");task.reason=T("不用把核心放在桌上。靠近机器就能插入。","No need to drop it on the worktop. Insert it directly near the machine.");if(socket is Machine machine&&machine.Requirement!=""){task.action=UiCopy.Translate(machine.Requirement);task.reason=T("先完成这一步，核心会留在手中。","Finish this step first. The core stays in your hands.");}}bool teaching=guide.Chapter==0;
+        float height=teaching?250:170;float top=h-95-height;
+        UiTheme.Panel(new Rect(28,top,565,height));
+        UiTheme.Key(new Rect(46,top+15,task.key.Length>3?190:75,38),string.IsNullOrEmpty(task.key)?"...":UiCopy.Translate(task.key));
+        UiTheme.Label(new Rect(46,top+65,528,96),task.action,25,UiTheme.Gold,true);
+        if(teaching)UiTheme.Label(new Rect(46,top+170,528,72),task.reason,22);
+        else UiTheme.Label(new Rect(255,top+18,315,38),T("提示 [H]","Help [H]"),21,UiTheme.Muted,false,false,TextAnchor.MiddleRight);
+    }
     void Controls(){UiTheme.Key(new Rect(28,h-61,143,40),"W A S D");UiTheme.Label(new Rect(183,h-56,130,40),T("走动","Walk"),22);UiTheme.Key(new Rect(287,h-61,52,40),"E");UiTheme.Label(new Rect(350,h-56,145,40),(g.player.NearbyCoreSocket()?T("插入","Insert"):T("拿起 / 使用","Use")),22);UiTheme.Key(new Rect(503,h-61,52,40),"Q");UiTheme.Label(new Rect(567,h-56,130,40),(g.player.NearbyCoreSocket()?T("插入","Insert"):T("放下","Place")),22);
         UiTheme.Label(new Rect(720,h-77,360,75),g.player.pointerMode?T("右键拖动：转头","Right-drag: look"):g.player.keyboardLook?T("方向键：转头","Arrows: look"):T("移动鼠标：转头\nEsc：菜单 / 释放鼠标","Mouse: look around\nEsc: menu / free pointer"),20,UiTheme.Muted);
         if(g.player.held)UiTheme.Label(new Rect(w-360,h-91,330,70),T("手中：","Carrying: ")+UiCopy.Translate(g.player.held.displayName),23,UiTheme.Gold);}
-    void Pointer(){if(!task.hasTarget)return;
+    void Pointer(){if(!task.hasTarget||string.IsNullOrEmpty(task.key))return;
         float heading=FactoryPath.Heading(g.player.transform.forward,g.player.transform.position,task.target);
         string direction=Mathf.Abs(heading)>120?T("转身","Turn around"):heading < -22?T("← 向左","← Turn left"):heading>22?T("向右 →","Turn right →"):T("前方","Straight ahead");
-        float x=w/2-210;UiTheme.Panel(new Rect(x,95,420,132));
-        UiTheme.Label(new Rect(x+15,100,390,45),direction,27,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);
-        UiTheme.Label(new Rect(x+15,147,390,42),task.targetName,22,null,true,false,TextAnchor.MiddleCenter);
-        UiTheme.Label(new Rect(x+15,189,390,32),(task.routeDistance>0?task.routeDistance:Vector3.Distance(g.player.transform.position,task.target)).ToString("0.0")+" m",21,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
-        if(g.player.held&&g.player.held.kind==Pickup.Kind.Crate){
-            var gate=guide.PlacementGate;bool valid=g.player.Placement(out var at,out var why);bool ready=valid&&gate&&g.player.ReadyOnPlate(gate);
-            UiTheme.Panel(new Rect(w-365,h-330,337,192));
-            if(ready){UiTheme.Key(new Rect(w-345,h-315,55,40),"Q");UiTheme.Label(new Rect(w-345,h-261,297,110),T("按 Q 键：把箱子放到条纹木板上。","Press Q: place crate on the striped plate."),24,UiTheme.Gold,true);}
-            else UiTheme.Label(new Rect(w-345,h-315,297,165),!valid?UiCopy.Translate(why):gate?T("目标是发光的条纹木板。靠近它，直到绿色箱子轮廓出现在木板上。","Target: the glowing striped plate. Move closer until the green crate outline sits on it."):T("箱子轮廓显示落点。Q 键放下。","The outline shows the landing spot. Q places the item."),23,UiTheme.Gold);
-        }
+        float x=w/2-210;UiTheme.Panel(new Rect(x,95,420,108));
+        UiTheme.Label(new Rect(x+15,99,390,40),direction,27,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);
+        UiTheme.Label(new Rect(x+15,139,390,34),task.targetName,22,null,true,false,TextAnchor.MiddleCenter);
+        UiTheme.Label(new Rect(x+15,172,390,29),(task.routeDistance>0?task.routeDistance:Vector3.Distance(g.player.transform.position,task.target)).ToString("0.0")+" m",21,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
     }
 
     void Dialogue(){float left=(w-1040)/2,top=h-355;UiTheme.Panel(new Rect(left,top,1040,322),new Color(.04f,.12f,.14f,.98f));
@@ -182,7 +181,8 @@ public class ShiftInterface {
     void Notebook(){float x=w/2-480;UiTheme.Panel(new Rect(x,70,960,h-140),UiTheme.Cream);UiTheme.Label(new Rect(x+35,95,890,65),T("夜班笔记","The night-shift notebook"),40,UiTheme.Ink,false,true);
         UiTheme.Label(new Rect(x+35,190,890,125),task.action+"\n"+task.reason,27,UiTheme.Ink,true);
         UiTheme.Label(new Rect(x+35,340,890,75),T("金色核心的位置：","Gold core location: ")+UiCopy.Translate(g.CoreLocation),26,UiTheme.Ink);
-        UiTheme.Label(new Rect(x+35,445,890,220),T("记住三件事就好：\n1. 箱子留在条纹板上，门就会开着。\n2. 只有一枚核心，但已经做好的东西不会消失。\n3. Hush 不会伤害你；被发现后保留完成进度重试。","Three things to remember:\n1. Leave a crate on a striped plate to keep access.\n2. There is one core; finished work stays finished.\n3. Hush cannot hurt you. Retries keep completed work."),25,UiTheme.Ink);
+        var rows=guide.Checklist;for(int i=0;i<rows.Length;i++)UiTheme.Label(new Rect(x+35,430+i*44,890,44),rows[i].Replace("[+]","✓").Replace("[ ]","□"),24,UiTheme.Ink);
+        UiTheme.Label(new Rect(x+35,625,890,95),g.blueprint?UiCopy.Translate("For the last one to leave. So the way home is bright, too."):T("完成的工序会保留。箱子留在板上，门就会开着。","Finished work stays finished. Leave crates on plates to keep access."),24,UiTheme.Ink);
         if(UiTheme.Button(new Rect(x+35,h-175,890,60),T("合上笔记  [J]","Close notebook  [J]")))g.ToggleJournal();
     }
     void Ending(){UiTheme.Panel(new Rect(35,70,600,h-140),new Color(.04f,.12f,.14f,.94f));UiTheme.Label(new Rect(65,100,530,42),T("最后一份订单 / 已送达","THE LAST ORDER / DELIVERED"),25,UiTheme.Gold,true);UiTheme.Label(new Rect(65,175,530,135),T("照亮回家的路。","A light for\nthe way home."),49,null,false,true);UiTheme.Label(new Rect(65,335,530,275),T("Pip 又看了一遍你的纸条。\n\n“这一次，我们一起下班吧。”\n\n门外的万圣节游行，才刚刚开始。","Pip turns your note over once more.\n\n\"Then this time, we all clock out together.\"\n\nOutside, the parade is just beginning."),26);
