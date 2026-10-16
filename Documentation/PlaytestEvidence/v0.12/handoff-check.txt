@@ -1,0 +1,9 @@
+Final installed v0.12 native handoff check, October 16, 2026 (America/Chicago).
+English opening: passed.
+Saved normal mouse-look mode restored through K: passed.
+Enter explicitly enters camera control; Esc opens pause menu: passed.
+X quit: exit 0.
+Fresh launch retains English and normal mouse-look entry: passed.
+Cmd-Q quit: exit 0.
+Keyboard-operated silent review; physical mouse motion and hover feel not asserted.
+No source or package change. Both review instances closed.

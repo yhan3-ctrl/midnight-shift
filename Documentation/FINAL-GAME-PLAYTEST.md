@@ -72,7 +72,7 @@ Release archive: `Builds/MidnightShift-Mac-v0.12.zip`. SHA-256: `333cb1b5bb1529b
 
 ### Handoff preference check
 
-The final native opening check was interrupted by the Mac lock screen. The earlier complete review used the saved arrow-only accessibility option; restoring normal mouse-look mode and confirming English on the final opening remain pending until the Mac is unlocked. No locked-screen check is reported as passed.
+The initial handoff check was interrupted by the Mac lock screen. After unlocking on October 16, the final installed v0.12 application was opened silently through the normal title and introductory dialogue. English was confirmed, the saved arrow-only review option was changed back to normal mouse-look mode using K, Enter explicitly entered mouse look, and Esc opened the pause menu and released gameplay control. Quit via X exited 0. A fresh launch confirmed that English and normal mouse-look entry persisted; Cmd-Q exited 0. Logs: `Work/native-default-restored-v012.log` and `Work/native-default-persistence-v012.log`. Physical mouse motion/hover feel is still outside this keyboard-driven verification. Both review instances are closed. No package or source-code change was needed.
 
 ## Portable evidence
 
