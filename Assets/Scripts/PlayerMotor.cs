@@ -9,6 +9,7 @@ public class PlayerMotor : MonoBehaviour {
     public bool NeedsLookStart=>!pointerMode&&!keyboardLook&&!lookCaptured;
     public static bool SystemShortcutHeld=>Input.GetKey(KeyCode.LeftCommand)||Input.GetKey(KeyCode.RightCommand)||Input.GetKey(KeyCode.LeftControl)||Input.GetKey(KeyCode.RightControl)||Input.GetKey(KeyCode.LeftAlt)||Input.GetKey(KeyCode.RightAlt);
     public bool MouseLookHeld=>!keyboardLook&&!SystemShortcutHeld&&(lookCaptured||(pointerMode&&Input.GetMouseButton(1))); public float Pitch=>pitch; int ignoreMouseFrames;
+    public void LevelView(){pitch=0;view.transform.localRotation=Quaternion.identity;ResetLookInput();}
     public void ResetLookInput(){ignoreMouseFrames=3;wasDragging=false;}
     public void ReleaseMouseLook(){lookCaptured=false;if(Cursor.lockState!=CursorLockMode.None)Cursor.lockState=CursorLockMode.None;if(!Cursor.visible)Cursor.visible=true;ResetLookInput();}
     public bool CaptureMouseLook(){
@@ -54,18 +55,33 @@ public class PlayerMotor : MonoBehaviour {
     }
     public bool CanReach(Interactable item){
         if(!item||!item.gameObject.activeInHierarchy||item.transform.IsChildOf(transform))return false;
+        if(item is Machine||item is GridRelay){
+            var body=item.GetComponent<Collider>();Vector3 socketSurface=body?body.ClosestPoint(view.transform.position):InteractionPoint(item);
+            Vector3 flat=InteractionPoint(item)-view.transform.position;flat.y=0;Vector3 facing=view.transform.forward;facing.y=0;
+            if(Vector3.Distance(socketSurface,view.transform.position)>3.8f||(flat.magnitude>1.3f&&Vector3.Dot(facing.normalized,flat.normalized)<.2f))return false;
+            return VisibleTo(item,InteractionPoint(item))||VisibleTo(item,socketSurface);
+        }
         Vector3 point=InteractionPoint(item),delta=point-view.transform.position;
         if(delta.magnitude>3.8f||Vector3.Dot(view.transform.forward,delta.normalized)<.38f)return false;
-        var hits=Physics.RaycastAll(view.transform.position,delta.normalized,delta.magnitude,~0,QueryTriggerInteraction.Ignore);
-        foreach(var hit in hits){
+        return VisibleTo(item,point);
+    }
+    bool VisibleTo(Interactable item,Vector3 point){Vector3 delta=point-view.transform.position;
+        foreach(var hit in Physics.RaycastAll(view.transform.position,delta.normalized,delta.magnitude,~0,QueryTriggerInteraction.Ignore)){
             if(hit.transform.IsChildOf(transform)||hit.transform.IsChildOf(item.transform))continue;
             if(item is Pickup pickup){if(pickup.socket&&hit.transform.IsChildOf(pickup.socket.transform))continue;var relay=pickup.GetComponentInParent<GridRelay>();if(relay&&hit.transform.IsChildOf(relay.transform))continue;}
             return false;
-        }
-        return true;
+        }return true;
+    }
+    public Interactable NearbyCoreSocket(){
+        if(!held||held.kind!=Pickup.Kind.Core)return null;Interactable best=null;float nearest=float.MaxValue;
+        foreach(var item in FindObjectsByType<Interactable>(FindObjectsSortMode.None)){
+            if(item is Machine machine){if(machine.core)continue;}else if(item is GridRelay relay){if(relay.core)continue;}else continue;
+            if(!CanReach(item))continue;float distance=Vector3.Distance(view.transform.position,InteractionPoint(item));if(distance<nearest){nearest=distance;best=item;}
+        }return best;
     }
     public void ScanFocus(){
         focus=null;var g=FactoryGame.I;if(!g)return;
+        var socket=NearbyCoreSocket();if(socket){focus=socket;return;}
         // A visible reusable core can be taken directly even while its own collider is disabled in a socket.
         if(!held&&g.sharedCore&&!g.sharedCore.carried&&CanReach(g.sharedCore)){focus=g.sharedCore.socket&&!g.sharedCore.socket.done&&!g.sharedCore.socket.running?(Interactable)g.sharedCore.socket:g.sharedCore;return;}
         if(Physics.Raycast(view.transform.position,view.transform.forward,out RaycastHit hit,3.8f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))focus=hit.collider.GetComponentInParent<Interactable>();
@@ -118,6 +134,7 @@ public class PlayerMotor : MonoBehaviour {
     }
     public bool ReadyOnPlate(FactoryGate gate){if(!gate||!gate.plate||!Placement(out var at,out _))return false;var d=at-gate.plate.position;d.y=0;return d.magnitude<.12f;}
     public void TryPlace(){
+        if(held&&held.kind==Pickup.Kind.Core){var socket=NearbyCoreSocket();if(socket){socket.Use(this);return;}}
         if(!Placement(out Vector3 at,out string reason)){FactoryGame.I.Notify(reason,4);return;}
         held.PlaceAt(at);held=null;FactoryGame.I.audioScore.Tick(330);Physics.SyncTransforms();
     }

@@ -49,24 +49,29 @@ public class ShiftInterface {
         if(LanguageOpen){Languages();return;}
         if(!g.started){Title();return;}if(g.ended){Ending();return;}
         if(g.paused){Menu();return;}
+        if(g.desktopHold){DesktopPause();return;}
         if(g.activeCircuit){g.DrawCircuit(w,h);MenuTab();return;}
         task=guide.Navigate(guide.Current);
         if(g.journal){Notebook();MenuTab();return;}
         if(g.AwaitingLook){LookStart();return;}
         if(g.player.LookCaptured)hasCaptured=true;
         Calendar();MenuTab();g.factoryMap.Mini(g);
-        if(g.Reading){Dialogue();DesktopResume();return;}
+        if(g.Reading){Dialogue();return;}
         Pointer();Coach();
         UiTheme.Label(new Rect(w/2-15,h/2-25,30,40),"+",27,UiTheme.Cream,false,false,TextAnchor.MiddleCenter);
         if(g.player.focus){UiTheme.Panel(new Rect(700,h-135,w-728,44));UiTheme.Label(new Rect(713,h-135,w-754,44),UiCopy.Prompt(g.player),23,null,true,false,TextAnchor.MiddleCenter);}
         Controls();
         if(g.ToastVisible){UiTheme.Panel(new Rect(28,337,Mathf.Min(710,w-430),125));UiTheme.Label(new Rect(46,352,Mathf.Min(674,w-466),100),UiCopy.Translate(g.toast),23);}
-        if(g.inspector.Alertness>0){UiTheme.Fill(new Rect(w/2-155,110,310,12),UiTheme.Ink);UiTheme.Fill(new Rect(w/2-155,110,310*g.inspector.Alertness,12),UiTheme.Gold);UiTheme.Label(new Rect(w/2-200,128,400,62),T("Hush 正在注意你：绕到货架或放下的箱子后面。","Hush notices you. Move behind a shelf or a placed crate."),22,null,false,false,TextAnchor.MiddleCenter);}
-        DesktopResume();
+        if(g.inspector.Alertness>0){UiTheme.Fill(new Rect(w/2-155,249,310,12),UiTheme.Ink);UiTheme.Fill(new Rect(w/2-155,249,310*g.inspector.Alertness,12),UiTheme.Gold);UiTheme.Label(new Rect(w/2-200,267,400,62),T("Hush 正在注意你：绕到货架或放下的箱子后面。","Hush notices you. Move behind a shelf or a placed crate."),22,null,false,false,TextAnchor.MiddleCenter);}
         if(Array.IndexOf(Environment.GetCommandLineArgs(),"--agent-playtest")>=0){var p=g.player.transform.position;UiTheme.Label(new Rect(28,76,850,35),$"AGENT REVIEW / {p.x:F2}, {p.z:F2} / yaw {g.player.transform.eulerAngles.y:F1} pitch {g.player.Pitch:F1}",18);}
     }
-    void MenuTab(){if(UiTheme.Button(new Rect(28,22,225,54),T("菜单 [Esc]","Menu [Esc]"),true))g.TogglePause();if(UiTheme.Button(new Rect(269,22,305,54),T("截图视图 [F2]","Screenshot view [F2]"),true))g.TogglePhoto();if(UiTheme.Button(new Rect(590,22,225,54),T("地图 [M]","Map [M]"),true))g.ToggleMap();}
-    void DesktopResume(){if(!g.desktopHold||!Application.isFocused)return;UiTheme.Panel(new Rect(w/2-290,90,580,120));UiTheme.Label(new Rect(w/2-270,102,540,48),T("已暂停，方便你操作系统窗口。","Paused while you use desktop controls."),23);if(UiTheme.Button(new Rect(w/2-270,151,540,48),T("继续游戏 [Enter]","Resume game [Enter]")))g.ResumeDesktop();}
+    void MenuTab(){if(UiTheme.Button(new Rect(28,22,225,54),T("菜单 [Esc]","Menu [Esc]"),true))g.TogglePause();if(UiTheme.Button(new Rect(269,22,305,54),T("截图视图 [F2]","Screenshot view [F2]"),true))g.TogglePhoto();if(UiTheme.Button(new Rect(590,22,225,54),T("地图 [M]","Map [M]"),true))g.ToggleMap();if(!g.Modal&&UiTheme.Button(new Rect(835,22,200,54),T("平视 [R]","Level view [R]"),true))g.player.LevelView();}
+    void DesktopPause(){
+        UiTheme.Fill(new Rect(0,0,w,h),new Color(.015f,.04f,.05f,.7f));MenuTab();float x=w/2-460,y=h/2-180;UiTheme.Panel(new Rect(x,y,920,360));
+        UiTheme.Label(new Rect(x+35,y+25,850,65),T("游戏已暂停","Game paused"),40,UiTheme.Gold,true,true);
+        UiTheme.Label(new Rect(x+35,y+110,850,105),T("切换窗口或截图时，我们会暂停游戏。\n暂停期间，E 和 Q 不会操作物品。先按 Enter 继续。","Switching windows or using desktop shortcuts pauses the game.\nE and Q do nothing while paused. Press Enter to resume."),26);
+        if(UiTheme.Button(new Rect(x+35,y+255,850,65),T("继续游戏 [Enter]","Resume game [Enter]")))g.ResumeDesktop();
+    }
     void Photo(){if(UiTheme.Button(new Rect(28,22,460,54),T("返回游戏 [F2 / Esc]","Return to game [F2 / Esc]"),true))g.TogglePhoto();}
     void Title(){
         UiTheme.Panel(new Rect(48,50,775,h-100),new Color(.045f,.12f,.14f,.98f));
@@ -128,19 +133,19 @@ public class ShiftInterface {
         UiTheme.Label(new Rect(x+22,177,292,64),guide.ChapterTitle,26,UiTheme.Ink,true,true);
         string[] rows=guide.Checklist;for(int i=0;i<rows.Length;i++){bool done=rows[i].StartsWith("[+]");float y=251+i*49;UiTheme.Fill(new Rect(x+22,y+9,20,20),UiTheme.Ink);UiTheme.Fill(new Rect(x+24,y+11,16,16),UiTheme.Cream);if(done)UiTheme.Label(new Rect(x+18,y-1,30,37),"✓",25,UiTheme.Teal,true,false,TextAnchor.MiddleCenter);UiTheme.Label(new Rect(x+54,y,259,49),rows[i].Substring(4),23,done?new Color(.32f,.47f,.4f):UiTheme.Ink);}
     }
-    void Coach(){UiTheme.Panel(new Rect(28,h-356,650,246));UiTheme.Key(new Rect(49,h-339,task.key.Length>3?240:75,39),string.IsNullOrEmpty(task.key)?"...":UiCopy.Translate(task.key));UiTheme.Label(new Rect(49,h-290,610,93),task.action,27,UiTheme.Gold,true);UiTheme.Label(new Rect(49,h-190,610,74),task.reason,23);}
-    void Controls(){UiTheme.Key(new Rect(28,h-61,143,40),"W A S D");UiTheme.Label(new Rect(183,h-56,130,40),T("走动","Walk"),22);UiTheme.Key(new Rect(287,h-61,52,40),"E");UiTheme.Label(new Rect(350,h-56,145,40),T("拿起 / 使用","Use"),22);UiTheme.Key(new Rect(503,h-61,52,40),"Q");UiTheme.Label(new Rect(567,h-56,130,40),T("放下","Place"),22);
+    void Coach(){var socket=g.player.NearbyCoreSocket();if(socket&&guide.IsCurrentCoreSocket(socket)){task.key="E / Q";task.action=T("按 E 或 Q，把核心插入机器","Press E or Q to insert the core");task.reason=T("不用把核心放在桌上。靠近机器就能插入。","No need to drop it on the worktop. Insert it directly near the machine.");if(socket is Machine machine&&machine.Requirement!=""){task.action=UiCopy.Translate(machine.Requirement);task.reason=T("先完成这一步，核心会留在手中。","Finish this step first. The core stays in your hands.");}}if(task.routeDistance>4.2f&&task.key=="W A S D"){
+        UiTheme.Panel(new Rect(28,h-330,485,220));UiTheme.Key(new Rect(49,h-315,190,39),"W A S D");UiTheme.Label(new Rect(49,h-265,445,73),task.action,25,UiTheme.Gold,true);UiTheme.Label(new Rect(49,h-187,445,71),task.reason,22);return;
+        }UiTheme.Panel(new Rect(28,h-356,650,246));UiTheme.Key(new Rect(49,h-339,task.key.Length>3?240:75,39),string.IsNullOrEmpty(task.key)?"...":UiCopy.Translate(task.key));UiTheme.Label(new Rect(49,h-290,610,93),task.action,27,UiTheme.Gold,true);UiTheme.Label(new Rect(49,h-190,610,74),task.reason,23);}
+    void Controls(){UiTheme.Key(new Rect(28,h-61,143,40),"W A S D");UiTheme.Label(new Rect(183,h-56,130,40),T("走动","Walk"),22);UiTheme.Key(new Rect(287,h-61,52,40),"E");UiTheme.Label(new Rect(350,h-56,145,40),(g.player.NearbyCoreSocket()?T("插入","Insert"):T("拿起 / 使用","Use")),22);UiTheme.Key(new Rect(503,h-61,52,40),"Q");UiTheme.Label(new Rect(567,h-56,130,40),(g.player.NearbyCoreSocket()?T("插入","Insert"):T("放下","Place")),22);
         UiTheme.Label(new Rect(720,h-77,360,75),g.player.pointerMode?T("右键拖动：转头","Right-drag: look"):g.player.keyboardLook?T("方向键：转头","Arrows: look"):T("移动鼠标：转头\nEsc：菜单 / 释放鼠标","Mouse: look around\nEsc: menu / free pointer"),20,UiTheme.Muted);
         if(g.player.held)UiTheme.Label(new Rect(w-360,h-91,330,70),T("手中：","Carrying: ")+UiCopy.Translate(g.player.held.displayName),23,UiTheme.Gold);}
-    void Pointer(){if(!task.hasTarget)return;var camera=g.player.view;Vector3 target=task.target+Vector3.up*.55f;Vector3 sp=camera.WorldToScreenPoint(target);Vector2 centre=new Vector2(w/2,h/2);Vector2 xy=new Vector2(sp.x/scale,(Screen.height-sp.y)/scale);if(sp.z<0)xy=centre-(xy-centre)*2;
-        bool offscreen=sp.z<0||xy.x<0||xy.x>w||xy.y<0||xy.y>h;
-        bool clipped=sp.z<0||xy.x<185||xy.x>w-535||xy.y<170||xy.y>h-442;
-        string direction=sp.z<0?"↶":xy.x<185?"←":xy.x>w-535?"→":xy.y<180?"↑":"↓";
-        xy.x=Mathf.Clamp(xy.x,185,w-535);xy.y=Mathf.Clamp(xy.y,180,h-442);
-        UiTheme.Label(new Rect(xy.x-30,xy.y-20,60,50),clipped?direction:"▼",42,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);
-        UiTheme.Panel(new Rect(xy.x-155,xy.y-105,310,80));UiTheme.Label(new Rect(xy.x-148,xy.y-101,296,42),task.targetName,22,null,true,false,TextAnchor.MiddleCenter);
-        UiTheme.Label(new Rect(xy.x-148,xy.y-61,296,30),(task.routeDistance>0?task.routeDistance:Vector3.Distance(g.player.transform.position,task.target)).ToString("0.0")+" m",20,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
-        if(offscreen&&!g.player.ReadyOnPlate(guide.PlacementGate))UiTheme.Label(new Rect(xy.x-145,xy.y+27,290,44),T("朝箭头方向转动视角","Turn toward the arrow"),20,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
+    void Pointer(){if(!task.hasTarget)return;
+        float heading=FactoryPath.Heading(g.player.transform.forward,g.player.transform.position,task.target);
+        string direction=Mathf.Abs(heading)>120?T("转身","Turn around"):heading < -22?T("← 向左","← Turn left"):heading>22?T("向右 →","Turn right →"):T("前方","Straight ahead");
+        float x=w/2-210;UiTheme.Panel(new Rect(x,95,420,132));
+        UiTheme.Label(new Rect(x+15,100,390,45),direction,27,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);
+        UiTheme.Label(new Rect(x+15,147,390,42),task.targetName,22,null,true,false,TextAnchor.MiddleCenter);
+        UiTheme.Label(new Rect(x+15,189,390,32),(task.routeDistance>0?task.routeDistance:Vector3.Distance(g.player.transform.position,task.target)).ToString("0.0")+" m",21,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
         if(g.player.held&&g.player.held.kind==Pickup.Kind.Crate){
             var gate=guide.PlacementGate;bool valid=g.player.Placement(out var at,out var why);bool ready=valid&&gate&&g.player.ReadyOnPlate(gate);
             UiTheme.Panel(new Rect(w-365,h-330,337,192));

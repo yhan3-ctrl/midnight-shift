@@ -73,6 +73,7 @@ public class ShiftGuide : MonoBehaviour {
             return Make("05 / 一起下班吧","05 / Let's go home together","把灯笼交给桌后的 Pip","Give the lantern to Pip behind the desk","对准 Pip 按 E，完成你的最后一份订单。","Aim at Pip and press E to finish your last order.","E",g.pipHelper.transform.position+Vector3.up,"Pip / 交付","Pip / Deliver");
         }
     }
+    public bool IsCurrentCoreSocket(Interactable socket){if(!socket)return false;var t=Current;if(!t.hasTarget||t.key!="E")return false;Vector3 delta=t.target-g.player.InteractionPoint(socket);delta.y=0;return delta.magnitude<1.1f;}
     public Task Navigate(Task t){
         if(!t.hasTarget||!g.navigation||t.key=="MOUSE"||t.key=="ARROWS"||t.key=="RIGHT-DRAG")return t;
         g.navigation.Refresh(t);

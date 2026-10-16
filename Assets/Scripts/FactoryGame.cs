@@ -95,6 +95,7 @@ public class FactoryGame : MonoBehaviour {
         if(journal&&Input.GetKeyDown(KeyCode.Backspace)){ToggleJournal();return;}
         if(Input.GetKeyDown(KeyCode.J)&&!Reading)ToggleJournal();
         if(Reading&&Time.frameCount!=dialogueOpenedFrame&&(Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown(KeyCode.Return))){Advance();return;}
+        if(started&&!Modal&&Input.GetKeyDown(KeyCode.R)){player.LevelView();return;}
         if(AwaitingLook&&Input.GetKeyDown(KeyCode.Return)){StartMouseLook();return;}
         if(started&&!Frozen&&Input.GetKeyDown(KeyCode.H))Hint();
         if(started&&!Frozen){

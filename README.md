@@ -1,6 +1,6 @@
 # Midnight Shift: The Last Lantern
 
-v0.10 responds to a friend's user-reported playtest: default relative mouse look after an explicit click (or Enter), clear Esc pointer release, hover highlights/hand cursors, a simple map Back arrow, and persisted comfort options. See Documentation/MOUSE-LOOK-REVIEW-v0.10.md for evidence and limitations.
+v0.11 makes the route visible from a level view: wider opaque gold lines, raised route lights and a heading-only compass. R levels the camera without changing heading. Near a visible machine, E or Q inserts the carried core; the main insertion coach only replaces the guide when that machine is the current objective. Desktop hold now clearly hides inactive E/Q instructions. See Documentation/ROUTE-PLACEMENT-REVIEW-v0.11.md for evidence and limits.
 
 Move the mouse to turn; WASD walks. Esc pauses and releases the pointer. Map, dialogue, circuits, notebook, screenshot view, system modifiers and focus loss also release it. Returning to exploration requires a deliberate click/Enter, never automatic capture. Controls & comfort [C] is available on the title, pause and look-entry screens.
 
@@ -8,13 +8,13 @@ Willow Works 的万圣节最后一班。Unity 6.6 / 6000.6.5f1 / Built-in Render
 
 ## 当前版本
 
-v0.10 retains the seven-language interface (English default), warm story, four circuits and visible lantern crafting. This is a playable revision, not a verified final course submission. Independent human timing and learning outcomes remain unverified.
+v0.11 retains the seven-language interface (English default), warm story, four circuits and visible lantern crafting. This is a playable revision, not a verified final course submission. Independent human timing and learning outcomes remain unverified.
 
 ## 打开游戏
 
-双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift v0.10.app`。
+双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift v0.11.app`。
 
-当前开发源文件位于本机 `~/Developer/MidnightShift`，避免 iCloud 卸载源代码。桌面旧项目保留为 v0.5 参考。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.10.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
+当前开发源文件位于本机 `~/Developer/MidnightShift`，避免 iCloud 卸载源代码。桌面旧项目保留为 v0.5 参考。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.11.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
 
 编辑项目：Unity Hub → Projects → Add → Add project from disk → 选择整个 `MidnightShift` 文件夹。打开后在 Project 面板双击 `Assets/Scenes/WillowWorks.unity`，再按编辑器上方 Play。
 
@@ -22,7 +22,8 @@ v0.10 retains the seven-language interface (English default), warm story, four c
 
 - WASD：移动。点击 Click to look around（或 Enter）后，移动鼠标即可自由转头，不用按住鼠标键。Esc 立即释放鼠标并打开菜单。方向键也可以转头；设置页可选自由指针／右键拖动或仅方向键模式。
 - E：拾取／插入核心／启动机器／读取说明／交付。
-- Q：放置物品。发光条纹木板是任务目标，箱子轮廓是实际落点；轮廓在木板上变绿后按 Q。靠近目标木板时会对齐，碰撞与墙壁仍会阻止放置。
+- R：恢复平视，只调整抬头／低头角度，保留朝向。
+- Q：核心靠近机器时可直接插入，与 E 一样打开线路板；其他位置放在空地。箱子仍按原有落点规则放置。发光条纹木板是任务目标，箱子轮廓是实际落点；轮廓在木板上变绿后按 Q。靠近目标木板时会对齐，碰撞与墙壁仍会阻止放置。
 - Space 或 Return：继续对白。阅读时世界暂停。
 - H：当前任务提示。
 - J：值班笔记，查看当前目标、规则和已发现的故事。
@@ -31,7 +32,7 @@ v0.10 retains the seven-language interface (English default), warm story, four c
 - 菜单内可退出游戏、试听/恢复声音，并打开七种语言的选择菜单（L）。Controls & comfort [C] 可调左右／上下灵敏度、垂直视野和走路速度；手部晃动默认关闭。设置关闭后保存。
 - 对话暂停世界；点击继续或按空格/回车推进。右侧挂历与金色箭头逐步指路。
 
-Production machines: E near the console inserts the core and opens the circuit. Turn tiles to power every OUT and every star; green stars remain visible. Choose Start machine. Click/Space rotates, arrows select, Return starts, Backspace returns and Esc opens the menu. The Chime needs no routing puzzle. Completed output persists when the same core is retrieved and reused.
+Production machines: E or Q near a visible console inserts a carried core and opens its circuit. Generic Q away from a machine places on clear floor; crates retain their pressure-plate landing validation. Turn tiles to power every OUT and every star; green stars remain visible. Choose Start machine. Click/Space rotates, arrows select, Return starts, Backspace returns and Esc opens the menu. The Chime needs no routing puzzle. Completed output persists when the same core is retrieved and reused.
 
 ## 本地试玩记录
 

@@ -13,7 +13,7 @@ stateDiagram-v2
     state Active {
         [*] --> EmptyHands
         EmptyHands --> Carrying: valid pickup
-        Carrying --> EmptyHands: valid place / insert / deliver
+        Carrying --> EmptyHands: valid Q place / E-or-Q insert / deliver
     }
     Active --> Routing: interact with production console
     Routing --> LookEntry: close / remove / start
@@ -96,3 +96,6 @@ Partial work survives power removal. The workshop relay is a continuous power so
 Button and Pip: Idle → WelcomeWave on first nearby active encounter; Idle/WelcomeWave → Celebrate on manufacturing success or optional Button interaction; animations return to Idle after their timers. Body bob, sleeve gestures and gaze use the same paused world clock. When Ended becomes true, helper relocation and gaze stop and EndOfShift controls the group departure. This helper presentation does not replace Hush's patrol FSM.
 
 Overlay modes retain the underlying dialogue, circuit, journal, pause and carrying state. Closing the map or screenshot view returns to that retained mode, not necessarily Active. The diagram shows representative transitions rather than every overlay combination.
+
+
+v0.11 leaves the mode transitions unchanged. R levels pitch without changing the current mode or yaw. A core inserted by either E or Q uses the same Carrying → EmptyHands → Routing path as E insertion. DesktopHold displays only its paused interface, with no active E/Q coach.

@@ -3971,6 +3971,138 @@
         "右ドラッグ",
         "우클릭 드래그"
       ]
+    },
+    {
+      "en": "Game paused",
+      "values": [
+        "Game paused",
+        "游戏已暂停",
+        "Juego en pausa",
+        "Jeu en pause",
+        "Spiel pausiert",
+        "ゲームは一時停止中",
+        "게임 일시 정지"
+      ]
+    },
+    {
+      "en": "Switching windows or using desktop shortcuts pauses the game.\nE and Q do nothing while paused. Press Enter to resume.",
+      "values": [
+        "Switching windows or using desktop shortcuts pauses the game.\nE and Q do nothing while paused. Press Enter to resume.",
+        "切换窗口或截图时，我们会暂停游戏。\n暂停期间，E 和 Q 不会操作物品。先按 Enter 继续。",
+        "Cambiar de ventana o usar atajos del sistema pausa el juego.\nE y Q no funcionan en pausa. Pulsa Enter para continuar.",
+        "Changer de fenêtre ou utiliser un raccourci système met le jeu en pause.\nE et Q sont inactifs en pause. Appuie sur Entrée pour reprendre.",
+        "Fensterwechsel und Systemkürzel pausieren das Spiel.\nE und Q sind während der Pause inaktiv. Enter setzt fort.",
+        "ウィンドウの切替やシステム操作で一時停止するよ。\n停止中は E と Q で物を動かせないよ。Enter で再開しよう。",
+        "창 전환이나 시스템 단축키를 사용하면 일시 정지돼요.\n일시 정지 중에는 E와 Q가 작동하지 않아요. Enter로 재개하세요."
+      ]
+    },
+    {
+      "en": "Insert",
+      "values": [
+        "Insert",
+        "插入",
+        "Insertar",
+        "Insérer",
+        "Einsetzen",
+        "差し込む",
+        "삽입"
+      ]
+    },
+    {
+      "en": "Turn around",
+      "values": [
+        "Turn around",
+        "转身",
+        "Date la vuelta",
+        "Fais demi-tour",
+        "Dreh dich um",
+        "振り返ろう",
+        "뒤로 돌아보세요"
+      ]
+    },
+    {
+      "en": "← Turn left",
+      "values": [
+        "← Turn left",
+        "← 向左",
+        "← Gira a la izquierda",
+        "← Tourne à gauche",
+        "← Nach links",
+        "← 左へ",
+        "← 왼쪽으로"
+      ]
+    },
+    {
+      "en": "Turn right →",
+      "values": [
+        "Turn right →",
+        "向右 →",
+        "Gira a la derecha →",
+        "Tourne à droite →",
+        "Nach rechts →",
+        "右へ →",
+        "오른쪽으로 →"
+      ]
+    },
+    {
+      "en": "Straight ahead",
+      "values": [
+        "Straight ahead",
+        "前方",
+        "Todo recto",
+        "Tout droit",
+        "Geradeaus",
+        "まっすぐ前へ",
+        "바로 앞"
+      ]
+    },
+    {
+      "en": "Press E or Q to insert the core",
+      "values": [
+        "Press E or Q to insert the core",
+        "按 E 或 Q，把核心插入机器",
+        "Pulsa E o Q para insertar el núcleo",
+        "Appuie sur E ou Q pour insérer le noyau",
+        "Drücke E oder Q, um den Kern einzusetzen",
+        "E か Q でコアを差し込もう",
+        "E 또는 Q로 코어를 넣으세요"
+      ]
+    },
+    {
+      "en": "No need to drop it on the worktop. Insert it directly near the machine.",
+      "values": [
+        "No need to drop it on the worktop. Insert it directly near the machine.",
+        "不用把核心放在桌上。靠近机器就能插入。",
+        "No hace falta soltarlo sobre la mesa. Insértalo junto a la máquina.",
+        "Inutile de le poser sur la table. Insère-le directement près de la machine.",
+        "Nicht auf die Arbeitsplatte legen. Setze ihn nahe der Maschine direkt ein.",
+        "作業台に置く必要はないよ。機械の近くで直接差し込めるよ。",
+        "작업대에 내려놓을 필요 없어요. 기계 가까이에서 바로 넣으세요."
+      ]
+    },
+    {
+      "en": "Finish this step first. The core stays in your hands.",
+      "values": [
+        "Finish this step first. The core stays in your hands.",
+        "先完成这一步，核心会留在手中。",
+        "Completa este paso primero. El núcleo sigue en tus manos.",
+        "Termine d'abord cette étape. Le noyau reste dans tes mains.",
+        "Erledige zuerst diesen Schritt. Du behältst den Kern.",
+        "先にこの工程を終えよう。コアは手元に残るよ。",
+        "이 단계를 먼저 끝내세요. 코어는 손에 그대로 있어요."
+      ]
+    },
+    {
+      "en": "Level view [R]",
+      "values": [
+        "Level view [R]",
+        "平视 [R]",
+        "Nivelar vista [R]",
+        "Vue à plat [R]",
+        "Blick gerade [R]",
+        "水平に戻す [R]",
+        "수평 시점 [R]"
+      ]
     }
   ]
 }

@@ -10,7 +10,7 @@ public class LocalizationPreview : MonoBehaviour {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     static void Install(){if(Array.IndexOf(Environment.GetCommandLineArgs(),"--capture-languages")>=0)new GameObject("Language layout review").AddComponent<LocalizationPreview>();}
     IEnumerator Snap(string code,string name){
-        Debug.Log("LOCALE_CAPTURE / "+code+" / "+name);yield return new WaitForEndOfFrame();ScreenCapture.CaptureScreenshot(Path.Combine(directory,code+"-"+name+".png"));yield return new WaitForSecondsRealtime(.18f);captures++;
+        if(!g.Frozen)g.player.ScanFocus();Debug.Log("LOCALE_CAPTURE / "+code+" / "+name);yield return new WaitForEndOfFrame();ScreenCapture.CaptureScreenshot(Path.Combine(directory,code+"-"+name+".png"));yield return new WaitForSecondsRealtime(.18f);captures++;
     }
     void Close(){for(int i=0;i<100&&g.Reading;i++)g.Advance();}
     IEnumerator Start(){
@@ -27,7 +27,9 @@ public class LocalizationPreview : MonoBehaviour {
             var captureField=typeof(PlayerMotor).GetField("lookCaptured",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance);captureField.SetValue(g.player,true);yield return Snap(code,"mouse-hud");captureField.SetValue(g.player,false);g.OpenComfort();yield return Snap(code,"comfort");g.CloseComfort(false);g.player.SetLookMode(1,false);yield return Snap(code,"guide");g.ToggleMap();yield return Snap(code,"map");g.ToggleMap();g.ToggleJournal();yield return Snap(code,"notebook");g.ToggleJournal();g.TogglePause();yield return Snap(code,"menu");g.TogglePause();
             g.OpenCircuit(mould);yield return Snap(code,"circuit3");g.CloseCircuit();g.OpenCircuit(press);yield return Snap(code,"circuit4");g.CloseCircuit();
             g.player.Teleport(new Vector3(0,0,15),0);yield return Snap(code,"packaging");
-            g.shell=true;g.transferred=true;g.player.Pick(g.sharedCore);g.player.Teleport(new Vector3(5.4f,0,23.1f),0);g.player.view.transform.LookAt(new Vector3(7.3f,.8f,27.5f));yield return new WaitForSecondsRealtime(1);g.navigation.Refresh(g.guide.Current,true);g.player.view.transform.LookAt(g.navigation.LookAhead(4)+Vector3.up*.2f);yield return Snap(code,"archive-route");g.ToggleMap();yield return Snap(code,"archive-map");g.ToggleMap();g.player.PutBackHeld();g.player.Teleport(new Vector3(0,0,29.5f),0);yield return Snap(code,"archive");
+            var overrideCrate=FindObjectsByType<Pickup>(FindObjectsSortMode.None).Single(x=>x.name=="Workshop override crate");Vector3 oldCrate=overrideCrate.transform.position;overrideCrate.PlaceAt(g.workshopRelay.gate.plate.position+Vector3.up*.885f);g.player.Pick(g.sharedCore);g.player.Teleport(new Vector3(-5.4f,0,18.9f),0);Physics.SyncTransforms();g.player.ScanFocus();yield return Snap(code,"core-insert-level");g.HoldForDesktop();yield return Snap(code,"desktop-pause");g.ResumeDesktop();g.player.PutBackHeld();overrideCrate.PlaceAt(oldCrate);Physics.SyncTransforms();
+
+            g.shell=true;g.transferred=true;g.player.Pick(g.sharedCore);g.player.Teleport(new Vector3(5.4f,0,23.1f),0);g.player.view.transform.LookAt(new Vector3(7.3f,.8f,27.5f));yield return new WaitForSecondsRealtime(1);g.navigation.Refresh(g.guide.Current,true);g.player.view.transform.LookAt(new Vector3(g.navigation.LookAhead(4).x,g.player.view.transform.position.y,g.navigation.LookAhead(4).z));yield return Snap(code,"archive-route");g.ToggleMap();yield return Snap(code,"archive-map");g.ToggleMap();g.player.PutBackHeld();g.player.Teleport(new Vector3(0,0,29.5f),0);yield return Snap(code,"archive");
             g.blueprint=true;g.etched=true;g.player.Teleport(new Vector3(0,0,49),0);yield return Snap(code,"assembly");
             g.assembled=true;g.player.Teleport(new Vector3(0,0,59),0);yield return Snap(code,"delivery");g.ended=true;yield return Snap(code,"ending");
         }
