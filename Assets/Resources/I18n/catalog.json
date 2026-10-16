@@ -4187,6 +4187,90 @@
         "Pip が図面を保管室にしまっているよ。コアも持っていって。明かりを入れる前に、見ておいたほうがいい。",
         "Pip이 그 그림을 기록실에 보관했어요. 코어도 가져가세요. 불을 켜기 전에 먼저 보면 좋겠어요."
       ]
+    },
+    {
+      "en": "BASICS COMPLETE / Your night shift begins. Make the lantern shell with Button and the reusable power core.",
+      "values": [
+        "BASICS COMPLETE / Your night shift begins. Make the lantern shell with Button and the reusable power core.",
+        "基础操作完成 / 正式夜班开始。和 Button 一起，用可复用核心制作灯笼外壳。",
+        "BASES APRENDIDAS / Empieza tu turno. Fabrica la carcasa con Button y el núcleo reutilizable.",
+        "BASES ACQUISES / Ton service commence. Fabrique la coque avec Button et le noyau réutilisable.",
+        "GRUNDLAGEN GELERNT / Deine Nachtschicht beginnt. Baue mit Button und dem wiederverwendbaren Kern die Laternenhülle.",
+        "基本操作完了 / 夜勤の始まりです。Button と一緒に、使い回せるコアでランタンの外側を作りましょう。",
+        "기본 조작 완료 / 야간 근무를 시작합니다. Button과 함께 재사용 코어로 등불 외형을 만드세요."
+      ]
+    },
+    {
+      "en": "Meet Hush, our friendly safety inspector. This archive is safe practice: he will not send you back here.",
+      "values": [
+        "Meet Hush, our friendly safety inspector. This archive is safe practice: he will not send you back here.",
+        "这是友善的安全巡检员 Hush。档案室是安全练习区：他不会在这里把你送回入口。",
+        "Este es Hush, nuestro amable inspector. El archivo es una zona de práctica segura: aquí no te hará volver a la entrada.",
+        "Voici Hush, notre gentil inspecteur. Les archives sont une zone sûre pour apprendre : ici, il ne te renverra pas à l'entrée.",
+        "Das ist Hush, unser freundlicher Prüfer. Das Archiv ist ein sicherer Übungsraum: Hier schickt er dich nicht zurück.",
+        "こちらは親切な安全係の Hush。資料室は安全な練習場所なので、入口に戻されることはありません。",
+        "친절한 안전 점검원 Hush예요. 기록실은 안전한 연습 공간이므로 여기서는 입구로 돌려보내지 않아요."
+      ]
+    },
+    {
+      "en": "Power the chime and ring it with E. It calls Hush away. Move the crate to the striped plate while he checks it. You do not need to wait for him to finish.",
+      "values": [
+        "Power the chime and ring it with E. It calls Hush away. Move the crate to the striped plate while he checks it. You do not need to wait for him to finish.",
+        "给铃供电，再按 E 响铃，就能把 Hush 叫过去。他检查铃时，把木箱搬到条纹压力板上。不用等他检查完。",
+        "Alimenta la campana y pulsa E para tocarla. Hush irá a revisarla. Mientras tanto, lleva la caja a la placa de rayas. No esperes a que termine.",
+        "Alimente la cloche, puis appuie sur E pour sonner. Hush ira la vérifier. Pendant ce temps, pose la caisse sur la plaque rayée. Inutile d'attendre qu'il termine.",
+        "Versorge die Glocke mit Strom und drücke E zum Läuten. Hush geht zu ihr. Bring währenddessen die Kiste zur gestreiften Platte. Warte nicht auf ihn.",
+        "コアを入れ、E でベルを鳴らすと Hush が見に行きます。その間に木箱をしま模様の板に運びましょう。点検が終わるのを待つ必要はありません。",
+        "종에 전원을 넣고 E로 울리면 Hush가 확인하러 가요. 그동안 상자를 줄무늬 발판으로 옮기세요. 점검이 끝날 때까지 기다릴 필요는 없어요."
+      ]
+    },
+    {
+      "en": "The real safety check starts here. If Hush sees you in the active aisle, step behind a shelf or a placed crate. A full warning and contact send you to this room entrance; finished jobs stay safe.",
+      "values": [
+        "The real safety check starts here. If Hush sees you in the active aisle, step behind a shelf or a placed crate. A full warning and contact send you to this room entrance; finished jobs stay safe.",
+        "这里开始正式安全检查。Hush 看见你时，躲到货架或已放下的箱子后面。警告条满后被他靠近，才会返回本房间入口；完成的工作会保留。",
+        "Aquí empieza la inspección real. Si Hush te ve, ponte tras una estantería o caja colocada. Solo te devuelve a esta entrada si llena el aviso y te alcanza. Los trabajos hechos se conservan.",
+        "La vraie inspection commence ici. Si Hush te voit, passe derrière une étagère ou une caisse posée. Si l'alerte est pleine et qu'il t'atteint, tu reviens à cette entrée. Le travail terminé reste acquis.",
+        "Hier beginnt die echte Prüfung. Wenn Hush dich sieht, geh hinter ein Regal oder eine abgestellte Kiste. Nur bei voller Warnung und Kontakt kommst du zu diesem Eingang zurück. Fertige Arbeit bleibt erhalten.",
+        "ここから本番の安全点検です。Hush に見られたら棚や置いた木箱の陰へ。警告が満ちて近づかれると、この部屋の入口に戻ります。完成した作業は残ります。",
+        "여기부터 실제 안전 점검이에요. Hush가 보면 선반이나 내려놓은 상자 뒤로 가세요. 경고가 가득 찬 뒤 그가 다가와 닿으면 이 방 입구로 돌아가지만 끝낸 작업은 유지돼요."
+      ]
+    },
+    {
+      "en": "Hush is checking the chime. Move the crate now; you do not need to wait. This room has no send-backs.",
+      "values": [
+        "Hush is checking the chime. Move the crate now; you do not need to wait. This room has no send-backs.",
+        "Hush 正在检查铃。现在就去搬木箱，不用等他。本房间不会把你送回入口。",
+        "Hush revisa la campana. Mueve la caja ahora; no hace falta esperar. Aquí no te devolverá a la entrada.",
+        "Hush vérifie la cloche. Déplace la caisse maintenant, sans attendre. Ici, aucun retour forcé à l'entrée.",
+        "Hush prüft die Glocke. Bring jetzt die Kiste zur Platte; du musst nicht warten. Hier gibt es kein Zurücksetzen.",
+        "Hush はベルを点検中。待たずに木箱を運びましょう。この部屋では入口に戻されません。",
+        "Hush가 종을 점검 중이에요. 기다리지 말고 상자를 옮기세요. 이 방에서는 입구로 돌려보내지 않아요."
+      ]
+    },
+    {
+      "en": "SAFE PRACTICE / No send-backs",
+      "values": [
+        "SAFE PRACTICE / No send-backs",
+        "安全练习 / Hush 不会送你返回",
+        "PRÁCTICA SEGURA / Sin retrocesos",
+        "ZONE SÛRE / Aucun retour forcé",
+        "SICHER ÜBEN / Kein Zurücksetzen",
+        "安全な練習 / 強制帰還なし",
+        "안전 연습 / 강제 복귀 없음"
+      ]
+    },
+    {
+      "en": "E  Ring chime / ",
+      "values": [
+        "E  Ring chime / ",
+        "E  响铃 / ",
+        "E  Tocar campana / ",
+        "E  Sonner / ",
+        "E  Glocke läuten / ",
+        "E  ベルを鳴らす / ",
+        "E  종 울리기 / "
+      ]
     }
   ]
 }

@@ -62,6 +62,7 @@ public class ShiftInterface {
         if(g.player.focus){UiTheme.Panel(new Rect(700,h-135,w-728,44));UiTheme.Label(new Rect(713,h-135,w-754,44),UiCopy.Prompt(g.player),23,null,true,false,TextAnchor.MiddleCenter);}
         Controls();
         if(g.ToastVisible){UiTheme.Panel(new Rect(28,337,Mathf.Min(710,w-430),125));UiTheme.Label(new Rect(46,352,Mathf.Min(674,w-466),100),UiCopy.Translate(g.toast),23);}
+        if(g.inspector.SafePractice&&g.inspectorLesson&&g.player.transform.position.z>31&&g.player.transform.position.z<46){UiTheme.Label(new Rect(w/2-230,249,460,60),T("安全练习 / Hush 不会送你返回","SAFE PRACTICE / No send-backs"),22,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);}
         if(g.inspector.Alertness>0){UiTheme.Fill(new Rect(w/2-155,249,310,12),UiTheme.Ink);UiTheme.Fill(new Rect(w/2-155,249,310*g.inspector.Alertness,12),UiTheme.Gold);UiTheme.Label(new Rect(w/2-200,267,400,62),T("Hush 正在注意你：绕到货架或放下的箱子后面。","Hush notices you. Move behind a shelf or a placed crate."),22,null,false,false,TextAnchor.MiddleCenter);}
         if(Array.IndexOf(Environment.GetCommandLineArgs(),"--agent-playtest")>=0){var p=g.player.transform.position;UiTheme.Label(new Rect(28,76,850,35),$"AGENT REVIEW / {p.x:F2}, {p.z:F2} / yaw {g.player.transform.eulerAngles.y:F1} pitch {g.player.Pitch:F1}",18);}
     }

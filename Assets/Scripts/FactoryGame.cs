@@ -28,7 +28,7 @@ public class FactoryGame : MonoBehaviour {
     public float musicVolume=.38f, effectsVolume=.65f, sensitivity=1.7f,verticalSensitivity=1.5f,fieldOfView=72;
     public FactoryPath navigation; public FactoryMap factoryMap=new FactoryMap();
     public ShiftGuide guide; ShiftInterface screen=new ShiftInterface();
-    int dialogueOpenedFrame;bool archiveWelcome,assemblyWelcome,foyerSuccess;
+    int dialogueOpenedFrame;bool archiveWelcome,assemblyWelcome,foyerSuccess,workshopWelcome;
     public bool ToastVisible=>Time.unscaledTime<toastUntil;
     public string CoreLocation {
         get {
@@ -55,7 +55,7 @@ public class FactoryGame : MonoBehaviour {
                 return "01  /  POWER THE WORKSHOP\nPick up the gold core and insert it into the purple Workshop Relay on the left. The gate opens while it has power.";
             }
             if(!transferred) return "02  /  SHARE THE POWER\nThe shell stays finished. Move the SAME core to the Ribbon Conveyor.";
-            if(!blueprint)return inspectorLesson?"03  /  FIND THE OLD DRAWING\nYou have tried the Chime. Watch Hush's route, use crates as cover and leave a crate on the archive plate to reach the drawing.":"03  /  FIND THE OLD DRAWING\nPower the Break-time Chime to call Hush, then hold the archive plate with a crate.";
+            if(!blueprint)return inspectorLesson?"03  /  FIND THE OLD DRAWING\nThe archive is safe practice. Leave a crate on the striped plate, then read the drawing. No waiting or hiding is required here.":"03  /  FIND THE OLD DRAWING\nPower the Break-time Chime to call Hush, then hold the archive plate with a crate.";
             if(!etched) return "04  /  FINISH YOUR OLD PROMISE\nBring the power core to the Engraving Table in Final Assembly.";
             if(!assembled) return "05  /  LIGHT THE WAY HOME\nKeep the assembly gate open with a crate. Move the core to the Lantern Press.";
             return "06  /  ONE LAST DELIVERY\nPick up the finished lantern and give it to Pip at the dispatch desk.";
@@ -100,8 +100,9 @@ public class FactoryGame : MonoBehaviour {
         if(started&&!Frozen&&Input.GetKeyDown(KeyCode.H))Hint();
         if(started&&!Frozen){
             if(!foyerSuccess&&player.transform.position.z<12){foreach(var gate in FindObjectsByType<FactoryGate>(FindObjectsSortMode.None))if(gate.name=="Foyer gate"&&gate.CrateHoldsPlate){foyerSuccess=true;Notify("Nice work! The crate keeps the door open. Leave it there and follow the marker.",5);if(buttonHelper)buttonHelper.Celebrate();audioScore.Chord();break;}}
-            if(transferred&&!blueprint&&!archiveWelcome&&player.transform.position.z>30.4f){archiveWelcome=true;Say("PIP / ARCHIVE TOUR","This is Hush, our safety inspector. He follows a route and checks noisy machines. He cannot hurt you.","Try the chime first. Then use the crate to open the drawing cabinet. If Hush stops you, finished work stays safe.");}
-            else if(blueprint&&!etched&&!assemblyWelcome&&player.transform.position.z>46.6f){assemblyWelcome=true;Say("PIP / FINAL ASSEMBLY","Your old drawing is safe in the notebook. Let's turn that promise into a real lantern.","The Engraver can work on its own. Leave its core in place and prepare the crate gate while it finishes. Keep an eye on Hush.");}
+            if(!workshopWelcome&&player.transform.position.z>12){workshopWelcome=true;Notify("BASICS COMPLETE / Your night shift begins. Make the lantern shell with Button and the reusable power core.",7);}
+            else if(transferred&&!blueprint&&!archiveWelcome&&player.transform.position.z>30.4f){archiveWelcome=true;Say("PIP / ARCHIVE TOUR","Meet Hush, our friendly safety inspector. This archive is safe practice: he will not send you back here.","Power the chime and ring it with E. It calls Hush away. Move the crate to the striped plate while he checks it. You do not need to wait for him to finish.");}
+            else if(blueprint&&!etched&&!assemblyWelcome&&player.transform.position.z>46.6f){assemblyWelcome=true;Say("PIP / FINAL ASSEMBLY","Your old drawing is safe in the notebook. Let's turn that promise into a real lantern.","The real safety check starts here. If Hush sees you in the active aisle, step behind a shelf or a placed crate. A full warning and contact send you to this room entrance; finished jobs stay safe.");}
         }
     }
     public void OpenComfort(){screen.ComfortOpen=true;SyncFreeze();}
@@ -162,7 +163,7 @@ public class FactoryGame : MonoBehaviour {
         player.ReleaseForDelivery();player.hand.gameObject.SetActive(false); ended=true; Time.timeScale=1; ReleaseCursor(); if(audioScore)audioScore.Chord();
     }
     public void ResetSection(){
-        if(Frozen)return; resets++;
+        if(Frozen||!inspector||inspector.SafePractice)return; resets++;
         bool final=inspector&&inspector.assemblyDuty;var held=player.held;player.PutBackHeld();
         float checkpoint=final?47.2f:31.7f;
         if(held&&held.kind==Pickup.Kind.Core)held.transform.position=new Vector3(1.4f,.6f,checkpoint);

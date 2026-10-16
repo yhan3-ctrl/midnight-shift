@@ -1,0 +1,174 @@
+PASS: 170 engine integration checks, including the animated ending.
+Actual scene components, physics visibility, progression, retries and delivery exercised.
+Not an unassisted human playthrough or timing validation.
+
+CHECK_PASS / scene references survive serialization
+CHECK_PASS / five machines present
+CHECK_PASS / story interaction components survive serialization
+CHECK_PASS / Halloween decorations add no collision, pickup or navigation obstacles
+CHECK_PASS / all catalog entries contain seven complete language values
+CHECK_PASS / language switch localizes actual guide/story without advancing work: zh-Hans
+CHECK_PASS / bundled font covers every catalog glyph: zh-Hans
+CHECK_PASS / language switch localizes actual guide/story without advancing work: es
+CHECK_PASS / bundled font covers every catalog glyph: es
+CHECK_PASS / language switch localizes actual guide/story without advancing work: fr
+CHECK_PASS / bundled font covers every catalog glyph: fr
+CHECK_PASS / language switch localizes actual guide/story without advancing work: de
+CHECK_PASS / bundled font covers every catalog glyph: de
+CHECK_PASS / language switch localizes actual guide/story without advancing work: ja
+CHECK_PASS / bundled font covers every catalog glyph: ja
+CHECK_PASS / language switch localizes actual guide/story without advancing work: ko
+CHECK_PASS / bundled font covers every catalog glyph: ko
+CHECK_PASS / unsupported language preference safely falls back to English
+CHECK_PASS / optional pointer mode teaches right-drag without implying the default view is fixed
+CHECK_PASS / default FPS mode waits for explicit click before capturing the pointer or running hazards
+CHECK_PASS / default opening guide explicitly teaches mouse turning
+CHECK_PASS / distance navigation must not replace the initial mouse-look instruction with a walking task
+CHECK_PASS / pause menu rejects mouse capture
+CHECK_PASS / resuming pause never silently captures the pointer
+CHECK_PASS / map rejects capture
+CHECK_PASS / map Back returns to explicit look entry
+CHECK_PASS / screenshot view rejects capture
+CHECK_PASS / closing screenshot view never silently captures
+CHECK_PASS / dialogue rejects capture
+CHECK_PASS / finishing dialogue never silently captures
+CHECK_PASS / desktop hold also works while awaiting look entry
+CHECK_PASS / desktop resume requires a fresh click
+CHECK_PASS / comfort settings are paused and reject capture
+CHECK_PASS / closing comfort restores underlying look entry
+CHECK_PASS / actual look transform applies raw mouse motion on independent horizontal and vertical axes
+CHECK_PASS / mouse look turns in both directions rather than only strafing
+CHECK_PASS / large mouse motion clamps pitch without rolling the view
+CHECK_PASS / stationary pointer causes no auto-turn or recentering
+CHECK_PASS / comfort defaults use static hands, adjustable FOV and default mouse look
+CHECK_PASS / explicit arrow-only alternative runs without capturing the pointer
+CHECK_PASS / active exploration keeps the operating-system pointer free
+CHECK_PASS / screenshot view freezes hazards without capturing the pointer
+CHECK_PASS / screenshot view returns to the previous active state
+CHECK_PASS / desktop focus loss freezes without covering the game with the pause menu
+CHECK_PASS / desktop resume restores play with a free pointer
+CHECK_PASS / expandable factory map freezes safely with a free pointer
+CHECK_PASS / closing map preserves active gameplay
+CHECK_PASS / map preserves the underlying dialogue
+CHECK_PASS / route compass ignores height and camera pitch instead of asking the player to look down
+CHECK_PASS / heading compass distinguishes left and right on the walking plane
+CHECK_PASS / close horizontal view reaches the whole machine without hunting for a socket or looking down
+CHECK_PASS / carrying core prioritizes the visible nearby machine over decorative pickups
+CHECK_PASS / nearby but out-of-sequence machine cannot replace the actual gate objective
+CHECK_PASS / E/Q insertion coach appears when the nearby machine is the actual current task
+CHECK_PASS / reachable socket retains its E action rather than routing behind a worktop
+CHECK_PASS / Q near the console performs actual core insertion and opens the circuit instead of rejecting the worktop
+CHECK_PASS / broad machine assist still cannot insert a core through a wall
+CHECK_PASS / explicit level-view recovery changes pitch without silently changing the player's heading
+CHECK_PASS / actual route rendering includes stationary raised lights visible above the floor
+CHECK_PASS / raised navigation lights are hidden while reading the map
+CHECK_PASS / nearby core can be picked up off-centre without pointing at its tiny collider
+CHECK_PASS / forgiving core focus performs the actual pickup
+CHECK_PASS / direct crate aim wins over a nearby installed core instead of silently retrieving the core
+CHECK_PASS / the intended crate is actually picked up with E beside the powered chime
+CHECK_PASS / nearby drawing uses forgiving visible-object focus rather than requiring a thin exact ray hit
+CHECK_PASS / forgiving core pickup cannot pass through a solid wall
+CHECK_PASS / floor route reaches archive entrance around the conveyor
+CHECK_PASS / drawn archive route has no wall, shelf or conveyor crossing
+CHECK_PASS / floor route reaches archive plate around solid shelves
+CHECK_PASS / route cannot cross a closed packaging gate
+CHECK_PASS / guide advances to walking only after observing look input
+CHECK_PASS / guide then asks for the crate interaction
+CHECK_PASS / menu can open during dialogue without discarding it
+CHECK_PASS / resume returns to the same dialogue line
+CHECK_PASS / audio recovery starts a stopped source rather than only unpausing it
+CHECK_PASS / audio device recovery recreates the generated music clips
+CHECK_PASS / automated checks stay silent even after restoring audio
+CHECK_PASS / redistributable fonts include Chinese guide glyphs and a display face
+CHECK_PASS / an outlet alone cannot bypass required contacts
+CHECK_PASS / adjacent tiles require matching reciprocal edges
+CHECK_PASS / source must face the incoming supply
+CHECK_PASS / closed unpowered gate resists approach and cannot be bypassed by anti-crush logic
+CHECK_PASS / foyer initially blocks progression
+CHECK_PASS / foyer objective teaches the immediate task before power mechanics
+CHECK_PASS / relay identifies crate-supported access independently of core power
+CHECK_PASS / crate override keeps workshop gate open without a core
+CHECK_PASS / objective advances from gate preparation to manufacturing once crate holds access
+CHECK_PASS / plate assistance never places a crate through a wall
+CHECK_PASS / plate assist refuses to place a crate over the player
+CHECK_PASS / placement refuses elevated worktops
+CHECK_PASS / green plate-ready guidance refers to the same validated Q landing point
+CHECK_PASS / near-edge crate placement snaps onto plate and opens gate
+CHECK_PASS / placed crate opens pressure gate
+CHECK_PASS / journal freezes world and retains held item
+CHECK_PASS / journal returns to active play
+CHECK_PASS / pause freezes world
+CHECK_PASS / resume preserves held item
+CHECK_PASS / out-of-order machine never traps the only core
+CHECK_PASS / one console interaction inserts core and opens the routing board
+CHECK_PASS / routing mode freezes workshop: mould
+CHECK_PASS / unconnected routing cannot start the machine: mould
+CHECK_PASS / authored circuit begins unsolved: mould
+CHECK_PASS / authored circuit has a valid connected solution: mould
+CHECK_PASS / connected circuit starts machine: mould
+CHECK_PASS / running output label does not promise completion: mould
+CHECK_PASS / growing shell stays anchored to its tray
+CHECK_PASS / watching a running mould does not turn into an unnecessary walking instruction
+CHECK_PASS / running machine objective does not instruct the player to remove its core or reopen routing
+CHECK_PASS / mould completes using game update
+CHECK_PASS / mould produces a visible persistent plain shell
+CHECK_PASS / Button reacts to manufacturing completion
+CHECK_PASS / optional Button dialogue responds to the current craft stage
+CHECK_PASS / optional helper conversation retains a celebration while world is paused
+CHECK_PASS / completed socket core is reachable despite its disabled collider
+CHECK_PASS / completed machine returns same core with tolerant focus
+CHECK_PASS / routing mode freezes workshop: ribbon
+CHECK_PASS / unconnected routing cannot start the machine: ribbon
+CHECK_PASS / authored circuit begins unsolved: ribbon
+CHECK_PASS / authored circuit has a valid connected solution: ribbon
+CHECK_PASS / connected circuit starts machine: ribbon
+CHECK_PASS / running output label does not promise completion: ribbon
+CHECK_PASS / processed shell survives power transfer
+CHECK_PASS / visible shell survives removing and reusing its core
+CHECK_PASS / ribbon output adds its bow without revealing engraving
+CHECK_PASS / archive guidance retrieves the core before sending the player into the next room
+CHECK_PASS / packaging door unlocks only after both jobs
+CHECK_PASS / archive drawing protected by physical gate
+CHECK_PASS / archive requires taught chime interaction as well as crate
+CHECK_PASS / powered chime explicitly prompts Ring chime instead of an ambiguous Open action
+CHECK_PASS / chime practice and crate open drawing route
+CHECK_PASS / ringing the chime visibly calls Hush away for a protected distraction window
+CHECK_PASS / retrieving the core does not cancel the chime invitation or require waiting
+CHECK_PASS / ringing again renews the invitation instead of leaving Hush in patrol
+CHECK_PASS / story reveal unlocks assembly
+CHECK_PASS / machine noise changes inspector state
+CHECK_PASS / archive practice cannot teleport the player even through the safety-reset entry point
+CHECK_PASS / archive practice preserves the held core and completed work without resetting a step
+CHECK_PASS / safe archive does not interrupt crate work with a retry dialogue
+CHECK_PASS / archive first practice remains safe before the chime lesson
+CHECK_PASS / inspector vision sees player in range and field of view
+CHECK_PASS / archive Update cancels pursuit and leaves a visible player safe while learning
+CHECK_PASS / placed crate physically blocks inspector sight
+CHECK_PASS / disabled carried-item collision does not create invisible cover
+CHECK_PASS / safety retry preserves a successfully placed gate crate instead of repeating solved work
+CHECK_PASS / final-area retry recovers player and held core locally
+CHECK_PASS / safety reset grants a brief detection grace period
+CHECK_PASS / assembly retains its announced local safety retry after harmless archive practice
+CHECK_PASS / routing mode freezes workshop: etch
+CHECK_PASS / unconnected routing cannot start the machine: etch
+CHECK_PASS / authored circuit begins unsolved: etch
+CHECK_PASS / authored circuit has a valid connected solution: etch
+CHECK_PASS / connected circuit starts machine: etch
+CHECK_PASS / running output label does not promise completion: etch
+CHECK_PASS / engraver gives the player gate preparation rather than exposed waiting
+CHECK_PASS / requested hints stay consistent with the current formal-game action
+CHECK_PASS / engraving completes
+CHECK_PASS / engraving adds the promise tag before the light is finished
+CHECK_PASS / routing mode freezes workshop: press
+CHECK_PASS / unconnected routing cannot start the machine: press
+CHECK_PASS / authored circuit begins unsolved: press
+CHECK_PASS / authored circuit has a valid connected solution: press
+CHECK_PASS / connected circuit starts machine: press
+CHECK_PASS / running output label does not promise completion: press
+CHECK_PASS / press creates physical lantern
+CHECK_PASS / finished pickup carries ribbon, inscription and an actual warm light
+CHECK_PASS / press clears its workpiece when the one deliverable lantern is ready
+CHECK_PASS / reachable delivery target retains its E action rather than routing around the dispatch desk
+CHECK_PASS / physical lantern delivery reaches ending
+CHECK_PASS / one core throughout run; no duplication
+CHECK_PASS / ending opens exit and takes the helpers into the village

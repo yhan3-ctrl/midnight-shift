@@ -39,7 +39,7 @@ public class FactoryPlaycheck : MonoBehaviour {
         yield return null;
         Application.runInBackground=true;Time.captureDeltaTime=1f/60;
         g=FactoryGame.I;p=g.player;p.SetLookMode(1,false);
-        try{Check(g&&p&&g.inspector,"scene references survive serialization");Check(FindObjectsByType<Machine>(FindObjectsSortMode.None).Length==5,"five machines present");Check(FindObjectsByType<StoryPoint>(FindObjectsSortMode.None).Length==4,"story interaction components survive serialization");}
+        try{Check(g&&p&&g.inspector,"scene references survive serialization");Check(FindObjectsByType<Machine>(FindObjectsSortMode.None).Length==5,"five machines present");Check(FindObjectsByType<StoryPoint>(FindObjectsSortMode.None).Length==4,"story interaction components survive serialization");var decor=GameObject.Find("Halloween decorations / non-interactive");Check(decor&&decor.GetComponentsInChildren<Collider>().Length==0&&decor.GetComponentsInChildren<Interactable>().Length==0,"Halloween decorations add no collision, pickup or navigation obstacles");}
         catch(Exception e){Fail(e);yield break;}
         int initialLanguage=UiCopy.Selected;UiCopy.Language(0,false);
         g.Begin();CloseDialogue();
@@ -181,21 +181,25 @@ public class FactoryPlaycheck : MonoBehaviour {
             Check(g.transferred&&gates.Single(x=>x.name=="Packaging gate").Evaluate(),"packaging door unlocks only after both jobs");
             var archive=gates.Single(x=>x.name=="Drawing cabinet");Check(!archive.Evaluate(),"archive drawing protected by physical gate");
             var crate=crates.Single(x=>x.name=="Archive crate");crate.transform.position=archive.plate.position+Vector3.up*.885f;Physics.SyncTransforms();Check(!archive.Evaluate(),"archive requires taught chime interaction as well as crate");
-            ribbon.Use(p);var chime=machines.Single(x=>x.machineId=="chime");chime.Use(p);chime.Use(p);
+            ribbon.Use(p);var chime=machines.Single(x=>x.machineId=="chime");chime.Use(p);p.focus=chime;Check(UiCopy.Prompt(p).Contains("Ring chime"),"powered chime explicitly prompts Ring chime instead of an ambiguous Open action");chime.Use(p);
             Check(g.inspectorLesson&&archive.Evaluate(),"chime practice and crate open drawing route");
+            Check(g.inspector.AtChime&&g.inspector.state==Inspector.State.Investigate,"ringing the chime visibly calls Hush away for a protected distraction window");
+            chime.Remove(p);Check(g.inspector.AtChime&&p.held==core,"retrieving the core does not cancel the chime invitation or require waiting");chime.Use(p);chime.Use(p);Check(g.inspector.AtChime&&g.inspector.state==Inspector.State.Investigate,"ringing again renews the invitation instead of leaving Hush in patrol");
             g.ReadDrawing();CloseDialogue();Check(g.blueprint&&gates.Single(x=>x.name=="Assembly entrance").Evaluate(),"story reveal unlocks assembly");
             machines.Single(x=>x.machineId=="chime").Use(p);p.Teleport(new Vector3(0,0,37),0);g.inspector.ResetPatrol();g.inspector.Hear(new Vector3(-6,0,35));Check(g.inspector.state==Inspector.State.Investigate,"machine noise changes inspector state");
-            g.ResetSection();Check(g.resets==1&&g.shell&&g.transferred&&g.blueprint,"safety reset preserves completed progress");Check(p.held==null&&core.transform.parent==null,"reset releases core to recoverable home");
-            Check(g.Reading&&g.Frozen,"retry explains recovery while safely pausing the world");CloseDialogue();
+            var practicePosition=p.transform.position;var practiceHeld=p.held;int practiceResets=g.resets;g.ResetSection();Check(g.resets==practiceResets&&p.transform.position==practicePosition,"archive practice cannot teleport the player even through the safety-reset entry point");Check(p.held==practiceHeld&&g.shell&&g.transferred&&g.blueprint,"archive practice preserves the held core and completed work without resetting a step");
+            Check(!g.Reading,"safe archive does not interrupt crate work with a retry dialogue");
             g.inspector.enabled=false;g.inspector.ResetPatrol();g.inspector.transform.position=new Vector3(0,0,36);g.inspector.transform.rotation=Quaternion.identity;p.Teleport(new Vector3(0,0,40),0);Physics.SyncTransforms();
             g.inspectorLesson=false;Check(!g.inspector.CanSeePlayer(),"archive first practice remains safe before the chime lesson");g.inspectorLesson=true;
             Check(g.inspector.CanSeePlayer(),"inspector vision sees player in range and field of view");
+            g.inspector.state=Inspector.State.Approach;var beforePractice=p.transform.position;int beforeStops=g.resets;g.inspector.SendMessage("Update");Check(g.resets==beforeStops&&p.transform.position==beforePractice&&g.inspector.Alertness==0&&g.inspector.state!=Inspector.State.Approach,"archive Update cancels pursuit and leaves a visible player safe while learning");g.inspector.transform.rotation=Quaternion.identity;
             var cover=crates.First();cover.transform.position=new Vector3(0,.835f,38);Physics.SyncTransforms();
             Check(!g.inspector.CanSeePlayer(),"placed crate physically blocks inspector sight");
             cover.SetColliders(false);Physics.SyncTransforms();Check(g.inspector.CanSeePlayer(),"disabled carried-item collision does not create invisible cover");cover.SetColliders(true);cover.ResetHome();
             p.Teleport(new Vector3(0,0,47.2f),0);g.inspector.assemblyDuty=true;g.inspector.route=new[]{new Vector3(4,0,52),new Vector3(-1,0,50)};g.inspector.ResetPatrol();
             var finalAccess=gates.Single(x=>x.name=="Assembly work gate");var finalCrate=crates.Single(x=>x.name=="Assembly crate");finalCrate.PlaceAt(finalAccess.plate.position+Vector3.up*.885f);Physics.SyncTransforms();
             p.Pick(core);g.ResetSection();Check(finalAccess.CrateHoldsPlate,"safety retry preserves a successfully placed gate crate instead of repeating solved work");finalCrate.ResetHome();Physics.SyncTransforms();Check(p.transform.position.z>46&&core.transform.position.z>46,"final-area retry recovers player and held core locally");Check(!g.inspector.CanSeePlayer(),"safety reset grants a brief detection grace period");CloseDialogue();
+            Check(g.resets==beforeStops+1&&g.Reading==false,"assembly retains its announced local safety retry after harmless archive practice");
             g.inspector.enabled=true;g.inspector.assemblyDuty=false;g.inspector.route=new[]{new Vector3(-2.3f,0,35.5f),new Vector3(2.3f,0,40.5f)};g.inspector.ResetPatrol();p.Teleport(new Vector3(0,0,15),0);
             var etch=machines.Single(x=>x.machineId=="etch");p.Pick(core);etch.Use(p);etch.Use(p);SolveRouting(etch);
             p.Teleport(new Vector3(-5.4f,0,49.1f),0);var preparation=g.guide.Current;Check(preparation.targetName=="Crate"&&preparation.reason.Contains("while it works"),"engraver gives the player gate preparation rather than exposed waiting");

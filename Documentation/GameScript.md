@@ -1,4 +1,4 @@
-# Game Script / v0.9 implemented rules
+# Game Script / v0.13 implemented rules
 
 This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. A future final report must update this document to match its submitted version.
 
@@ -30,7 +30,7 @@ Every current job lasts five seconds. These short processing times communicate a
 
 - Moulding Table produces the shell.
 - Ribbon Conveyor requires the completed shell and transfers it to assembly.
-- Break-time Chime accepts the same core and, when started, asks the inspector to investigate its location. After its five-second cycle it marks itself complete, allowing E to remove the core. Removing, reinserting and starting the core permits another cycle. It does not advance the order.
+- Break-time Chime accepts the same core and, when started, asks the inspector to investigate its location. E can remove the core immediately, including during its five-second machine cycle. The 16-second Hush visit continues without power; no waiting is required. Removing, reinserting and starting the core permits another cycle. It does not advance the order.
 - Engraving Table requires reading the old drawing and engraves the shell.
 - Lantern Press requires engraving and creates a physical lantern beside its pedestal.
 
@@ -51,11 +51,11 @@ All four are authored and have validated solutions. Tile rotations persist when 
 
 ## Inspector
 
-Hush is a safety inspector, not a lethal enemy. His four patrol waypoints form a rectangle in the archive. Patrol speed is 1.45 units/s. He sees the player within 7 units and a 110-degree horizontal field of view, provided a wall or placed crate does not block the physics ray. Archive detection stays off until the player starts the first Chime cycle; this allows a safe first demonstration. That first activation grants 2.5 seconds of detection grace before normal patrol detection begins. In archive duty, only player positions z = 31.5–44.8 are detectable. In assembly duty this region becomes z = 47–53.3. Assembly patrol waypoints are (4,52), (-1,50), (-1,52), (4,50). This version uses a magical relocation between duties, announced by a message, rather than pathing the entire inter-room transition.
+Hush is a friendly safety inspector. The archive is a safe demonstration throughout: he patrols and investigates the chime but cannot pursue, interrupt or send the player back, even after the chime lesson or drawing reveal. The archive sign, introductory dialogue and compact safe-practice label explain this. No wait for his rest or patrol is a progression condition. Ringing the Chime calls him to its corner for a 16-game-second visit, which remains active if the core is removed immediately. The player can move the crate straight away. Bell power still demonstrates reusing the same physical core.
 
-Continuous visibility fills alert over 0.95 seconds. Alert pauses patrol and faces the player. Full alert begins Approach at 2.8 units/s. Lost sight begins Search of the last seen position; search lasts 4 seconds, then Return. Sounds initiate Investigate at 1.8 units/s with 5 seconds at the destination, then Return. The destination is a walkable point 1.6 units in front of the sounding machine, not the occupied centre of its cabinet. New sound cannot cancel Alert or Approach. Movement checks world obstacles and attempts a lateral detour; complex navigation still needs gameplay evaluation.
+Only Final Assembly activates the safety challenge, after a paused introduction explains its consequence. Detection uses a 7-unit range and 110-degree horizontal field of view with physical line of sight. Its player region is z = 47–53.3. Patrol waypoints are (4,52), (-1,50), (-1,52), (4,50). Patrol speed is 1.45 units/s; sustained visibility fills the warning over 1.6 seconds, then Approach moves at 2.8 units/s. Hiding behind a shelf or a placed crate breaks sight, leading to Search for four seconds and then Return. A valid production-machine sound attracts an unalerted inspector to a point in front of the machine; it cannot override an active warning or approach.
 
-Within 1.1 units of the detected player, a safety retry moves the player to the current region checkpoint (archive z = 31.7; assembly z = 47.2), resets that region’s crates and the inspector, and releases the held item. A held core is recovered beside the local checkpoint, avoiding a long return trip. Finished jobs and the story reveal remain complete. After a safety reset or a change of duty, 2.5 game seconds of detection grace allow the player to reorient. No damage, jump scare or global restart occurs. The retry opens a two-line dialogue that freezes the world until acknowledged and explains the local recovery. The notebook also names the current location or occupied machine of the shared core, reducing accidental backtracking.
+Full warning followed by contact within 1.1 units causes a local safety retry to the assembly entrance (z = 47.2). Finished jobs, the drawing and crates already holding access remain safe. Other assembly crates return home; the held item is released and a held core is recovered beside the local checkpoint. The inspector resets with five game seconds of grace. The retry dialogue pauses simulation and explains the recovery. No damage, jump scare or global restart occurs. The archive explicitly rejects this reset path and does not drop held items.
 
 ## Story progression and ending
 
@@ -109,7 +109,7 @@ English is the fresh-install default. English/Chinese selection is available at 
 
 The foyer teaches looking, approaching the crate, aiming/E, Q onto the plate, and leaving the crate behind to cross. The first successful placement receives a brief positive response. Packaging then introduces shared gate power and the crate override before core transfer, one-route Moulding and branching Ribbon puzzles. Physical output changes from shell to bow, tag and final light, so progress is visible in the world.
 
-The archive entry introduces Hush and the consequence of a safety check in two short paused lines. The first Chime interaction is a safe opportunity to meet the system. After activation, crate carrying, patrol and the drawing gate form the traversal challenge. A retry keeps completed jobs and story state, recovers a carried core locally and explains what happened.
+The archive entry introduces Hush and the chime in two paused lines. In v0.13 the entire archive is harmless practice; the actual safety challenge is introduced in Final Assembly.
 
 The assembly entry reconnects the childhood promise with the task. While the Engraver runs, the immediate guide asks the player to prepare the crate gate instead of standing exposed beside the machine. After completion, the core moves to the Press for the combined branching/contact puzzle. The final delivery gives the crafted item to a character and changes the whole scene through the departure animation.
 
@@ -178,3 +178,7 @@ These changes address the reported visibility and intent mismatch. Staged level-
 Formal-game guidance defaults to one short next action. J opens the actual chapter checklist, core whereabouts and the remembered promise; H requests the detailed explanation. During dialogue the exploration HUD is hidden. Gold outlines mark reachable focused objects. Direct aimed objects take priority over nearby core assistance; story boards support the same visible-object reach aid as pickups. Crafting does not request needless walking.
 
 Safety inspection builds detection over 1.6 seconds and grants five seconds of grace on room-duty transition/retry. Retries preserve crates already holding access, completed production jobs and the drawing; other local crates recover home. The sole held core is recovered locally. Ribbon completion now includes Button's two-line response connecting its crooked bow to the archived drawing. The last lantern uses a smaller, lower carry pose. Full problem/change/retest evidence is in FINAL-GAME-PLAYTEST.md.
+
+## v0.13 / clear lesson boundary and harmless archive practice
+
+Direct player feedback reported confusion about Hush being friendly while sending the player back during the first crate task. The opening teaches looking, walking, picking up and placing a crate, then announces the formal night shift without another blocking dialogue. Packaging and Archive are formal chapters that introduce tools in context. Archive now demonstrates the chime safely without retries; Assembly combines crate access, power reuse and the announced safety check. The short opening targets roughly one minute, but independent first-play timing is not validated. Added perimeter pumpkin lamps, paper bats, hanging paper ghosts and treat buckets with no colliders or interactions. No extra collection task or forced wait was added. See HUSH-REVIEW-v0.13.md for checks and limits.

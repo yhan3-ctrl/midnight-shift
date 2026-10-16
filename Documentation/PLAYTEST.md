@@ -26,3 +26,7 @@ The response was explicit-entry mouse look with a clear first turning lesson, vi
 For an actual first-time player, record the build, prior first-person experience, whether answers were known, start-to-delivery active/reading time, completion or abandonment, external help, first unclear step and retries. Ask the player to explain the shared-core rule and who the lantern was for in their own words. Record actual use of patrol prediction, distraction or crate cover rather than assuming mastery from completion. Stop a session if the player feels unwell.
 
 Record each finding as observation -> revision -> retest. Engine tests demonstrate component behavior, not enjoyment, independent understanding or a 5-10-minute duration.
+
+## October 16 / Hush and teaching scope
+
+The user reported both desktop pause and an unexpected archive safety retry, confusion about waiting at the chime and Hush's friendly role, and too much apparent teaching. Archive practice now cannot cause a reset; chime retrieval does not cancel its distraction, and the first-door lesson has an explicit ending. The real safety challenge starts in Assembly with its own explanation. The user also requested more Halloween decorations. See HUSH-REVIEW-v0.13.md for implementation and executed checks. No post-fix independent player response has yet been recorded.

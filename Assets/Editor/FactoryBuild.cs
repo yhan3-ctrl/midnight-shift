@@ -71,7 +71,7 @@ public static class FactoryBuild {
         var drawing=Board("",new Vector3(2.6f,1.5f,44.9f),2.3f).AddComponent<StoryPoint>();drawing.name="Notice / AN OLD DRAWING";drawing.kind=StoryPoint.StoryKind.Drawing;
         DrawingSketch(new Vector3(2.6f,1.5f,44.9f),drawing.transform);
         Gate("Assembly entrance",46,FactoryGate.Rule.Drawing,Vector3.zero);
-        Board("HUSH IS ON SAFETY DUTY\nWATCH HIS ROUTE. CRATES BLOCK SIGHT.\nSTART THE CHIME TO DRAW HIM AWAY.\nHE WILL NEVER HURT YOU.",new Vector3(6.4f,2.75f,32),3.4f);
+        Board("HUSH / FRIENDLY SAFETY INSPECTOR\nSAFE PRACTICE: NO SEND-BACKS HERE.\nRING THE CHIME, THEN MOVE THE CRATE.\nYOU DO NOT NEED TO WAIT.",new Vector3(6.4f,2.75f,32),3.4f);
         var ig=Ghost("Hush / safety inspector",new Vector3(0,0,35),true);var ins=ig.AddComponent<Inspector>();game.inspector=ins;
         ins.visual=ig.transform.Find("Ghost body");ins.eyes=new GameObject("Sight origin").transform;ins.eyes.SetParent(ig.transform);ins.eyes.localPosition=new Vector3(0,1.45f,.35f);
         ins.armLeft=ins.visual.Find("Left sleeve");ins.armRight=ins.visual.Find("Right sleeve");
@@ -90,8 +90,8 @@ public static class FactoryBuild {
         Board("DISPATCH / PIP\nONE LAST ORDER",new Vector3(-3.8f,1.8f,61),2.6f);
         Pumpkin(new Vector3(-6,.5f,60),.9f);
         var ending=game.gameObject.AddComponent<EndOfShift>();ending.pip=pip.transform;ending.button=buttonGhost;ending.hush=ig.transform;ending.exitDoor=exitDoor;ending.view=cam;
-        Festival();
-        PlayerSettings.bundleVersion="0.12";PlayerSettings.companyName="Willow Works";PlayerSettings.productName="Midnight Shift - The Last Lantern";
+        HalloweenDecorations();Festival();
+        PlayerSettings.bundleVersion="0.13";PlayerSettings.companyName="Willow Works";PlayerSettings.productName="Midnight Shift - The Last Lantern";
         PlayerSettings.defaultScreenWidth=1280;PlayerSettings.defaultScreenHeight=800;PlayerSettings.fullScreenMode=FullScreenMode.Windowed;PlayerSettings.runInBackground=false;PlayerSettings.resizableWindow=true;PlayerSettings.allowFullscreenSwitch=true;
         var ps=new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/ProjectSettings.asset")[0]);var active=ps.FindProperty("activeInputHandler");if(active!=null){active.intValue=0;ps.ApplyModifiedPropertiesWithoutUndo();}
         EditorSceneManager.SaveScene(SceneManager.GetActiveScene(),"Assets/Scenes/WillowWorks.unity");
@@ -127,6 +127,35 @@ public static class FactoryBuild {
             var l=new GameObject("Warm pendant light").AddComponent<Light>();l.transform.SetParent(world);l.transform.position=new Vector3(0,3.45f,z);l.type=LightType.Point;l.range=12;l.intensity=1.6f;l.color=new Color(1,.77f,.48f);
             for(int i=-3;i<=3;i++){var flag=Box("Halloween bunting",new Vector3(i*2,3.6f,z+2),new Vector3(.45f,.55f,.06f),i%2==0?orange:violet,null,false);flag.transform.rotation=Quaternion.Euler(0,0,i*6);}
         }
+    }
+    static void HalloweenDecorations(){
+        var decorations=new GameObject("Halloween decorations / non-interactive").transform;decorations.SetParent(world);
+        // Perimeter and overhead only: no colliders or gold navigation colours.
+        foreach(float z in new[]{-3f,22f,37f,55f})foreach(int side in new[]{-1,1}){
+            var pumpkin=Pumpkin(new Vector3(side*8.3f,1.1f,z),.5f,decorations);UnityEngine.Object.DestroyImmediate(pumpkin.GetComponent<Collider>());pumpkin.transform.rotation=Quaternion.Euler(0,side*90,0);
+            Box("Pumpkin wall shelf",new Vector3(side*8.4f,.8f,z),new Vector3(.7f,.1f,.8f),timber,decorations,false);
+        }
+        foreach(float z in new[]{6f,27f,42f,59f})foreach(int side in new[]{-1,1}){
+            Vector3 at=new Vector3(side*4.3f,3.2f,z);
+            Box("Paper ghost thread",at+Vector3.up*.65f,new Vector3(.012f,.9f,.012f),cream,decorations,false);
+            Shape("Paper ghost body",PrimitiveType.Sphere,at,new Vector3(.48f,.6f,.06f),cream,decorations,false);
+            for(int i=-1;i<=1;i++)Shape("Paper ghost scallop",PrimitiveType.Sphere,at+new Vector3(i*.15f,-.23f,0),new Vector3(.18f,.2f,.06f),cream,decorations,false);
+            foreach(int eye in new[]{-1,1})Shape("Paper ghost eye",PrimitiveType.Sphere,at+new Vector3(eye*.09f,.04f,-.04f),new Vector3(.055f,.08f,.02f),ink,decorations,false);
+        }
+        foreach(float z in new[]{10f,29f,45f,62f})foreach(int side in new[]{-1,1}){
+            Vector3 at=new Vector3(side*5.8f,3.35f,z);
+            Shape("Paper bat body",PrimitiveType.Sphere,at,new Vector3(.19f,.34f,.045f),violet,decorations,false);
+            foreach(int wing in new[]{-1,1}){
+                var paper=Box("Paper bat wing",at+new Vector3(wing*.3f,.04f,0),new Vector3(.48f,.23f,.035f),violet,decorations,false);paper.transform.rotation=Quaternion.Euler(0,0,wing*28);
+                var tip=Box("Paper bat wingtip",at+new Vector3(wing*.57f,.17f,0),new Vector3(.28f,.15f,.03f),violet,decorations,false);tip.transform.rotation=Quaternion.Euler(0,0,wing*55);
+                var ear=Box("Paper bat ear",at+new Vector3(wing*.055f,.18f,0),new Vector3(.07f,.12f,.03f),violet,decorations,false);ear.transform.rotation=Quaternion.Euler(0,0,wing*-18);
+            }
+        }
+        foreach(var at in new[]{new Vector3(-7.4f,.35f,-6.5f),new Vector3(7.5f,.35f,60.5f)}){
+            Shape("Treat bucket",PrimitiveType.Cylinder,at,new Vector3(.65f,.3f,.65f),violet,decorations,false);
+            for(int i=0;i<7;i++){float a=i*2.4f;Vector3 sweet=at+new Vector3(Mathf.Cos(a)*.19f,.32f,Mathf.Sin(a)*.19f);Shape("Wrapped sweet",PrimitiveType.Sphere,sweet,new Vector3(.13f,.09f,.1f),i%2==0?orange:cream,decorations,false);foreach(int end in new[]{-1,1})Shape("Candy wrapper",PrimitiveType.Cube,sweet+Vector3.right*end*.085f,new Vector3(.06f,.07f,.08f),i%2==0?cream:orange,decorations,false);}
+        }
+        var banner=Sign("HAPPY HALLOWEEN",new Vector3(0,4.22f,28.45f),.95f,orange,0,decorations);banner.GetComponent<WorldLabel>().maxWidth=7;
     }
     static void Festival(){
         Box("Parade square",new Vector3(0,-.2f,73),new Vector3(22,.4f,19),dark);

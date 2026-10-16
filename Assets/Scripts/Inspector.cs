@@ -6,17 +6,23 @@ public class Inspector : MonoBehaviour {
     public Transform visual,eyes,armLeft,armRight;
     public Vector3[] route;
     public float Alertness=>alert; public bool assemblyDuty;
+    public bool SafePractice=>!assemblyDuty;
+    public bool AtChime=>Time.time<chimeUntil; float chimeUntil;
     int waypoint; float timer,alert,graceUntil; Vector3 destination,lastSeen; Quaternion facing;
     void Start(){ResetPatrol();}
-    public void ResetPatrol(bool grantGrace=false){graceUntil=grantGrace?Time.time+5f:0;if(route==null||route.Length==0)return;transform.position=route[0];waypoint=1;state=State.Patrol;alert=0;timer=0;facing=Quaternion.identity;}
+    public void ResetPatrol(bool grantGrace=false){chimeUntil=0;graceUntil=grantGrace?Time.time+5f:0;if(route==null||route.Length==0)return;transform.position=route[0];waypoint=1;state=State.Patrol;alert=0;timer=0;facing=Quaternion.identity;}
+    public void CallToChime(Vector3 location){
+        if(assemblyDuty)return;
+        alert=0;chimeUntil=0;state=State.Patrol;Hear(location);chimeUntil=Time.time+16f;
+    }
     public void Hear(Vector3 location){
-        if(state==State.Alert||state==State.Approach)return;
+        if(AtChime||state==State.Alert||state==State.Approach)return;
         float min=assemblyDuty?47:31,max=assemblyDuty?54:46;
         if(location.z<min||location.z>max)return;
         destination=new Vector3(Mathf.Clamp(location.x,-7,7),0,Mathf.Clamp(location.z-1.6f,min+1,max-1));state=State.Investigate;timer=0;
     }
     public bool CanSeePlayer(){
-        if(Time.time<graceUntil||(!assemblyDuty&&!FactoryGame.I.inspectorLesson))return false;
+        if(AtChime||Time.time<graceUntil||(!assemblyDuty&&!FactoryGame.I.inspectorLesson))return false;
         var p=FactoryGame.I.player;Vector3 target=p.transform.position+Vector3.up*1.1f;
         Vector3 delta=target-eyes.position;
         float lower=assemblyDuty?47:31.5f,upper=assemblyDuty?53.3f:44.8f;
@@ -31,13 +37,15 @@ public class Inspector : MonoBehaviour {
             assemblyDuty=true;route=new[]{new Vector3(4,0,52),new Vector3(-1,0,50),new Vector3(-1,0,52),new Vector3(4,0,50)};ResetPatrol(true);
             FactoryGame.I.Notify("Hush: 'Final inspection! I'll check the machines as you finish each job.'",7);
         }
-        bool seen=CanSeePlayer();
+        // The archive demonstrates the rule without a surprise reset. Challenge begins in assembly.
+        if(SafePractice&&(state==State.Alert||state==State.Approach)){state=State.Return;alert=0;}
+        bool seen=!SafePractice&&CanSeePlayer();
         if(seen&&state!=State.Alert&&state!=State.Approach)FactoryGame.I.audioScore.Tick(880);
         if(seen){lastSeen=FactoryGame.I.player.transform.position;lastSeen.y=0;alert=Mathf.Min(1,alert+dt/1.6f);if(state!=State.Approach)state=State.Alert;if(alert>=1)state=State.Approach;}
         else {alert=Mathf.Max(0,alert-dt*.5f);if(state==State.Alert||state==State.Approach){state=State.Search;timer=0;destination=lastSeen;}}
         switch(state){
             case State.Patrol: Move(route[waypoint],1.45f);if(Distance(route[waypoint])<.3f)waypoint=(waypoint+1)%route.Length;break;
-            case State.Investigate: Move(destination,1.8f);if(Distance(destination)<.4f){timer+=dt;if(timer>5){state=State.Return;timer=0;}}break;
+            case State.Investigate: Move(destination,1.8f);if(Distance(destination)<.4f){timer+=dt;if(timer>5&&!AtChime){state=State.Return;timer=0;}}break;
             case State.Alert: Face(lastSeen);break;
             case State.Approach: Move(lastSeen,2.8f);if(Distance(lastSeen)<1.1f)FactoryGame.I.ResetSection();break;
             case State.Search: Move(destination,1.5f);timer+=dt;if(timer>4){state=State.Return;timer=0;}break;

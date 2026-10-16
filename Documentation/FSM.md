@@ -41,7 +41,7 @@ stateDiagram-v2
     Comfort --> Title: Back, if opened from title
     Comfort --> Paused: Back, if opened from pause
     Comfort --> LookEntry: Back, if opened from look entry
-    Active --> SafetyReset: inspector contact
+    Active --> SafetyReset: Assembly only, full warning and inspector contact
     SafetyReset --> Reading: checkpoint restored
     Active --> Ending: deliver completed lantern
     Paused --> Title: restart
@@ -58,12 +58,12 @@ stateDiagram-v2
     Patrol --> Investigate: valid machine-start sound
     Return --> Investigate: valid machine-start sound
     Search --> Investigate: valid machine-start sound
-    Investigate --> Return: arrive and wait 5 seconds
-    Patrol --> Alert: player visible
-    Investigate --> Alert: player visible
-    Return --> Alert: player visible
-    Search --> Alert: player visible
-    Alert --> Approach: visibility fills alert over 0.95 seconds
+    Investigate --> Return: finish visit; archive chime holds 16 seconds
+    Patrol --> Alert: Assembly, player visible
+    Investigate --> Alert: Assembly, player visible
+    Return --> Alert: Assembly, player visible
+    Search --> Alert: Assembly, player visible
+    Alert --> Approach: Assembly visibility fills alert over 1.6 seconds
     Alert --> Search: lose line of sight
     Approach --> Search: lose line of sight
     Search --> Return: 4 seconds elapsed
@@ -71,7 +71,7 @@ stateDiagram-v2
     Approach --> Patrol: contact causes safety reset
 ```
 
-A new machine sound cannot override Alert or Approach. Visibility requires range, field of view, region bounds and an unblocked ray. A crate is occlusion only when placed, since held objects have colliders disabled.
+The archive is SafePractice: Alert/Approach are cancelled, no contact reset is allowed, and a chime visit lasts 16 game seconds even after core removal. The player does not need to wait. Only the announced Assembly duty enables the Alert/Approach transitions. New machine sound cannot override Alert or Approach. Visibility requires range, field of view, region bounds and an unblocked ray. A crate is occlusion only when placed, since held objects have colliders disabled.
 
 ## Machine
 
