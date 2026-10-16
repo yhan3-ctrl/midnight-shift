@@ -172,3 +172,8 @@ Direct feedback reported route sway, unexplained crate/core transfers, weak craf
 ## v0.15 / tutorial boundary, character clearance and Halloween interface
 
 Direct user photos identified a helper intersecting the foyer desk, unclear tutorial/formal separation, a date mistaken for progress, weak placement targets and a generic title. Moved helpers clear of desks; choreographed a separated exit with an exterior camera; added an acknowledged tutorial completion card and persistent formal phase; replaced the date with labeled task progress; illuminated the actual target plate before pickup; added a decorative title face and paper/pumpkin/bat UI while retaining readable instructions. Executed checks: 222 engine integration cases, complete deterministic physical traversal, 196 seven-language staged screens, actual animated ending captures, and installed/extracted package validation. See INTERFACE-REVIEW-v0.15.md and PlaytestEvidence/v0.15 for scope and portable evidence. No new independent first-play duration or guaranteed grade is claimed.
+
+
+## Final submission audit October 16 2026
+
+Gameplay remains at fc16ac7 (v0.15). Final publication adds the six-page English report, the confirmed approximate v0.15 10-minute completion report, current dialogue/FSM documentation and native Windows/Linux startup logs. These are submission/evidence updates. All three platform archives passed ZIP integrity and file checks; hashes match the GitHub release. Box confirmed the upload of exactly the three final platform ZIPs. The instructor invitation is sent and pending acceptance; Blackboard submission remains Yu Han's action. See Submission/RubricAudit.md and GITHUB-HANDOFF.md.

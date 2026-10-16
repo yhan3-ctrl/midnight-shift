@@ -4,9 +4,19 @@ A warm Halloween puzzle game set inside Willow Works. Finish a forgotten pumpkin
 
 Unity 6000.6.5f1, 3D, Built-in Render Pipeline. Current gameplay revision: **v0.15**. English is the default; Chinese, Spanish, French, German, Japanese and Korean are optional.
 
-## Play on macOS
+## Play the final release
 
-Download [the Mac v0.15 release](https://github.com/yhan3-ctrl/midnight-shift/releases/tag/v0.15), extract `MidnightShift-Mac-v0.15.zip`, and open `Midnight Shift v0.15.app`. The release includes its SHA-256 checksum. On the development Mac, the existing `开始试玩.app` shortcut also opens this version. A source-only clone should be opened in Unity Hub as described below.
+Download the ZIP for your operating system from the [v0.15 release](https://github.com/yhan3-ctrl/midnight-shift/releases/tag/v0.15):
+
+- Windows x86-64: `MidnightShift-Windows-v0.15.zip`
+- Mac Intel and Apple Silicon: `MidnightShift-Mac-v0.15.zip`
+- Linux x86-64: `MidnightShift-Linux-v0.15.zip`
+
+Extract the entire archive and open the game executable inside. Keep the accompanying data and runtime files together. Unity Editor is not required. The release includes checksums for all three ZIPs. The course Box folder contains the same three final archives.
+
+## Final report
+
+[Project 2 report by Yu Han](Documentation/Submission/Project2_Report_Yu_Han.pdf) is the final six-page English report, with Arial text, game screenshots, learning objectives, rules, modes, design schemas, player and Hush state machines, and playtest-based revisions. [Report text](Documentation/Submission/Project2_Report_Yu_Han.md) and the [rubric audit](Documentation/Submission/RubricAudit.md) accompany it. Detailed rules remain in [GameScript.md](Documentation/GameScript.md).
 
 ## Controls
 
@@ -41,7 +51,7 @@ Dialogue hides the exploration HUD. The compact calendar opens the complete chec
 
 ## Development and evidence
 
-The [GitHub repository](https://github.com/yhan3-ctrl/midnight-shift) preserves the original 23 development/documentation commits through the v0.15 game revision. Publication documentation is recorded separately afterward. [GitHub handoff status](Documentation/GITHUB-HANDOFF.md) distinguishes the uploaded source/Mac release from the remaining course submissions.
+The [GitHub repository](https://github.com/yhan3-ctrl/midnight-shift) preserves the original 23 development/documentation commits through the v0.15 game revision. Publication documentation is recorded separately afterward. [GitHub handoff status](Documentation/GITHUB-HANDOFF.md) records the final three-platform release, report and course submission status.
 
 Open this directory through Unity Hub, then open `Assets/Scenes/WillowWorks.unity`. The scene generator and build commands are in Unity's Willow Works menu. `Tools/build-mac.zsh` regenerates the authored scene, builds, signs, smoke-checks and packages the Mac app. Save any manual scene changes before running the generator.
 
@@ -55,6 +65,6 @@ Open this directory through Unity Hub, then open `Assets/Scenes/WillowWorks.unit
 - [High concept](Documentation/HighConcept.md), [Game script](Documentation/GameScript.md), [Design schemas](Documentation/Schemas.md), [State machines](Documentation/FSM.md)
 - [Asset and font credits](Documentation/CREDITS.md)
 
-Local session records distinguish automatic development checks from unattributed ordinary runs. They contain progression, pauses, reading, hints and retries; they are stored locally with no network transport. Tool-controlled or solution-informed session times do not establish first-play duration. Independent completion timing, player comfort and audio listening remain separate acceptance checks.
+Local session records distinguish automatic development checks from unattributed ordinary runs. They contain progression, pauses, reading, hints and retries; they are stored locally with no network transport. Tool-controlled or solution-informed session times do not establish first-play duration. Yu Han reported completed runs of approximately 20 and 13 minutes on earlier updates and approximately 10 minutes by another friend on final v0.15. These are approximate reports from different players/builds; player comfort and audio listening remain experience-based judgments.
 
-Windows/Linux release execution and course distribution/submission are tracked separately from this Mac gameplay review. Passing development checks is not a predicted grade.
+Windows and Linux native headless startup checks passed. Mac graphical inspection and the reported v0.15 completion provide the gameplay evidence. The final three archives are uploaded to the course Box folder. Blackboard submission of the report and repository link is the remaining user action.

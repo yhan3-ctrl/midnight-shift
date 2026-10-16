@@ -1,6 +1,6 @@
 # Finite State Machines / implemented baseline
 
-These diagrams describe current states and transitions. They are design documentation, not engine-generated verification. Parameters and exceptions are listed in GameScript.md.
+These diagrams describe v0.15 states and transitions. TutorialComplete is a dedicated presentation of the Reading state; it is not a second scene. They are design documentation, not engine-generated verification. Parameters and exceptions are listed in GameScript.md.
 
 ## Player modes
 
@@ -15,6 +15,12 @@ stateDiagram-v2
         EmptyHands --> Carrying: valid pickup
         Carrying --> EmptyHands: valid Q place / E-or-Q insert / deliver
     }
+    Active --> TutorialComplete: first crossing of foyer door
+    TutorialComplete --> LookEntry: confirm Start making the lantern
+    Title --> Language: L / Language button
+    Paused --> Language: Language button
+    Language --> Title: select / back, opened from title
+    Language --> Paused: select / back, opened from pause
     Active --> Routing: interact with production console
     Routing --> LookEntry: close / remove / start
     Active --> Reading: story / job dialogue

@@ -1,6 +1,6 @@
 # Game Script / v0.15 implemented rules
 
-This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. A future final report must update this document to match its submitted version.
+This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. The final report in Submission/Project2_Report_Yu_Han.md describes the same v0.15 gameplay. Later version-history sections below distinguish historical changes from current rules.
 
 ## Player role, controls and modes
 
@@ -61,7 +61,7 @@ Full warning followed by contact within 1.1 units causes a local safety retry to
 
 Aunt May's foyer note explains the helpers return at Halloween and the old drawing is in the archive. Completing moulding provides Button's hint about the child who asked who went home last. Reading the framed drawing reveals the player's own note: 'For the last one to leave. So the way home is bright, too.'
 
-The reveal unlocks assembly. The player engraves, powers the press, picks up the finished lantern and interacts with Pip at dispatch. Delivery ends the night. The exit opens and the camera follows the helpers walking with their lantern into the illuminated village. Ending text remains visible beside the scene. Reading again does not repeat progression rewards.
+The reveal unlocks assembly. The player engraves, powers the press, picks up the finished lantern and interacts with Pip at dispatch. Delivery ends the night. The exit opens. The helpers queue clear of dispatch, cross the narrow doorway separately and gather in the illuminated village. A fixed exterior cinematic camera keeps the group beside the ending card. Ending text remains visible beside the scene. Reading again does not repeat progression rewards.
 
 ## State machines
 
@@ -194,3 +194,7 @@ Circuit satisfaction plays a three-note success phrase once per unsolved-to-solv
 The title explicitly starts the tutorial. The foyer alone teaches looking, walking, pickup and plate placement. Crossing its door opens a paused TUTORIAL COMPLETE card with the lantern objective and Packaging → Archive → Assembly route. Confirming starts formal work; returning to the foyer does not reset the phase or replace the production task. The former non-blocking completion toast is superseded by this acknowledged boundary. The HUD distinguishes TUTORIAL / NIGHT SHIFT from the chapter's explicit completed-task count. 10 / 31 is removed from it.
 
 The current crate plate illuminates before pickup; its thick mint perimeter and upright markers are independent of gold navigation. Validated Q landing remains a separate green box. Helper positions clear desks during turning/waving. Ending helpers queue beyond dispatch, cross the door individually and spread outside while the cinematic camera keeps them beside the paper ending card. See INTERFACE-REVIEW-v0.15.md for actual evidence and test limits.
+
+## October 16 confirmed completion times
+
+Yu Han reported three completed ordinary play sessions: their first run took approximately 20 minutes; one friend completed a subsequently updated build in approximately 13 minutes; another friend completed the latest v0.15 in approximately 10 minutes. Yu Han explicitly confirmed the last build number. These are participant-reported approximate durations, not stopwatch logs or averages. Exact earlier build numbers, pause/reading breakdowns, prior familiarity and assistance were not supplied. Different people played after different updates, so the 20-to-13-to-10 sequence cannot isolate a causal effect. The latest report supports a completion at the upper edge of the rubric's 5-10-minute range; it does not prove every player's duration or enjoyment.
