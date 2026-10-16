@@ -12,7 +12,7 @@ public class PlacementPreview : MonoBehaviour {
         foreach(var l in box)if(l)l.enabled=false;foreach(var l in plate)if(l)l.enabled=false;
         if(!g||!g.started||g.ended||(g.Frozen&&!g.photoMode&&!g.desktopHold))return;
         if(!g.player.held||g.player.held.kind!=Pickup.Kind.Crate){
-            var focus=g.player.focus;if(!g.Frozen&&focus&&g.player.CanReach(focus)){
+            var focus=g.player.focus;if(!g.Frozen&&focus&&!(focus is StoryPoint)&&g.player.CanReach(focus)){
                 Bounds bounds;var collider=focus.GetComponent<Collider>();
                 if(focus is Machine||focus is GridRelay||!collider)bounds=new Bounds(g.player.InteractionPoint(focus),Vector3.one*.46f);
                 else bounds=collider.bounds;

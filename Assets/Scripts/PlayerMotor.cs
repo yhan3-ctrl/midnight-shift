@@ -50,7 +50,7 @@ public class PlayerMotor : MonoBehaviour {
     public Vector3 InteractionPoint(Interactable item){
         if(item is Machine machine)return machine.corePoint.position;
         if(item is GridRelay relay)return relay.socket.position;
-        if(item is StoryPoint)return item.transform.position+Vector3.up*.6f;
+        if(item is StoryPoint){var body=item.GetComponent<Collider>();return body?body.bounds.center:item.transform.position+Vector3.up*.6f;}
         return item.transform.position;
     }
     public bool CanReach(Interactable item){
@@ -82,14 +82,15 @@ public class PlayerMotor : MonoBehaviour {
     public void ScanFocus(){
         focus=null;var g=FactoryGame.I;if(!g)return;
         var socket=NearbyCoreSocket();if(socket){focus=socket;return;}
-        // A visible reusable core can be taken directly even while its own collider is disabled in a socket.
-        if(!held&&g.sharedCore&&!g.sharedCore.carried&&CanReach(g.sharedCore)){focus=g.sharedCore.socket&&!g.sharedCore.socket.done&&!g.sharedCore.socket.running?(Interactable)g.sharedCore.socket:g.sharedCore;return;}
+        // Direct aim wins over the wide pickup assist, so a socket cannot steal a nearby crate interaction.
         if(Physics.Raycast(view.transform.position,view.transform.forward,out RaycastHit hit,3.8f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))focus=hit.collider.GetComponentInParent<Interactable>();
         if(focus)return;
+        // A reusable core remains reachable while its own collider is disabled in a socket.
+        if(!held&&g.sharedCore&&!g.sharedCore.carried&&CanReach(g.sharedCore)){focus=g.sharedCore.socket&&!g.sharedCore.socket.done&&!g.sharedCore.socket.running?(Interactable)g.sharedCore.socket:g.sharedCore;return;}
         float best=0;
         foreach(var item in FindObjectsByType<Interactable>(FindObjectsSortMode.None)){
             if(item is Pickup pickup&&(pickup.carried||pickup.socket))continue;
-            if(!(item is Machine)&&!(item is GridRelay)&&!(item is Pickup))continue;
+            if(!(item is Machine)&&!(item is GridRelay)&&!(item is Pickup)&&!(item is StoryPoint))continue;
             if(!CanReach(item))continue;
             Vector3 d=InteractionPoint(item)-view.transform.position;float score=Vector3.Dot(view.transform.forward,d.normalized)-d.magnitude*.045f;
             if(score>best){best=score;focus=item;}
@@ -100,6 +101,7 @@ public class PlayerMotor : MonoBehaviour {
         if(held){FactoryGame.I.Notify("Your hands are full. Place what you're carrying first.");return false;}
         held=item;item.AttachTo(hand);item.carried=true;if(item.kind==Pickup.Kind.Crate){item.transform.localScale*=.26f;item.transform.localPosition=new Vector3(.3f,-.44f,.08f);}
         if(item.kind==Pickup.Kind.Core){item.transform.localScale*=.5f;item.transform.localPosition=new Vector3(.1f,-.25f,0);}
+        if(item.kind==Pickup.Kind.Lantern){item.transform.localScale*=.65f;item.transform.localPosition=new Vector3(.12f,-.2f,0);}
         FactoryGame.I.audioScore.Tick(660);return true;
     }
     public bool Placement(out Vector3 at,out string reason){

@@ -1,71 +1,53 @@
 # Midnight Shift: The Last Lantern
 
-v0.11 makes the route visible from a level view: wider opaque gold lines, raised route lights and a heading-only compass. R levels the camera without changing heading. Near a visible machine, E or Q inserts the carried core; the main insertion coach only replaces the guide when that machine is the current objective. Desktop hold now clearly hides inactive E/Q instructions. See Documentation/ROUTE-PLACEMENT-REVIEW-v0.11.md for evidence and limits.
+A warm Halloween puzzle game set inside Willow Works. Finish a forgotten pumpkin lantern, share the factory's last power core and discover who the gift was meant for.
 
-Move the mouse to turn; WASD walks. Esc pauses and releases the pointer. Map, dialogue, circuits, notebook, screenshot view, system modifiers and focus loss also release it. Returning to exploration requires a deliberate click/Enter, never automatic capture. Controls & comfort [C] is available on the title, pause and look-entry screens.
+Unity 6000.6.5f1, 3D, Built-in Render Pipeline. Current gameplay revision: **v0.12**. English is the default; Chinese, Spanish, French, German, Japanese and Korean are optional.
 
-Willow Works 的万圣节最后一班。Unity 6.6 / 6000.6.5f1 / Built-in Render Pipeline。
+## Play on macOS
 
-## 当前版本
+Open `开始试玩.app` in the project folder, or the installed `Midnight Shift v0.12.app`. The distributable archive is `Builds/MidnightShift-Mac-v0.12.zip`.
 
-v0.11 retains the seven-language interface (English default), warm story, four circuits and visible lantern crafting. This is a playable revision, not a verified final course submission. Independent human timing and learning outcomes remain unverified.
+## Controls
 
-## 打开游戏
+| Control | Action |
+|---|---|
+| WASD | Walk |
+| Mouse | Look after explicitly clicking/pressing Enter to begin mouse look |
+| Arrow keys | Alternative camera turning; select circuit tiles while routing |
+| E | Pick up, use, read or deliver |
+| Q | Place; near a visible console, insert a held power core |
+| R | Level the view while retaining your heading |
+| H | Explain the current step |
+| J | Full chapter checklist, core whereabouts and notebook |
+| M | Expandable factory map |
+| Space / Enter | Continue dialogue; Space turns a selected circuit tile, Enter starts a solved circuit |
+| Esc / Tab | Pause and free the pointer |
+| Backspace | Return from a circuit, map or notebook |
+| F2 | Pause in a clean screenshot view; F2/Esc returns |
+| C | Controls and comfort from the title, pause or look-entry screen |
 
-双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift v0.11.app`。
+Mouse look never resumes automatically after a menu, dialogue or desktop interruption. Click/Enter explicitly to continue. Switching windows or holding desktop shortcut modifiers releases the pointer and pauses hazards. Use Enter to resume desktop pause. Arrow-only and right-drag alternatives are available in Controls & comfort; sensitivity, field of view, walk speed and optional hand motion can be adjusted.
 
-当前开发源文件位于本机 `~/Developer/MidnightShift`，避免 iCloud 卸载源代码。桌面旧项目保留为 v0.5 参考。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.11.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
+## Playing the night shift
 
-编辑项目：Unity Hub → Projects → Add → Add project from disk → 选择整个 `MidnightShift` 文件夹。打开后在 Project 面板双击 `Assets/Scenes/WillowWorks.unity`，再按编辑器上方 Play。
+Follow the gold route and the next-action card. A striped pressure plate is a physical target; the green crate outline shows a valid placement. Leave the crate there to keep the door open.
 
-## 操作
+There is one reusable gold core. E or Q near a visible console inserts it and opens the circuit board. Rotate tiles to connect IN to every OUT **through every star contact**, then choose Start machine. Completed work remains finished after retrieving the core. Hush checks safety: watch his route, use the chime or hide behind shelves and placed crates. Retries preserve completed jobs, the drawing and crates already holding access.
 
-- WASD：移动。点击 Click to look around（或 Enter）后，移动鼠标即可自由转头，不用按住鼠标键。Esc 立即释放鼠标并打开菜单。方向键也可以转头；设置页可选自由指针／右键拖动或仅方向键模式。
-- E：拾取／插入核心／启动机器／读取说明／交付。
-- R：恢复平视，只调整抬头／低头角度，保留朝向。
-- Q：核心靠近机器时可直接插入，与 E 一样打开线路板；其他位置放在空地。箱子仍按原有落点规则放置。发光条纹木板是任务目标，箱子轮廓是实际落点；轮廓在木板上变绿后按 Q。靠近目标木板时会对齐，碰撞与墙壁仍会阻止放置。
-- Space 或 Return：继续对白。阅读时世界暂停。
-- H：当前任务提示。
-- J：值班笔记，查看当前目标、规则和已发现的故事。
-- Tab / F1：随时打开菜单、释放鼠标，包括对话与线路板期间。Esc 在对话、线路板、笔记中统一打开菜单；线路板用 Backspace 返回。
-- F2：冻结世界并隐藏主要界面，方便用系统截图；F2 / Esc 返回。切换到其他窗口时冻结世界，返回后 Enter 恢复，再点击／Enter 主动进入鼠标视角。
-- 菜单内可退出游戏、试听/恢复声音，并打开七种语言的选择菜单（L）。Controls & comfort [C] 可调左右／上下灵敏度、垂直视野和走路速度；手部晃动默认关闭。设置关闭后保存。
-- 对话暂停世界；点击继续或按空格/回车推进。右侧挂历与金色箭头逐步指路。
+Dialogue hides the exploration HUD. The compact calendar opens the complete checklist with J. The story ends with physically delivering the finished lantern to Pip.
 
-Production machines: E or Q near a visible console inserts a carried core and opens its circuit. Generic Q away from a machine places on clear floor; crates retain their pressure-plate landing validation. Turn tiles to power every OUT and every star; green stars remain visible. Choose Start machine. Click/Space rotates, arrows select, Return starts, Backspace returns and Esc opens the menu. The Chime needs no routing puzzle. Completed output persists when the same core is retrieved and reused.
+## Development and evidence
 
-## 本地试玩记录
+Open this directory through Unity Hub, then open `Assets/Scenes/WillowWorks.unity`. The scene generator and build commands are in Unity's Willow Works menu. `Tools/build-mac.zsh` regenerates the authored scene, builds, signs, smoke-checks and packages the Mac app. Save any manual scene changes before running the generator.
 
-游戏自动记录当前局部任务完成、活跃操作时间、阅读、暂停、笔记、提示次数和重试次数，仅保存在本机，不上传。Mac 独立应用位置为 `~/Library/Application Support/com.Willow-Works.Midnight-Shift---The-Last-Lantern/Playtests/`；编辑器检查记录位于 `~/Library/Application Support/Willow Works/Midnight Shift - The Last Lantern/Playtests/`。自动检查及带 --agent-playtest 的操作会标记为 automated，并自动静音；其余记录默认 reviewer=unattributed，不能仅凭日志认定是真人试玩。
+- [Playtesting findings and revisions](Documentation/FINAL-GAME-PLAYTEST.md)
+- [Reported player feedback](Documentation/PLAYTEST.md)
+- [Iteration history](Documentation/ITERATIONS.md)
+- [Technical validation](Documentation/VALIDATION.md)
+- [High concept](Documentation/HighConcept.md), [Game script](Documentation/GameScript.md), [Design schemas](Documentation/Schemas.md), [State machines](Documentation/FSM.md)
+- [Asset and font credits](Documentation/CREDITS.md)
 
-计时包含未暂停时的思考与停顿，等待主动进入鼠标视角和舒适度设置的时间也计入暂停，不计入活跃时间。长时间离开或系统休眠会污染数据；这类记录必须剔除，不能作为课程时长证据。完整开发者试玩见 `Documentation/NATIVE-FULL-REVIEW-v0.5.md`；本轮鼠标与放置修正的验证及限制见 `Documentation/CONTROLS-REVIEW-v0.8.md`。
+Local session records distinguish automatic development checks from unattributed ordinary runs. They contain progression, pauses, reading, hints and retries; they are stored locally with no network transport. Tool-controlled or solution-informed session times do not establish first-play duration. Independent completion timing, player comfort and audio listening remain separate acceptance checks.
 
-## 第一次检查重点
-
-先看能否不依赖旁人指导理解操作与目标，再记录完整游玩时间。请不要把看过答案后的用时当作首次玩家用时。记录卡点和实际策略，不只记录“好玩／不好玩”。
-
-## 开发菜单
-
-Unity 顶部 `Willow Works`：
-- Build factory scene：根据生成工具重建场景，会覆盖 `WillowWorks.unity` 中的手工改动。
-- Build Mac playable：生成 Mac 通用版本。
-- Build Windows / Linux playable：安装相应模块后可用。
-
-`Tools/build-mac.zsh` 提供可重现的构建、本机副本签名、发布包启动检查和 ZIP 打包流程。脚本会重建生成场景，手工改过场景时先保存到 Git 或另存副本。
-
-场景是实际保存的 Unity 场景，正常打开不需要每次重建。
-`Assets/Editor/FactoryVerification.cs` 包含引擎集成检查与场景画面检查工具。
-
-## 待验证和后续完善
-
-- 陌生玩家的真实时长、学习迁移、难度及故事理解。
-- 巡检教学已要求实际启动休息铃。是否能在首次游玩时顺利理解，仍需真人验证。
-- 最终区域已加入巡检，组合能源复用、压力板和机器声音。难度与敌人导航还需真人测试。
-- 美术目前为原创程序化 3D 几何，角色与手部动画为程序动画。需要继续打磨动作和角色表现。
-- 音乐、脚步与反馈音为原创合成音，尚需人工试听和混音改进。持续机器环境音还可加强。
-- 游戏首次启动默认英文。标题或暂停菜单选择 Language（也可按 L），支持七种语言并记住选择。开发说明为中文。
-- 尚无跨启动存档。重启或菜单重新开始会重置整晚。
-- Mac 构建目标为 Intel + Apple Silicon 通用版；Windows / Linux 模块尚未安装，构建及跨平台完整验证尚未完成。
-- GitHub 上传、教师协作者、Box 发布、Blackboard 提交尚未执行。
-
-更多见 Documentation。所有验证记录只描述实际执行的检查，不替代真人试玩。
+Windows/Linux release execution and course distribution/submission are tracked separately from this Mac gameplay review. Passing development checks is not a predicted grade.

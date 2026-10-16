@@ -1,0 +1,200 @@
+{
+    "version": "0.12",
+    "startedUtc": "2026-10-16T04:26:44.5278420Z",
+    "reviewer": "unattributed",
+    "automated": true,
+    "completed": true,
+    "elapsedSeconds": 622.6837158203125,
+    "activeSeconds": 316.91571044921875,
+    "readingSeconds": 159.66607666015625,
+    "pausedSeconds": 146.099609375,
+    "journalSeconds": 0.0,
+    "safetyRetries": 0,
+    "hintsRequested": 0,
+    "events": [
+        {
+            "seconds": 0.0,
+            "action": "reading"
+        },
+        {
+            "seconds": 0.0,
+            "action": "progress-mask:0"
+        },
+        {
+            "seconds": 30.63374137878418,
+            "action": "active"
+        },
+        {
+            "seconds": 103.00032806396484,
+            "action": "routing"
+        },
+        {
+            "seconds": 139.05010986328125,
+            "action": "active"
+        },
+        {
+            "seconds": 144.0505828857422,
+            "action": "reading"
+        },
+        {
+            "seconds": 144.0505828857422,
+            "action": "progress-mask:1"
+        },
+        {
+            "seconds": 159.66650390625,
+            "action": "active"
+        },
+        {
+            "seconds": 167.0664825439453,
+            "action": "routing"
+        },
+        {
+            "seconds": 177.29977416992188,
+            "action": "active"
+        },
+        {
+            "seconds": 182.28309631347656,
+            "action": "reading"
+        },
+        {
+            "seconds": 182.28309631347656,
+            "action": "progress-mask:3"
+        },
+        {
+            "seconds": 205.53285217285156,
+            "action": "active"
+        },
+        {
+            "seconds": 219.46617126464844,
+            "action": "reading"
+        },
+        {
+            "seconds": 228.78262329101563,
+            "action": "active"
+        },
+        {
+            "seconds": 232.3493194580078,
+            "action": "paused"
+        },
+        {
+            "seconds": 249.5660400390625,
+            "action": "active"
+        },
+        {
+            "seconds": 249.66586303710938,
+            "action": "progress-mask:7"
+        },
+        {
+            "seconds": 252.2491912841797,
+            "action": "paused"
+        },
+        {
+            "seconds": 296.3326721191406,
+            "action": "active"
+        },
+        {
+            "seconds": 297.982666015625,
+            "action": "paused"
+        },
+        {
+            "seconds": 309.9825439453125,
+            "action": "active"
+        },
+        {
+            "seconds": 318.232177734375,
+            "action": "paused"
+        },
+        {
+            "seconds": 330.4984130859375,
+            "action": "active"
+        },
+        {
+            "seconds": 350.9152526855469,
+            "action": "reading"
+        },
+        {
+            "seconds": 350.9152526855469,
+            "action": "progress-mask:15"
+        },
+        {
+            "seconds": 368.99945068359375,
+            "action": "active"
+        },
+        {
+            "seconds": 376.4993591308594,
+            "action": "paused"
+        },
+        {
+            "seconds": 392.04949951171875,
+            "action": "active"
+        },
+        {
+            "seconds": 397.86614990234375,
+            "action": "reading"
+        },
+        {
+            "seconds": 428.5661926269531,
+            "action": "active"
+        },
+        {
+            "seconds": 431.7830505371094,
+            "action": "routing"
+        },
+        {
+            "seconds": 463.631591796875,
+            "action": "active"
+        },
+        {
+            "seconds": 468.615478515625,
+            "action": "progress-mask:31"
+        },
+        {
+            "seconds": 469.6988830566406,
+            "action": "paused"
+        },
+        {
+            "seconds": 483.9493408203125,
+            "action": "active"
+        },
+        {
+            "seconds": 488.2329406738281,
+            "action": "paused"
+        },
+        {
+            "seconds": 505.6164855957031,
+            "action": "active"
+        },
+        {
+            "seconds": 508.716552734375,
+            "action": "paused"
+        },
+        {
+            "seconds": 522.0667114257813,
+            "action": "active"
+        },
+        {
+            "seconds": 524.6000366210938,
+            "action": "routing"
+        },
+        {
+            "seconds": 560.4663696289063,
+            "action": "active"
+        },
+        {
+            "seconds": 565.4663696289063,
+            "action": "reading"
+        },
+        {
+            "seconds": 565.4663696289063,
+            "action": "progress-mask:63"
+        },
+        {
+            "seconds": 597.5337524414063,
+            "action": "active"
+        },
+        {
+            "seconds": 622.6837158203125,
+            "action": "ending"
+        }
+    ]
+}

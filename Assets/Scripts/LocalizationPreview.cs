@@ -31,7 +31,7 @@ public class LocalizationPreview : MonoBehaviour {
 
             g.shell=true;g.transferred=true;g.player.Pick(g.sharedCore);g.player.Teleport(new Vector3(5.4f,0,23.1f),0);g.player.view.transform.LookAt(new Vector3(7.3f,.8f,27.5f));yield return new WaitForSecondsRealtime(1);g.navigation.Refresh(g.guide.Current,true);g.player.view.transform.LookAt(new Vector3(g.navigation.LookAhead(4).x,g.player.view.transform.position.y,g.navigation.LookAhead(4).z));yield return Snap(code,"archive-route");g.ToggleMap();yield return Snap(code,"archive-map");g.ToggleMap();g.player.PutBackHeld();g.player.Teleport(new Vector3(0,0,29.5f),0);yield return Snap(code,"archive");
             g.blueprint=true;g.etched=true;g.player.Teleport(new Vector3(0,0,49),0);yield return Snap(code,"assembly");
-            g.assembled=true;g.player.Teleport(new Vector3(0,0,59),0);yield return Snap(code,"delivery");g.ended=true;yield return Snap(code,"ending");
+            g.assembled=true;g.lantern.gameObject.SetActive(true);g.player.Teleport(new Vector3(0,0,59),0);g.player.Pick(g.lantern);yield return Snap(code,"delivery");g.player.PutBackHeld();g.ended=true;yield return Snap(code,"ending");
         }
         UiCopy.Language(initial,false);Debug.Log("LOCALIZATION_PREVIEWS_PASS / "+captures+" staged screens; "+pageContinuations+" multi-page dialogues advanced without skipping their source line. Preferences untouched.");Application.Quit(0);
     }

@@ -1,0 +1,248 @@
+{
+    "version": "0.11",
+    "startedUtc": "2026-10-16T03:56:56.2687090Z",
+    "reviewer": "unattributed",
+    "automated": true,
+    "completed": false,
+    "elapsedSeconds": 971.3834228515625,
+    "activeSeconds": 431.7513732910156,
+    "readingSeconds": 321.3310852050781,
+    "pausedSeconds": 218.3286590576172,
+    "journalSeconds": 0.0,
+    "safetyRetries": 4,
+    "hintsRequested": 0,
+    "events": [
+        {
+            "seconds": 0.0,
+            "action": "reading"
+        },
+        {
+            "seconds": 0.0,
+            "action": "progress-mask:0"
+        },
+        {
+            "seconds": 23.30088233947754,
+            "action": "look-entry"
+        },
+        {
+            "seconds": 69.80183410644531,
+            "action": "active"
+        },
+        {
+            "seconds": 146.98497009277344,
+            "action": "map"
+        },
+        {
+            "seconds": 158.30152893066406,
+            "action": "look-entry"
+        },
+        {
+            "seconds": 158.3181610107422,
+            "action": "active"
+        },
+        {
+            "seconds": 214.36737060546875,
+            "action": "routing"
+        },
+        {
+            "seconds": 253.083984375,
+            "action": "look-entry"
+        },
+        {
+            "seconds": 260.36724853515625,
+            "action": "active"
+        },
+        {
+            "seconds": 265.3675537109375,
+            "action": "reading"
+        },
+        {
+            "seconds": 265.3675537109375,
+            "action": "progress-mask:1"
+        },
+        {
+            "seconds": 361.2818298339844,
+            "action": "look-entry"
+        },
+        {
+            "seconds": 361.4151306152344,
+            "action": "active"
+        },
+        {
+            "seconds": 368.6633605957031,
+            "action": "routing"
+        },
+        {
+            "seconds": 388.1585998535156,
+            "action": "look-entry"
+        },
+        {
+            "seconds": 388.2752380371094,
+            "action": "active"
+        },
+        {
+            "seconds": 393.2906799316406,
+            "action": "progress-mask:3"
+        },
+        {
+            "seconds": 422.7668151855469,
+            "action": "reading"
+        },
+        {
+            "seconds": 440.3125305175781,
+            "action": "look-entry"
+        },
+        {
+            "seconds": 440.4458312988281,
+            "action": "active"
+        },
+        {
+            "seconds": 474.2542419433594,
+            "action": "progress-mask:7"
+        },
+        {
+            "seconds": 532.9615478515625,
+            "action": "desktop"
+        },
+        {
+            "seconds": 545.7180786132813,
+            "action": "look-entry"
+        },
+        {
+            "seconds": 546.8015747070313,
+            "action": "active"
+        },
+        {
+            "seconds": 550.1783447265625,
+            "action": "desktop"
+        },
+        {
+            "seconds": 557.4015502929688,
+            "action": "look-entry"
+        },
+        {
+            "seconds": 557.5348510742188,
+            "action": "active"
+        },
+        {
+            "seconds": 568.8103637695313,
+            "action": "desktop"
+        },
+        {
+            "seconds": 578.5162963867188,
+            "action": "active"
+        },
+        {
+            "seconds": 579.299560546875,
+            "action": "reading"
+        },
+        {
+            "seconds": 579.299560546875,
+            "action": "progress-mask:15"
+        },
+        {
+            "seconds": 624.1006469726563,
+            "action": "active"
+        },
+        {
+            "seconds": 646.432861328125,
+            "action": "reading"
+        },
+        {
+            "seconds": 662.7835693359375,
+            "action": "active"
+        },
+        {
+            "seconds": 666.0335083007813,
+            "action": "routing"
+        },
+        {
+            "seconds": 697.4168701171875,
+            "action": "active"
+        },
+        {
+            "seconds": 698.5661010742188,
+            "action": "reading"
+        },
+        {
+            "seconds": 724.9735717773438,
+            "action": "active"
+        },
+        {
+            "seconds": 728.8392944335938,
+            "action": "progress-mask:31"
+        },
+        {
+            "seconds": 731.4386596679688,
+            "action": "reading"
+        },
+        {
+            "seconds": 774.4614868164063,
+            "action": "active"
+        },
+        {
+            "seconds": 782.0178833007813,
+            "action": "paused"
+        },
+        {
+            "seconds": 790.8941650390625,
+            "action": "active"
+        },
+        {
+            "seconds": 791.3607177734375,
+            "action": "paused"
+        },
+        {
+            "seconds": 806.0404663085938,
+            "action": "active"
+        },
+        {
+            "seconds": 810.2394409179688,
+            "action": "paused"
+        },
+        {
+            "seconds": 818.6207275390625,
+            "action": "active"
+        },
+        {
+            "seconds": 819.4871826171875,
+            "action": "paused"
+        },
+        {
+            "seconds": 831.0010375976563,
+            "action": "active"
+        },
+        {
+            "seconds": 832.9505615234375,
+            "action": "paused"
+        },
+        {
+            "seconds": 845.6141357421875,
+            "action": "active"
+        },
+        {
+            "seconds": 846.8305053710938,
+            "action": "reading"
+        },
+        {
+            "seconds": 898.3345947265625,
+            "action": "active"
+        },
+        {
+            "seconds": 902.6835327148438,
+            "action": "paused"
+        },
+        {
+            "seconds": 931.4098510742188,
+            "action": "active"
+        },
+        {
+            "seconds": 931.8430786132813,
+            "action": "reading"
+        },
+        {
+            "seconds": 934.3091430664063,
+            "action": "paused"
+        }
+    ]
+}
