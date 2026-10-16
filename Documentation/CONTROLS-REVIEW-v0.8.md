@@ -18,7 +18,7 @@ The real striped wooden plate receives a gold outline. The full-size crate landi
 - Native macOS fullscreen button entered fullscreen; the native Window menu returned to a normal window. The red close button ended the standalone process with exit code 0. This establishes these accessible window actions, not every physical mouse gesture.
 - Attempted Command-Shift-4 plus region dragging through CUA twice, including screenshot view. No resulting Desktop PNG could be verified. Therefore OS region screenshot capture is **not marked passed**. Tool event routing or a configured screenshot destination may be involved; no system screenshot preference was changed. The no-lock implementation and free pointer are verified separately.
 - Physical right-button dragging cannot be fully simulated by the currently documented CUA drag API. Arrow look, modifier suppression and idle-pointer behaviour are covered; real hand-operated drag feel and the user's screenshot workflow remain a human acceptance check.
-- Final native title review restored English through L/Left/Enter and verified the English controls on screen. The muted review session was then closed with the native red button (exit code 0). Automated/agent launches were muted. No global audio device or volume preferences were changed.
+- Final native title review restored English through L/Left/Enter and verified the English controls on screen. The final muted review session was closed with Command-Q (exit code 0); the earlier active session established native red-button exit. Automated/agent launches were muted. No global audio device or volume preferences were changed.
 
 ## Package
 
