@@ -6,7 +6,7 @@ Unity 6000.6.5f1, 3D, Built-in Render Pipeline. Current gameplay revision: **v0.
 
 ## Play on macOS
 
-Open `开始试玩.app` in the project folder, or the installed `Midnight Shift v0.15.app`. The distributable archive is `Builds/MidnightShift-Mac-v0.15.zip`.
+Download [the Mac v0.15 release](https://github.com/yhan3-ctrl/midnight-shift/releases/tag/v0.15), extract `MidnightShift-Mac-v0.15.zip`, and open `Midnight Shift v0.15.app`. The release includes its SHA-256 checksum. On the development Mac, the existing `开始试玩.app` shortcut also opens this version. A source-only clone should be opened in Unity Hub as described below.
 
 ## Controls
 
@@ -40,6 +40,8 @@ There is one reusable gold core. If you retrieve it before a crate task, the gui
 Dialogue hides the exploration HUD. The compact calendar opens the complete checklist with J. The story ends with physically delivering the finished lantern to Pip.
 
 ## Development and evidence
+
+The [GitHub repository](https://github.com/yhan3-ctrl/midnight-shift) preserves the original 23 development/documentation commits through the v0.15 game revision. Publication documentation is recorded separately afterward. [GitHub handoff status](Documentation/GITHUB-HANDOFF.md) distinguishes the uploaded source/Mac release from the remaining course submissions.
 
 Open this directory through Unity Hub, then open `Assets/Scenes/WillowWorks.unity`. The scene generator and build commands are in Unity's Willow Works menu. `Tools/build-mac.zsh` regenerates the authored scene, builds, signs, smoke-checks and packages the Mac app. Save any manual scene changes before running the generator.
 
