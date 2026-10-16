@@ -20,6 +20,7 @@ public static class UiCopy {
     public static string Translate(string text){if(Selected==0||string.IsNullOrEmpty(text))return text;Ensure();return lines.TryGetValue(text,out var entry)&&entry.values.Length>Selected&&!string.IsNullOrEmpty(entry.values[Selected])?entry.values[Selected]:text;}
     public static string Prompt(PlayerMotor p){
         if(!p.focus)return "";var item=p.focus as Pickup;
+        if(item==FactoryGame.I.sharedCore&&!p.held&&(item.socket||item.GetComponentInParent<GridRelay>()))return Translate("E  Retrieve core / ")+Translate(FactoryGame.I.CoreLocation);
         if(item)return p.held?Pick("双手正忙：先按 Q 放下物品","Hands full: place your item with Q"):Pick("E  拿起 ","E  Pick up ")+Translate(item.displayName);
         var machine=p.focus as Machine;
         if(machine){string name=Translate(machine.displayName);if(p.held&&p.held.kind==Pickup.Kind.Core&&machine.Requirement!="")return Translate(machine.Requirement);if(p.held&&p.held.kind==Pickup.Kind.Core)return Pick("E  插入核心 / ","E  Insert core / ")+name;if(p.held)return Pick("先按 Q 放下物品","Place your item with Q first");return machine.core?Translate(machine.done?"E  Retrieve core / ":machine.running?"E  Stop & retrieve core / ":"E  Open / ")+name:Pick("这里需要金色核心 / ","Bring the gold core / ")+name;}

@@ -20,13 +20,13 @@ public class LocalizationPreview : MonoBehaviour {
         string staffNote=UiCopy.Entries.Single(x=>x.en.StartsWith("The helpers only return on Halloween.")).en;
         int initial=UiCopy.Selected;
         for(int language=0;language<UiCopy.Codes.Length;language++){
-            Close();g.CloseLanguages();g.paused=false;g.journal=false;g.activeCircuit=null;g.started=false;g.ended=false;g.shell=false;g.transferred=false;g.blueprint=false;g.etched=false;g.assembled=false;g.guide.looked=false;g.guide.walked=false;g.player.Teleport(new Vector3(0,0,-7),0);UiCopy.Language(language,false);string code=UiCopy.Codes[language];
+            Close();g.CloseLanguages();g.mapOpen=false;g.paused=false;g.journal=false;g.activeCircuit=null;g.started=false;g.ended=false;g.shell=false;g.transferred=false;g.blueprint=false;g.etched=false;g.assembled=false;g.guide.looked=false;g.guide.walked=false;g.player.Teleport(new Vector3(0,0,-7),0);UiCopy.Language(language,false);string code=UiCopy.Codes[language];
             yield return Snap(code,"title");g.OpenLanguages();yield return Snap(code,"languages");g.CloseLanguages();
             g.Begin();g.Say("WILLOW WORKS / STAFF NOTE",staffNote);yield return Snap(code,"dialogue");Close();string stress=UiCopy.Translate(staffNote)+"\n\n"+UiCopy.Translate(staffNote);g.Say("WILLOW WORKS / STAFF NOTE",stress);yield return Snap(code,"dialogue-stress");g.Advance();if(!g.Reading||g.line!=stress){Debug.LogError("LOCALIZATION_PREVIEWS_FAIL / Long dialogue skipped: "+code);Application.Quit(1);yield break;}pageContinuations++;yield return Snap(code,"dialogue-page2");Close();
-            yield return Snap(code,"guide");g.ToggleJournal();yield return Snap(code,"notebook");g.ToggleJournal();g.TogglePause();yield return Snap(code,"menu");g.TogglePause();
+            yield return Snap(code,"guide");g.ToggleMap();yield return Snap(code,"map");g.ToggleMap();g.ToggleJournal();yield return Snap(code,"notebook");g.ToggleJournal();g.TogglePause();yield return Snap(code,"menu");g.TogglePause();
             g.OpenCircuit(mould);yield return Snap(code,"circuit3");g.CloseCircuit();g.OpenCircuit(press);yield return Snap(code,"circuit4");g.CloseCircuit();
             g.player.Teleport(new Vector3(0,0,15),0);yield return Snap(code,"packaging");
-            g.shell=true;g.transferred=true;g.player.Teleport(new Vector3(0,0,29.5f),0);yield return Snap(code,"archive");
+            g.shell=true;g.transferred=true;g.player.Pick(g.sharedCore);g.player.Teleport(new Vector3(5.4f,0,23.1f),0);g.player.view.transform.LookAt(new Vector3(7.3f,.8f,27.5f));yield return new WaitForSecondsRealtime(1);g.navigation.Refresh(g.guide.Current,true);g.player.view.transform.LookAt(g.navigation.LookAhead(4)+Vector3.up*.2f);yield return Snap(code,"archive-route");g.ToggleMap();yield return Snap(code,"archive-map");g.ToggleMap();g.player.PutBackHeld();g.player.Teleport(new Vector3(0,0,29.5f),0);yield return Snap(code,"archive");
             g.blueprint=true;g.etched=true;g.player.Teleport(new Vector3(0,0,49),0);yield return Snap(code,"assembly");
             g.assembled=true;g.player.Teleport(new Vector3(0,0,59),0);yield return Snap(code,"delivery");g.ended=true;yield return Snap(code,"ending");
         }

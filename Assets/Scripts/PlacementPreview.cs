@@ -11,7 +11,7 @@ public class PlacementPreview : MonoBehaviour {
     void LateUpdate(){
         foreach(var l in box)if(l)l.enabled=false;foreach(var l in plate)if(l)l.enabled=false;
         if(!g||!g.started||g.ended||!g.player.held||(g.Frozen&&!g.photoMode&&!g.desktopHold))return;
-        var p=g.player;var gate=g.guide.PlacementGate;
+        var p=g.player;if(p.held.kind!=Pickup.Kind.Crate)return;var gate=g.guide.PlacementGate;
         if(gate&&gate.plate){Vector3 centre=gate.plate.position+Vector3.up*.075f;Vector3[] corners={centre+new Vector3(-.98f,0,-.98f),centre+new Vector3(.98f,0,-.98f),centre+new Vector3(.98f,0,.98f),centre+new Vector3(-.98f,0,.98f)};float pulse=.7f+.25f*Mathf.Sin(Time.unscaledTime*3);for(int i=0;i<4;i++)Show(plate[i],corners[i],corners[(i+1)%4],new Color(1,.72f,.25f,pulse));}
         bool valid=p.Placement(out var at,out _);if(at==Vector3.zero)return;
         bool onPlate=valid&&gate&&new Vector2(at.x-gate.plate.position.x,at.z-gate.plate.position.z).magnitude<.12f;

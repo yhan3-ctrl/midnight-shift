@@ -21,8 +21,8 @@ public class FactoryWalker : MonoBehaviour {
         yield return Go(-4.8f,6.5f);Place(0,"Foyer gate");yield return Wait(.9f);
         yield return Go(0,10);yield return Go(0,15.3f);Use(new Vector3(0,.6f,16),"Shared power core");
         yield return Go(-5.4f,13.5f);Use(new Vector3(-5.4f,.8f,14.8f),"WORKSHOP RELAY");yield return Wait(1);yield return Go(0,16.5f);yield return Go(0,19.8f);yield return Go(5,18.6f);Use(new Vector3(5,.61f,20),"Workshop override crate");yield return Go(0,19.8f);yield return Go(0,16);yield return Go(4.8f,14.5f);Place(0,"Workshop power gate");yield return Go(-5.4f,13.5f);Use(new Vector3(-5.4f,.8f,14.8f),"WORKSHOP RELAY");yield return Go(0,16.5f);yield return Go(0,19.8f);
-        yield return Go(-5.4f,18.6f);Use(new Vector3(-5.4f,.8f,19.3f),"MOULDING TABLE");Use(new Vector3(-5.4f,.8f,19.3f),"MOULDING TABLE");yield return Job("mould");Use(new Vector3(-5.4f,.8f,19.3f),"MOULDING TABLE");
-        yield return Go(0,20);yield return Go(5.4f,20);yield return Go(5.4f,23.1f);Use(new Vector3(5.4f,.8f,24.3f),"RIBBON CONVEYOR");Use(new Vector3(5.4f,.8f,24.3f),"RIBBON CONVEYOR");yield return Job("ribbon");Use(new Vector3(5.4f,.8f,24.3f),"RIBBON CONVEYOR");
+        yield return Go(-5.4f,18.6f);Use(new Vector3(-5.4f,.8f,19.3f),"MOULDING TABLE");yield return Job("mould");Use(new Vector3(-5.4f,.8f,19.3f),"MOULDING TABLE");
+        yield return Go(0,20);yield return Go(5.4f,20);yield return Go(5.4f,23.1f);Use(new Vector3(5.4f,.8f,24.3f),"RIBBON CONVEYOR");yield return Job("ribbon");Use(new Vector3(5.4f,.8f,24.3f),"RIBBON CONVEYOR");
         yield return Go(7.3f,23.1f);yield return Go(7.3f,27.5f);yield return Go(0,28.8f);yield return Wait(.9f);yield return Go(0,31.7f);
         yield return Go(-6.3f,31.7f);yield return Go(-6.3f,33.3f);Use(new Vector3(-6.3f,.8f,34.3f),"BREAK-TIME CHIME");Use(new Vector3(-6.3f,.8f,34.3f),"BREAK-TIME CHIME");
         yield return Go(-4,31.3f);Use(new Vector3(-4,.61f,32.8f),"Archive crate");
@@ -30,10 +30,10 @@ public class FactoryWalker : MonoBehaviour {
         yield return Go(7,42.4f);yield return Go(2.3f,42.4f);yield return Go(0,42.5f);yield return Go(0,44.1f);Use(new Vector3(2.6f,1.5f,44.83f),"Notice / AN OLD DRAWING");Close();Time.timeScale=5;
         yield return Go(0,42);yield return Go(-3.2f,42);yield return Go(-3.2f,37);yield return Go(-6.3f,37);Use(new Vector3(-6.3f,.8f,35.7f),"BREAK-TIME CHIME");
         yield return Go(-3.2f,37);yield return Go(-3.2f,42);yield return Go(0,42);yield return Go(0,44.1f);yield return Go(0,45.4f);yield return Wait(.9f);yield return Go(0,48);
-        yield return Go(-5.4f,49.1f);Use(new Vector3(-5.4f,.8f,50.1f),"ENGRAVING TABLE");Use(new Vector3(-5.4f,.8f,50.1f),"ENGRAVING TABLE");yield return Job("etch");
+        yield return Go(-5.4f,49.1f);Use(new Vector3(-5.4f,.8f,50.1f),"ENGRAVING TABLE");yield return Job("etch");
         yield return Go(0,48);yield return Go(4.8f,47.4f);Use(new Vector3(4.8f,.61f,49),"Assembly crate");yield return Go(0,48);yield return Go(-2,50);Place(0,"Assembly work gate");yield return Wait(.9f);
         yield return Go(-5.4f,49.1f);Use(new Vector3(-5.4f,.8f,50.1f),"ENGRAVING TABLE");yield return Go(0,49);yield return Go(0,52);yield return Go(0,55);yield return Go(5.4f,55.8f);
-        Use(new Vector3(5.4f,.8f,56.8f),"LANTERN PRESS");Use(new Vector3(5.4f,.8f,56.8f),"LANTERN PRESS");yield return Job("press");Close();Time.timeScale=5;
+        Use(new Vector3(5.4f,.8f,56.8f),"LANTERN PRESS");yield return Job("press");Close();Time.timeScale=5;
         yield return Go(3.5f,55.8f);yield return Go(3.5f,56.8f);Use(new Vector3(3.6f,1.1f,58.5f),"The last lantern");yield return Go(0,58.2f);Use(new Vector3(0,1.4f,60.3f),"Pip");
         if(!g.ended)Fail("Delivery did not reach ending");
         if(!failed){string report=$"PASS: physical route to ending. {interactions} raycast interactions, {placements} validated Q placements, {routingSolved} authored circuits executed.\nAll traversal after initial spawn used CharacterController.Move, with live wall/gate/collision geometry.\nInspector locomotion disabled for deterministic navigation isolation; inspector behaviour has separate integration checks.\nRouting solved using the known authored solution; does not measure puzzle skill.\nTime accelerated; this is NOT an unassisted human playtest or a valid duration measurement.\n";File.WriteAllText("Work/navigation.txt",report);Debug.Log("NAVIGATION_PASS / "+report);EditorApplication.Exit(0);}
@@ -53,7 +53,8 @@ public class FactoryWalker : MonoBehaviour {
     }
     void Use(Vector3 target,string expected){
         if(failed)return;p.view.transform.LookAt(target);Physics.SyncTransforms();p.ScanFocus();
-        if(!p.focus||!p.focus.name.StartsWith(expected)){Physics.Raycast(p.view.transform.position,p.view.transform.forward,out RaycastHit raw,3.1f,~0,QueryTriggerInteraction.Ignore);Fail("Raycast expected "+expected+", found "+(p.focus?p.focus.name:"nothing")+" collider="+(raw.collider?raw.collider.name:"none")+" view="+p.view.transform.position+" dir="+p.view.transform.forward+" from "+p.transform.position);return;}
+        var owner=p.focus==g.sharedCore?(Component)g.sharedCore.socket:null;if(!owner&&p.focus==g.sharedCore)owner=g.sharedCore.GetComponentInParent<GridRelay>();bool coreAlias=owner&&owner.name.StartsWith(expected);
+        if(!p.focus||(!p.focus.name.StartsWith(expected)&&!coreAlias)){Physics.Raycast(p.view.transform.position,p.view.transform.forward,out RaycastHit raw,3.1f,~0,QueryTriggerInteraction.Ignore);Fail("Raycast expected "+expected+", found "+(p.focus?p.focus.name:"nothing")+" collider="+(raw.collider?raw.collider.name:"none")+" view="+p.view.transform.position+" dir="+p.view.transform.forward+" from "+p.transform.position);return;}
         p.TryInteract();interactions++;
         if(g.activeCircuit){var circuit=g.activeCircuit.puzzle;for(int i=0;i<circuit.turns.Length;i++)while(circuit.turns[i]!=0)circuit.Rotate(i);if(!circuit.Solved){Fail("Authored routing solution invalid");return;}g.PowerCircuit();routingSolved++;}Debug.Log("NAV_USE / "+expected);
     }

@@ -13,16 +13,17 @@ public class FactoryGame : MonoBehaviour {
     public GridRelay workshopRelay; public GhostIdle buttonHelper,pipHelper;
     int circuitOpenedFrame;
     public Machine activeCircuit; CircuitView circuitView=new CircuitView();
-    public bool started, paused, ended, journal, photoMode, desktopHold;
+    public bool started, paused, ended, journal, photoMode, desktopHold, mapOpen;
     public bool shell, transferred, blueprint, etched, assembled, inspectorLesson;
     public int resets, hintsRequested;
     public float playSeconds;
     public string toast="", speaker="", line="";
     public bool Reading => dialogue.Count>0;
-    public bool Frozen => !started || paused || Reading || ended || journal || activeCircuit!=null || photoMode || desktopHold;
+    public bool Frozen => !started || paused || Reading || ended || journal || activeCircuit!=null || photoMode || desktopHold || mapOpen;
     readonly Queue<string> dialogue=new Queue<string>();
     float toastUntil;
     public float musicVolume=.38f, effectsVolume=.65f, sensitivity=1.7f;
+    public FactoryPath navigation; public FactoryMap factoryMap=new FactoryMap();
     public ShiftGuide guide; ShiftInterface screen=new ShiftInterface();
     int dialogueOpenedFrame;bool archiveWelcome,assemblyWelcome,foyerSuccess;
     public bool ToastVisible=>Time.unscaledTime<toastUntil;
@@ -57,7 +58,7 @@ public class FactoryGame : MonoBehaviour {
             return "06  /  ONE LAST DELIVERY\nPick up the finished lantern and give it to Pip at the dispatch desk.";
         }
     }
-    void Awake(){ I=this; Time.timeScale=1;guide=GetComponent<ShiftGuide>();if(!guide)guide=gameObject.AddComponent<ShiftGuide>();if(!GetComponent<PlacementPreview>())gameObject.AddComponent<PlacementPreview>(); }
+    void Awake(){ I=this; Time.timeScale=1;guide=GetComponent<ShiftGuide>();if(!guide)guide=gameObject.AddComponent<ShiftGuide>();navigation=GetComponent<FactoryPath>();if(!navigation)navigation=gameObject.AddComponent<FactoryPath>();if(!GetComponent<PlacementPreview>())gameObject.AddComponent<PlacementPreview>(); }
     void Start(){ ReleaseCursor();if(!Application.isBatchMode&&!PlayerPrefs.HasKey("shift-v08-window")){Screen.SetResolution(1280,800,FullScreenMode.Windowed);PlayerPrefs.SetInt("shift-v08-window",1);} }
     void Update(){
         ReleaseCursor();
@@ -65,6 +66,8 @@ public class FactoryGame : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.F2)&&started&&!ended){TogglePhoto();return;}
         if(photoMode){if(Input.GetKeyDown(KeyCode.Escape))TogglePhoto();return;}
         if(desktopHold){if(Input.GetKeyDown(KeyCode.Return))ResumeDesktop();else if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Tab)){desktopHold=false;TogglePause();}return;}
+        if(started&&!ended&&Input.GetKeyDown(KeyCode.M)){ToggleMap();return;}
+        if(mapOpen){if(Input.GetKeyDown(KeyCode.Escape)||Input.GetKeyDown(KeyCode.Backspace))ToggleMap();return;}
         if(screen.LanguageOpen){screen.LanguageKeys();return;}
         if((paused||!started)&&Input.GetKeyDown(KeyCode.L)){screen.OpenLanguages();return;}
         bool menu=Input.GetKeyDown(KeyCode.Tab)||Input.GetKeyDown(KeyCode.F1);
@@ -72,7 +75,7 @@ public class FactoryGame : MonoBehaviour {
         if(paused){if(Input.GetKeyDown(KeyCode.X)){Quit();return;}if(menu||escape)TogglePause();return;}
         if(menu&&started&&!ended){TogglePause();return;}
         if(!started&&(Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown(KeyCode.Space))){Begin();return;}
-        if(started&&!paused&&!Reading&&!ended&&!journal&&!photoMode&&!desktopHold)playSeconds+=Time.unscaledDeltaTime;
+        if(started&&!paused&&!Reading&&!ended&&!journal&&!photoMode&&!desktopHold&&!mapOpen)playSeconds+=Time.unscaledDeltaTime;
         if(escape&&started&&!ended){TogglePause();return;}
         if(activeCircuit){
             if(Time.frameCount==circuitOpenedFrame)return;
@@ -99,6 +102,7 @@ public class FactoryGame : MonoBehaviour {
     public void OpenCircuit(Machine m){activeCircuit=m;circuitOpenedFrame=Time.frameCount;SyncFreeze();}
     public void CloseCircuit(){activeCircuit=null;SyncFreeze();}
     public void PowerCircuit(){if(!activeCircuit||!activeCircuit.puzzle.Solved)return;var machine=activeCircuit;CloseCircuit();machine.StartWork();}
+    public void ToggleMap(){if(!started||ended)return;mapOpen=!mapOpen;SyncFreeze();}
     public void TogglePhoto(){if(!started||ended)return;photoMode=!photoMode;SyncFreeze();}
     public void ResumeDesktop(){desktopHold=false;SyncFreeze();}
     public void HoldForDesktop(){if(!started||Frozen)return;desktopHold=true;SyncFreeze();}

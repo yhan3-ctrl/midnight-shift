@@ -14,7 +14,7 @@ for entry in entries:
     by_key[key] = entry
 literal = r'"(?:[^"\\]|\\.)*"'
 missing = set()
-for name in ['ShiftGuide.cs', 'ShiftInterface.cs', 'CircuitView.cs', 'PlayerMotor.cs']:
+for name in ['ShiftGuide.cs', 'ShiftInterface.cs', 'CircuitView.cs', 'PlayerMotor.cs', 'FactoryMap.cs']:
     source = (root / 'Assets/Scripts' / name).read_text()
     for match in re.finditer('(' + literal + r')\s*,\s*(' + literal + ')', source):
         chinese, english = map(json.loads, match.groups())

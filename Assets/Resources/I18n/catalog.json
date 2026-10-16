@@ -3395,6 +3395,234 @@
         "壁に遮られているよ。先にドアを通ろう。",
         "벽이 가로막고 있어요. 먼저 문을 통과하세요."
       ]
+    },
+    {
+      "en": "1. Turn tiles to join IN → OUT.\n2. Power MUST pass every ★.\n3. Green stars + lit OUTs: start.",
+      "values": [
+        "1. Turn tiles to join IN → OUT.\n2. Power MUST pass every ★.\n3. Green stars + lit OUTs: start.",
+        "1. 点击方格，接好 IN → OUT。\n2. 必须让电经过每个 ★ 星标。\n3. 星标变绿、出口全亮后启动。",
+        "1. Gira piezas: IN → OUT.\n2. La corriente debe pasar por ★.\n3. Estrellas verdes y salidas: inicia.",
+        "1. Tourne les cases : IN → OUT.\n2. Alimente chaque ★.\n3. Étoiles vertes et sorties : démarre.",
+        "1. Drehe Felder: IN → OUT.\n2. Strom muss jedes ★ erreichen.\n3. Grüne Sterne + Ausgänge: starten.",
+        "1. マスを回して IN → OUT。\n2. 電気をすべての ★ に通す。\n3. 星が緑、出口が点灯したら起動。",
+        "1. 칸을 돌려 IN → OUT 연결.\n2. 전기는 모든 ★를 지나야 해요.\n3. 초록 별과 켜진 출구: 시작."
+      ]
+    },
+    {
+      "en": "Archive",
+      "values": [
+        "Archive",
+        "档案室",
+        "Archivo",
+        "Archives",
+        "Archiv",
+        "資料室",
+        "자료실"
+      ]
+    },
+    {
+      "en": "Assembly",
+      "values": [
+        "Assembly",
+        "装配区",
+        "Montaje",
+        "Assemblage",
+        "Montage",
+        "組立室",
+        "조립실"
+      ]
+    },
+    {
+      "en": "Back [M / Esc]",
+      "values": [
+        "Back [M / Esc]",
+        "返回 [M / Esc]",
+        "Volver [M / Esc]",
+        "Retour [M / Esc]",
+        "Zurück [M / Esc]",
+        "戻る [M / Esc]",
+        "돌아가기 [M / Esc]"
+      ]
+    },
+    {
+      "en": "Entrance",
+      "values": [
+        "Entrance",
+        "入口",
+        "Entrada",
+        "Entrée",
+        "Eingang",
+        "入口",
+        "입구"
+      ]
+    },
+    {
+      "en": "Entrance → Packaging → Archive → Assembly → Dispatch",
+      "values": [
+        "Entrance → Packaging → Archive → Assembly → Dispatch",
+        "入口 → 包装区 → 档案室 → 装配区 → 交付",
+        "Entrada → Embalaje → Archivo → Montaje → Entrega",
+        "Entrée → Emballage → Archives → Assemblage → Livraison",
+        "Eingang → Verpackung → Archiv → Montage → Versand",
+        "入口 → 梱包室 → 資料室 → 組立室 → 発送",
+        "입구 → 포장실 → 자료실 → 조립실 → 배송"
+      ]
+    },
+    {
+      "en": "Factory map [M]",
+      "values": [
+        "Factory map [M]",
+        "工厂地图 [M]",
+        "Mapa [M]",
+        "Plan [M]",
+        "Werksplan [M]",
+        "工場地図 [M]",
+        "공장 지도 [M]"
+      ]
+    },
+    {
+      "en": "Follow the gold trail around shelves and the conveyor.\nThe map pauses the world; it does not solve puzzles.",
+      "values": [
+        "Follow the gold trail around shelves and the conveyor.\nThe map pauses the world; it does not solve puzzles.",
+        "沿金色地面光路走。路线会绕过货架和传送带。\n这张图暂停世界，不会替你完成谜题。",
+        "Sigue la ruta dorada entre estantes y cinta.\nEl mapa pausa el mundo; no resuelve puzles.",
+        "Suis le chemin doré autour des obstacles.\nLe plan met le monde en pause, sans résoudre les énigmes.",
+        "Folge der goldenen Spur um Regale und Förderband.\nDie Karte pausiert die Welt, löst aber keine Rätsel.",
+        "金色の道で棚やコンベアを回り込もう。\n地図中は時間が止まるけれど、謎は自分で解こう。",
+        "금빛 길을 따라 선반과 컨베이어를 돌아가세요.\n지도는 세계를 멈추지만 퍼즐을 풀어주지는 않아요."
+      ]
+    },
+    {
+      "en": "Packaging",
+      "values": [
+        "Packaging",
+        "包装区",
+        "Embalaje",
+        "Emballage",
+        "Verpackung",
+        "梱包室",
+        "포장실"
+      ]
+    },
+    {
+      "en": "White: you + facing   Gold: route / goal\nGreen: core   Dark: machines / obstacles",
+      "values": [
+        "White: you + facing   Gold: route / goal\nGreen: core   Dark: machines / obstacles",
+        "白色：你与朝向   金色：当前路线 / 目标\n绿色：核心   深色：机器 / 障碍",
+        "Blanco: tú y dirección   Dorado: ruta / meta\nVerde: núcleo   Oscuro: máquinas / obstáculos",
+        "Blanc : toi et direction   Or : chemin / but\nVert : noyau   Sombre : machines / obstacles",
+        "Weiß: du + Blick   Gold: Weg / Ziel\nGrün: Kern   Dunkel: Maschinen / Hindernisse",
+        "白：自分と向き   金：道と目的地\n緑：コア   暗色：機械と障害物",
+        "흰색: 나와 방향   금색: 경로와 목표\n초록: 코어   어두운색: 기계와 장애물"
+      ]
+    },
+    {
+      "en": "Willow Works / Factory map",
+      "values": [
+        "Willow Works / Factory map",
+        "Willow Works / 工厂地图",
+        "Willow Works / Mapa",
+        "Willow Works / Plan",
+        "Willow Works / Werksplan",
+        "Willow Works / 工場地図",
+        "Willow Works / 공장 지도"
+      ]
+    },
+    {
+      "en": "Move near the object, face it, then press E.",
+      "values": [
+        "Move near the object, face it, then press E.",
+        "靠近目标并朝向它，再按 E。",
+        "Acércate al objeto, míralo y pulsa E.",
+        "Approche de l'objet, regarde-le et appuie sur E.",
+        "Geh zum Objekt, schau es an und drücke E.",
+        "物に近づいてそちらを向き、E を押そう。",
+        "물체 가까이 가서 바라보고 E를 누르세요."
+      ]
+    },
+    {
+      "en": "03 / Bring the reusable core",
+      "values": [
+        "03 / Bring the reusable core",
+        "03 / 带上可复用的核心",
+        "03 / Lleva el núcleo",
+        "03 / Emporte le noyau",
+        "03 / Nimm den Kern mit",
+        "03 / コアを持っていこう",
+        "03 / 코어 가져가기"
+      ]
+    },
+    {
+      "en": "Destination: ",
+      "values": [
+        "Destination: ",
+        "前往：",
+        "Destino: ",
+        "Destination : ",
+        "Ziel: ",
+        "目的地：",
+        "목적지: "
+      ]
+    },
+    {
+      "en": "Follow the gold trail",
+      "values": [
+        "Follow the gold trail",
+        "沿地面金色光路前进",
+        "Sigue la ruta dorada",
+        "Suis le chemin doré",
+        "Folge der goldenen Spur",
+        "金色の道を進もう",
+        "금빛 길을 따라가세요"
+      ]
+    },
+    {
+      "en": "Press E near the console to continue",
+      "values": [
+        "Press E near the console to continue",
+        "靠近操作台，按 E 继续",
+        "Pulsa E junto a la consola",
+        "Appuie sur E près de la console",
+        "Drücke E an der Konsole",
+        "操作台の近くで E を押そう",
+        "조작대 근처에서 E를 누르세요"
+      ]
+    },
+    {
+      "en": "Press E near the console to insert the core and open the circuit.",
+      "values": [
+        "Press E near the console to insert the core and open the circuit.",
+        "靠近操作台按 E，插入核心并打开线路板。",
+        "Pulsa E junto a la consola para insertar el núcleo y abrir el circuito.",
+        "Appuie sur E près de la console pour insérer le noyau et ouvrir le circuit.",
+        "Drücke E an der Konsole, um den Kern einzusetzen und den Schaltplan zu öffnen.",
+        "操作台の近くで E を押すと、コアを入れて回路を開くよ。",
+        "조작대 근처에서 E를 누르면 코어를 넣고 회로를 열어요."
+      ]
+    },
+    {
+      "en": "Rotate tiles. Power every OUT and every star, then start the machine.",
+      "values": [
+        "Rotate tiles. Power every OUT and every star, then start the machine.",
+        "旋转线路，接通所有出口和每个星标，再启动机器。",
+        "Gira las piezas. Alimenta cada OUT y estrella, luego inicia.",
+        "Tourne les cases. Alimente chaque OUT et étoile, puis démarre.",
+        "Drehe die Felder. Versorge alle OUTs und Sterne, dann starte.",
+        "マスを回し、すべての OUT と星に電気を通して起動しよう。",
+        "칸을 돌려 모든 OUT과 별에 전기를 보내고 기계를 시작하세요."
+      ]
+    },
+    {
+      "en": "Map [M]",
+      "values": [
+        "Map [M]",
+        "地图 [M]",
+        "Mapa [M]",
+        "Plan [M]",
+        "Karte [M]",
+        "地図 [M]",
+        "지도 [M]"
+      ]
     }
   ]
 }

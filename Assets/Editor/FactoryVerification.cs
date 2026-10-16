@@ -61,6 +61,19 @@ public class FactoryPlaycheck : MonoBehaviour {
             g.TogglePhoto();Check(g.photoMode&&g.Frozen&&Time.timeScale==0&&Cursor.lockState==CursorLockMode.None,"screenshot view freezes hazards without capturing the pointer");g.TogglePhoto();Check(!g.Frozen,"screenshot view returns to the previous active state");
             g.HoldForDesktop();Check(g.desktopHold&&g.Frozen&&!g.paused,"desktop focus loss freezes without covering the game with the pause menu");g.ResumeDesktop();Check(!g.Frozen&&Cursor.visible,"desktop resume restores play with a free pointer");
 
+            g.ToggleMap();Check(g.mapOpen&&g.Frozen&&Time.timeScale==0&&Cursor.visible,"expandable factory map freezes safely with a free pointer");g.ToggleMap();Check(!g.Frozen,"closing map preserves active gameplay");
+            g.Say("Map test","Keep this line.");g.ToggleMap();g.ToggleMap();Check(g.Reading&&g.line=="Keep this line.","map preserves the underlying dialogue");CloseDialogue();
+            p.Teleport(new Vector3(.8f,0,14.2f),0);Physics.SyncTransforms();p.ScanFocus();Check(p.focus==g.sharedCore,"nearby core can be picked up off-centre without pointing at its tiny collider");
+            Check(p.TryInteract()&&p.held==g.sharedCore,"forgiving core focus performs the actual pickup");p.PutBackHeld();
+            var blockingWall=GameObject.CreatePrimitive(PrimitiveType.Cube);blockingWall.transform.position=new Vector3(.4f,1,15.1f);blockingWall.transform.localScale=new Vector3(3,2,.2f);Physics.SyncTransforms();Check(!p.CanReach(g.sharedCore),"forgiving core pickup cannot pass through a solid wall");DestroyImmediate(blockingWall);
+            p.Teleport(new Vector3(0,0,-7),0);Physics.SyncTransforms();
+            var packDoor=FindObjectsByType<FactoryGate>(FindObjectsSortMode.None).Single(x=>x.name=="Packaging gate");var savedPanel=packDoor.panel.position;packDoor.panel.position=packDoor.closedPosition+Vector3.up*3.7f;Physics.SyncTransforms();
+            Check(g.navigation.Build(new Vector3(5.4f,0,23.1f),new Vector3(0,0,31.4f)),"floor route reaches archive entrance around the conveyor");
+            bool clearRoute=true;for(int i=1;i<g.navigation.Points.Count;i++){Vector3 a=g.navigation.Points[i-1]+Vector3.up*.8f,b=g.navigation.Points[i]+Vector3.up*.8f;foreach(var hit in Physics.SphereCastAll(a,.28f,(b-a).normalized,Vector3.Distance(a,b),~0,QueryTriggerInteraction.Ignore))if(!hit.transform.IsChildOf(p.transform)&&!hit.collider.GetComponentInParent<GhostIdle>())clearRoute=false;}
+            Check(clearRoute,"drawn archive route has no wall, shelf or conveyor crossing");
+            Check(g.navigation.Build(new Vector3(0,0,31.4f),new Vector3(5.5f,0,41.3f)),"floor route reaches archive plate around solid shelves");
+            packDoor.panel.position=savedPanel;Physics.SyncTransforms();Check(!g.navigation.Build(new Vector3(0,0,28),new Vector3(0,0,32)),"route cannot cross a closed packaging gate");
+
             g.guide.looked=true;Check(g.guide.Current.key=="W A S D","guide advances to walking only after observing look input");
             g.guide.walked=true;Check(g.guide.Current.key=="E","guide then asks for the crate interaction");
             g.Say("Menu regression","This line must survive opening the menu.");g.TogglePause();
@@ -109,7 +122,7 @@ public class FactoryPlaycheck : MonoBehaviour {
             p.Teleport(new Vector3(0,0,-6),0);
 
             crates.Single(x=>x.name=="Foyer crate").transform.position=foyer.plate.position+Vector3.up*.885f;Physics.SyncTransforms();Check(foyer.Evaluate(),"placed crate opens pressure gate");
-            p.Pick(core);g.ToggleJournal();Check(g.Frozen&&Time.timeScale==0&&p.held==core,"journal freezes world and retains held item");g.ToggleJournal();Check(!g.Frozen&&Time.timeScale==1,"journal returns to active play");g.TogglePause();Check(g.Frozen&&Time.timeScale==0,"pause freezes world");g.TogglePause();Check(!g.Frozen&&p.held==core,"resume preserves held item");var blocked=machines.Single(x=>x.machineId=="press");blocked.Use(p);Check(p.held==core&&blocked.core==null,"out-of-order machine never traps the only core");var mould=machines.Single(x=>x.machineId=="mould");mould.Use(p);Check(mould.core==core&&p.held==null,"core inserted into machine");mould.Use(p);SolveRouting(mould);
+            p.Pick(core);g.ToggleJournal();Check(g.Frozen&&Time.timeScale==0&&p.held==core,"journal freezes world and retains held item");g.ToggleJournal();Check(!g.Frozen&&Time.timeScale==1,"journal returns to active play");g.TogglePause();Check(g.Frozen&&Time.timeScale==0,"pause freezes world");g.TogglePause();Check(!g.Frozen&&p.held==core,"resume preserves held item");var blocked=machines.Single(x=>x.machineId=="press");blocked.Use(p);Check(p.held==core&&blocked.core==null,"out-of-order machine never traps the only core");var mould=machines.Single(x=>x.machineId=="mould");mould.Use(p);Check(mould.core==core&&p.held==null&&g.activeCircuit==mould,"one console interaction inserts core and opens the routing board");mould.Use(p);SolveRouting(mould);
         }catch(Exception e){Fail(e);yield break;}
         yield return new WaitForSecondsRealtime(.1f);Time.timeScale=16;
         yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
@@ -121,7 +134,7 @@ public class FactoryPlaycheck : MonoBehaviour {
             Check(g.buttonHelper&&g.buttonHelper.Celebrations>0,"Button reacts to manufacturing completion");
             g.TalkToButton();Check(g.Reading&&g.line.Contains("shell"),"optional Button dialogue responds to the current craft stage");
             Check(g.buttonHelper.Celebrating&&g.Frozen,"optional helper conversation retains a celebration while world is paused");CloseDialogue();
-            machines.Single(x=>x.machineId=="mould").Use(p);Check(p.held==core,"completed machine returns same core");
+            var completedMould=machines.Single(x=>x.machineId=="mould");p.Teleport(new Vector3(-4.3f,0,18.1f),0);p.view.transform.LookAt(completedMould.corePoint.position+Vector3.left*.7f);Physics.SyncTransforms();p.ScanFocus();Check(p.focus==core,"completed socket core is reachable despite its disabled collider");p.TryInteract();Check(p.held==core&&completedMould.core==null&&!completedMould.running,"completed machine returns same core with tolerant focus");p.Teleport(new Vector3(0,0,-6),0);
             ribbon.Use(p);ribbon.Use(p);SolveRouting(ribbon);Check(g.shell,"processed shell survives power transfer");
             shellDisplay.Refresh();Check(shellDisplay.Visible,"visible shell survives removing and reusing its core");
         }catch(Exception e){Fail(e);yield break;}
@@ -129,6 +142,7 @@ public class FactoryPlaycheck : MonoBehaviour {
         try{
             var ribbonDisplay=FindObjectsByType<LanternDisplay>(FindObjectsSortMode.None).Single(x=>x.station&&x.station.machineId=="ribbon");ribbonDisplay.Refresh();
             Check(ribbonDisplay.Visible&&ribbonDisplay.Stage==2&&ribbonDisplay.ribbon.gameObject.activeSelf&&!ribbonDisplay.inscription.gameObject.activeSelf,"ribbon output adds its bow without revealing engraving");
+            p.Teleport(new Vector3(0,0,29),0);Check(g.guide.Current.target==g.sharedCore.transform.position,"archive guidance retrieves the core before sending the player into the next room");p.Teleport(new Vector3(0,0,-6),0);
             Check(g.transferred&&gates.Single(x=>x.name=="Packaging gate").Evaluate(),"packaging door unlocks only after both jobs");
             var archive=gates.Single(x=>x.name=="Drawing cabinet");Check(!archive.Evaluate(),"archive drawing protected by physical gate");
             var crate=crates.Single(x=>x.name=="Archive crate");crate.transform.position=archive.plate.position+Vector3.up*.885f;Physics.SyncTransforms();Check(!archive.Evaluate(),"archive requires taught chime interaction as well as crate");
@@ -149,7 +163,7 @@ public class FactoryPlaycheck : MonoBehaviour {
             g.inspector.enabled=true;g.inspector.assemblyDuty=false;g.inspector.route=new[]{new Vector3(-2.3f,0,35.5f),new Vector3(2.3f,0,40.5f)};g.inspector.ResetPatrol();p.Teleport(new Vector3(0,0,15),0);
             var etch=machines.Single(x=>x.machineId=="etch");p.Pick(core);etch.Use(p);etch.Use(p);SolveRouting(etch);
             p.Teleport(new Vector3(-5.4f,0,49.1f),0);var preparation=g.guide.Current;Check(preparation.targetName=="Crate"&&preparation.reason.Contains("while it works"),"engraver gives the player gate preparation rather than exposed waiting");
-            g.Hint();Check(g.toast.Contains(preparation.action),"requested hints stay consistent with the current formal-game action");p.Teleport(new Vector3(0,0,15),0);
+            g.Hint();Check(g.toast.Contains(g.guide.Navigate(g.guide.Current).action),"requested hints stay consistent with the current formal-game action");p.Teleport(new Vector3(0,0,15),0);
         }catch(Exception e){Fail(e);yield break;}
         Time.timeScale=16;yield return new WaitForSecondsRealtime(.5f);CloseDialogue();
         try{

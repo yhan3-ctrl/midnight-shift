@@ -31,11 +31,41 @@ public class PlayerMotor : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.Q)&&held)TryPlace();
         if(transform.position.y < -4)Teleport(new Vector3(0,0,-6),0);
     }
-    public void ScanFocus(){
-        focus=null;
-        if(Physics.Raycast(view.transform.position,view.transform.forward,out RaycastHit hit,3.1f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))focus=hit.collider.GetComponentInParent<Interactable>();
+    // Precise aim remains possible; nearby visible targets have a forgiving interaction cone.
+    public Vector3 InteractionPoint(Interactable item){
+        if(item is Machine machine)return machine.corePoint.position;
+        if(item is GridRelay relay)return relay.socket.position;
+        if(item is StoryPoint)return item.transform.position+Vector3.up*.6f;
+        return item.transform.position;
     }
-    public bool TryInteract(){ScanFocus();if(!focus)return false;focus.Use(this);return true;}
+    public bool CanReach(Interactable item){
+        if(!item||!item.gameObject.activeInHierarchy||item.transform.IsChildOf(transform))return false;
+        Vector3 point=InteractionPoint(item),delta=point-view.transform.position;
+        if(delta.magnitude>3.8f||Vector3.Dot(view.transform.forward,delta.normalized)<.38f)return false;
+        var hits=Physics.RaycastAll(view.transform.position,delta.normalized,delta.magnitude,~0,QueryTriggerInteraction.Ignore);
+        foreach(var hit in hits){
+            if(hit.transform.IsChildOf(transform)||hit.transform.IsChildOf(item.transform))continue;
+            if(item is Pickup pickup){if(pickup.socket&&hit.transform.IsChildOf(pickup.socket.transform))continue;var relay=pickup.GetComponentInParent<GridRelay>();if(relay&&hit.transform.IsChildOf(relay.transform))continue;}
+            return false;
+        }
+        return true;
+    }
+    public void ScanFocus(){
+        focus=null;var g=FactoryGame.I;if(!g)return;
+        // A visible reusable core can be taken directly even while its own collider is disabled in a socket.
+        if(!held&&g.sharedCore&&!g.sharedCore.carried&&CanReach(g.sharedCore)){focus=g.sharedCore.socket&&!g.sharedCore.socket.done&&!g.sharedCore.socket.running?(Interactable)g.sharedCore.socket:g.sharedCore;return;}
+        if(Physics.Raycast(view.transform.position,view.transform.forward,out RaycastHit hit,3.8f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))focus=hit.collider.GetComponentInParent<Interactable>();
+        if(focus)return;
+        float best=0;
+        foreach(var item in FindObjectsByType<Interactable>(FindObjectsSortMode.None)){
+            if(item is Pickup pickup&&(pickup.carried||pickup.socket))continue;
+            if(!(item is Machine)&&!(item is GridRelay)&&!(item is Pickup))continue;
+            if(!CanReach(item))continue;
+            Vector3 d=InteractionPoint(item)-view.transform.position;float score=Vector3.Dot(view.transform.forward,d.normalized)-d.magnitude*.045f;
+            if(score>best){best=score;focus=item;}
+        }
+    }
+    public bool TryInteract(){ScanFocus();if(!focus){FactoryGame.I.Notify(UiCopy.Pick("靠近目标并朝向它，再按 E。","Move near the object, face it, then press E."),3);return false;}focus.Use(this);return true;}
     public bool Pick(Pickup item){
         if(held){FactoryGame.I.Notify("Your hands are full. Place what you're carrying first.");return false;}
         held=item;item.AttachTo(hand);item.carried=true;if(item.kind==Pickup.Kind.Crate){item.transform.localScale*=.26f;item.transform.localPosition=new Vector3(.3f,-.44f,.08f);}

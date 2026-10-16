@@ -19,7 +19,18 @@ stateDiagram-v2
     Active --> Reading: story interaction or job dialogue
     Reading --> Active: final line advanced
     Active --> Journal: J
-    Journal --> Active: J / Esc / Close
+    Journal --> Active: J / Backspace / Close
+    Active --> Map: M / map button
+    Map --> Active: M / Esc / Back
+    Reading --> Map: M / map button
+    Map --> Reading: close, if reading was retained
+    Active --> Screenshot: F2 / screenshot button
+    Screenshot --> Active: F2 / Esc
+    Active --> DesktopHold: lose OS focus
+    DesktopHold --> Active: Enter / Resume
+    Reading --> Paused: Esc / Tab / F1
+    Routing --> Paused: Esc / Tab / F1
+    Journal --> Paused: Esc / Tab / F1
     Active --> Paused: Esc
     Paused --> Active: Esc / Resume
     Active --> SafetyReset: inspector contact
@@ -29,7 +40,7 @@ stateDiagram-v2
     Ending --> Title: restart scene
 ```
 
-Movement can coexist with both carrying states. Reading, Journal, Routing and Paused retain the previous carrying state and freeze world simulation. A safety reset returns held items to known home positions and preserves completed jobs. There is no player death state.
+Movement can coexist with both carrying states. Reading, Journal, Routing, Map, Screenshot, DesktopHold and Paused retain the previous carrying state and freeze world simulation. A safety reset returns held items to known home positions and preserves completed jobs. There is no player death state.
 
 ## Inspector
 
@@ -59,7 +70,9 @@ A new machine sound cannot override Alert or Approach. Visibility requires range
 ```mermaid
 stateDiagram-v2
     [*] --> Unpowered
-    Unpowered --> Ready: insert core
+    Unpowered --> Routing: insert core, production machine
+    Routing --> Running: accept valid circuit
+    Unpowered --> Ready: insert core, Chime
     Ready --> Running: E and prerequisite satisfied
     Running --> Unpowered: E removes core
     Running --> Complete: work target reached
@@ -73,3 +86,5 @@ Partial work survives power removal. The workshop relay is a continuous power so
 ## Helper presentation (v0.4)
 
 Button and Pip: Idle → WelcomeWave on first nearby active encounter; Idle/WelcomeWave → Celebrate on manufacturing success or optional Button interaction; animations return to Idle after their timers. Body bob, sleeve gestures and gaze use the same paused world clock. When Ended becomes true, helper relocation and gaze stop and EndOfShift controls the group departure. This helper presentation does not replace Hush's patrol FSM.
+
+Overlay modes retain the underlying dialogue, circuit, journal, pause and carrying state. Closing the map or screenshot view returns to that retained mode, not necessarily Active. The diagram shows representative transitions rather than every overlay combination.

@@ -1,18 +1,18 @@
-# Game Script / v0.8 implemented rules
+# Game Script / v0.9 implemented rules
 
 This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. A future final report must update this document to match its submitted version.
 
 ## Player role, controls and modes
 
-The player is Aunt May's visitor helping magical toy-factory workers finish a childhood order. Exploration/puzzle play uses a first-person camera, WASD movement at 4.1 units/s, mouse/arrow-key look (K toggles arrow-only look), E interaction, Q placement, H hint, J journal and Tab/F1 menu. Esc opens the menu from exploration/dialogue and closes routing/notebook first. Circuit routing has its own mode with clickable tiles, arrow-key selection, Space rotation, Return activation and Esc close. No jumping, combat, health pool or global time limit. Interactions use the first collider on a camera ray, maximum distance 3.1 units.
+The player is Aunt May's visitor helping magical toy-factory workers finish a childhood order. Exploration uses a first-person camera, WASD at 4.1 units/s, right-button drag or arrows to look (K selects arrows only), E interaction, Q placement, H hint, J journal, M map, F2 screenshot view and Tab/F1/Esc menu. The hardware cursor stays free. Esc opens the menu during dialogue, routing and notebook; Backspace returns from routing or notebook. M/Esc closes the expanded map. The circuit supports clicks, arrows, Space rotation and Return activation. Interactions use a 3.8-unit ray with a nearby visible-object assist cone (dot product at least .38). The active focus prompt shows the actual action; solid walls still block assisted pickup. No jumping, combat, health pool or global time limit.
 
 Exploration permits walking, looking, carrying and interacting. Reading/dialogue restricts locomotion and freezes world simulation; Space, Return or the visible button advances. The journal freezes simulation and displays the current task, rules and discovered story, then restores the previous carrying state. Pause freezes simulation and offers music/effects sliders, audio test/recovery, a mouse/arrow-only toggle, optional language switching, resume, restart and Quit (also X). The current dialogue or circuit is retained. The title screen begins the night; the ending offers restart. Reading and pause are not secretly timed hazards.
 
 ## Items and placement
 
-One item can be held at a time. A held item has its colliders disabled and follows the carry pose. Carrying does not reduce movement speed. Q attempts placement 1.5 units ahead, using a downward surface query. A floor-level surface (height at most 0.25 units), clear volume and separation from the player are required. Raised worktops and shelf tops are rejected. A crate must remain at least 1 unit horizontally from the player after plate assistance (0.65 for other pickups). Failed placement retains the item and explains the failure. No throwing or item destruction.
+One item can be held at a time. A held item has its colliders disabled and follows the carry pose. Carrying does not reduce movement speed. Q normally attempts placement 1.5 units ahead, using a downward surface query. A visible target plate within 3 units in front can be selected directly; a 1.35-unit near-plate assist also applies. The validated landing point is shown as a full-size outline, green on the target plate. Player separation, solid overlap and line of sight still apply. A floor-level surface (height at most 0.25 units), clear volume and separation from the player are required. Raised worktops and shelf tops are rejected. A crate must remain at least 1 unit horizontally from the player after plate assistance (0.65 for other pickups). Failed placement retains the item and explains the failure. No throwing or item destruction.
 
-Crates measure 1.2 by 1.65 by 1.2 units. They appear at 45% scale while held, below the view centre, and return to full scale on valid placement. Crates hold pressure plates and block inspector sight when placed. There is one reusable power core. A lantern exists only after final pressing. No inventory consumption or random drops.
+Crates measure 1.2 by 1.65 by 1.2 units. They appear at 26% scale while held, below the view centre, and return to full scale on valid placement. Crates hold pressure plates and block inspector sight when placed. There is one reusable power core. A lantern exists only after final pressing. No inventory consumption or random drops.
 
 ## Gates
 
@@ -24,7 +24,7 @@ The Packaging gate permanently unlocks after Moulding and Ribbon work completes.
 
 ## Machines
 
-A machine accepts one core only if its prerequisite is satisfied. An out-of-order attempt keeps the core in the player’s hands and states what is missing. E with the core inserts it. For production machines, E with empty hands opens a power-routing board until that board has a valid solution; after a solution is accepted the machine starts. The Chime starts directly. E while running stops work and removes the core. E after completion retrieves the core. Removing power stops processing, but partial processing and completed output persist.
+A machine accepts one core only if its prerequisite is satisfied. An out-of-order attempt keeps the core in the player’s hands and states what is missing. E with the core inserts it and opens the production routing board in one action. E with empty hands near an unfinished console reopens the board; accepting a valid solution starts the machine. The Chime starts directly. E while running stops work and removes the core. E after completion retrieves the core. Removing power stops processing, but partial processing and completed output persist.
 
 Every current job lasts five seconds. These short processing times communicate action results and are not designed as a mechanism to reach the length requirement.
 
@@ -65,7 +65,7 @@ The reveal unlocks assembly. The player engraves, powers the press, picks up the
 
 ## State machines
 
-Player: Active.EmptyHands / Active.Carrying. Pickup enters Carrying; placement, insertion or delivery leaves it. Movement may coexist with either state. Reading, Journal, Routing and Paused retain carrying state while freezing time. Safety reset returns to Active.EmptyHands. Delivery enters Ending.
+Player: Active.EmptyHands / Active.Carrying. Pickup enters Carrying; placement, insertion or delivery leaves it. Movement may coexist with either state. Reading, Journal, Routing, Map, Screenshot, DesktopHold and Paused retain carrying state while freezing time. Safety reset returns to Active.EmptyHands. Delivery enters Ending.
 
 Inspector: Patrol -> Alert -> Approach -> Search -> Return -> Patrol. A machine sound may replace Patrol/Search/Return with Investigate; seeing the player replaces investigation with Alert. The return route and sound priority are specified above.
 
@@ -136,3 +136,13 @@ Esc opens the menu consistently during dialogue, circuits and notebook; Backspac
 The destination striped plate has a pulsing gold border. A world-space crate outline uses the same validated landing position as Q: green when it is on the target plate, pale blue for ordinary floor placement, red for an invalid candidate. Q appears only as a keycap/fixed instruction, never as a spatial location marker. The carried crate is smaller (26% visual scale) so the plate remains visible. Within 3 units and in front of the player, a clear target plate can be selected directly; collision, player separation and line-of-sight validation still apply. The final placement cannot pass through a wall. The physical output remains full size.
 
 Reference decisions: Minecraft's official control guide ties placement to the surface being pointed at (https://www.minecraft.net/article/minecraft-controls). Unity documents that a locked cursor blocks UI interaction and recommends capture only after user action (https://docs.unity.com/en-us/engine/6000.0/script-reference/unityengine/cursor/lockstate). This game uses an unconfined drag gesture and visible world feedback to suit the player's desktop/screenshot requirements. Apple documents Shift-Command-4 region selection at https://support.apple.com/en-gb/102646 . These references informed the redesign; they are not claims of identical controls across all games.
+
+## v0.9 / interaction and navigation revisions from direct play feedback
+
+The player reported that a visible nearby core still required exact aiming, the console marker felt vague, star prerequisites needed clearer teaching, and doorway hints led to circles near the archive. Nearby visible cores now receive a forgiving interaction cone within 3.8 units; line of sight still blocks through-wall pickup. Socketed cores are directly retrievable when the machine is finished or running, despite their disabled pickup colliders. An unfinished console opens its circuit instead. Core insertion opens the production circuit in the same E action; both body and worktop remain valid console targets. Current focus is shown in the interaction strip.
+
+Star contacts remain visibly star-shaped after activation and turn green. The circuit instructions explicitly require every star and every outlet, with live counters. Stars are not optional collectibles and all tiles need not be powered.
+
+M or the clickable upper-left mini-map opens a paused floor plan. It identifies Entrance, Packaging, Archive and Assembly, numbered machines, drawing and dispatch, the player/facing, physical core, C crates, P plates, current goal and route. The floor trail and map use the same physics-checked grid route, avoiding walls, shelves, conveyors, crates and closed gates. Guidance uses the next reachable route segment and full route distance. The old coordinate-based doorway guessing is removed. Archive guidance requests the reusable core before sending the player to the next room. Map navigation does not rotate circuits, move objects or avoid the inspector on the player's behalf. Map time is recorded as paused time.
+
+The course brief requires teaching and later novel application; it does not prescribe a separate tutorial duration. The 5-10 minute criterion applies to the complete game without noticeable filler. The foyer remains the short interactive introduction to looking, walking, carrying and plate placement; Packaging is already the first production challenge. A 45-75 second foyer is a design target to observe in first-time play, not a measured result. Required later transfer includes crate-held access while reusing power, turning/splitting through contacts, and safe traversal with the inspector. Search time caused by unclear navigation is not treated as learning or substantial content.

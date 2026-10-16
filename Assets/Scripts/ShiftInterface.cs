@@ -31,24 +31,25 @@ public class ShiftInterface {
     string T(string zh,string en)=>UiCopy.Pick(zh,en);
     public void Draw(FactoryGame game){g=game;guide=g.guide;UiTheme.Setup();scale=Mathf.Min(Screen.width/1440f,Screen.height/900f);w=Screen.width/scale;h=Screen.height/scale;GUI.matrix=Matrix4x4.TRS(Vector3.zero,Quaternion.identity,Vector3.one*scale);
         if(g.photoMode){Photo();return;}
+        if(g.mapOpen){g.factoryMap.Draw(g,w,h);return;}
         if(LanguageOpen){Languages();return;}
         if(!g.started){Title();return;}if(g.ended){Ending();return;}
         if(g.paused){Menu();return;}
         if(g.activeCircuit){g.DrawCircuit(w,h);MenuTab();return;}
         task=guide.Navigate(guide.Current);
         if(g.journal){Notebook();MenuTab();return;}
-        Calendar();MenuTab();
+        Calendar();MenuTab();g.factoryMap.Mini(g);
         if(g.Reading){Dialogue();DesktopResume();return;}
         Pointer();Coach();
         UiTheme.Label(new Rect(w/2-15,h/2-25,30,40),"+",27,UiTheme.Cream,false,false,TextAnchor.MiddleCenter);
         if(g.player.focus){UiTheme.Panel(new Rect(w/2-290,h-110,580,44));UiTheme.Label(new Rect(w/2-277,h-110,554,44),UiCopy.Prompt(g.player),23,null,true,false,TextAnchor.MiddleCenter);}
         Controls();
-        if(g.ToastVisible){UiTheme.Panel(new Rect(28,100,Mathf.Min(710,w-430),125));UiTheme.Label(new Rect(46,115,Mathf.Min(674,w-466),100),UiCopy.Translate(g.toast),23);}
+        if(g.ToastVisible){UiTheme.Panel(new Rect(28,337,Mathf.Min(710,w-430),125));UiTheme.Label(new Rect(46,352,Mathf.Min(674,w-466),100),UiCopy.Translate(g.toast),23);}
         if(g.inspector.Alertness>0){UiTheme.Fill(new Rect(w/2-155,110,310,12),UiTheme.Ink);UiTheme.Fill(new Rect(w/2-155,110,310*g.inspector.Alertness,12),UiTheme.Gold);UiTheme.Label(new Rect(w/2-200,128,400,62),T("Hush 正在注意你：绕到货架或放下的箱子后面。","Hush notices you. Move behind a shelf or a placed crate."),22,null,false,false,TextAnchor.MiddleCenter);}
         DesktopResume();
         if(Array.IndexOf(Environment.GetCommandLineArgs(),"--agent-playtest")>=0){var p=g.player.transform.position;UiTheme.Label(new Rect(28,76,850,35),$"AGENT REVIEW / {p.x:F2}, {p.z:F2} / yaw {g.player.transform.eulerAngles.y:F1} pitch {g.player.Pitch:F1}",18);}
     }
-    void MenuTab(){if(UiTheme.Button(new Rect(28,22,225,54),T("菜单 [Esc]","Menu [Esc]"),true))g.TogglePause();if(UiTheme.Button(new Rect(269,22,305,54),T("截图视图 [F2]","Screenshot view [F2]"),true))g.TogglePhoto();}
+    void MenuTab(){if(UiTheme.Button(new Rect(28,22,225,54),T("菜单 [Esc]","Menu [Esc]"),true))g.TogglePause();if(UiTheme.Button(new Rect(269,22,305,54),T("截图视图 [F2]","Screenshot view [F2]"),true))g.TogglePhoto();if(UiTheme.Button(new Rect(590,22,225,54),T("地图 [M]","Map [M]"),true))g.ToggleMap();}
     void DesktopResume(){if(!g.desktopHold||!Application.isFocused)return;UiTheme.Panel(new Rect(w/2-290,90,580,120));UiTheme.Label(new Rect(w/2-270,102,540,48),T("已暂停，方便你操作系统窗口。","Paused while you use desktop controls."),23);if(UiTheme.Button(new Rect(w/2-270,151,540,48),T("继续游戏 [Enter]","Resume game [Enter]")))g.ResumeDesktop();}
     void Photo(){if(UiTheme.Button(new Rect(28,22,460,54),T("返回游戏 [F2 / Esc]","Return to game [F2 / Esc]"),true))g.TogglePhoto();}
     void Title(){
@@ -87,14 +88,15 @@ public class ShiftInterface {
     void Controls(){UiTheme.Key(new Rect(28,h-61,143,40),"W A S D");UiTheme.Label(new Rect(183,h-56,130,40),T("走动","Walk"),22);UiTheme.Key(new Rect(287,h-61,52,40),"E");UiTheme.Label(new Rect(350,h-56,145,40),T("拿起 / 使用","Use"),22);UiTheme.Key(new Rect(503,h-61,52,40),"Q");UiTheme.Label(new Rect(567,h-56,130,40),T("放下","Place"),22);
         if(g.player.held)UiTheme.Label(new Rect(w-360,h-91,330,70),T("手中：","Carrying: ")+UiCopy.Translate(g.player.held.displayName),23,UiTheme.Gold);}
     void Pointer(){if(!task.hasTarget)return;var camera=g.player.view;Vector3 target=task.target+Vector3.up*.55f;Vector3 sp=camera.WorldToScreenPoint(target);Vector2 centre=new Vector2(w/2,h/2);Vector2 xy=new Vector2(sp.x/scale,(Screen.height-sp.y)/scale);if(sp.z<0)xy=centre-(xy-centre)*2;
+        bool offscreen=sp.z<0||xy.x<0||xy.x>w||xy.y<0||xy.y>h;
         bool clipped=sp.z<0||xy.x<185||xy.x>w-535||xy.y<170||xy.y>h-442;
         string direction=sp.z<0?"↶":xy.x<185?"←":xy.x>w-535?"→":xy.y<180?"↑":"↓";
         xy.x=Mathf.Clamp(xy.x,185,w-535);xy.y=Mathf.Clamp(xy.y,180,h-442);
         UiTheme.Label(new Rect(xy.x-30,xy.y-20,60,50),clipped?direction:"▼",42,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);
         UiTheme.Panel(new Rect(xy.x-155,xy.y-105,310,80));UiTheme.Label(new Rect(xy.x-148,xy.y-101,296,42),task.targetName,22,null,true,false,TextAnchor.MiddleCenter);
-        UiTheme.Label(new Rect(xy.x-148,xy.y-61,296,30),Vector3.Distance(g.player.transform.position,task.target).ToString("0.0")+" m",20,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
-        if(clipped&&!g.player.ReadyOnPlate(guide.PlacementGate))UiTheme.Label(new Rect(xy.x-145,xy.y+27,290,44),T("朝箭头方向转动视角","Turn toward the arrow"),20,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
-        if(g.player.held){
+        UiTheme.Label(new Rect(xy.x-148,xy.y-61,296,30),(task.routeDistance>0?task.routeDistance:Vector3.Distance(g.player.transform.position,task.target)).ToString("0.0")+" m",20,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
+        if(offscreen&&!g.player.ReadyOnPlate(guide.PlacementGate))UiTheme.Label(new Rect(xy.x-145,xy.y+27,290,44),T("朝箭头方向转动视角","Turn toward the arrow"),20,UiTheme.Gold,false,false,TextAnchor.MiddleCenter);
+        if(g.player.held&&g.player.held.kind==Pickup.Kind.Crate){
             var gate=guide.PlacementGate;bool valid=g.player.Placement(out var at,out var why);bool ready=valid&&gate&&g.player.ReadyOnPlate(gate);
             UiTheme.Panel(new Rect(w-365,h-330,337,192));
             if(ready){UiTheme.Key(new Rect(w-345,h-315,55,40),"Q");UiTheme.Label(new Rect(w-345,h-261,297,110),T("按 Q 键：把箱子放到条纹木板上。","Press Q: place crate on the striped plate."),24,UiTheme.Gold,true);}

@@ -1,16 +1,20 @@
 # Midnight Shift: The Last Lantern
 
+v0.9 adds forgiving visible-core interactions, one-action core insertion/circuit opening, an expandable factory map (M), physics-checked gold floor trails, and persistent green star contacts. The factory map labels rooms, stations, crates, plates, player and core. It pauses safely. Full validation: Documentation/WAYFINDING-REVIEW-v0.9.md.
+
+Current production controls: press E near the console to insert a core and open its circuit in one action. Every star and every outlet must receive power. M opens/closes the map; Esc closes it. The floor trail and map share one route around obstacles.
+
 Willow Works 的万圣节最后一班。Unity 6.6 / 6000.6.5f1 / Built-in Render Pipeline。
 
 ## 当前版本
 
-v0.8：修复系统鼠标被占用及箱子落点不清楚的问题。默认英文，新增统一语言菜单，提供 English、简体中文、Español、Français、Deutsch、日本語、한국어 七种语言。教学、正式关卡待办、界面与剧情对白均有翻译，长对白自动分页；品牌名称与工厂内招牌保留英文。保留逐步教学、大字界面、挂历待办、退出菜单与音频恢复。包含四个从教学到综合运用的线路谜题、可见的灯笼制作阶段，以及可选的 Button 对话和幽灵回应。当前不视为最终课程提交版。未完成陌生玩家试玩，不能声称已达到 5–10 分钟或已验证学习成效。
+v0.9 retains the seven-language interface (English default), warm story, four circuits and visible lantern crafting. This is a playable revision, not a verified final course submission. Independent human timing and learning outcomes remain unverified.
 
 ## 打开游戏
 
 双击本文件夹中的 `开始试玩.app`。它指向本机 `~/Applications/Midnight Shift.app`。
 
-当前开发源文件位于本机 `~/Developer/MidnightShift`，避免 iCloud 卸载源代码。桌面旧项目保留为 v0.5 参考。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.8.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
+当前开发源文件位于本机 `~/Developer/MidnightShift`，避免 iCloud 卸载源代码。桌面旧项目保留为 v0.5 参考。可玩副本放在本机应用程序文件夹，避开 iCloud 自动加入的程序包元数据。`Builds/MidnightShift-Mac-v0.9.zip` 是保留签名的打包副本；`Builds/Mac` 为 Unity 原始构建输出。
 
 编辑项目：Unity Hub → Projects → Add → Add project from disk → 选择整个 `MidnightShift` 文件夹。打开后在 Project 面板双击 `Assets/Scenes/WillowWorks.unity`，再按编辑器上方 Play。
 
@@ -27,7 +31,7 @@ v0.8：修复系统鼠标被占用及箱子落点不清楚的问题。默认英�
 - 菜单内可退出游戏、试听/恢复声音，并打开七种语言的选择菜单（L）。
 - 对话暂停世界；点击继续或按空格/回车推进。右侧挂历与金色箭头逐步指路。
 
-生产机器插入核心后，再按 E 打开线路板。旋转线路，使电源经过标记接点并到达全部出口，再点 Send power 启动。线路板支持鼠标，也支持方向键选格、空格旋转、回车启动、Backspace 返回，Esc 打开菜单。休息铃无需线路谜题。完成后按 E 取出核心，用于下一台。核心始终只有一枚，不会消耗。没有全局倒计时。
+Production machines: E near the console inserts the core and opens the circuit. Turn tiles to power every OUT and every star; green stars remain visible. Choose Start machine. Click/Space rotates, arrows select, Return starts, Backspace returns and Esc opens the menu. The Chime needs no routing puzzle. Completed output persists when the same core is retrieved and reused.
 
 ## 本地试玩记录
 

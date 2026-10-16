@@ -73,3 +73,7 @@ The blocked v0.7 checks have now completed on the same build. Final staged rende
 ## v0.8 / operating-system access and placement clarity
 
 Direct feedback exposed automatic cursor locking and an ambiguous spatial Q marker. Removed all locking, introduced right-button drag looking, consistent Esc menu access, F2 screenshot view and desktop-focus freezing. A gold target plate and validated full-size landing outline now explain Q placement. 112 engine checks, complete deterministic traversal and seven-language layout checks passed. Native opening placement/door transition, screenshot-view keyboard control, fullscreen/window access and red-button exit were verified. OS region screenshot output could not be verified through CUA and is explicitly not counted as passed. See CONTROLS-REVIEW-v0.8.md for evidence, package hash and limits.
+
+## v0.9 / forgiving interaction and actual navigation
+
+Direct user screenshots revealed precision pickup failures, unclear console/star instructions and looping archive directions. Added visible-object interaction assistance, direct retrieval from finished sockets, one-action circuit opening, persistent green stars, an expandable labeled map and a shared physics-checked floor trail. Archive guidance now requests the core before leaving Packaging. 124 engine checks and complete deterministic traversal (20 interactions, four placements, four circuits) passed. See WAYFINDING-REVIEW-v0.9.md for actual evidence, course requirements and limits.

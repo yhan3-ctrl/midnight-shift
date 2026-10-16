@@ -20,7 +20,7 @@ public class CircuitView {
             if((mask&CircuitGrid.S)!=0)UiTheme.Fill(new Rect(cx-6,cy,12,step/2),c);
             if((mask&CircuitGrid.W)!=0)UiTheme.Fill(new Rect(r.x,cy-6,step/2,12),c);
             UiTheme.Fill(new Rect(cx-8,cy-8,16,16),c);
-            if(p.IsContact(i)){UiTheme.Fill(new Rect(r.x+5,r.y+5,28,28),UiTheme.Cream);UiTheme.Label(new Rect(r.x+5,r.y+2,28,32),p.Powered(i)?"✓":"★",24,UiTheme.Ink,true,false,TextAnchor.MiddleCenter);}
+            if(p.IsContact(i)){UiTheme.Fill(new Rect(r.x+5,r.y+5,28,28),p.Powered(i)?new Color(.5f,1,.65f):UiTheme.Cream);UiTheme.Label(new Rect(r.x+5,r.y+2,28,32),"★",24,UiTheme.Ink,true,false,TextAnchor.MiddleCenter);}
             if(p.IsOutlet(i))UiTheme.Label(new Rect(r.xMax+12,cy-22,125,50),p.Powered(i)&&(mask&CircuitGrid.E)!=0?"OUT ✓":"OUT →",24,UiTheme.Gold,true,false,TextAnchor.MiddleLeft);
         }
         UiTheme.Label(new Rect(gridX-98,gridY+p.sourceRow*(step+gap)+22,94,55),"IN →",26,UiTheme.Gold,true);
@@ -30,10 +30,10 @@ public class CircuitView {
             bool connected=((int)(Time.unscaledTime-exampleSince))%2==1;
             UiTheme.Label(new Rect(sx,top+294,490,50),T("点一下，方格转动四分之一圈。","One click turns a tile a quarter turn."),24);
             UiTheme.Label(new Rect(sx,top+370,92,45),"IN →",25,UiTheme.Gold,true);
-            for(int n=0;n<2;n++){Rect box=new Rect(sx+100+n*85,top+365,68,68);UiTheme.Fill(box,new Color(.16f,.3f,.32f));bool horizontal=n==0||connected;UiTheme.Fill(horizontal?new Rect(box.x,box.center.y-5,68,10):new Rect(box.center.x-5,box.y,10,68),n==0||connected?UiTheme.Gold:UiTheme.Muted);}
+            for(int n=0;n<2;n++){Rect box=new Rect(sx+100+n*85,top+365,68,68);UiTheme.Fill(box,new Color(.16f,.3f,.32f));bool horizontal=n==0||connected;UiTheme.Fill(horizontal?new Rect(box.x,box.center.y-5,68,10):new Rect(box.center.x-5,box.y,10,68),n==0||connected?UiTheme.Gold:UiTheme.Muted);if(n==1){UiTheme.Fill(new Rect(box.x+4,box.y+4,25,25),connected?new Color(.5f,1,.65f):UiTheme.Cream);UiTheme.Label(new Rect(box.x+4,box.y+1,25,30),"★",21,UiTheme.Ink,true,false,TextAnchor.MiddleCenter);}}
             UiTheme.Label(new Rect(sx+280,top+370,180,45),connected?"→ OUT ✓":"OUT",25,connected?UiTheme.Gold:UiTheme.Muted,true);
             UiTheme.Label(new Rect(sx,top+447,490,40),T("线头对上后，电就能继续走。","Matching ends let the power continue."),23,UiTheme.Muted);
-        }else UiTheme.Label(new Rect(sx,top+294,493,180),p.Solved?T("接好啦！\n现在点下面的“启动机器”。","Connected!\nChoose Start machine below."):T("1. 从金色 IN 开始看。\n2. 点击方格，让两段线头接上。\n3. 金色表示有电，不必点亮所有格子。","1. Start at the gold IN.\n2. Click tiles to join the ends.\n3. Gold means power.\nNot all tiles need to light up."),26);
+        }else UiTheme.Label(new Rect(sx,top+294,493,180),p.Solved?T("接好啦！\n现在点下面的“启动机器”。","Connected!\nChoose Start machine below."):T("1. 点击方格，接好 IN → OUT。\n2. 必须让电经过每个 ★ 星标。\n3. 星标变绿、出口全亮后启动。","1. Turn tiles to join IN → OUT.\n2. Power MUST pass every ★.\n3. Green stars + lit OUTs: start."),26);
         if(UiTheme.Button(new Rect(sx,top+492,450,55),example?T("收起小例子","Hide the example"):T("看一个简单例子","Show a simple example"),true)){example=!example;exampleSince=Time.unscaledTime;}
         if(example){UiTheme.Label(new Rect(sx,top+563,465,70),T("IN → ── → ┐\n横线传电，弯角转弯，T 形可以分流。","IN → ── → ┐\nStraights carry; corners turn; T shapes split."),24,UiTheme.Gold);}
         else UiTheme.Label(new Rect(sx,top+563,465,70),T("看线路时世界暂停。\n不用着急，按 Tab 可以打开菜单。","The world is paused. Take your time.\nTab opens the menu."),23,UiTheme.Muted);

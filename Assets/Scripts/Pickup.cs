@@ -10,7 +10,8 @@ public class Pickup : Interactable {
     public override string Prompt(PlayerMotor p)=>p.held?"Hands full / Q to place":"E  Pick up "+displayName;
     public override void Use(PlayerMotor p){
         if(p.held){FactoryGame.I.Notify("Your hands are full. Press Q to place the item first.");return;}
-        if(p.Pick(this)&&socket){socket.core=null;socket=null;}
+        var source=socket;var relay=GetComponentInParent<GridRelay>();
+        if(p.Pick(this)){if(source){source.running=false;source.core=null;socket=null;}if(relay&&relay.core==this)relay.core=null;}
     }
     public void SetColliders(bool on){foreach(var c in GetComponentsInChildren<Collider>())c.enabled=on;}
     public void ResetHome(){

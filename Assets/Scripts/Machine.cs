@@ -20,7 +20,7 @@ public class Machine : Interactable {
         if(p.held){
             if(p.held.kind!=Pickup.Kind.Core||core){FactoryGame.I.Notify("This socket accepts one power core.");return;}
             if(Requirement!=""){FactoryGame.I.Notify(Requirement+". Your core stays with you.",5);return;}
-            core=p.held;p.held=null;if(machineId=="chime"){done=false;progress=0;}core.carried=false;core.socket=this;core.AttachTo(corePoint);FactoryGame.I.audioScore.Tick(550);return;
+            core=p.held;p.held=null;if(machineId=="chime"){done=false;progress=0;}core.carried=false;core.socket=this;core.AttachTo(corePoint);FactoryGame.I.audioScore.Tick(550);if(puzzle!=null&&!done)FactoryGame.I.OpenCircuit(this);return;
         }
         if(!core){FactoryGame.I.Notify("Bring a power core to this machine.");return;}
         if(running||done){Remove(p);return;}

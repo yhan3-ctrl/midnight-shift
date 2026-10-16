@@ -4,7 +4,7 @@ namespace LastLantern {
 // One immediate action at a time. Progress follows actual world state, not a timed slideshow.
 public class ShiftGuide : MonoBehaviour {
     public struct Task {
-        public string title, action, reason, key, targetName; public Vector3 target; public bool hasTarget;
+        public string title, action, reason, key, targetName; public Vector3 target; public bool hasTarget; public float routeDistance;
     }
     public bool looked,walked; Vector3 start; float lookTime; FactoryGame g;
     FactoryGate foyer,archive,assembly; Pickup foyerCrate,overrideCrate,archiveCrate,assemblyCrate;
@@ -24,7 +24,6 @@ public class ShiftGuide : MonoBehaviour {
         if(gate.CrateHoldsPlate)return Make(chapter,chapter,"穿过打开的门","Walk through the open door","让箱子留在板上，门就会一直开着。","Leave the crate on the plate to keep the door open.","W A S D",gate.closedPosition+Vector3.forward*2,"门的中央","Centre doorway");
         if(g.player.held==crate){
             Vector3 target=gate.plate.position;string detail=UiCopy.Pick("绿色箱子轮廓在条纹木板上时，按 Q 键放置。","When the green crate outline is on the striped plate, press the Q key.");
-            if(crate==archiveCrate&&g.player.transform.position.z<40.5f){target=g.player.transform.position.x<7.65f?new Vector3(8,0,31.4f):new Vector3(8,0,41.3f);detail=UiCopy.Pick("先沿入口走向右墙，再从货架右侧绕过去。","Go along the entrance to the right wall, then around the right side of the shelf.");}
             bool ready=g.player.ReadyOnPlate(gate);
             var t=Make(chapter,chapter,ready?"按 Q 键，把箱子放到这块木板上":"把箱子带到发光的条纹木板前",ready?"Press Q to place the crate on this plate":"Bring the crate to the glowing striped plate",detail,detail,ready?"Q":"W A S D",target,"条纹压力板","Striped pressure plate");return t;
         }
@@ -35,8 +34,8 @@ public class ShiftGuide : MonoBehaviour {
         if(m.running){
             if(m.machineId=="etch"){var preparing=CrateTask(assemblyCrate,assembly,UiCopy.Pick("04 / 提前准备门禁","04 / Prepare the gate"));preparing.reason=UiCopy.Pick("核心留在雕刻机里。趁它工作，把箱子搬到条纹板上；留意 Hush。","Leave the core in the Engraver. Prepare the crate gate while it works; watch Hush.");return preparing;}
             var t=Make(zh,en,"正在制作，核心先留在机器里","Crafting: leave the core in place","完成后待办会自动更新。你可以观察作品。","The checklist updates when finished. You can watch the workpiece.","",m.transform.position,"制作中的机器","Machine at work");return t;}
-        if(m.core){return Make(zh,en,"对准机器，按 E 打开线路板","Aim at the machine and press E","接通线路后，点“启动机器”。研究线路时工厂会暂停。","Connect the circuit, then choose Start machine. The factory pauses while you plan.","E",m.transform.position,"机器正面","Machine front");}
-        if(g.player.held==g.sharedCore)return Make(zh,en,"把金色核心插进这台机器","Insert the gold core into this machine","对准机器正面，按 E。然后再按 E 打开线路板。","Aim at the cabinet and press E. Press E again to open the circuit.","E",m.transform.position,"目标机器","Your next machine");
+        if(m.core){return Make(zh,en,"靠近操作台，按 E 继续","Press E near the console to continue","旋转线路，接通所有出口和每个星标，再启动机器。","Rotate tiles. Power every OUT and every star, then start the machine.","E",m.corePoint.position,m.displayName,m.displayName);}
+        if(g.player.held==g.sharedCore)return Make(zh,en,"把金色核心插进这台机器","Insert the gold core into this machine","靠近操作台按 E，插入核心并打开线路板。","Press E near the console to insert the core and open the circuit.","E",m.corePoint.position,m.displayName,m.displayName);
         Vector3 source=g.sharedCore.transform.position;
         return Make(zh,en,"先取回同一枚金色核心","Retrieve the same gold core",UiCopy.Pick("核心位置：", "Core location: ")+UiCopy.Translate(g.CoreLocation),UiCopy.Pick("核心位置：", "Core location: ")+UiCopy.Translate(g.CoreLocation),"E",source,"金色核心","Gold power core");
     }
@@ -59,6 +58,7 @@ public class ShiftGuide : MonoBehaviour {
             }
             if(!g.transferred)return MachineTask(ribbon,"02 / 给外壳系上丝带","02 / Add the ribbon");
             if(!g.blueprint){
+                if(!g.inspectorLesson&&!chime.core&&p.held!=g.sharedCore&&g.sharedCore.transform.position.z<30)return MachineTask(chime,"03 / 带上可复用的核心","03 / Bring the reusable core");
                 if(p.transform.position.z<30.5f)return Make("03 / 寻找旧图纸","03 / Find the old drawing","从中央门进入档案室","Enter the archive through the centre door","绕过传送带，从房间中央的门前进。","Walk around the conveyor and through the centre door.","W A S D",new Vector3(0,0,31.4f),"档案室入口","Archive entrance");
                 if(!g.inspectorLesson){
                     if(!chime.core)return MachineTask(chime,"03 / 试一试休息铃","03 / Try the break-time chime");
@@ -73,16 +73,14 @@ public class ShiftGuide : MonoBehaviour {
             return Make("05 / 一起下班吧","05 / Let's go home together","把灯笼交给桌后的 Pip","Give the lantern to Pip behind the desk","对准 Pip 按 E，完成你的最后一份订单。","Aim at Pip and press E to finish your last order.","E",g.pipHelper.transform.position+Vector3.up,"Pip / 交付","Pip / Deliver");
         }
     }
-    // Mark the next doorway/corner rather than pointing a newcomer through a divider.
     public Task Navigate(Task t){
-        if(!t.hasTarget)return t;Vector3 from=g.player.transform.position,to=t.target;Vector3 waypoint=to;bool route=false;
-        float[] doors={12,18,30,43.5f,46,54};
-        if(to.z>from.z){foreach(float z in doors){if(from.z<z-.7f&&to.z>z+.7f){waypoint=new Vector3(0,0,Mathf.Abs(from.x)>1.15f||from.z<z-2?z-1.2f:z+1.2f);route=true;break;}}}
-        else {for(int i=doors.Length-1;i>=0;i--){float z=doors[i];if(from.z>z+.7f&&to.z<z-.7f){waypoint=new Vector3(0,0,Mathf.Abs(from.x)>1.15f||from.z>z+2?z+1.2f:z-1.2f);route=true;break;}}}
-        if(!route&&to.z>23.8f&&from.z<23.8f&&from.z>18&&to.z<29&&Mathf.Abs(from.x)<4.4f){waypoint=new Vector3(5.4f,0,20.2f);route=true;}
-        if(!route&&to.x< -4&&to.z<38&&from.z>40&&from.z<43.5f){waypoint=new Vector3(-3.3f,0,from.x< -2.9f?37:41.7f);route=true;}
-        if(route&&from.z>32&&from.z<38&&Mathf.Abs(from.x)>4&&waypoint.z>40)waypoint=new Vector3(Mathf.Sign(from.x)*3.3f,0,37);
-        if(route){t.target=waypoint;t.key="W A S D";t.action=UiCopy.Pick("先沿箭头走到中央通道","Walk to the marked doorway");t.reason=UiCopy.Pick("这条通道通往：","This passage leads to: ")+t.targetName;t.targetName=UiCopy.Pick("下一处通道","Next clear passage");}
+        if(!t.hasTarget||!g.navigation)return t;
+        g.navigation.Refresh(t);
+        if(g.navigation.Points.Count>1&&g.navigation.Distance>4.2f){
+            var original=t.targetName;t.routeDistance=g.navigation.Distance;t.target=g.navigation.LookAhead(2.6f);t.key="W A S D";
+            t.action=UiCopy.Pick("沿地面金色光路前进","Follow the gold trail");
+            t.reason=UiCopy.Pick("前往：","Destination: ")+original;t.targetName=original;
+        }
         return t;
     }
     public FactoryGate PlacementGate {get{Ensure();var held=g.player.held;if(held==foyerCrate)return foyer;if(held==overrideCrate)return g.workshopRelay.gate;if(held==archiveCrate)return archive;if(held==assemblyCrate)return assembly;return null;}}
