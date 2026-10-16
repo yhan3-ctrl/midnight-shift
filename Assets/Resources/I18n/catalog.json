@@ -4271,6 +4271,246 @@
         "E  ベルを鳴らす / ",
         "E  종 울리기 / "
       ]
+    },
+    {
+      "en": "Carry the core along the gold trail to the console.",
+      "values": [
+        "Carry the core along the gold trail to the console.",
+        "带着核心，沿金色路线走到操作台。",
+        "Lleva el núcleo por la ruta dorada hasta la consola.",
+        "Suis la piste dorée avec le noyau jusqu’à la console.",
+        "Trage den Kern auf dem goldenen Weg zur Konsole.",
+        "コアを持って金色の道を進み、操作台へ。",
+        "코어를 든 채 금빛 길을 따라 조작대로 가세요."
+      ]
+    },
+    {
+      "en": "Turn to face the console. Keep the core in your hands.",
+      "values": [
+        "Turn to face the console. Keep the core in your hands.",
+        "转身面向操作台；核心留在手里。",
+        "Gira hacia la consola. Conserva el núcleo en la mano.",
+        "Tourne-toi vers la console. Garde le noyau en main.",
+        "Dreh dich zur Konsole. Behalte den Kern in der Hand.",
+        "操作台の方を向きましょう。コアは持ったままで。",
+        "조작대 쪽으로 돌아보세요. 코어는 계속 들고 계세요."
+      ]
+    },
+    {
+      "en": "Go around the crate or shelf to reach the console.",
+      "values": [
+        "Go around the crate or shelf to reach the console.",
+        "绕过箱子或货架，到操作台前插入核心。",
+        "Rodea la caja o estantería para llegar a la consola.",
+        "Contourne la caisse ou l’étagère pour atteindre la console.",
+        "Geh um Kiste oder Regal herum zur Konsole.",
+        "木箱や棚を回り込んで操作台へ行きましょう。",
+        "상자나 선반을 돌아 조작대로 가세요."
+      ]
+    },
+    {
+      "en": "Why: ",
+      "values": [
+        "Why: ",
+        "为什么：",
+        "Por qué: ",
+        "Pourquoi : ",
+        "Warum: ",
+        "理由：",
+        "이유: "
+      ]
+    },
+    {
+      "en": "CRAFTING",
+      "values": [
+        "CRAFTING",
+        "制作中",
+        "FABRICANDO",
+        "FABRICATION",
+        "IN ARBEIT",
+        "制作中",
+        "제작 중"
+      ]
+    },
+    {
+      "en": "A crate replaces gate power, freeing the core for crafting.",
+      "values": [
+        "A crate replaces gate power, freeing the core for crafting.",
+        "箱子代替电力保持门打开，核心就能拿去制作。",
+        "La caja mantiene la puerta abierta y libera el núcleo para fabricar.",
+        "La caisse garde la porte ouverte et libère le noyau pour fabriquer.",
+        "Die Kiste hält das Tor offen. So wird der Kern zum Fertigen frei.",
+        "木箱で扉を開けておけば、コアを制作に使えます。",
+        "상자로 문을 열어 두면 코어를 제작에 쓸 수 있어요."
+      ]
+    },
+    {
+      "en": "Build the shell first; it becomes the lantern's body.",
+      "values": [
+        "Build the shell first; it becomes the lantern's body.",
+        "先制作外壳，它会成为灯笼的主体。",
+        "Primero crea la carcasa: será el cuerpo del farol.",
+        "Fabrique d’abord la coque : elle formera le corps de la lanterne.",
+        "Baue zuerst die Hülle. Sie wird der Körper der Laterne.",
+        "まず外側を作ります。ランタンの本体になります。",
+        "먼저 외형을 만드세요. 등불의 몸체가 됩니다."
+      ]
+    },
+    {
+      "en": "The ribbon finishes the shell before we take it to assembly.",
+      "values": [
+        "The ribbon finishes the shell before we take it to assembly.",
+        "给外壳系上丝带，再带去装配。",
+        "La cinta termina la carcasa antes del montaje.",
+        "Le ruban finit la coque avant l’assemblage.",
+        "Das Band vollendet die Hülle vor der Montage.",
+        "組み立てる前に、リボンで外側を仕上げます。",
+        "조립하기 전에 리본으로 외형을 마무리해요."
+      ]
+    },
+    {
+      "en": "The old drawing explains who this lantern is for.",
+      "values": [
+        "The old drawing explains who this lantern is for.",
+        "旧图纸会告诉我们，这盏灯笼是为谁做的。",
+        "El viejo dibujo explica para quién es este farol.",
+        "Le vieux dessin révèle à qui cette lanterne est destinée.",
+        "Die alte Zeichnung verrät, für wen diese Laterne ist.",
+        "古い絵を見ると、誰のためのランタンか分かります。",
+        "옛 그림을 보면 누구를 위한 등불인지 알 수 있어요."
+      ]
+    },
+    {
+      "en": "The bell calls Hush away so you can move the crate.",
+      "values": [
+        "The bell calls Hush away so you can move the crate.",
+        "铃声把 Hush 叫过去，你就可以继续搬木箱。",
+        "La campana atrae a Hush para que puedas mover la caja.",
+        "La cloche attire Hush pour te laisser déplacer la caisse.",
+        "Die Glocke lockt Hush weg, damit du die Kiste tragen kannst.",
+        "ベルで Hush を呼び、木箱を運びましょう。",
+        "종소리로 Hush를 부르고 상자를 옮겨요."
+      ]
+    },
+    {
+      "en": "There is one core. Finished work stays finished without power.",
+      "values": [
+        "There is one core. Finished work stays finished without power.",
+        "只有一枚核心；完成的作品断电后也会保留。",
+        "Solo hay un núcleo. Lo terminado se conserva sin energía.",
+        "Il n’y a qu’un noyau. Le travail fini reste acquis sans courant.",
+        "Es gibt nur einen Kern. Fertige Arbeit bleibt ohne Strom erhalten.",
+        "コアは一つだけ。完成品は電源を外しても残ります。",
+        "코어는 하나뿐이에요. 완성한 작품은 전원이 없어도 남아요."
+      ]
+    },
+    {
+      "en": "Engrave the promise from your childhood drawing.",
+      "values": [
+        "Engrave the promise from your childhood drawing.",
+        "把童年图纸上的承诺刻进灯笼。",
+        "Graba la promesa de tu dibujo de infancia.",
+        "Grave la promesse de ton dessin d’enfance.",
+        "Graviere das Versprechen aus deiner Kinderzeichnung.",
+        "子どもの頃の絵に書いた約束を刻みます。",
+        "어릴 적 그림에 쓴 약속을 새겨요."
+      ]
+    },
+    {
+      "en": "The crate holds access open while the core powers the Press.",
+      "values": [
+        "The crate holds access open while the core powers the Press.",
+        "用箱子保持通道打开，核心才能拿去驱动装配机。",
+        "La caja mantiene el acceso abierto mientras el núcleo alimenta la prensa.",
+        "La caisse garde l’accès ouvert pendant que le noyau alimente la presse.",
+        "Die Kiste hält den Zugang offen, während der Kern die Presse versorgt.",
+        "木箱で通路を開けておき、コアをプレスに使います。",
+        "상자로 통로를 열어 두고 코어로 프레스를 가동해요."
+      ]
+    },
+    {
+      "en": "Join the finished parts and light the lantern.",
+      "values": [
+        "Join the finished parts and light the lantern.",
+        "把完成的部件装在一起，点亮灯笼。",
+        "Une las piezas terminadas y enciende el farol.",
+        "Assemble les pièces terminées et allume la lanterne.",
+        "Füge die fertigen Teile zusammen und entzünde die Laterne.",
+        "完成した部品を組み合わせて、ランタンを灯します。",
+        "완성된 부품을 모아 등불을 켜요."
+      ]
+    },
+    {
+      "en": "Give the helpers a light for their way home.",
+      "values": [
+        "Give the helpers a light for their way home.",
+        "给小帮手们一盏照亮回家路的灯。",
+        "Dales a los ayudantes una luz para volver a casa.",
+        "Offre aux petits aides une lumière pour rentrer chez eux.",
+        "Gib den Helfern ein Licht für ihren Heimweg.",
+        "小さなお手伝いたちの帰り道を照らしましょう。",
+        "작은 도우미들의 귀갓길을 밝혀 주세요."
+      ]
+    },
+    {
+      "en": "Great work! Every star and OUT is powered.\nChoose Start machine below.",
+      "values": [
+        "Great work! Every star and OUT is powered.\nChoose Start machine below.",
+        "太棒了！每个星标和出口都通电了。\n现在点“启动机器”。",
+        "¡Muy bien! Todas las estrellas y salidas tienen energía.\nElige Iniciar máquina.",
+        "Bravo ! Chaque étoile et sortie est alimentée.\nChoisis Démarrer la machine.",
+        "Gut gemacht! Alle Sterne und Ausgänge haben Strom.\nWähle Maschine starten.",
+        "お見事！すべての星印と出口に電気が通りました。\n「機械を起動」を選びましょう。",
+        "잘했어요! 모든 별과 출구에 전원이 연결됐어요.\n아래의 기계 가동을 선택하세요."
+      ]
+    },
+    {
+      "en": "Insert the core to power the chime. Then press E to ring it.",
+      "values": [
+        "Insert the core to power the chime. Then press E to ring it.",
+        "插入核心给铃供电，然后按 E 响铃。",
+        "Inserta el núcleo y pulsa E para tocar la campana.",
+        "Insère le noyau, puis appuie sur E pour sonner.",
+        "Setze den Kern ein und drücke E zum Läuten.",
+        "コアで電源を入れ、E でベルを鳴らします。",
+        "코어로 전원을 넣은 뒤 E로 종을 울리세요."
+      ]
+    },
+    {
+      "en": "Park the core in the console",
+      "values": [
+        "Park the core in the console",
+        "先把核心留在操作台",
+        "Deja el núcleo en la consola",
+        "Dépose le noyau dans la console",
+        "Setze den Kern in die Konsole",
+        "コアを操作台に預ける",
+        "코어를 조작대에 넣어 두세요"
+      ]
+    },
+    {
+      "en": "The machine holds the core safely. Retrieve it after opening the gate.",
+      "values": [
+        "The machine holds the core safely. Retrieve it after opening the gate.",
+        "机器可以安全保管核心；打开门后再取回来。",
+        "La máquina guarda el núcleo. Recógelo después de abrir la puerta.",
+        "La machine garde le noyau. Reprends-le après avoir ouvert la porte.",
+        "Die Maschine bewahrt den Kern auf. Hol ihn nach dem Öffnen des Tors zurück.",
+        "機械にコアを預け、扉を開けてから取り戻しましょう。",
+        "기계에 코어를 두고 문을 연 뒤 다시 가져오세요."
+      ]
+    },
+    {
+      "en": "Carry one item at a time. Park the core to free your hands for the crate.",
+      "values": [
+        "Carry one item at a time. Park the core to free your hands for the crate.",
+        "一次只能拿一个物品；先存放核心，双手才能搬箱子。",
+        "Solo puedes llevar un objeto. Deja el núcleo para cargar la caja.",
+        "Tu ne peux porter qu’un objet. Dépose le noyau pour prendre la caisse.",
+        "Du kannst nur eines tragen. Setze den Kern ein, um die Kiste zu tragen.",
+        "持てるのは一つだけ。コアを預けて木箱を運びましょう。",
+        "한 번에 하나만 들 수 있어요. 코어를 넣어 두고 상자를 옮기세요."
+      ]
     }
   ]
 }

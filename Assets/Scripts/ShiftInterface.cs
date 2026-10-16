@@ -59,8 +59,9 @@ public class ShiftInterface {
         Calendar();MenuTab();g.factoryMap.Mini(g);
         Pointer();Coach();
         UiTheme.Label(new Rect(w/2-15,h/2-25,30,40),"+",27,UiTheme.Cream,false,false,TextAnchor.MiddleCenter);
-        if(g.player.focus){UiTheme.Panel(new Rect(700,h-135,w-728,44));UiTheme.Label(new Rect(713,h-135,w-754,44),UiCopy.Prompt(g.player),23,null,true,false,TextAnchor.MiddleCenter);}
-        Controls();
+        if(g.player.held&&!(g.player.focus is StoryPoint)&&g.player.IntendedCoreSocket()&&!g.player.NearbyCoreSocket()){UiTheme.Panel(new Rect(700,h-145,w-728,65));UiTheme.Label(new Rect(713,h-142,w-754,60),g.player.CoreAccessHint(),21,null,true,false,TextAnchor.MiddleCenter);}
+        else if(g.player.focus){UiTheme.Panel(new Rect(700,h-135,w-728,44));UiTheme.Label(new Rect(713,h-135,w-754,44),UiCopy.Prompt(g.player),23,null,true,false,TextAnchor.MiddleCenter);}
+        Controls();WorkProgress();
         if(g.ToastVisible){UiTheme.Panel(new Rect(28,337,Mathf.Min(710,w-430),125));UiTheme.Label(new Rect(46,352,Mathf.Min(674,w-466),100),UiCopy.Translate(g.toast),23);}
         if(g.inspector.SafePractice&&g.inspectorLesson&&g.player.transform.position.z>31&&g.player.transform.position.z<46){UiTheme.Label(new Rect(w/2-230,249,460,60),T("安全练习 / Hush 不会送你返回","SAFE PRACTICE / No send-backs"),22,UiTheme.Gold,true,false,TextAnchor.MiddleCenter);}
         if(g.inspector.Alertness>0){UiTheme.Fill(new Rect(w/2-155,249,310,12),UiTheme.Ink);UiTheme.Fill(new Rect(w/2-155,249,310*g.inspector.Alertness,12),UiTheme.Gold);UiTheme.Label(new Rect(w/2-200,267,400,62),T("Hush 正在注意你：绕到货架或放下的箱子后面。","Hush notices you. Move behind a shelf or a placed crate."),22,null,false,false,TextAnchor.MiddleCenter);}
@@ -134,13 +135,22 @@ public class ShiftInterface {
         string[] rows=guide.Checklist;int done=0;foreach(var row in rows)if(row.StartsWith("[+]"))done++;
         if(UiTheme.Button(new Rect(x+18,238,266,48),T("待办 [J]","Tasks [J]")+"  "+done+" / "+rows.Length,true))g.ToggleJournal();
     }
-    void Coach(){var socket=g.player.NearbyCoreSocket();if(socket&&guide.IsCurrentCoreSocket(socket)){task.key="E / Q";task.action=T("按 E 或 Q，把核心插入机器","Press E or Q to insert the core");task.reason=T("不用把核心放在桌上。靠近机器就能插入。","No need to drop it on the worktop. Insert it directly near the machine.");if(socket is Machine machine&&machine.Requirement!=""){task.action=UiCopy.Translate(machine.Requirement);task.reason=T("先完成这一步，核心会留在手中。","Finish this step first. The core stays in your hands.");}}bool teaching=guide.Chapter==0;
-        float height=teaching?250:170;float top=h-95-height;
+    void Coach(){var socket=g.player.NearbyCoreSocket();if(socket&&guide.IsCurrentCoreSocket(socket)){task.key="E / Q";task.action=T("按 E 或 Q，把核心插入机器","Press E or Q to insert the core");task.reason=T("不用把核心放在桌上。靠近机器就能插入。","No need to drop it on the worktop. Insert it directly near the machine.");if(socket is Machine machine&&machine.Requirement!=""){task.action=UiCopy.Translate(machine.Requirement);task.reason=T("先完成这一步，核心会留在手中。","Finish this step first. The core stays in your hands.");}}else if(g.player.IntendedCoreSocket()&&!socket){task.key=g.player.CoreAccessKey;task.action=g.player.CoreAccessHint();}
+        float height=246;float top=h-95-height;
         UiTheme.Panel(new Rect(28,top,565,height));
         UiTheme.Key(new Rect(46,top+15,task.key.Length>3?190:75,38),string.IsNullOrEmpty(task.key)?"...":UiCopy.Translate(task.key));
         UiTheme.Label(new Rect(46,top+65,528,96),task.action,25,UiTheme.Gold,true);
-        if(teaching)UiTheme.Label(new Rect(46,top+170,528,72),task.reason,22);
-        else UiTheme.Label(new Rect(255,top+18,315,38),T("提示 [H]","Help [H]"),21,UiTheme.Muted,false,false,TextAnchor.MiddleRight);
+        UiTheme.Label(new Rect(46,top+164,528,72),T("为什么：","Why: ")+guide.Purpose,21,UiTheme.Muted);
+        UiTheme.Label(new Rect(255,top+18,315,38),T("提示 [H]","Help [H]"),21,UiTheme.Muted,false,false,TextAnchor.MiddleRight);
+    }
+    void WorkProgress(){
+        foreach(var machine in UnityEngine.Object.FindObjectsByType<Machine>(FindObjectsSortMode.None))if(machine.running&&machine.machineId!="chime"){
+            float x=w-330,y=327;UiTheme.Panel(new Rect(x,y,302,142));
+            UiTheme.Label(new Rect(x+18,y+10,190,36),T("制作中","CRAFTING"),22,UiTheme.Gold,true);
+            UiTheme.Label(new Rect(x+210,y+10,74,36),Mathf.FloorToInt(machine.WorkFraction*100)+"%",22,null,true,false,TextAnchor.MiddleRight);
+            UiTheme.Label(new Rect(x+18,y+48,266,54),UiCopy.Translate(machine.displayName),20);
+            UiTheme.Fill(new Rect(x+18,y+111,266,12),UiTheme.Ink);UiTheme.Fill(new Rect(x+18,y+111,266*machine.WorkFraction,12),UiTheme.Gold);break;
+        }
     }
     void Controls(){UiTheme.Key(new Rect(28,h-61,143,40),"W A S D");UiTheme.Label(new Rect(183,h-56,130,40),T("走动","Walk"),22);UiTheme.Key(new Rect(287,h-61,52,40),"E");UiTheme.Label(new Rect(350,h-56,145,40),(g.player.NearbyCoreSocket()?T("插入","Insert"):T("拿起 / 使用","Use")),22);UiTheme.Key(new Rect(503,h-61,52,40),"Q");UiTheme.Label(new Rect(567,h-56,130,40),(g.player.NearbyCoreSocket()?T("插入","Insert"):T("放下","Place")),22);
         UiTheme.Label(new Rect(720,h-77,360,75),g.player.pointerMode?T("右键拖动：转头","Right-drag: look"):g.player.keyboardLook?T("方向键：转头","Arrows: look"):T("移动鼠标：转头\nEsc：菜单 / 释放鼠标","Mouse: look around\nEsc: menu / free pointer"),20,UiTheme.Muted);

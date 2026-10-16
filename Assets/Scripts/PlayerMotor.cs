@@ -72,8 +72,21 @@ public class PlayerMotor : MonoBehaviour {
             return false;
         }return true;
     }
+    public Interactable IntendedCoreSocket(){
+        if(!held||held.kind!=Pickup.Kind.Core)return null;var g=FactoryGame.I;
+        foreach(var item in FindObjectsByType<Interactable>(FindObjectsSortMode.None))if((item is Machine||item is GridRelay)&&g.guide.IsCurrentCoreSocket(item))return item;
+        return null;
+    }
+    public string CoreAccessKey {get{var target=IntendedCoreSocket();if(target){Vector3 delta=InteractionPoint(target)-view.transform.position;Vector3 flat=delta;flat.y=0;Vector3 facing=view.transform.forward;facing.y=0;if(delta.magnitude<=4.5f&&Vector3.Dot(facing.normalized,flat.normalized)<.2f)return keyboardLook?"ARROWS":pointerMode?"RIGHT-DRAG":"MOUSE";}return "W A S D";}}
+    public string CoreAccessHint(){
+        var target=IntendedCoreSocket();if(!target)return UiCopy.Translate("Move near the object, face it, then press E.");
+        Vector3 delta=InteractionPoint(target)-view.transform.position;Vector3 flat=delta;flat.y=0;Vector3 facing=view.transform.forward;facing.y=0;
+        if(delta.magnitude>4.5f)return UiCopy.Pick("带着核心，沿金色路线走到操作台。","Carry the core along the gold trail to the console.");
+        if(Vector3.Dot(facing.normalized,flat.normalized)<.2f)return UiCopy.Pick("转身面向操作台；核心留在手里。","Turn to face the console. Keep the core in your hands.");
+        return UiCopy.Pick("绕过箱子或货架，到操作台前插入核心。","Go around the crate or shelf to reach the console.");
+    }
     public Interactable NearbyCoreSocket(){
-        if(!held||held.kind!=Pickup.Kind.Core)return null;Interactable best=null;float nearest=float.MaxValue;
+        if(!held||held.kind!=Pickup.Kind.Core)return null;Interactable best=null;float nearest=float.MaxValue;var intended=IntendedCoreSocket();if(intended&&CanReach(intended)){if(intended is Machine wanted&&!wanted.core)return intended;if(intended is GridRelay gate&&!gate.core)return intended;}
         foreach(var item in FindObjectsByType<Interactable>(FindObjectsSortMode.None)){
             if(item is Machine machine){if(machine.core)continue;}else if(item is GridRelay relay){if(relay.core)continue;}else continue;
             if(!CanReach(item))continue;float distance=Vector3.Distance(view.transform.position,InteractionPoint(item));if(distance<nearest){nearest=distance;best=item;}
@@ -84,19 +97,20 @@ public class PlayerMotor : MonoBehaviour {
         var socket=NearbyCoreSocket();if(socket){focus=socket;return;}
         // Direct aim wins over the wide pickup assist, so a socket cannot steal a nearby crate interaction.
         if(Physics.Raycast(view.transform.position,view.transform.forward,out RaycastHit hit,3.8f,Physics.DefaultRaycastLayers,QueryTriggerInteraction.Ignore))focus=hit.collider.GetComponentInParent<Interactable>();
+        if(focus is Pickup&&held)focus=null;
         if(focus)return;
         // A reusable core remains reachable while its own collider is disabled in a socket.
         if(!held&&g.sharedCore&&!g.sharedCore.carried&&CanReach(g.sharedCore)){focus=g.sharedCore.socket&&!g.sharedCore.socket.done&&!g.sharedCore.socket.running?(Interactable)g.sharedCore.socket:g.sharedCore;return;}
         float best=0;
         foreach(var item in FindObjectsByType<Interactable>(FindObjectsSortMode.None)){
-            if(item is Pickup pickup&&(pickup.carried||pickup.socket))continue;
+            if(item is Pickup pickup&&(held||pickup.carried||pickup.socket))continue;
             if(!(item is Machine)&&!(item is GridRelay)&&!(item is Pickup)&&!(item is StoryPoint))continue;
             if(!CanReach(item))continue;
             Vector3 d=InteractionPoint(item)-view.transform.position;float score=Vector3.Dot(view.transform.forward,d.normalized)-d.magnitude*.045f;
             if(score>best){best=score;focus=item;}
         }
     }
-    public bool TryInteract(){ScanFocus();if(!focus){FactoryGame.I.Notify(UiCopy.Pick("靠近目标并朝向它，再按 E。","Move near the object, face it, then press E."),3);return false;}focus.Use(this);return true;}
+    public bool TryInteract(){ScanFocus();if(!(focus is StoryPoint)&&held&&held.kind==Pickup.Kind.Core&&IntendedCoreSocket()&&!NearbyCoreSocket()){FactoryGame.I.Notify(CoreAccessHint(),5);return false;}if(!focus){FactoryGame.I.Notify(UiCopy.Pick("靠近目标并朝向它，再按 E。","Move near the object, face it, then press E."),3);return false;}focus.Use(this);return true;}
     public bool Pick(Pickup item){
         if(held){FactoryGame.I.Notify("Your hands are full. Place what you're carrying first.");return false;}
         held=item;item.AttachTo(hand);item.carried=true;if(item.kind==Pickup.Kind.Crate){item.transform.localScale*=.26f;item.transform.localPosition=new Vector3(.3f,-.44f,.08f);}

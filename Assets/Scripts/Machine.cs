@@ -5,7 +5,8 @@ public class Machine : Interactable {
     public CircuitGrid puzzle;public int selectedTile;
     void Awake(){puzzle=CircuitGrid.Create(machineId);}
     public float progress; public bool running,done; public float workSeconds=5;
-    public bool Powered=>core!=null;
+    public bool Powered=>core!=null;public float WorkFraction=>Mathf.Clamp01(progress/Mathf.Max(.01f,workSeconds));bool circuitWasSolved;
+    public void ObserveCircuit(){var g=FactoryGame.I;if(!g||g.activeCircuit!=this||g.paused||g.mapOpen||g.desktopHold||puzzle==null)return;bool solved=puzzle.Solved;if(solved&&!circuitWasSolved)g.audioScore.CircuitSuccess();circuitWasSolved=solved;}
     public string Requirement {
         get {var g=FactoryGame.I;if(!g)return "";if(machineId=="ribbon"&&!g.shell)return "Make the shell first";if(machineId=="etch"&&!g.blueprint)return "Read the old drawing first";if(machineId=="press"&&!g.etched)return "Engrave the shell first";return "";}
     }
@@ -33,12 +34,13 @@ public class Machine : Interactable {
     public void StartWork(){
         if(!core||done||Requirement!=""||(puzzle!=null&&!puzzle.Solved))return;
         running=true;if(machineId=="chime"){bool first=!FactoryGame.I.inspectorLesson;FactoryGame.I.inspectorLesson=true;if(first&&FactoryGame.I.inspector)FactoryGame.I.inspector.ResetPatrol(true);FactoryGame.I.inspector.CallToChime(transform.position);FactoryGame.I.Notify("Hush is checking the chime. Move the crate now; you do not need to wait. This room has no send-backs.",9);}
-        FactoryGame.I.audioScore.Tick(440);if(FactoryGame.I.inspector)FactoryGame.I.inspector.Hear(transform.position);
+        FactoryGame.I.audioScore.MachineStart(machineId);if(FactoryGame.I.inspector)FactoryGame.I.inspector.Hear(transform.position);
     }
     public void Remove(PlayerMotor p){
         if(!core||p.held)return;running=false;var item=core;core=null;item.socket=null;p.Pick(item);
     }
     void Update(){
+        ObserveCircuit();
         if(!FactoryGame.I||FactoryGame.I.Frozen)return;
         if(!Powered)running=false;
         if(running){

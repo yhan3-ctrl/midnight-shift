@@ -30,3 +30,7 @@ Record each finding as observation -> revision -> retest. Engine tests demonstra
 ## October 16 / Hush and teaching scope
 
 The user reported both desktop pause and an unexpected archive safety retry, confusion about waiting at the chime and Hush's friendly role, and too much apparent teaching. Archive practice now cannot cause a reset; chime retrieval does not cancel its distraction, and the first-door lesson has an explicit ending. The real safety challenge starts in Assembly with its own explanation. The user also requested more Halloween decorations. See HUSH-REVIEW-v0.13.md for implementation and executed checks. No post-fix independent player response has yet been recorded.
+
+## October 16 / route motion, task purpose, craft feedback and blocked core
+
+The user reported the gold route jumping sideways while walking, unclear reasons for moving the crate/core between tasks, insufficient success/start/production feedback, and an insertion instruction conflicting with a hands-full message. The supplied photograph shows a held core, crate in front and a different console goal. v0.14 retains valid routes in world space, shows Why on task cards, adds circuit/start/work feedback and actual progress UI, and replaces the second-pickup conflict with safe console-access guidance. See FEEDBACK-REVIEW-v0.14.md. This is actual reported feedback; no post-fix human comfort or comprehension result is asserted.

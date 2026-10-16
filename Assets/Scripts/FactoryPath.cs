@@ -6,6 +6,7 @@ namespace LastLantern {
 public class FactoryPath : MonoBehaviour {
     const float Step=.6f,MinX=-8.4f,MinZ=-9;const int Columns=29,Rows=121,Count=Columns*Rows;
     public readonly List<Vector3> Points=new List<Vector3>();
+    public int Revision {get;private set;} float routeProgress,totalDistance;int progressSegment=1;
     public float Distance {get;private set;}public bool Available=>Points.Count>1;
     FactoryGame g;Material material;LineRenderer[] trail,beacons;float nextPlan;Vector3 plannedTarget,plannedFrom;int[] occupancy=new int[Count];
     readonly Collider[] overlaps=new Collider[32];
@@ -30,11 +31,22 @@ public class FactoryPath : MonoBehaviour {
     public void Refresh(ShiftGuide.Task task,bool force=false){
         if(!g)g=GetComponent<FactoryGame>();if(!task.hasTarget)return;
         var from=g.player.transform.position;
-        if(!force&&Time.unscaledTime<nextPlan&&Vector3.Distance(task.target,plannedTarget)<.3f&&Vector3.Distance(from,plannedFrom)<1.5f)return;
+        bool sameGoal=Vector3.Distance(task.target,plannedTarget)<.3f;
+        if(!force&&sameGoal&&Available){
+            float offRoute=TrackProgress(from);
+            if(Time.unscaledTime<nextPlan)return;
+            nextPlan=Time.unscaledTime+.8f;
+            if(offRoute<1.35f&&Corridor(new Vector3(from.x,.065f,from.z),Points[Mathf.Clamp(progressSegment,1,Points.Count-1)]))return;
+        }
         nextPlan=Time.unscaledTime+.8f;plannedFrom=from;plannedTarget=task.target;Build(from,task.target);
     }
+    float TrackProgress(Vector3 from){
+        from.y=.065f;float nearest=float.MaxValue,along=0,best=0;
+        for(int i=1;i<Points.Count;i++){Vector3 a=Points[i-1],d=Points[i]-a;float length=d.magnitude;float t=Mathf.Clamp01(Vector3.Dot(from-a,d)/Mathf.Max(.001f,d.sqrMagnitude));float off=Vector3.Distance(from,a+d*t);if(off<nearest){nearest=off;best=along+length*t;progressSegment=i;}along+=length;}
+        routeProgress=best;Distance=Mathf.Max(0,totalDistance-best);return nearest;
+    }
     public bool Build(Vector3 from,Vector3 target){
-        if(!g)g=GetComponent<FactoryGame>();System.Array.Clear(occupancy,0,Count);Points.Clear();Distance=0;
+        if(!g)g=GetComponent<FactoryGame>();System.Array.Clear(occupancy,0,Count);Points.Clear();Distance=0;routeProgress=0;totalDistance=0;Revision++;
         int first=Nearest(from,false),last=Nearest(target,true);if(first<0||last<0)return false;
         var cost=new float[Count];var parent=new int[Count];var closed=new bool[Count];for(int i=0;i<Count;i++){cost[i]=float.MaxValue;parent[i]=-1;}
         var open=new Heap();cost[first]=0;open.Add(first,0);int goal=-1;
@@ -51,20 +63,22 @@ public class FactoryPath : MonoBehaviour {
         if(Points.Count==1)Points.Add(Position(goal));
         var corners=Points.ToArray();Points.Clear();Points.Add(corners[0]);
         for(int i=0;i<corners.Length-1;){int next=i+1;for(int j=corners.Length-1;j>i+1;j--)if(Corridor(corners[i],corners[j])){next=j;break;}Points.Add(corners[next]);i=next;}
-        for(int i=1;i<Points.Count;i++)Distance+=Vector3.Distance(Points[i-1],Points[i]);return true;
+        for(int i=1;i<Points.Count;i++)Distance+=Vector3.Distance(Points[i-1],Points[i]);totalDistance=Distance;return true;
     }
     bool Corridor(Vector3 from,Vector3 to){Vector3 d=to-from;foreach(var hit in Physics.CapsuleCastAll(from+Vector3.up*.38f,from+Vector3.up*1.45f,.34f,d.normalized,d.magnitude,~0,QueryTriggerInteraction.Ignore)){
         if(hit.transform.IsChildOf(g.player.transform)||hit.collider.GetComponentInParent<GhostIdle>()||hit.collider.bounds.max.y<.14f)continue;return false;
     }return true;}
-    public Vector3 LookAhead(float distance){if(Points.Count==0)return plannedTarget;for(int i=1;i<Points.Count;i++){float d=Vector3.Distance(Points[i-1],Points[i]);if(distance<=d)return Vector3.Lerp(Points[i-1],Points[i],distance/Mathf.Max(.001f,d));distance-=d;}return Points[Points.Count-1];}
+    public Vector3 LookAhead(float distance)=>PointAlong(routeProgress+distance);
+    Vector3 PointAlong(float distance){if(Points.Count==0)return plannedTarget;for(int i=1;i<Points.Count;i++){float d=Vector3.Distance(Points[i-1],Points[i]);if(distance<=d)return Vector3.Lerp(Points[i-1],Points[i],distance/Mathf.Max(.001f,d));distance-=d;}return Points[Points.Count-1];}
     void LateUpdate(){DrawTrail();}
     void DrawTrail(){if(trail==null)return;foreach(var l in trail)l.enabled=false;foreach(var l in beacons)l.enabled=false;if(!g||!g.started||g.ended||g.mapOpen||g.paused||g.Reading||g.activeCircuit||g.journal||g.photoMode||g.desktopHold||g.ComfortOpen||g.AwaitingLook)return;
         var objective=g.guide.Current;if(string.IsNullOrEmpty(objective.key)||g.guide.CanActHere(objective))return;Refresh(objective);if(!Available)return;float walked=0;int drawn=0;Color c=new Color(1,.78f,.30f,1);
         for(int i=1;i<Points.Count&&drawn<trail.Length;i++){Vector3 a=Points[i-1]+Vector3.up*.055f,b=Points[i]+Vector3.up*.055f;float len=Vector3.Distance(a,b);for(float t=0;t<len&&drawn<trail.Length;t+=.85f){var l=trail[drawn++];l.SetPosition(0,Vector3.Lerp(a,b,t/Mathf.Max(.001f,len)));l.SetPosition(1,Vector3.Lerp(a,b,Mathf.Min(t+.56f,len)/Mathf.Max(.001f,len)));l.startColor=l.endColor=c;l.enabled=true;}walked+=len;if(walked>32)break;}
         // Stationary lantern-shaped markers rise into a level camera's view. Real depth testing hides them behind walls.
-        Vector3 side=g.player.view.transform.right;side.y=0;side.Normalize();int count=0;
-        for(float distance=2;distance<Mathf.Min(Distance,26)&&count<beacons.Length;distance+=2.8f){
-            Vector3 floor=LookAhead(distance),centre=floor+Vector3.up*.95f;var l=beacons[count++];l.startColor=l.endColor=new Color(1,.9f,.55f,1);
+        int count=0;
+        for(float distance=2;distance<Mathf.Min(totalDistance,routeProgress+26)&&count<beacons.Length;distance+=2.8f){
+            if(distance<routeProgress+.8f)continue;
+            Vector3 floor=PointAlong(distance),centre=floor+Vector3.up*.8f;Vector3 tangent=PointAlong(distance+.2f)-PointAlong(distance-.2f);Vector3 side=Vector3.Cross(Vector3.up,tangent).normalized;var l=beacons[count++];l.startColor=l.endColor=new Color(1,.9f,.55f,1);
             l.SetPositions(new[]{floor,centre-Vector3.up*.18f,centre-side*.18f,centre+Vector3.up*.18f,centre+side*.18f,centre-Vector3.up*.18f,centre});l.enabled=true;
         }
     }

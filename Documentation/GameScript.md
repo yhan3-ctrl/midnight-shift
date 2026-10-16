@@ -1,4 +1,4 @@
-# Game Script / v0.13 implemented rules
+# Game Script / v0.14 implemented rules
 
 This records the current playable, not every feature proposed in Design-v1.zh.md. All distances are Unity world units and timings are game seconds. A future final report must update this document to match its submitted version.
 
@@ -182,3 +182,9 @@ Safety inspection builds detection over 1.6 seconds and grants five seconds of g
 ## v0.13 / clear lesson boundary and harmless archive practice
 
 Direct player feedback reported confusion about Hush being friendly while sending the player back during the first crate task. The opening teaches looking, walking, picking up and placing a crate, then announces the formal night shift without another blocking dialogue. Packaging and Archive are formal chapters that introduce tools in context. Archive now demonstrates the chime safely without retries; Assembly combines crate access, power reuse and the announced safety check. The short opening targets roughly one minute, but independent first-play timing is not validated. Added perimeter pumpkin lamps, paper bats, hanging paper ghosts and treat buckets with no colliders or interactions. No extra collection task or forced wait was added. See HUSH-REVIEW-v0.13.md for checks and limits.
+
+## v0.14 / stable guidance and readable cause and effect
+
+Route corners remain fixed while the player follows the same clear route. Position projection updates remaining distance and look-ahead; target changes, off-route movement or a blocked forward segment cause replanning. The raised markers are oriented to the route tangent rather than the camera. Every task card includes a short Why explanation; H retains detailed instructions. When a carried core prevents moving the archive/final crate, the guide offers the Chime/Engraver as safe storage, using the existing insertion action. A blocked console gives an access instruction instead of a second-pickup hands-full message; solid objects remain blocking.
+
+Circuit satisfaction plays a three-note success phrase once per unsolved-to-solved transition observed while that board is open. The world remains paused during routing. Starting production plays a distinct cue; the Chime uses a bell cue. Moulding, Ribbon, Engraving and Press each have a quiet loop while actually working. Progress UI reads Machine.WorkFraction, not a separate display timer. Menus, dialogue, desktop hold and look-entry pause work feedback along with production. Removing a core stops work and its loop on the next update; completed output remains. All automatic review modes mute the added work source too. Actual listening/mix and motion comfort still require player feedback. See FEEDBACK-REVIEW-v0.14.md for executed checks and limitations.

@@ -113,7 +113,7 @@ public class FactoryGame : MonoBehaviour {
     public void CloseLanguages(){screen.CloseLanguages();}
     public void OpenCircuit(Machine m){activeCircuit=m;circuitOpenedFrame=Time.frameCount;SyncFreeze();}
     public void CloseCircuit(){activeCircuit=null;SyncFreeze();}
-    public void PowerCircuit(){if(!activeCircuit||!activeCircuit.puzzle.Solved)return;var machine=activeCircuit;CloseCircuit();machine.StartWork();}
+    public void PowerCircuit(){if(!activeCircuit||!activeCircuit.puzzle.Solved)return;var machine=activeCircuit;machine.ObserveCircuit();CloseCircuit();machine.StartWork();}
     public void ToggleMap(){if(!started||ended)return;mapOpen=!mapOpen;SyncFreeze();}
     public void TogglePhoto(){if(!started||ended)return;photoMode=!photoMode;SyncFreeze();}
     public void ResumeDesktop(){desktopHold=false;SyncFreeze();}

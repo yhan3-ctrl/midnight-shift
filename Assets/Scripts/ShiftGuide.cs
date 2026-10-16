@@ -28,6 +28,7 @@ public class ShiftGuide : MonoBehaviour {
             if(!g.player.Placement(out _,out var why))detail=why;
             var t=Make(chapter,chapter,ready?"按 Q 键，把箱子放到这块木板上":"把箱子带到发光的条纹木板前",ready?"Press Q to place the crate on this plate":"Bring the crate to the glowing striped plate",detail,detail,ready?"Q":"W A S D",target,"条纹压力板","Striped pressure plate");return t;
         }
+        if(g.player.held==g.sharedCore){var parking=gate==archive?chime:gate==assembly?etch:null;if(parking&&!parking.core)return Make(chapter,chapter,"先把核心留在操作台","Park the core in the console","机器可以安全保管核心；打开门后再取回来。","The machine holds the core safely. Retrieve it after opening the gate.","E",parking.corePoint.position,parking.displayName,parking.displayName);}
         if(g.player.held)return Make(chapter,chapter,"先腾出双手","Free your hands first","按 Q 把手中的物品放到空地，再拿箱子。","Press Q on clear floor, then pick up the crate.","Q",crate.transform.position,"木箱","Crate");
         return Make(chapter,chapter,"走近木箱，按 E 拿起","Walk to the crate and press E","让屏幕中央的小圆点对准箱子。出现“拾取”提示再按 E。","Aim the centre dot at the crate. Press E when the pickup prompt appears.","E",crate.transform.position,"木箱","Crate");
     }
@@ -36,7 +37,7 @@ public class ShiftGuide : MonoBehaviour {
             if(m.machineId=="etch"){var preparing=CrateTask(assemblyCrate,assembly,UiCopy.Pick("04 / 提前准备门禁","04 / Prepare the gate"));preparing.reason=UiCopy.Pick("核心留在雕刻机里。趁它工作，把箱子搬到条纹板上；留意 Hush。","Leave the core in the Engraver. Prepare the crate gate while it works; watch Hush.");return preparing;}
             var t=Make(zh,en,"正在制作，核心先留在机器里","Crafting: leave the core in place","完成后待办会自动更新。你可以观察作品。","The checklist updates when finished. You can watch the workpiece.","",m.transform.position,"制作中的机器","Machine at work");return t;}
         if(m.core){return Make(zh,en,"靠近操作台，按 E 继续","Press E near the console to continue","旋转线路，接通所有出口和每个星标，再启动机器。","Rotate tiles. Power every OUT and every star, then start the machine.","E",m.corePoint.position,m.displayName,m.displayName);}
-        if(g.player.held==g.sharedCore)return Make(zh,en,"把金色核心插进这台机器","Insert the gold core into this machine","靠近操作台按 E，插入核心并打开线路板。","Press E near the console to insert the core and open the circuit.","E",m.corePoint.position,m.displayName,m.displayName);
+        if(g.player.held==g.sharedCore)return Make(zh,en,"把金色核心插进这台机器","Insert the gold core into this machine",m.machineId=="chime"?"插入核心给铃供电，然后按 E 响铃。":"靠近操作台按 E，插入核心并打开线路板。",m.machineId=="chime"?UiCopy.Translate("Insert the core to power the chime. Then press E to ring it."):"Press E near the console to insert the core and open the circuit.","E",m.corePoint.position,m.displayName,m.displayName);
         Vector3 source=g.sharedCore.transform.position;
         return Make(zh,en,"先取回同一枚金色核心","Retrieve the same gold core",UiCopy.Pick("核心位置：", "Core location: ")+UiCopy.Translate(g.CoreLocation),UiCopy.Pick("核心位置：", "Core location: ")+UiCopy.Translate(g.CoreLocation),"E",source,"金色核心","Gold power core");
     }
@@ -74,10 +75,21 @@ public class ShiftGuide : MonoBehaviour {
             return Make("05 / 一起下班吧","05 / Let's go home together","把灯笼交给桌后的 Pip","Give the lantern to Pip behind the desk","对准 Pip 按 E，完成你的最后一份订单。","Aim at Pip and press E to finish your last order.","E",g.pipHelper.transform.position+Vector3.up,"Pip / 交付","Pip / Deliver");
         }
     }
+    public string Purpose {get{Ensure();
+        if(g.player.held==g.sharedCore&&((g.inspectorLesson&&!g.blueprint&&!archive.CrateHoldsPlate)||(g.blueprint&&g.etched&&!assembly.CrateHoldsPlate)))return UiCopy.Translate("Carry one item at a time. Park the core to free your hands for the crate.");
+        if(g.sharedCore&&g.player.held!=g.sharedCore&&Current.key=="E"&&Vector3.Distance(Current.target,g.sharedCore.transform.position)<.2f)return UiCopy.Translate("There is one core. Finished work stays finished without power.");
+        if(g.player.transform.position.z<12&&!g.shell)return UiCopy.Translate("Leave the crate on the plate to keep the door open.");
+        if(!g.shell){if(!g.workshopRelay.OverrideHeld)return UiCopy.Translate("A crate replaces gate power, freeing the core for crafting.");return UiCopy.Translate("Build the shell first; it becomes the lantern's body.");}
+        if(!g.transferred)return UiCopy.Translate("The ribbon finishes the shell before we take it to assembly.");
+        if(!g.blueprint){if(g.player.transform.position.z<30.5f)return UiCopy.Translate("The old drawing explains who this lantern is for.");if(!g.inspectorLesson)return UiCopy.Translate("The bell calls Hush away so you can move the crate.");if(!archive.CrateHoldsPlate)return UiCopy.Translate("Leave the crate on the plate to keep the door open.");return UiCopy.Translate("The old drawing explains who this lantern is for.");}
+        if(!g.etched){if(g.sharedCore.socket==chime&&g.player.held!=g.sharedCore)return UiCopy.Translate("There is one core. Finished work stays finished without power.");if(etch.running)return UiCopy.Translate("The crate holds access open while the core powers the Press.");return UiCopy.Translate("Engrave the promise from your childhood drawing.");}
+        if(!g.assembled)return UiCopy.Translate(!assembly.CrateHoldsPlate?"The crate holds access open while the core powers the Press.":"Join the finished parts and light the lantern.");
+        return UiCopy.Translate("Give the helpers a light for their way home.");
+    }}
     public bool IsCurrentCoreSocket(Interactable socket){if(!socket)return false;var t=Current;if(!t.hasTarget||t.key!="E")return false;Vector3 delta=t.target-g.player.InteractionPoint(socket);delta.y=0;return delta.magnitude<1.1f;}
     // Keep an already reachable action instead of routing to the far side of its furniture.
     public bool CanActHere(Task t){
-        if(t.key!="E"||!t.hasTarget)return false;
+        if(t.key!="E"||!t.hasTarget)return false;var intended=g.player.IntendedCoreSocket();if(intended)return g.player.CanReach(intended);
         foreach(var item in FindObjectsByType<Interactable>(FindObjectsSortMode.None)){
             if(item is Pickup pick&&pick.carried)continue;
             if(Vector3.Distance(t.target,g.player.InteractionPoint(item))>.75f&&Vector3.Distance(t.target,item.transform.position)>.75f)continue;
@@ -87,6 +99,7 @@ public class ShiftGuide : MonoBehaviour {
     public Task Navigate(Task t){
         if(!t.hasTarget||string.IsNullOrEmpty(t.key)||CanActHere(t)||!g.navigation||t.key=="MOUSE"||t.key=="ARROWS"||t.key=="RIGHT-DRAG")return t;
         g.navigation.Refresh(t);
+        if(g.player.IntendedCoreSocket()&&!g.player.NearbyCoreSocket()){t.key=g.player.CoreAccessKey;t.action=g.player.CoreAccessHint();if(t.key=="W A S D"&&g.navigation.Available)t.target=g.navigation.LookAhead(2.6f);return t;}
         if(g.navigation.Points.Count>1&&g.navigation.Distance>4.2f){
             var original=t.targetName;t.routeDistance=g.navigation.Distance;t.target=g.navigation.LookAhead(2.6f);t.key="W A S D";
             t.action=UiCopy.Pick("沿地面金色光路前进","Follow the gold trail");
